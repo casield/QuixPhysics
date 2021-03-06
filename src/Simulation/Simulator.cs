@@ -60,7 +60,7 @@ namespace QuixPhysics
 
         private void createObjects()
         {
-            for (int a = 0; a < 200; a++)
+            for (int a = 0; a < 400; a++)
             {
                 var box = new Box(1, 1, 1);
                 createBox(box);
@@ -90,7 +90,7 @@ namespace QuixPhysics
             Simulation.Timestep(1 / 60f, ThreadDispatcher);
             if (timer == tickB)
             {
-                createObjects();
+                //createObjects();
                 tickB = 0;
             }
 
