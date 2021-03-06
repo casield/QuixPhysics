@@ -1,42 +1,43 @@
 using System;
-
+using System.Net.Sockets;
 using System.Threading.Tasks;
 namespace QuixPhysics
 {
-        public class GameLoop
+    public class GameLoop
+    {
+        private Simulator _mySimulator;
+
+        /// <summary>
+        /// Status of GameLoop
+        /// </summary>
+        public bool Running { get; private set; }
+
+        /// <summary>
+        /// Load Game into GameLoop
+        /// </summary>
+        public void Load(Simulator gameObj)
         {
-            private Simulator _mySimulator;
+            _mySimulator = gameObj;
+        }
 
-            /// <summary>
-            /// Status of GameLoop
-            /// </summary>
-            public bool Running { get; private set; }
+        /// <summary>
+        /// Start GameLoop
+        /// </summary>
+        public async Task Start()
+        {
+            if (_mySimulator == null)
+                throw new ArgumentException("Simulator not loaded!");
 
-            /// <summary>
-            /// Load Game into GameLoop
-            /// </summary>
-            public void Load(Simulator gameObj)
+            // Load game content
+            _mySimulator.Load();
+
+            // Set gameloop state
+            Running = true;
+
+            // Set previous game time
+            DateTime _previousGameTime = DateTime.Now;
+            try
             {
-                _mySimulator = gameObj;
-            }
-
-            /// <summary>
-            /// Start GameLoop
-            /// </summary>
-            public async Task Start()
-            {
-                if (_mySimulator == null)
-                    throw new ArgumentException("Simulator not loaded!");
-
-                // Load game content
-                _mySimulator.Load();
-
-                // Set gameloop state
-                Running = true;
-
-                // Set previous game time
-                DateTime _previousGameTime = DateTime.Now;
-
                 while (true)
                 {
                     // Calculate the time elapsed since the last game loop cycle
@@ -46,21 +47,26 @@ namespace QuixPhysics
                     // Update the game
                     _mySimulator.Update(GameTime);
                     // Update Game at 60fps
-                   await Task.Delay(8);
+                    await Task.Delay(8);
                 }
+            }catch(SocketException e){
+                Console.WriteLine(e);
             }
 
-            /// <summary>
-            /// Stop GameLoop
-            /// </summary>
-            public void Stop()
-            {
-                Running = false;
-                //_myGame?.Unload();
+
             }
 
-            /// <summary>
-            /// Draw Game Graphics
-            /// </summary>
+        /// <summary>
+        /// Stop GameLoop
+        /// </summary>
+        public void Stop()
+        {
+            Running = false;
+            //_myGame?.Unload();
         }
+
+        /// <summary>
+        /// Draw Game Graphics
+        /// </summary>
     }
+}

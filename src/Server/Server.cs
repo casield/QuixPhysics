@@ -72,7 +72,7 @@ namespace QuixPhysics
             Console.Read();
         }
 
-        public static void AcceptCallback(IAsyncResult ar)
+        public void AcceptCallback(IAsyncResult ar)
         {
             // Signal the main thread to continue.  
             allDone.Set();
@@ -84,20 +84,26 @@ namespace QuixPhysics
             // Create the state object.  
             StateObject state = new StateObject();
             state.workSocket = handler;
-            handler.BeginReceive(state.buffer, 0, StateObject.BufferSize, 0,
+            try{
+                handler.BeginReceive(state.buffer, 0, StateObject.BufferSize, 0,
                 new AsyncCallback(ReadCallback), state);
+            }catch(SocketException e){
+                Console.WriteLine(e);
+            }
+            
 
             CreateSimulator(state);
         }
 
-        private static void CreateSimulator(StateObject socket)
+        private void CreateSimulator(StateObject socket)
         {
             Console.WriteLine("Create simulator");
-            Simulator simulator = new Simulator();
+            Simulator simulator = new Simulator(socket,this);
             socket.simulator = simulator;
         }
-        public static void ReadCallback(IAsyncResult ar)
+        public void ReadCallback(IAsyncResult ar)
         {
+      
             String content = String.Empty;
 
             // Retrieve the state object and the handler socket  
@@ -137,10 +143,16 @@ namespace QuixPhysics
                 }
             }
         }
-        private static void Send(Socket handler, String data)
+        public static void Send(Socket handler, String data)
         {
+           
             // Convert the string data to byte data using ASCII encoding.  
+            data += "<L@>";
             byte[] byteData = Encoding.ASCII.GetBytes(data);
+            
+
+            //handler.Send(byteData);
+          
 
             // Begin sending the data to the remote device.  
             handler.BeginSend(byteData, 0, byteData.Length, 0,
@@ -155,10 +167,10 @@ namespace QuixPhysics
 
                 // Complete sending the data to the remote device.  
                 int bytesSent = handler.EndSend(ar);
-                Console.WriteLine("Sent {0} bytes to client.", bytesSent);
+               // Console.WriteLine("Sent {0} bytes to client.", bytesSent);
 
-                handler.Shutdown(SocketShutdown.Both);
-                handler.Close();
+               // handler.Shutdown(SocketShutdown.Both);
+               // handler.Close();
 
             }
             catch (Exception e)

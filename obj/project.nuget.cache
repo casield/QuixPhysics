@@ -1,11 +1,12 @@
 {
   "version": 2,
-  "dgSpecHash": "GfspC5tuXct6G54KUQ1fXM7f23KO4ScUpFjxNdYKI4TF75OOoa6vwPrVOSixb6rwtuKZPoEYRYKEtCjgGh2vcQ==",
+  "dgSpecHash": "KfJC9w793Qv6i6EHgMj5oEvo/PKO77NNunjFN2lPRRqO2/7c90Y2LgGBamvEyc4CvrlKmJip8T6nFYW8Ytdl6Q==",
   "success": true,
   "projectFilePath": "C:\\Users\\Casiel\\Desktop\\ciberchico420\\Games\\QuixPhysics\\QuixPhysics.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Casiel\\.nuget\\packages\\bepuphysics\\2.3.0\\bepuphysics.2.3.0.nupkg.sha512",
     "C:\\Users\\Casiel\\.nuget\\packages\\bepuutilities\\2.3.0\\bepuutilities.2.3.0.nupkg.sha512",
+    "C:\\Users\\Casiel\\.nuget\\packages\\newtonsoft.json\\12.0.3\\newtonsoft.json.12.0.3.nupkg.sha512",
     "C:\\Users\\Casiel\\.nuget\\packages\\system.memory\\4.5.3\\system.memory.4.5.3.nupkg.sha512",
     "C:\\Users\\Casiel\\.nuget\\packages\\system.numerics.vectors\\4.5.0\\system.numerics.vectors.4.5.0.nupkg.sha512",
     "C:\\Users\\Casiel\\.nuget\\packages\\system.runtime.compilerservices.unsafe\\4.7.0\\system.runtime.compilerservices.unsafe.4.7.0.nupkg.sha512"

@@ -47,6 +47,10 @@
             "BepuUtilities": {
               "target": "Package",
               "version": "[2.3.0, )"
+            },
+            "Newtonsoft.Json": {
+              "target": "Package",
+              "version": "[12.0.3, )"
             }
           },
           "imports": [

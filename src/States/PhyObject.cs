@@ -1,22 +1,38 @@
 using System;
 using System.Numerics;
 using BepuPhysics;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 
 namespace QuixPhysics
 {
     public class PhyObject
     {
         public string uID;
-        BodyDescription description;
+        public BodyHandle bodyHandle;
+        public BodyDescription description;
+        private Simulator simulator;
 
-        public PhyObject(BodyDescription description)
+        public PhyObject(BodyHandle bodyHandle, BodyDescription description, StateObject state,Simulator simulator)
         {
+            this.bodyHandle = bodyHandle;
+            
             this.description = description;
-          
-
+            this.simulator = simulator;
             uID = createUID();
-            Console.WriteLine(uID);
+
+            simulator.SendMessage("createBox",getJSON());
         }
+
+        public JObject getJSON()
+        {
+            simulator.Simulation.Bodies.GetDescription(bodyHandle, out description);
+            JObject o = new JObject();
+            o["uID"] = uID;
+            o["position"] = JsonConvert.SerializeObject(description.Pose.Position);
+
+            return o;
+        } 
 
         public string createUID()
         {

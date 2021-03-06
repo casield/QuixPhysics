@@ -28,6 +28,15 @@
           "lib/netstandard2.0/BepuUtilities.dll": {}
         }
       },
+      "Newtonsoft.Json/12.0.3": {
+        "type": "package",
+        "compile": {
+          "lib/netstandard2.0/Newtonsoft.Json.dll": {}
+        },
+        "runtime": {
+          "lib/netstandard2.0/Newtonsoft.Json.dll": {}
+        }
+      },
       "System.Memory/4.5.3": {
         "type": "package",
         "compile": {
@@ -82,6 +91,37 @@
         "bepuutilities.2.3.0.nupkg.sha512",
         "bepuutilities.nuspec",
         "lib/netstandard2.0/BepuUtilities.dll"
+      ]
+    },
+    "Newtonsoft.Json/12.0.3": {
+      "sha512": "6mgjfnRB4jKMlzHSl+VD+oUc1IebOZabkbyWj2RiTgWwYPPuaK1H97G1sHqGwPlS5npiF5Q0OrxN1wni2n5QWg==",
+      "type": "package",
+      "path": "newtonsoft.json/12.0.3",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "LICENSE.md",
+        "lib/net20/Newtonsoft.Json.dll",
+        "lib/net20/Newtonsoft.Json.xml",
+        "lib/net35/Newtonsoft.Json.dll",
+        "lib/net35/Newtonsoft.Json.xml",
+        "lib/net40/Newtonsoft.Json.dll",
+        "lib/net40/Newtonsoft.Json.xml",
+        "lib/net45/Newtonsoft.Json.dll",
+        "lib/net45/Newtonsoft.Json.xml",
+        "lib/netstandard1.0/Newtonsoft.Json.dll",
+        "lib/netstandard1.0/Newtonsoft.Json.xml",
+        "lib/netstandard1.3/Newtonsoft.Json.dll",
+        "lib/netstandard1.3/Newtonsoft.Json.xml",
+        "lib/netstandard2.0/Newtonsoft.Json.dll",
+        "lib/netstandard2.0/Newtonsoft.Json.xml",
+        "lib/portable-net40+sl5+win8+wp8+wpa81/Newtonsoft.Json.dll",
+        "lib/portable-net40+sl5+win8+wp8+wpa81/Newtonsoft.Json.xml",
+        "lib/portable-net45+win8+wp8+wpa81/Newtonsoft.Json.dll",
+        "lib/portable-net45+win8+wp8+wpa81/Newtonsoft.Json.xml",
+        "newtonsoft.json.12.0.3.nupkg.sha512",
+        "newtonsoft.json.nuspec",
+        "packageIcon.png"
       ]
     },
     "System.Memory/4.5.3": {
@@ -181,7 +221,8 @@
   "projectFileDependencyGroups": {
     "net5.0": [
       "BepuPhysics >= 2.3.0",
-      "BepuUtilities >= 2.3.0"
+      "BepuUtilities >= 2.3.0",
+      "Newtonsoft.Json >= 12.0.3"
     ]
   },
   "packageFolders": {
@@ -190,11 +231,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "c:\\Users\\Casiel\\Desktop\\ciberchico420\\Games\\QuixPhysics\\QuixPhysics.csproj",
+      "projectUniqueName": "C:\\Users\\Casiel\\Desktop\\ciberchico420\\Games\\QuixPhysics\\QuixPhysics.csproj",
       "projectName": "QuixPhysics",
-      "projectPath": "c:\\Users\\Casiel\\Desktop\\ciberchico420\\Games\\QuixPhysics\\QuixPhysics.csproj",
+      "projectPath": "C:\\Users\\Casiel\\Desktop\\ciberchico420\\Games\\QuixPhysics\\QuixPhysics.csproj",
       "packagesPath": "C:\\Users\\Casiel\\.nuget\\packages\\",
-      "outputPath": "c:\\Users\\Casiel\\Desktop\\ciberchico420\\Games\\QuixPhysics\\obj\\",
+      "outputPath": "C:\\Users\\Casiel\\Desktop\\ciberchico420\\Games\\QuixPhysics\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\Casiel\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -230,6 +271,10 @@
           "BepuUtilities": {
             "target": "Package",
             "version": "[2.3.0, )"
+          },
+          "Newtonsoft.Json": {
+            "target": "Package",
+            "version": "[12.0.3, )"
           }
         },
         "imports": [
