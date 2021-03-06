@@ -60,7 +60,7 @@ namespace QuixPhysics
 
         private void createObjects()
         {
-            for (int a = 0; a < 10; a++)
+            for (int a = 0; a < 200; a++)
             {
                 var box = new Box(1, 1, 1);
                 createBox(box);
