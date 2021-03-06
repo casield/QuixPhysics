@@ -1,0 +1,89 @@
+{
+  "runtimeTarget": {
+    "name": ".NETCoreApp,Version=v5.0",
+    "signature": ""
+  },
+  "compilationOptions": {},
+  "targets": {
+    ".NETCoreApp,Version=v5.0": {
+      "QuixPhysics/1.0.0": {
+        "dependencies": {
+          "BepuPhysics": "2.3.0",
+          "BepuUtilities": "2.3.0"
+        },
+        "runtime": {
+          "QuixPhysics.dll": {}
+        }
+      },
+      "BepuPhysics/2.3.0": {
+        "dependencies": {
+          "BepuUtilities": "2.3.0"
+        },
+        "runtime": {
+          "lib/netstandard2.0/BepuPhysics.dll": {
+            "assemblyVersion": "2.3.0.0",
+            "fileVersion": "2.3.0.0"
+          }
+        }
+      },
+      "BepuUtilities/2.3.0": {
+        "dependencies": {
+          "System.Memory": "4.5.3",
+          "System.Numerics.Vectors": "4.5.0",
+          "System.Runtime.CompilerServices.Unsafe": "4.7.0"
+        },
+        "runtime": {
+          "lib/netstandard2.0/BepuUtilities.dll": {
+            "assemblyVersion": "2.3.0.0",
+            "fileVersion": "2.3.0.0"
+          }
+        }
+      },
+      "System.Memory/4.5.3": {},
+      "System.Numerics.Vectors/4.5.0": {},
+      "System.Runtime.CompilerServices.Unsafe/4.7.0": {}
+    }
+  },
+  "libraries": {
+    "QuixPhysics/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "BepuPhysics/2.3.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-UxGVgCoHQTzTP6Xd6xk6ZGyuKqa9PyHJjfX7rRlqXnkA7WWHxo59/roS+oNh85JTkT9jNwAnPgHEuDrtOASoFA==",
+      "path": "bepuphysics/2.3.0",
+      "hashPath": "bepuphysics.2.3.0.nupkg.sha512"
+    },
+    "BepuUtilities/2.3.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-rR+Q5gawSKBU0r0d7Zs/3CZ3UUByQrcUnvKw36gHtXyDL+6UJ6hGbA+Seyurzgk8lzjEnD0tRqBh+9fF/d+WBw==",
+      "path": "bepuutilities/2.3.0",
+      "hashPath": "bepuutilities.2.3.0.nupkg.sha512"
+    },
+    "System.Memory/4.5.3": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-3oDzvc/zzetpTKWMShs1AADwZjQ/36HnsufHRPcOjyRAAMLDlu2iD33MBI2opxnezcVUtXyqDXXjoFMOU9c7SA==",
+      "path": "system.memory/4.5.3",
+      "hashPath": "system.memory.4.5.3.nupkg.sha512"
+    },
+    "System.Numerics.Vectors/4.5.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-QQTlPTl06J/iiDbJCiepZ4H//BVraReU4O4EoRw1U02H5TLUIT7xn3GnDp9AXPSlJUDyFs4uWjWafNX6WrAojQ==",
+      "path": "system.numerics.vectors/4.5.0",
+      "hashPath": "system.numerics.vectors.4.5.0.nupkg.sha512"
+    },
+    "System.Runtime.CompilerServices.Unsafe/4.7.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-IpU1lcHz8/09yDr9N+Juc7SCgNUz+RohkCQI+KsWKR67XxpFr8Z6c8t1iENCXZuRuNCc4HBwme/MDHNVCwyAKg==",
+      "path": "system.runtime.compilerservices.unsafe/4.7.0",
+      "hashPath": "system.runtime.compilerservices.unsafe.4.7.0.nupkg.sha512"
+    }
+  }
+}
