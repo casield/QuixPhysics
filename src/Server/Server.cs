@@ -34,7 +34,7 @@ namespace QuixPhysics
         {
 
 
-            IPAddress ipAddress = IPAddress.Parse("127.0.0.1");
+            IPAddress ipAddress = IPAddress.Parse("172.31.7.155");
             IPEndPoint localEndPoint = new IPEndPoint(ipAddress, 1337);
 
             // Create a TCP/IP socket.  
