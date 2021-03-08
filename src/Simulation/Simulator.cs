@@ -27,7 +27,7 @@ namespace QuixPhysics
         private int t = 0;
         private int tMax = 15000;
         private ArrayList commandsList = new ArrayList();
-        private int boxToCreate = 300;
+        private int boxToCreate = 100;
 
         public Simulator(ConnectionState state, Server server)
         {
