@@ -27,7 +27,7 @@ namespace QuixPhysics
         private int t = 0;
         private int tMax = 15000;
         private ArrayList commandsList = new ArrayList();
-        private int boxToCreate = 10;
+        private int boxToCreate = 300;
 
         public Simulator(ConnectionState state, Server server)
         {
@@ -208,6 +208,7 @@ namespace QuixPhysics
                     if (message.type == "createBoxes")
                     {
                         Console.WriteLine("Create boxes");
+                        boxToCreate = 10;
                         createObjects();
                     }
 

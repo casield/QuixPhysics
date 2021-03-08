@@ -1,2 +1,4 @@
 /.vscode
-/bin/
+/bin/Debug/
+bin/Debug/
+obj/Debug/
