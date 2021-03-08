@@ -1,5 +1,6 @@
 using System;
 using System.Net.Sockets;
+using System.Threading;
 using System.Threading.Tasks;
 namespace QuixPhysics
 {
@@ -23,7 +24,7 @@ namespace QuixPhysics
         /// <summary>
         /// Start GameLoop
         /// </summary>
-        public async Task Start()
+        public void Start()
         {
             if (_mySimulator == null)
                 throw new ArgumentException("Simulator not loaded!");
@@ -46,15 +47,17 @@ namespace QuixPhysics
                     _previousGameTime = _previousGameTime + GameTime;
                     // Update the game
                     _mySimulator.Update(GameTime);
+
+
                     // Update Game at 60fps
-                    await Task.Delay(8);
+                     Thread.Sleep(8);
                 }
-            }catch(SocketException e){
-                Console.WriteLine(e);
             }
-
-
+            catch (Exception e)
+            {
+                Console.WriteLine("Exception in gameloop. {0}", e);
             }
+        }
 
         /// <summary>
         /// Stop GameLoop

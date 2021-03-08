@@ -8,33 +8,45 @@ namespace QuixPhysics
 {
     public class PhyObject
     {
-        public string uID;
+        public ObjectState state;
         public BodyHandle bodyHandle;
         public BodyDescription description;
         private Simulator simulator;
+        internal bool updateRotation = true;
 
-        public PhyObject(BodyHandle bodyHandle, BodyDescription description, StateObject state,Simulator simulator)
+        public PhyObject()
+        {
+
+        }
+        public void Load(BodyHandle bodyHandle, BodyDescription description, ConnectionState connectionState, Simulator simulator, ObjectState state)
         {
             this.bodyHandle = bodyHandle;
-            
+            this.state = state;
             this.description = description;
             this.simulator = simulator;
-            uID = createUID();
 
-            simulator.SendMessage("createBox",getJSON());
+            simulator.SendMessage("create", getJSON(), connectionState.workSocket);
         }
 
-        public JObject getJSON()
+        public string getJSON()
         {
             simulator.Simulation.Bodies.GetDescription(bodyHandle, out description);
-            JObject o = new JObject();
-            o["uID"] = uID;
-            o["position"] = JsonConvert.SerializeObject(description.Pose.Position);
 
-            return o;
-        } 
+            state.position = description.Pose.Position;
+            if (updateRotation)
+            {
+                state.quaternion = description.Pose.Orientation;
+            }
 
-        public string createUID()
+
+
+            return state.getJson();
+        }
+        public void getDescription(){
+
+        }
+
+        public static string createUID()
         {
             var bytes = new byte[5];
             var random = new Random();

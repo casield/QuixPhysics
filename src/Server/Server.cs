@@ -3,10 +3,13 @@ using System.Net;
 using System.Net.Sockets;
 using System.Text;
 using System.Threading;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace QuixPhysics
 {
-    public class StateObject
+    public class ConnectionState
     {
         // Size of receive buffer.  
         public const int BufferSize = 1024;
@@ -41,6 +44,8 @@ namespace QuixPhysics
             Socket listener = new Socket(ipAddress.AddressFamily,
                 SocketType.Stream, ProtocolType.Tcp);
 
+            // AppDomain.CurrentDomain.UnhandledException+= HandleExceptions;
+
             // Bind the socket to the local endpoint and listen for incoming connections.  
             try
             {
@@ -66,10 +71,17 @@ namespace QuixPhysics
             catch (Exception e)
             {
                 Console.WriteLine(e.ToString());
+
             }
 
             Console.WriteLine("\nPress ENTER to continue...");
             Console.Read();
+        }
+
+
+        private void HandleExceptions(object sender, UnhandledExceptionEventArgs e)
+        {
+            Console.WriteLine(e);
         }
 
         public void AcceptCallback(IAsyncResult ar)
@@ -82,83 +94,99 @@ namespace QuixPhysics
             Socket handler = listener.EndAccept(ar);
 
             // Create the state object.  
-            StateObject state = new StateObject();
+            ConnectionState state = new ConnectionState();
             state.workSocket = handler;
-            try{
-                handler.BeginReceive(state.buffer, 0, StateObject.BufferSize, 0,
-                new AsyncCallback(ReadCallback), state);
-            }catch(SocketException e){
-                Console.WriteLine(e);
-            }
-            
 
             CreateSimulator(state);
+
+            handler.BeginReceive(state.buffer, 0, ConnectionState.BufferSize, 0,
+            new AsyncCallback(ReadCallback), state);
+
+
+
         }
 
-        private void CreateSimulator(StateObject socket)
+        private void CreateSimulator(ConnectionState socket)
         {
             Console.WriteLine("Create simulator");
-            Simulator simulator = new Simulator(socket,this);
+            Simulator simulator = new Simulator(socket, this);
             socket.simulator = simulator;
         }
         public void ReadCallback(IAsyncResult ar)
         {
-      
-            String content = String.Empty;
 
-            // Retrieve the state object and the handler socket  
-            // from the asynchronous state object.  
-            StateObject state = (StateObject)ar.AsyncState;
-            Socket handler = state.workSocket;
-
-
-            // Read data from the client socket.
-            int bytesRead = handler.EndReceive(ar);
-
-            if (bytesRead > 0)
+            try
             {
-                // There  might be more data, so store the data received so far.  
-                state.sb.Append(Encoding.ASCII.GetString(
-                    state.buffer, 0, bytesRead));
 
-                // Check for end-of-file tag. If it is not there, read
-                // more data.  
-                content = state.sb.ToString();
+                ConnectionState state = (ConnectionState)ar.AsyncState;
+                String content = String.Empty;
+
+                // Retrieve the state object and the handler socket  
+                // from the asynchronous state object.  
+
+                Socket handler = state.workSocket;
 
 
-                if (content.IndexOf("<EOF>") > -1)
+                // Read data from the client socket.
+                int bytesRead = handler.EndReceive(ar);
+
+                if (bytesRead > 0)
                 {
-                    // All the data has been read from the
-                    // client. Display it on the console.  
-                    Console.WriteLine("Read {0} bytes from socket. \n Data : {1}",
-                        content.Length, content);
-                    // Echo the data back to the client.  
-                    Send(handler, content);
-                }
-                else
-                {
-                    // Not all data received. Get more.  
-                    handler.BeginReceive(state.buffer, 0, StateObject.BufferSize, 0,
+                    // There  might be more data, so store the data received so far.  
+                    state.sb.Append(Encoding.ASCII.GetString(
+                        state.buffer, 0, bytesRead));
+
+                    // Check for end-of-file tag. If it is not there, read
+                    // more data.  
+                    content = state.sb.ToString();
+
+                    var splited = content.Split("<L@>");
+                    for (int a = 0; a < splited.Length; a++)
+                    {
+                        if (state.simulator != null)
+                        {
+                            if (splited[a] != "")
+                            {
+                                state.simulator.AddCommandToBeRead(splited[a]);
+                            }
+
+                        }
+
+                    }
+                    state.sb.Clear();
+                    handler.BeginReceive(state.buffer, 0, ConnectionState.BufferSize, 0,
                     new AsyncCallback(ReadCallback), state);
                 }
+
             }
+            catch (Exception e)
+            {
+                Console.WriteLine("Error reading socket {0}", e);
+            }
+
+
+
         }
-        public static void Send(Socket handler, String data)
+        public void Send(Socket handler, String data)
         {
-           
+
             // Convert the string data to byte data using ASCII encoding.  
             data += "<L@>";
             byte[] byteData = Encoding.ASCII.GetBytes(data);
-            
-
-            //handler.Send(byteData);
-          
 
             // Begin sending the data to the remote device.  
-            handler.BeginSend(byteData, 0, byteData.Length, 0,
-                new AsyncCallback(SendCallback), handler);
+            try
+            {
+                handler.BeginSend(byteData, 0, byteData.Length, 0,
+          new AsyncCallback(SendCallback), handler);
+            }
+            catch (SocketException e)
+            {
+                Console.WriteLine("Error in Send");
+                CloseConnection(handler);
+            }
         }
-        private static void SendCallback(IAsyncResult ar)
+        private void SendCallback(IAsyncResult ar)
         {
             try
             {
@@ -167,16 +195,24 @@ namespace QuixPhysics
 
                 // Complete sending the data to the remote device.  
                 int bytesSent = handler.EndSend(ar);
-               // Console.WriteLine("Sent {0} bytes to client.", bytesSent);
+               //  Console.WriteLine("Sent {0} bytes to client.", bytesSent);
 
-               // handler.Shutdown(SocketShutdown.Both);
-               // handler.Close();
+                // handler.Shutdown(SocketShutdown.Both);
+                // handler.Close();
 
             }
             catch (Exception e)
             {
                 Console.WriteLine(e.ToString());
+                CloseConnection((Socket)ar.AsyncState);
             }
+        }
+
+        private static void CloseConnection(Socket handler)
+        {
+            Console.WriteLine("Shutting down " + handler);
+            handler.Shutdown(SocketShutdown.Both);
+            handler.Close();
         }
 
 
