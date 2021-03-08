@@ -74,6 +74,7 @@ namespace QuixPhysics
                 box.mass = 1;
                 box.position = new Vector3(11 * a, 630, 30);
                 box.halfSize = new Vector3(10, 10, 10);
+                box.mesh = "Board/Gem/Gem_prefab";
                 box.quaternion = Quaternion.Identity;
                 Create(box);
             }
