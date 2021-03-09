@@ -351,7 +351,7 @@ namespace QuixPhysics
                             break;
                         case "generateMap":
 
-                            var map = this.simulator.server.dataBase.GetMap("arena");
+                            var map = this.simulator.server.dataBase.GetMap((string)message["data"]);
 
                             foreach (var obj in map.objects)
                             {
