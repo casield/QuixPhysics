@@ -55,7 +55,7 @@ namespace QuixPhysics
             if (moveMessage != null)
             {
             
-               /* BodyDescription bb;
+               BodyDescription bb;
                     simulator.Simulation.Bodies.GetDescription(bodyHandle, out bb);
 
                // Console.WriteLine(bb.Velocity.Linear.Y);
@@ -84,7 +84,7 @@ namespace QuixPhysics
                     acceleration /=1000;
                 }
 
-*/
+
 
 
             }
@@ -97,13 +97,12 @@ namespace QuixPhysics
             if (rotateMessage != null)
             {
 
-              /*  BodyDescription bb;
+                BodyDescription bb;
                 simulator.Simulation.Bodies.GetDescription(bodyHandle, out bb);
                 rotationController += rotateMessage.x / 70;
                 simulator.Simulation.Awakener.AwakenBody(bodyHandle);
                 state.quaternion = QuaternionEx.CreateFromYawPitchRoll(-rotationController, 0, 0);
-                // simulator.Simulation.Bodies.ApplyDescription(bodyHandle, bb);*/
-
+                // simulator.Simulation.Bodies.ApplyDescription(bodyHandle, bb);
 
             }
         }
