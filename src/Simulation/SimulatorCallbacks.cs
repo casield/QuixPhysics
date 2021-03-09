@@ -7,6 +7,8 @@ using BepuPhysics.Constraints;
 using System;
 using System.Runtime.CompilerServices;
 using System.Numerics;
+using System.Diagnostics;
+using BepuUtilities.Collections;
 
 namespace QuixPhysics
 {
@@ -86,8 +88,11 @@ namespace QuixPhysics
         public SpringSettings ContactSpringiness;
         public CollidableProperty<SimpleMaterial> CollidableMaterials;
 
+        private Simulation simulation;
+
         public void Initialize(Simulation simulation)
         {
+            this.simulation = simulation;
             CollidableMaterials.Initialize(simulation);
             //Use a default if the springiness value wasn't initialized.
             if (ContactSpringiness.AngularFrequency == 0 && ContactSpringiness.TwiceDampingRatio == 0)
@@ -114,12 +119,27 @@ namespace QuixPhysics
         {
             var a = CollidableMaterials[pair.A];
             var b = CollidableMaterials[pair.B];
-            pairMaterial.FrictionCoefficient = a.FrictionCoefficient * b.FrictionCoefficient;
-            pairMaterial.MaximumRecoveryVelocity = MathF.Max(a.MaximumRecoveryVelocity, b.MaximumRecoveryVelocity);
-            pairMaterial.SpringSettings = pairMaterial.MaximumRecoveryVelocity == a.MaximumRecoveryVelocity ? a.SpringSettings : b.SpringSettings;
-            /* pairMaterial.FrictionCoefficient = 1f;
-             pairMaterial.MaximumRecoveryVelocity = 2f;
-             pairMaterial.SpringSettings = ContactSpringiness;*/
+            // pairMaterial.FrictionCoefficient = a.FrictionCoefficient * b.FrictionCoefficient;
+            /* pairMaterial.MaximumRecoveryVelocity = MathF.Max(a.MaximumRecoveryVelocity, b.MaximumRecoveryVelocity);
+             pairMaterial.SpringSettings = pairMaterial.MaximumRecoveryVelocity == a.MaximumRecoveryVelocity ? a.SpringSettings : b.SpringSettings;
+              pairMaterial.FrictionCoefficient = 100f;*/
+
+            // Console.WriteLine("A" + pair.A.BodyHandle);
+            // Console.WriteLine("B" + pair.B.BodyHandle);
+            pairMaterial.FrictionCoefficient = 1f;
+            pairMaterial.MaximumRecoveryVelocity = 10f;
+            pairMaterial.SpringSettings = ContactSpringiness;
+           /* if (pair.A.BodyHandle != null)
+            {
+                simulation.Bodies.GetDescription(pair.A.BodyHandle, out var descA);
+                descA.Velocity.Linear.X *= a.FrictionCoefficient;
+                descA.Velocity.Linear.Z *= a.FrictionCoefficient;
+
+                simulation.Bodies.ApplyDescription(pair.A.BodyHandle, descA);
+            }*/
+     
+
+
             return true;
         }
 

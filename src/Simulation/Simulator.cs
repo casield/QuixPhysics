@@ -42,7 +42,7 @@ namespace QuixPhysics
             bufferPool = new BufferPool();
             var targetThreadCount = Math.Max(1, Environment.ProcessorCount > 4 ? Environment.ProcessorCount - 2 : Environment.ProcessorCount - 1);
             ThreadDispatcher = new SimpleThreadDispatcher(targetThreadCount);
-            Simulation = Simulation.Create(bufferPool, new QuixNarrowPhaseCallbacks() { CollidableMaterials = collidableMaterials }, new QuixPoseIntegratorCallbacks(new Vector3(0, -10, 0)), new PositionFirstTimestepper());
+            Simulation = Simulation.Create(bufferPool, new QuixNarrowPhaseCallbacks() { CollidableMaterials = collidableMaterials }, new QuixPoseIntegratorCallbacks(new Vector3(0, -20, 0)), new PositionFirstTimestepper());
 
             CreateMap();
             // Server.Send(state.workSocket, "Hola desde simulator");
@@ -179,15 +179,19 @@ namespace QuixPhysics
             {
                 collidableMaterials.Allocate(phy.bodyHandle) = new SimpleMaterial
                 {
-                    FrictionCoefficient = 5,
+                    FrictionCoefficient = .1f,
                     MaximumRecoveryVelocity = float.MaxValue,
                     SpringSettings = new SpringSettings(1f, 1.5f)
                 };
 
             }
 
-
-            objects.Add(state.uID, phy);
+            if(!objects.ContainsKey(state.uID)){
+                objects.Add(state.uID, phy);
+            }else{
+                Console.WriteLine("Objects already had that key");
+            }
+            
 
 
         }

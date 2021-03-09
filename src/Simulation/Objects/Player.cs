@@ -18,8 +18,8 @@ namespace QuixPhysics
 
         private float rotationController = 0;
         private float acceleration = 0;
-        private float maxAcceleration = 2;
-        private float accelerationPower = .05f;
+        private float maxAcceleration = 15;
+        private float accelerationPower = .8f;
 
         public Player2()
         {
@@ -33,9 +33,9 @@ namespace QuixPhysics
             PhyInterval worker = new PhyInterval(1, simulator);
             worker.Completed += Tick;
 
-           material = new SimpleMaterial
+            material = new SimpleMaterial
             {
-                FrictionCoefficient = 5,
+                FrictionCoefficient = .97f,
                 MaximumRecoveryVelocity = float.MaxValue,
                 SpringSettings = new SpringSettings(1f, 1.5f)
             };
@@ -54,55 +54,37 @@ namespace QuixPhysics
         {
             if (moveMessage != null)
             {
-
-                if (moveMessage.x != 0 || moveMessage.y != 0)
-                {
-
-                    BodyDescription bb;
+            
+                BodyDescription bb;
                     simulator.Simulation.Bodies.GetDescription(bodyHandle, out bb);
-                    //Console.WriteLine(JsonConvert.SerializeObject(moveMessage));
 
-
-                    //Vector3 vel = new Vector3(-(moveMessage.y * moveMultiplier), 0, moveMessage.x * moveMultiplier);
+               // Console.WriteLine(bb.Velocity.Linear.Y);
+                if ((moveMessage.x != 0 || moveMessage.y != 0) && Math.Abs(bb.Velocity.Linear.Y) < 0.1)
+                {
                     var radPad = Math.Atan2(this.moveMessage.x, -this.moveMessage.y);
                     var radian = (this.rotationController);
                     var x = (float)Math.Cos(radian + radPad);
                     var y = (float)Math.Sin(radian + radPad);
-
-
                     Vector3 vel = new Vector3(x, 0, y);
-
-
-                    /* if (onMaxVelocity(bb))
-                     {
-                         vel *= friction;
-                     }*/
-                    if (this.acceleration <= this.maxAcceleration)
-                    {
-                        this.acceleration += this.accelerationPower;
+                    if(this.acceleration <= maxAcceleration){
+                        this.acceleration += accelerationPower;
+                    }else{
+                        this.acceleration+=0.01f;
                     }
-                    else
-                    {
-                        this.acceleration += this.accelerationPower / 1000;
-                    }
+                    
                     vel.X *= acceleration;
                     vel.Z *= acceleration;
                     bb.Velocity.Linear.X += vel.X;
                     bb.Velocity.Linear.Z += vel.Z;
 
-
-                    //  simulator.Simulation.Bodies.ApplyDescription(bodyHandle, in bb);
-                    // Console.WriteLine("Move" + moveMessage.x);
-
                     simulator.Simulation.Bodies.ApplyDescription(bodyHandle, in bb);
                 }
 
-
-                if (moveMessage.x == 0 && moveMessage.y == 0)
-                {
-                    acceleration /= 1000;
-
+                if((moveMessage.x == 0 && moveMessage.y == 0)){
+                    acceleration /=1000;
                 }
+
+
 
 
             }
