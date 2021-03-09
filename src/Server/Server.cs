@@ -28,9 +28,12 @@ namespace QuixPhysics
     {
 
         public static ManualResetEvent allDone = new ManualResetEvent(false);
+        public DataBase dataBase;
         public Server()
-        {
+        { 
+            dataBase = new DataBase();
             StartListening();
+           
         }
 
         public void StartListening()
@@ -147,7 +150,7 @@ namespace QuixPhysics
                         {
                             if (splited[a] != "")
                             {
-                                state.simulator.AddCommandToBeRead(splited[a]);
+                                state.simulator.commandReader.AddCommandToBeRead(splited[a]);
                             }
 
                         }

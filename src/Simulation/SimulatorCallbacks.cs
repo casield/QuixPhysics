@@ -84,9 +84,11 @@ namespace QuixPhysics
     public unsafe struct QuixNarrowPhaseCallbacks : INarrowPhaseCallbacks
     {
         public SpringSettings ContactSpringiness;
+        public CollidableProperty<SimpleMaterial> CollidableMaterials;
 
         public void Initialize(Simulation simulation)
         {
+            CollidableMaterials.Initialize(simulation);
             //Use a default if the springiness value wasn't initialized.
             if (ContactSpringiness.AngularFrequency == 0 && ContactSpringiness.TwiceDampingRatio == 0)
                 ContactSpringiness = new SpringSettings(30, 1);
@@ -110,9 +112,14 @@ namespace QuixPhysics
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public unsafe bool ConfigureContactManifold<TManifold>(int workerIndex, CollidablePair pair, ref TManifold manifold, out PairMaterialProperties pairMaterial) where TManifold : struct, IContactManifold<TManifold>
         {
-            pairMaterial.FrictionCoefficient = 1f;
-            pairMaterial.MaximumRecoveryVelocity = 2f;
-            pairMaterial.SpringSettings = ContactSpringiness;
+            var a = CollidableMaterials[pair.A];
+            var b = CollidableMaterials[pair.B];
+            pairMaterial.FrictionCoefficient = a.FrictionCoefficient * b.FrictionCoefficient;
+            pairMaterial.MaximumRecoveryVelocity = MathF.Max(a.MaximumRecoveryVelocity, b.MaximumRecoveryVelocity);
+            pairMaterial.SpringSettings = pairMaterial.MaximumRecoveryVelocity == a.MaximumRecoveryVelocity ? a.SpringSettings : b.SpringSettings;
+            /* pairMaterial.FrictionCoefficient = 1f;
+             pairMaterial.MaximumRecoveryVelocity = 2f;
+             pairMaterial.SpringSettings = ContactSpringiness;*/
             return true;
         }
 
@@ -124,6 +131,22 @@ namespace QuixPhysics
 
         public void Dispose()
         {
+        }
+    }
+    public struct SimpleMaterial
+    {
+        public SpringSettings SpringSettings;
+        public float FrictionCoefficient;
+        public float MaximumRecoveryVelocity;
+
+        public static bool operator ==(SimpleMaterial op1, SimpleMaterial op2)
+        {
+            return op1.Equals(op2);
+        }
+
+        public static bool operator !=(SimpleMaterial op1, SimpleMaterial op2)
+        {
+            return !op1.Equals(op2);
         }
     }
 

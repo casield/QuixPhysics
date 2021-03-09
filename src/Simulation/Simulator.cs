@@ -8,9 +8,10 @@ namespace QuixPhysics
     using System.Threading;
     using BepuPhysics;
     using BepuPhysics.Collidables;
+    using BepuPhysics.Constraints;
     using BepuUtilities.Memory;
+    using MongoDB.Bson;
     using Newtonsoft.Json;
-    using Newtonsoft.Json.Linq;
 
     public class Simulator
     {
@@ -21,22 +22,27 @@ namespace QuixPhysics
         public GameLoop gameLoop = null;
         public Dictionary<BodyHandle, PhyObject> objectsHandlers = new Dictionary<BodyHandle, PhyObject>();
         public Dictionary<string, PhyObject> objects = new Dictionary<string, PhyObject>();
+        public CollidableProperty<SimpleMaterial> collidableMaterials;
         public ConnectionState connectionState;
-        private Server server;
+        internal Server server;
 
         private int t = 0;
         private int tMax = 15000;
-        private ArrayList commandsList = new ArrayList();
-        private int boxToCreate = 100;
+        internal int boxToCreate = 0;
+        internal List<PhyWorker> workers = new List<PhyWorker>();
+        internal CommandReader commandReader;
 
         public Simulator(ConnectionState state, Server server)
         {
+
+            collidableMaterials = new CollidableProperty<SimpleMaterial>();
+
             this.connectionState = state;
             this.server = server;
             bufferPool = new BufferPool();
             var targetThreadCount = Math.Max(1, Environment.ProcessorCount > 4 ? Environment.ProcessorCount - 2 : Environment.ProcessorCount - 1);
             ThreadDispatcher = new SimpleThreadDispatcher(targetThreadCount);
-            Simulation = Simulation.Create(bufferPool, new QuixNarrowPhaseCallbacks(), new QuixPoseIntegratorCallbacks(new Vector3(0, -10, 0)), new PositionFirstTimestepper());
+            Simulation = Simulation.Create(bufferPool, new QuixNarrowPhaseCallbacks() { CollidableMaterials = collidableMaterials }, new QuixPoseIntegratorCallbacks(new Vector3(0, -10, 0)), new PositionFirstTimestepper());
 
             CreateMap();
             // Server.Send(state.workSocket, "Hola desde simulator");
@@ -46,6 +52,7 @@ namespace QuixPhysics
             Thread t = new Thread(new ThreadStart(gameLoop.Start));
             try
             {
+                commandReader = new CommandReader(this);
                 t.Start();
             }
             catch (SocketException e)
@@ -65,7 +72,7 @@ namespace QuixPhysics
             createObjects();
         }
 
-        private void createObjects()
+        internal void createObjects()
         {
             for (int a = 0; a < boxToCreate; a++)
             {
@@ -74,7 +81,8 @@ namespace QuixPhysics
                 box.mass = 1;
                 box.position = new Vector3(11 * a, 630, 30);
                 box.halfSize = new Vector3(10, 10, 10);
-                box.mesh = "Board/Gem/Gem_prefab";
+                box.mesh = "Board/Bomb";
+                box.instantiate = true;
                 box.quaternion = Quaternion.Identity;
                 Create(box);
             }
@@ -82,12 +90,25 @@ namespace QuixPhysics
 
         private void createFloor()
         {
-            Simulation.Statics.Add(new StaticDescription(new Vector3(0, -0.5f, 0), new CollidableDescription(Simulation.Shapes.Add(new Box(5000, 1, 5000)), 0.1f)));
+            // Simulation.Statics.Add(new StaticDescription(new Vector3(0, -0.5f, 0), new CollidableDescription(Simulation.Shapes.Add(new Box(5000, 1, 5000)), 0.1f)));
+            BoxState box = new BoxState();
+            box.position = new Vector3(0, 0, 0);
+            box.uID = PhyObject.createUID();
+            box.mass = 0;
+            box.quaternion = Quaternion.Identity;
+            box.type = "QuixBox";
+            box.halfSize = new Vector3(5000, 1, 5000);
+
+            Create(box);
         }
 
         internal void Update(TimeSpan gameTime)
         {
             // Console.WriteLine(gameTime.TotalSeconds);
+            foreach (var item in workers)
+            {
+                item.tick();
+            }
             Simulation.Timestep(1 / 30f, ThreadDispatcher);
 
             ArrayList bodies = new ArrayList();
@@ -106,7 +127,12 @@ namespace QuixPhysics
                 try
                 {
                     var handle = set.IndexToHandle[bodyIndex];
-                    bodies.Add(objectsHandlers[handle].getJSON());
+                    if (objectsHandlers[handle].state.instantiate)
+                    {
+                        bodies.Add(objectsHandlers[handle].getJSON());
+                    }
+
+
                 }
                 catch (KeyNotFoundException e)
                 {
@@ -120,11 +146,11 @@ namespace QuixPhysics
                 SendMessage("update", JsonConvert.SerializeObject(bodies), connectionState.workSocket);
             }
 
-            ReadCommand();
+            commandReader.ReadCommand();
 
 
         }
-        public void SendMessage(string type, JObject message, Socket socket)
+        public void SendMessage(string type, Newtonsoft.Json.Linq.JObject message, Socket socket)
         {
             SendMessage(type, message.ToString(), socket);
         }
@@ -145,30 +171,82 @@ namespace QuixPhysics
             {
                 phy = CreateBox((BoxState)state);
             }
+            if (state is SphereState)
+            {
+                phy = CreateSphere((SphereState)state);
+            }
+            if (phy.material == default(SimpleMaterial))
+            {
+                collidableMaterials.Allocate(phy.bodyHandle) = new SimpleMaterial
+                {
+                    FrictionCoefficient = 5,
+                    MaximumRecoveryVelocity = float.MaxValue,
+                    SpringSettings = new SpringSettings(1f, 1.5f)
+                };
 
-            objectsHandlers.Add(phy.bodyHandle, phy);
+            }
+
+
             objects.Add(state.uID, phy);
+
+
+        }
+        private PhyObject CreateVanilla(ObjectState state, CollidableDescription collidableDescription, BodyInertia bodyInertia)
+        {
+            PhyObject phy;
+
+            if (state.mass != 0)
+            {
+                BodyDescription boxDescription = BodyDescription.CreateDynamic(state.position, bodyInertia,
+                     collidableDescription,
+                     new BodyActivityDescription(0.01f));
+
+                boxDescription.Pose = new RigidPose(state.position, state.quaternion);
+                var bodyHandle = Simulation.Bodies.Add(boxDescription);
+
+                phy = SetUpPhyObject(bodyHandle, state);
+                objectsHandlers.Add(phy.bodyHandle, phy);
+
+            }
+            else
+            {
+
+                StaticDescription description = new StaticDescription(state.position, state.quaternion, collidableDescription);
+                StaticHandle handle = Simulation.Statics.Add(description);
+                //collidableMaterials.Allocate(handle) = new SimpleMaterial { FrictionCoefficient = 1, MaximumRecoveryVelocity = float.MaxValue, SpringSettings = new SpringSettings(1f, 1f) };
+                phy = SetUpPhyObject(handle, state);
+            }
+            return phy;
         }
         private PhyObject CreateBox(BoxState state)
         {
             var box = new Box(state.halfSize.X, state.halfSize.Y, state.halfSize.Z);
-            var ringBoxShape = box;
+            CollidableDescription collidableDescription = new CollidableDescription(Simulation.Shapes.Add(box), 0.1f);
+            BodyInertia bodyInertia;
 
-            ringBoxShape.ComputeInertia(state.mass, out var ringBoxInertia);
-            var boxDescription = BodyDescription.CreateDynamic(new Vector3(), ringBoxInertia,
-                new CollidableDescription(Simulation.Shapes.Add(ringBoxShape), 0.1f),
-                new BodyActivityDescription(0.01f));
+            box.ComputeInertia(state.mass, out bodyInertia);
 
-            boxDescription.Pose = new RigidPose(state.position, state.quaternion);
-            var bodyHandle = Simulation.Bodies.Add(boxDescription);
-            var phy = SetUpPhyObject(bodyHandle, boxDescription, state);
+            var phy = CreateVanilla(state, collidableDescription, bodyInertia);
+            return phy;
 
+        }
+
+        private PhyObject CreateSphere(SphereState state)
+        {
+
+            var sphere = new Sphere(state.radius);
+            CollidableDescription collidableDescription = new CollidableDescription(Simulation.Shapes.Add(sphere), 0.1f);
+            BodyInertia bodyInertia;
+
+            sphere.ComputeInertia(state.mass, out bodyInertia);
+
+            var phy = CreateVanilla(state, collidableDescription, bodyInertia);
             return phy;
         }
 
-        private PhyObject SetUpPhyObject(BodyHandle bodyHandle, BodyDescription description, ObjectState state)
+        private PhyObject GetPhyClass(string name)
         {
-            System.Type t = System.Type.GetType("QuixPhysics." + state.type + ", QuixPhysics");
+            System.Type t = System.Type.GetType("QuixPhysics." + name + ", QuixPhysics");
             PhyObject phy = null;
             if (t != null)
             {
@@ -178,11 +256,37 @@ namespace QuixPhysics
             {
                 phy = new PhyObject();
             }
-            phy.Load(bodyHandle, description, connectionState, this, state);
+            return phy;
+        }
+
+        private PhyObject SetUpPhyObject(BodyHandle bodyHandle, ObjectState state)
+        {
+
+            PhyObject phy = GetPhyClass(state.type);
+
+            phy.Load(bodyHandle, connectionState, this, state);
+
+            return phy;
+        }
+        private StaticPhyObject SetUpPhyObject(StaticHandle staticHandle, ObjectState state)
+        {
+            StaticPhyObject phy = (StaticPhyObject)GetPhyClass(state.type);
+
+            phy.Load(staticHandle, connectionState, this, state);
 
             return phy;
         }
 
+    }
+    class CommandReader
+    {
+        private ArrayList commandsList = new ArrayList();
+        private Simulator simulator;
+
+        public CommandReader(Simulator _simulator)
+        {
+            simulator = _simulator;
+        }
         internal void AddCommandToBeRead(string v)
         {
             commandsList.Add(v);
@@ -194,53 +298,90 @@ namespace QuixPhysics
             {
                 foreach (var item in commandsList)
                 {
-                    MessageState message = JsonConvert.DeserializeObject<MessageState>((string)item);
-
-                    if (message.type == "create")
+                    // Console.WriteLine(item);
+                    JsonSerializerSettings setting = new JsonSerializerSettings();
+                    setting.CheckAdditionalContent = false;
+                    Newtonsoft.Json.Linq.JObject message = JsonConvert.DeserializeObject<Newtonsoft.Json.Linq.JObject>((string)item, setting);
+                    string type = (string)message["type"];
+                    switch (type)
                     {
-                        string typ = message.data.ToString().Split("type")[1].Split(",")[0].Trim(new Char[] { '"', ':' }).Remove(0, 2);
+                        case "create":
 
+                            Console.WriteLine(message);
+                                                  
+                            if (message["data"]["halfSize"] != null)
+                            {
+                                 Console.WriteLine("Create box??? "+message);    
+                                BoxState ob = JsonConvert.DeserializeObject<BoxState>(((object)message["data"]).ToString());
+                                simulator.Create(ob);
+                            }
 
-                        Type t = System.Type.GetType("QuixPhysics." + typ + ", QuixPhysics");
-                        BoxState ob = JsonConvert.DeserializeObject<BoxState>(message.data.ToString()); ;
-                        Create(ob);
-                    }
+                            if (message["data"]["radius"] != null)
+                            {
+                                SphereState ob = JsonConvert.DeserializeObject<SphereState>(((object)message["data"]).ToString());
+                                simulator.Create(ob);
+                                break;
+                            }
 
-                    if (message.type == "createBoxes")
-                    {
-                        Console.WriteLine("Create boxes");
-                        boxToCreate = 10;
-                        createObjects();
-                    }
+                            break;
+                        case "createBoxes":
+                            Console.WriteLine("Create boxes");
+                            simulator.boxToCreate = 10;
+                            simulator.createObjects();
+                            break;
+                        case "move":
 
-                    if (message.type == "move")
-                    {
-                        try
-                        {
-                            MoveMessage j = JsonConvert.DeserializeObject<MoveMessage>(message.data.ToString());
+                            MoveMessage j = JsonConvert.DeserializeObject<MoveMessage>(((object)message["data"]).ToString());
                             //objects[]
-                            PhyObject ob = objects[j.uID];
+                            Player2 onb = (Player2)simulator.objects[j.uID];
                             // Simulation.Awakener.AwakenBody(ob.bodyHandle);
-                            BodyDescription bb;
-                            Simulation.Bodies.GetDescription(ob.bodyHandle, out bb);
-                            //Simulation.Bodies.
-                            j.x /= 10;
-                            j.y /= 10;
+                            onb.Move(j);
 
-                            bb.Velocity.Linear += new Vector3(-j.y, 0, j.x);
-                            Simulation.Bodies.ApplyDescription(ob.bodyHandle, in bb);
-                            Console.WriteLine("Move" + j.x);
-                        }
-                        catch (NullReferenceException e)
-                        {
+                            break;
+                        case "rotate":
+                            MoveMessage j2 = JsonConvert.DeserializeObject<MoveMessage>(((object)message["data"]).ToString());
+                            //objects[]
+                            Player2 onb2 = (Player2)simulator.objects[j2.uID];
+                            // Simulation.Awakener.AwakenBody(ob.bodyHandle);
+                            onb2.Rotate(j2);
+                            break;
+                        case "generateMap":
 
-                        }
-                        catch (ArgumentOutOfRangeException e)
-                        {
+                            var map = this.simulator.server.dataBase.GetMap("arena");
 
-                        }
+                            foreach (var obj in map.objects)
+                            {
+
+                                //obj.ToJson();
+                                if (obj.Contains("halfSize"))
+                                {
+
+                                    obj["halfSize"].AsBsonDocument.Remove("__refId");
+                                    obj.Remove("_id");
+                                    var stri = JsonConvert.DeserializeObject<BoxState>(obj.ToJson());
+                                    stri.quaternion = JsonConvert.DeserializeObject<Quaternion>(obj["quat"].ToJson());
+
+                                    this.simulator.Create(stri);
+                                }
+                                if (obj.Contains("radius"))
+                                {
+                                    Console.WriteLine(obj);
+                                    // obj["radius"].AsBsonDocument.Remove("__refId");
+                                    obj.Remove("_id");
+                                    var stri = JsonConvert.DeserializeObject<SphereState>(obj.ToJson());
+                                    stri.quaternion = JsonConvert.DeserializeObject<Quaternion>(obj["quat"].ToJson());
+
+                                    this.simulator.Create(stri);
+                                }
+                            }
+                            break;
+                        default:
+                            Console.WriteLine("Command not registred " + type);
+                            break;
+
 
                     }
+
                 }
 
                 commandsList.Clear();
@@ -248,6 +389,10 @@ namespace QuixPhysics
             catch (InvalidOperationException e)
             {
                 Console.WriteLine("Collection was modifyes");
+            }
+            catch (JsonReaderException e)
+            {
+                Console.WriteLine("Json Problem " + e);
             }
 
 

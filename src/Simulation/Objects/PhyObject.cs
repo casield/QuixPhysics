@@ -10,26 +10,38 @@ namespace QuixPhysics
     {
         public ObjectState state;
         public BodyHandle bodyHandle;
-        public BodyDescription description;
-        private Simulator simulator;
+        internal Simulator simulator;
         internal bool updateRotation = true;
+        internal ConnectionState connectionState;
+        public SimpleMaterial material;
 
         public PhyObject()
         {
 
         }
-        public void Load(BodyHandle bodyHandle, BodyDescription description, ConnectionState connectionState, Simulator simulator, ObjectState state)
+        public virtual void Load(BodyHandle bodyHandle, ConnectionState connectionState, Simulator simulator, ObjectState state)
         {
+            this.connectionState = connectionState;
             this.bodyHandle = bodyHandle;
             this.state = state;
-            this.description = description;
             this.simulator = simulator;
 
-            simulator.SendMessage("create", getJSON(), connectionState.workSocket);
+            SendCreateMessage();
         }
+
+
+
+        internal void SendCreateMessage(){
+            if(state.instantiate){
+               simulator.SendMessage("create", getJSON(), connectionState.workSocket); 
+            }
+            
+        }
+
 
         public string getJSON()
         {
+            BodyDescription description;
             simulator.Simulation.Bodies.GetDescription(bodyHandle, out description);
 
             state.position = description.Pose.Position;
@@ -37,8 +49,6 @@ namespace QuixPhysics
             {
                 state.quaternion = description.Pose.Orientation;
             }
-
-
 
             return state.getJson();
         }
@@ -57,5 +67,41 @@ namespace QuixPhysics
 
             return idStr;
         }
+
+        public virtual void Move(MoveMessage message){
+
+        }
+    }
+
+    public class StaticPhyObject:PhyObject{
+       new StaticHandle bodyHandle;
+       public virtual void Load(StaticHandle bodyHandle, ConnectionState connectionState, Simulator simulator, ObjectState state){
+            this.connectionState = connectionState;
+            this.bodyHandle = bodyHandle;
+            this.state = state;
+            this.simulator = simulator;
+
+            SendCreateMessage();
+       }
+
+        new public string getJSON()
+        {
+            StaticDescription description;
+            simulator.Simulation.Statics.GetDescription(bodyHandle, out description);
+
+            state.position = description.Pose.Position;
+            if (updateRotation)
+            {
+                state.quaternion = description.Pose.Orientation;
+            }
+
+            return state.getJson();
+        }
+        new public void SendCreateMessage(){
+              if(state.instantiate){
+               simulator.SendMessage("create", getJSON(), connectionState.workSocket); 
+            }
+        }
+
     }
 }

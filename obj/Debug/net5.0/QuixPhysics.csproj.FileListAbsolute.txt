@@ -18,3 +18,15 @@ C:\Users\Casiel\Desktop\ciberchico420\Games\QuixPhysics\obj\Debug\net5.0\ref\Qui
 C:\Users\Casiel\Desktop\ciberchico420\Games\QuixPhysics\obj\Debug\net5.0\QuixPhysics.pdb
 C:\Users\Casiel\Desktop\ciberchico420\Games\QuixPhysics\obj\Debug\net5.0\QuixPhysics.genruntimeconfig.cache
 C:\Users\Casiel\Desktop\ciberchico420\Games\QuixPhysics\bin\Debug\net5.0\Newtonsoft.Json.dll
+C:\Users\Casiel\Desktop\ciberchico420\Games\QuixPhysics\bin\Debug\net5.0\DnsClient.dll
+C:\Users\Casiel\Desktop\ciberchico420\Games\QuixPhysics\bin\Debug\net5.0\MongoDB.Bson.dll
+C:\Users\Casiel\Desktop\ciberchico420\Games\QuixPhysics\bin\Debug\net5.0\MongoDB.Driver.dll
+C:\Users\Casiel\Desktop\ciberchico420\Games\QuixPhysics\bin\Debug\net5.0\MongoDB.Driver.Core.dll
+C:\Users\Casiel\Desktop\ciberchico420\Games\QuixPhysics\bin\Debug\net5.0\MongoDB.LibMongocrypt.dll
+C:\Users\Casiel\Desktop\ciberchico420\Games\QuixPhysics\bin\Debug\net5.0\SharpCompress.dll
+C:\Users\Casiel\Desktop\ciberchico420\Games\QuixPhysics\bin\Debug\net5.0\runtimes\win\native\libzstd.dll
+C:\Users\Casiel\Desktop\ciberchico420\Games\QuixPhysics\bin\Debug\net5.0\runtimes\win\native\snappy32.dll
+C:\Users\Casiel\Desktop\ciberchico420\Games\QuixPhysics\bin\Debug\net5.0\runtimes\win\native\snappy64.dll
+C:\Users\Casiel\Desktop\ciberchico420\Games\QuixPhysics\bin\Debug\net5.0\runtimes\linux\native\libmongocrypt.so
+C:\Users\Casiel\Desktop\ciberchico420\Games\QuixPhysics\bin\Debug\net5.0\runtimes\osx\native\libmongocrypt.dylib
+C:\Users\Casiel\Desktop\ciberchico420\Games\QuixPhysics\bin\Debug\net5.0\runtimes\win\native\mongocrypt.dll
