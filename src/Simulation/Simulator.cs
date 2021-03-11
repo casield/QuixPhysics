@@ -13,7 +13,7 @@ namespace QuixPhysics
     using MongoDB.Bson;
     using Newtonsoft.Json;
 
-    public class Simulator
+    public class Simulator : IDisposable
     {
         private BufferPool bufferPool;
 
@@ -21,6 +21,7 @@ namespace QuixPhysics
         public Simulation Simulation { get; }
         public GameLoop gameLoop = null;
         public Dictionary<BodyHandle, PhyObject> objectsHandlers = new Dictionary<BodyHandle, PhyObject>();
+        public Dictionary<StaticHandle, StaticPhyObject> staticObjectsHandlers = new Dictionary<StaticHandle, StaticPhyObject>();
         public Dictionary<string, PhyObject> objects = new Dictionary<string, PhyObject>();
         public CollidableProperty<SimpleMaterial> collidableMaterials;
         public ConnectionState connectionState;
@@ -28,9 +29,18 @@ namespace QuixPhysics
 
         private int t = 0;
         private int tMax = 15000;
-        internal int boxToCreate = 0;
+        internal int boxToCreate = 200;
         internal List<PhyWorker> workers = new List<PhyWorker>();
         internal CommandReader commandReader;
+        internal Thread thread;
+
+        public QuixNarrowPhaseCallbacks narrowPhaseCallbacks;
+
+        public Dictionary<BodyHandle, PhyObject> OnContactListeners = new Dictionary<BodyHandle, PhyObject>();
+        public Dictionary<StaticHandle, PhyObject> OnStaticContactListeners = new Dictionary<StaticHandle, PhyObject>();
+
+        public bool Disposed = false;
+
 
         public Simulator(ConnectionState state, Server server)
         {
@@ -42,23 +52,20 @@ namespace QuixPhysics
             bufferPool = new BufferPool();
             var targetThreadCount = Math.Max(1, Environment.ProcessorCount > 4 ? Environment.ProcessorCount - 2 : Environment.ProcessorCount - 1);
             ThreadDispatcher = new SimpleThreadDispatcher(targetThreadCount);
-            Simulation = Simulation.Create(bufferPool, new QuixNarrowPhaseCallbacks() { CollidableMaterials = collidableMaterials }, new QuixPoseIntegratorCallbacks(new Vector3(0, -20, 0)), new PositionFirstTimestepper());
+            narrowPhaseCallbacks = new QuixNarrowPhaseCallbacks() { CollidableMaterials = collidableMaterials, simulator = this };
+            Simulation = Simulation.Create(bufferPool, narrowPhaseCallbacks, new QuixPoseIntegratorCallbacks(new Vector3(0, -20, 0)), new PositionFirstTimestepper());
 
             CreateMap();
             // Server.Send(state.workSocket, "Hola desde simulator");
             gameLoop = new GameLoop();
             gameLoop.Load(this);
 
-            Thread t = new Thread(new ThreadStart(gameLoop.Start));
-            try
-            {
-                commandReader = new CommandReader(this);
-                t.Start();
-            }
-            catch (SocketException e)
-            {
-                Console.WriteLine("Exception in Simulator Start - " + e.ToString());
-            }
+            thread = new Thread(new ThreadStart(gameLoop.Start));
+
+            commandReader = new CommandReader(this);
+            thread.Start();
+
+
         }
 
         internal void Load()
@@ -74,18 +81,36 @@ namespace QuixPhysics
 
         internal void createObjects()
         {
+            int width = 30;
             for (int a = 0; a < boxToCreate; a++)
             {
                 var box = new BoxState();
                 box.uID = PhyObject.createUID();
                 box.mass = 1;
-                box.position = new Vector3(11 * a, 630, 30);
+                box.type = "QuixBox";
+                // box.instantiate = false;
+
+                int x = a % width;    // % is the "modulo operator", the remainder of i / width;
+                int y = a / width;    // where "/" is an integer division
+                box.position = new Vector3(x * 11, 630, y * 11);
                 box.halfSize = new Vector3(10, 10, 10);
                 box.mesh = "Board/Bomb";
                 box.instantiate = true;
                 box.quaternion = Quaternion.Identity;
                 Create(box);
+                 /* int x = a % width;    // % is the "modulo operator", the remainder of i / width;
+                int y = a / width;    // where "/" is an integer division
+                var ringBoxShape = new Box(1, 1, 1);
+                ringBoxShape.ComputeInertia(1, out var ringBoxInertia);
+                var boxDescription = BodyDescription.CreateDynamic(new Vector3(), ringBoxInertia,
+                                   new CollidableDescription(Simulation.Shapes.Add(ringBoxShape), 0.1f),
+                                   new BodyActivityDescription(0.01f));
+                new BodyActivityDescription(0.01f);
+
+            boxDescription.Pose = new RigidPose(new Vector3(x,300,y), Quaternion.Identity);
+            Simulation.Bodies.Add(boxDescription);*/
             }
+            Console.WriteLine("Statics size " + Simulation.Statics.Count);
         }
 
         private void createFloor()
@@ -104,7 +129,7 @@ namespace QuixPhysics
 
         internal void Update(TimeSpan gameTime)
         {
-            // Console.WriteLine(gameTime.TotalSeconds);
+            //Console.WriteLine(gameTime.TotalSeconds);
             foreach (var item in workers)
             {
                 item.tick();
@@ -122,10 +147,12 @@ namespace QuixPhysics
             t++;
 
 
-            for (var bodyIndex = 0; bodyIndex < set.Count; ++bodyIndex)
+           for (var bodyIndex = 0; bodyIndex < set.Count; ++bodyIndex)
             {
                 try
                 {
+                    //var handle = set.IndexToHandle[bodyIndex];
+                    // if(objects.ContainsValue())
                     var handle = set.IndexToHandle[bodyIndex];
                     if (objectsHandlers[handle].state.instantiate)
                     {
@@ -186,13 +213,14 @@ namespace QuixPhysics
 
             }
 
-            if(!objects.ContainsKey(state.uID)){
+            if (!objects.ContainsKey(state.uID))
+            {
                 objects.Add(state.uID, phy);
-            }else{
+            }
+            else
+            {
                 Console.WriteLine("Objects already had that key");
             }
-            
-
 
         }
         private PhyObject CreateVanilla(ObjectState state, CollidableDescription collidableDescription, BodyInertia bodyInertia)
@@ -209,7 +237,7 @@ namespace QuixPhysics
                 var bodyHandle = Simulation.Bodies.Add(boxDescription);
 
                 phy = SetUpPhyObject(bodyHandle, state);
-                objectsHandlers.Add(phy.bodyHandle, phy);
+                objectsHandlers.Add(bodyHandle, phy);
 
             }
             else
@@ -219,7 +247,11 @@ namespace QuixPhysics
                 StaticHandle handle = Simulation.Statics.Add(description);
                 //collidableMaterials.Allocate(handle) = new SimpleMaterial { FrictionCoefficient = 1, MaximumRecoveryVelocity = float.MaxValue, SpringSettings = new SpringSettings(1f, 1f) };
                 phy = SetUpPhyObject(handle, state);
+                staticObjectsHandlers.Add(handle, (StaticPhyObject)phy);
+                //objectsHandlers.Add(handle,phy);
             }
+
+
             return phy;
         }
         private PhyObject CreateBox(BoxState state)
@@ -281,6 +313,68 @@ namespace QuixPhysics
             return phy;
         }
 
+        public PhyObject handleToPhyObject(BodyHandle handle)
+        {
+            PhyObject obj = objectsHandlers[handle];
+            return obj;
+        }
+        public StaticPhyObject handleToPhyObject(StaticHandle handle)
+        {
+            StaticPhyObject obj = staticObjectsHandlers[handle];
+
+            return obj;
+        }
+        public PhyObject collidableToPhyObject(CollidableReference reference)
+        {
+            if (reference.Mobility == CollidableMobility.Static)
+            {
+                return handleToPhyObject(reference.StaticHandle);
+            }
+            else
+            {
+                return handleToPhyObject(reference.BodyHandle);
+            }
+        }
+        public void Close()
+        {
+            Console.WriteLine("Closing Simulator");
+            
+
+
+            
+            collidableMaterials.Dispose();
+
+            objects.Clear();
+            objectsHandlers.Clear();
+            staticObjectsHandlers.Clear();
+
+            //Simulation.Bodies.Dispose();
+           // Simulation.Statics.Dispose();
+
+            Simulation.Dispose();
+            bufferPool.Clear();
+            ThreadDispatcher.Dispose();
+
+            //OnContactListeners.Clear();
+            // OnStaticContactListeners.Clear();
+            connectionState.Dispose();
+            //server.isRunning = false;
+
+            Disposed = true;
+             gameLoop.Stop();
+
+            //Dispose();
+            
+           
+        }
+
+        public void Dispose()
+        {
+            GC.Collect();
+
+            // Wait for all finalizers to complete before continuing.
+            GC.WaitForPendingFinalizers();
+        }
     }
     class CommandReader
     {
@@ -294,6 +388,14 @@ namespace QuixPhysics
         internal void AddCommandToBeRead(string v)
         {
             commandsList.Add(v);
+        }
+        internal void Jump(string data)
+        {
+            MoveMessage j2 = JsonConvert.DeserializeObject<MoveMessage>(data);
+            //objects[]
+            Player2 onb2 = (Player2)simulator.objects[j2.uID];
+            // Simulation.Awakener.AwakenBody(ob.bodyHandle);
+            onb2.Jump(j2);
         }
         internal void ReadCommand()
         {
@@ -312,10 +414,9 @@ namespace QuixPhysics
                         case "create":
 
                             Console.WriteLine(message);
-                                                  
+
                             if (message["data"]["halfSize"] != null)
                             {
-                                 Console.WriteLine("Create box??? "+message);    
                                 BoxState ob = JsonConvert.DeserializeObject<BoxState>(((object)message["data"]).ToString());
                                 simulator.Create(ob);
                             }
@@ -330,7 +431,7 @@ namespace QuixPhysics
                             break;
                         case "createBoxes":
                             Console.WriteLine("Create boxes");
-                            simulator.boxToCreate = 10;
+                            // simulator.boxToCreate = 10;
                             simulator.createObjects();
                             break;
                         case "move":
@@ -348,6 +449,10 @@ namespace QuixPhysics
                             Player2 onb2 = (Player2)simulator.objects[j2.uID];
                             // Simulation.Awakener.AwakenBody(ob.bodyHandle);
                             onb2.Rotate(j2);
+                            break;
+                        case "jump":
+                            Console.WriteLine(((object)message["data"]).ToString());
+                            Jump(((object)message["data"]).ToString());
                             break;
                         case "generateMap":
 
@@ -379,10 +484,14 @@ namespace QuixPhysics
                                 }
                             }
                             break;
+                        case "close":
+                            Console.WriteLine("Close");
+                            simulator.Close();
+
+                            break;
                         default:
                             Console.WriteLine("Command not registred " + type);
                             break;
-
 
                     }
 

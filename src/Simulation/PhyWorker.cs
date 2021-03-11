@@ -71,4 +71,21 @@ namespace QuixPhysics
 
 
     }
+    public class Waiter 
+    {
+        public int time;
+        private int tickTime;
+        public Waiter(int time) 
+        {
+            this.time = time;
+        }
+        public bool Wait(){
+            tickTime++;
+            if(time == tickTime){
+                time = 0;
+                return true;
+            }
+            return false;
+        }
+    }
 }

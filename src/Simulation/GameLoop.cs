@@ -37,26 +37,30 @@ namespace QuixPhysics
 
             // Set previous game time
             DateTime _previousGameTime = DateTime.Now;
-            try
+
+            while (Running)
             {
-                while (true)
+                // Calculate the time elapsed since the last game loop cycle
+                TimeSpan GameTime = DateTime.Now - _previousGameTime;
+                // Update the current previous game time
+                _previousGameTime = _previousGameTime + GameTime;
+                // Update the game
+                if (_mySimulator != null && !_mySimulator.Disposed)
                 {
-                    // Calculate the time elapsed since the last game loop cycle
-                    TimeSpan GameTime = DateTime.Now - _previousGameTime;
-                    // Update the current previous game time
-                    _previousGameTime = _previousGameTime + GameTime;
-                    // Update the game
+
                     _mySimulator.Update(GameTime);
-
-
-                    // Update Game at 60fps
-                     Thread.Sleep(8);
                 }
+
+                if (_mySimulator.Disposed)
+                {
+                    Running = false;
+                }
+
+                // Update Game at 60fps
+                Thread.Sleep(8);
             }
-            catch (Exception e)
-            {
-                Console.WriteLine("Exception in gameloop. {0}", e);
-            }
+
+
         }
 
         /// <summary>

@@ -71,6 +71,9 @@ namespace QuixPhysics
         public virtual void Move(MoveMessage message){
 
         }
+        public virtual void OnContact(PhyObject obj){
+            
+        }
     }
 
     public class StaticPhyObject:PhyObject{

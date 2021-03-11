@@ -9,6 +9,7 @@ using System.Runtime.CompilerServices;
 using System.Numerics;
 using System.Diagnostics;
 using BepuUtilities.Collections;
+using System.Collections.Generic;
 
 namespace QuixPhysics
 {
@@ -83,20 +84,28 @@ namespace QuixPhysics
         }
 
     }
+    public delegate void ContactAction(PhyObject A,PhyObject B);
     public unsafe struct QuixNarrowPhaseCallbacks : INarrowPhaseCallbacks
     {
         public SpringSettings ContactSpringiness;
         public CollidableProperty<SimpleMaterial> CollidableMaterials;
 
         private Simulation simulation;
+        public Simulator simulator;
+
+       // public QuickList<BodyHandle> onContactListeners;
+ //QuickDictionary<CollidableReference, QuickList<PreviousCollisionData>, CollidableReferenceComparer> listeners;
 
         public void Initialize(Simulation simulation)
         {
             this.simulation = simulation;
             CollidableMaterials.Initialize(simulation);
+           // onContactListeners= new QuickList<BodyHandle>(4096,simulation.BufferPool);
             //Use a default if the springiness value wasn't initialized.
             if (ContactSpringiness.AngularFrequency == 0 && ContactSpringiness.TwiceDampingRatio == 0)
                 ContactSpringiness = new SpringSettings(30, 1);
+                
+
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -119,26 +128,29 @@ namespace QuixPhysics
         {
             var a = CollidableMaterials[pair.A];
             var b = CollidableMaterials[pair.B];
-            // pairMaterial.FrictionCoefficient = a.FrictionCoefficient * b.FrictionCoefficient;
-            /* pairMaterial.MaximumRecoveryVelocity = MathF.Max(a.MaximumRecoveryVelocity, b.MaximumRecoveryVelocity);
-             pairMaterial.SpringSettings = pairMaterial.MaximumRecoveryVelocity == a.MaximumRecoveryVelocity ? a.SpringSettings : b.SpringSettings;
-              pairMaterial.FrictionCoefficient = 100f;*/
-
-            // Console.WriteLine("A" + pair.A.BodyHandle);
-            // Console.WriteLine("B" + pair.B.BodyHandle);
-            pairMaterial.FrictionCoefficient = 1f;
+ 
+            pairMaterial.FrictionCoefficient = .6f;
             pairMaterial.MaximumRecoveryVelocity = 10f;
             pairMaterial.SpringSettings = ContactSpringiness;
-           /* if (pair.A.BodyHandle != null)
-            {
-                simulation.Bodies.GetDescription(pair.A.BodyHandle, out var descA);
-                descA.Velocity.Linear.X *= a.FrictionCoefficient;
-                descA.Velocity.Linear.Z *= a.FrictionCoefficient;
 
-                simulation.Bodies.ApplyDescription(pair.A.BodyHandle, descA);
-            }*/
-     
-
+            if(simulator.OnContactListeners.ContainsKey(pair.A.BodyHandle)){
+                
+                var con = simulator.collidableToPhyObject(pair.B);
+                if(pair.A.Mobility == CollidableMobility.Static){
+                     simulator.OnStaticContactListeners[pair.A.StaticHandle].OnContact(con);
+                }else{
+                    simulator.OnContactListeners[pair.A.BodyHandle].OnContact(con);
+                }
+            }
+            if(simulator.OnContactListeners.ContainsKey(pair.B.BodyHandle)){
+                
+                var con = simulator.collidableToPhyObject(pair.A);
+                if(pair.B.Mobility == CollidableMobility.Static){
+                     simulator.OnStaticContactListeners[pair.B.StaticHandle].OnContact(con);
+                }else{
+                    simulator.OnContactListeners[pair.B.BodyHandle].OnContact(con);
+                }
+            }
 
             return true;
         }
