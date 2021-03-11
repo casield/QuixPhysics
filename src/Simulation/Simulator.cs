@@ -110,7 +110,7 @@ namespace QuixPhysics
             boxDescription.Pose = new RigidPose(new Vector3(x,300,y), Quaternion.Identity);
             Simulation.Bodies.Add(boxDescription);*/
             }
-            Console.WriteLine("Statics size " + Simulation.Statics.Count);
+           // Console.WriteLine("Statics size " + Simulation.Statics.Count);
         }
 
         private void createFloor()
@@ -413,7 +413,7 @@ namespace QuixPhysics
                     {
                         case "create":
 
-                            Console.WriteLine(message);
+                           // Console.WriteLine(message);
 
                             if (message["data"]["halfSize"] != null)
                             {
@@ -430,7 +430,7 @@ namespace QuixPhysics
 
                             break;
                         case "createBoxes":
-                            Console.WriteLine("Create boxes");
+                            //Console.WriteLine("Create boxes");
                             // simulator.boxToCreate = 10;
                             simulator.createObjects();
                             break;
@@ -485,7 +485,7 @@ namespace QuixPhysics
                             }
                             break;
                         case "close":
-                            Console.WriteLine("Close");
+                            //Console.WriteLine("Close");
                             simulator.Close();
 
                             break;
