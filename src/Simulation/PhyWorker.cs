@@ -14,7 +14,7 @@ namespace QuixPhysics
         public PhyWorker(int time, Simulator _simulator)
         {
             this.time = time;
-            Console.WriteLine("Created a worker");
+            //Console.WriteLine("Created a worker");
             this.simulator = _simulator;
             _simulator.workers.Add(this);
 
