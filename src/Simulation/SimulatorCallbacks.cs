@@ -102,8 +102,8 @@ namespace QuixPhysics
             CollidableMaterials.Initialize(simulation);
            // onContactListeners= new QuickList<BodyHandle>(4096,simulation.BufferPool);
             //Use a default if the springiness value wasn't initialized.
-            if (ContactSpringiness.AngularFrequency == 0 && ContactSpringiness.TwiceDampingRatio == 0)
-                ContactSpringiness = new SpringSettings(30, 1);
+            //if (ContactSpringiness.AngularFrequency == 0 && ContactSpringiness.TwiceDampingRatio == 0)
+                ContactSpringiness = new SpringSettings(1000f, 0.001f);
                 
 
         }
@@ -129,8 +129,8 @@ namespace QuixPhysics
             var a = CollidableMaterials[pair.A];
             var b = CollidableMaterials[pair.B];
  
-            pairMaterial.FrictionCoefficient = .6f;
-            pairMaterial.MaximumRecoveryVelocity = 10f;
+            pairMaterial.FrictionCoefficient = 0f;
+            pairMaterial.MaximumRecoveryVelocity = 1000f;
             pairMaterial.SpringSettings = ContactSpringiness;
 
             if(simulator.OnContactListeners.ContainsKey(pair.A.BodyHandle)){

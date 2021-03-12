@@ -29,7 +29,7 @@ namespace QuixPhysics
 
         private int t = 0;
         private int tMax = 15000;
-        internal int boxToCreate = 200;
+        internal int boxToCreate = 10;
         internal List<PhyWorker> workers = new List<PhyWorker>();
         internal CommandReader commandReader;
         internal Thread thread;
@@ -124,7 +124,7 @@ namespace QuixPhysics
             box.type = "QuixBox";
             box.halfSize = new Vector3(5000, 1, 5000);
 
-            Create(box);
+           // Create(box);
         }
 
         internal void Update(TimeSpan gameTime)
