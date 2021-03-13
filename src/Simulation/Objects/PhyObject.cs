@@ -14,6 +14,7 @@ namespace QuixPhysics
         internal bool updateRotation = true;
         internal ConnectionState connectionState;
         public SimpleMaterial material;
+        public bool collidable = true;
 
         public PhyObject()
         {
@@ -25,17 +26,39 @@ namespace QuixPhysics
             this.bodyHandle = bodyHandle;
             this.state = state;
             this.simulator = simulator;
+            /* if(state.quaternion == new Quaternion(0,0,0,0)){
+                this.state.quaternion = Quaternion.Identity;
+            }*/
 
             SendCreateMessage();
         }
 
+        public BodyReference GetReference()
+        {
+            return simulator.Simulation.Bodies.GetBodyReference(bodyHandle);
+        }
+
+        public void Stop(){
+            GetReference().Velocity.Linear = Vector3.Zero;
+        }
 
 
-        internal void SendCreateMessage(){
-            if(state.instantiate){
-               simulator.SendMessage("create", getJSON(), connectionState.workSocket); 
+
+        internal void SendCreateMessage()
+        {
+            if (state.instantiate)
+            {
+                simulator.SendMessage("create", getJSON(), connectionState.workSocket);
             }
-            
+
+        }
+        internal void SendObjectMessage(string data)
+        {
+            JObject m = new JObject();
+            m["uID"] = state.uID;
+            m["data"] = data;
+            simulator.SendMessage("objectMessage", m.ToString(), connectionState.workSocket);
+
         }
 
 
@@ -52,7 +75,8 @@ namespace QuixPhysics
 
             return state.getJson();
         }
-        public void getDescription(){
+        public void getDescription()
+        {
 
         }
 
@@ -68,24 +92,28 @@ namespace QuixPhysics
             return idStr;
         }
 
-        public virtual void Move(MoveMessage message){
+        public virtual void Move(MoveMessage message)
+        {
 
         }
-        public virtual void OnContact(PhyObject obj){
-            
+        public virtual void OnContact(PhyObject obj)
+        {
+
         }
     }
 
-    public class StaticPhyObject:PhyObject{
-       new StaticHandle bodyHandle;
-       public virtual void Load(StaticHandle bodyHandle, ConnectionState connectionState, Simulator simulator, ObjectState state){
+    public class StaticPhyObject : PhyObject
+    {
+        new StaticHandle bodyHandle;
+        public virtual void Load(StaticHandle bodyHandle, ConnectionState connectionState, Simulator simulator, ObjectState state)
+        {
             this.connectionState = connectionState;
             this.bodyHandle = bodyHandle;
             this.state = state;
             this.simulator = simulator;
 
             SendCreateMessage();
-       }
+        }
 
         new public string getJSON()
         {
@@ -100,9 +128,11 @@ namespace QuixPhysics
 
             return state.getJson();
         }
-        new public void SendCreateMessage(){
-              if(state.instantiate){
-               simulator.SendMessage("create", getJSON(), connectionState.workSocket); 
+        new public void SendCreateMessage()
+        {
+            if (state.instantiate)
+            {
+                simulator.SendMessage("create", getJSON(), connectionState.workSocket);
             }
         }
 

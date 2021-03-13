@@ -11,12 +11,17 @@ namespace QuixPhysics
         public event PhyAction Tick;
         public event PhyAction Completed;
         private Simulator simulator;
+        public bool destroy = false;
         public PhyWorker(int time, Simulator _simulator)
         {
             this.time = time;
             //Console.WriteLine("Created a worker");
             this.simulator = _simulator;
-            _simulator.workers.Add(this);
+            lock (_simulator.workers)
+            {
+                _simulator.workersToAdd.Add(this);
+            }
+
 
         }
         protected virtual void OnTick()
@@ -29,8 +34,29 @@ namespace QuixPhysics
         }
         protected void Destroy()
         {
-            simulator.workers.Remove(this);
+            destroy = true;
+            RemoveAllListeners();
+
         }
+        public void RemoveAllListeners()
+        {
+            if (Tick != null)
+            {
+                foreach (PhyAction d in Tick.GetInvocationList())
+                {
+                    Tick -= d;
+                }
+            }
+            if (Completed != null)
+            {
+                foreach (PhyAction d in Completed.GetInvocationList())
+                {
+                    Completed -= d;
+                }
+            }
+
+        }
+
         public bool tick()
         {
             if (time == tickTime)
@@ -71,17 +97,19 @@ namespace QuixPhysics
 
 
     }
-    public class Waiter 
+    public class Waiter
     {
         public int time;
         private int tickTime;
-        public Waiter(int time) 
+        public Waiter(int time)
         {
             this.time = time;
         }
-        public bool Wait(){
+        public bool Wait()
+        {
             tickTime++;
-            if(time == tickTime){
+            if (time == tickTime)
+            {
                 time = 0;
                 return true;
             }

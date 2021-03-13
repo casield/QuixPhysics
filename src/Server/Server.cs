@@ -3,13 +3,11 @@ using System.Net;
 using System.Net.Sockets;
 using System.Text;
 using System.Threading;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
-using static System.Net.Mime.MediaTypeNames;
+
 
 namespace QuixPhysics
 {
-    public class ConnectionState :IDisposable
+    public class ConnectionState : IDisposable
     {
         // Size of receive buffer.  
         public const int BufferSize = 1024;
@@ -39,7 +37,10 @@ namespace QuixPhysics
         public Server()
         {
             dataBase = new DataBase();
+
             StartListening();
+
+
 
         }
 
@@ -128,36 +129,40 @@ namespace QuixPhysics
 
 
             // Read data from the client socket.
-            int bytesRead = handler.EndReceive(ar);
-
-            if (bytesRead > 0)
+            if (handler.Connected)
             {
-                // There  might be more data, so store the data received so far.  
-                state.sb.Append(Encoding.ASCII.GetString(
-                    state.buffer, 0, bytesRead));
+                int bytesRead = handler.EndReceive(ar);
 
-                // Check for end-of-file tag. If it is not there, read
-                // more data.  
-                content = state.sb.ToString();
 
-                var splited = content.Split("<L@>");
-                for (int a = 0; a < splited.Length; a++)
+
+                if (bytesRead > 0)
                 {
-                    if (state.simulator != null)
+                    // There  might be more data, so store the data received so far.  
+                    state.sb.Append(Encoding.ASCII.GetString(
+                        state.buffer, 0, bytesRead));
+
+                    // Check for end-of-file tag. If it is not there, read
+                    // more data.  
+                    content = state.sb.ToString();
+
+                    var splited = content.Split("<L@>");
+                    for (int a = 0; a < splited.Length; a++)
                     {
-                        if (splited[a] != "")
+                        if (state.simulator != null)
                         {
-                            state.simulator.commandReader.AddCommandToBeRead(splited[a]);
+                            if (splited[a] != "")
+                            {
+                                state.simulator.commandReader.AddCommandToBeRead(splited[a]);
+                            }
+
                         }
 
                     }
-
+                    state.sb.Clear();
+                    handler.BeginReceive(state.buffer, 0, ConnectionState.BufferSize, 0,
+                    new AsyncCallback(ReadCallback), state);
                 }
-                state.sb.Clear();
-                handler.BeginReceive(state.buffer, 0, ConnectionState.BufferSize, 0,
-                new AsyncCallback(ReadCallback), state);
             }
-
 
         }
         public void Send(Socket handler, String data)
@@ -168,24 +173,27 @@ namespace QuixPhysics
             byte[] byteData = Encoding.ASCII.GetBytes(data);
 
             // Begin sending the data to the remote device.  
-
-            handler.BeginSend(byteData, 0, byteData.Length, 0,
+            if (handler.Connected)
+            {
+                handler.BeginSend(byteData, 0, byteData.Length, 0,
                 new AsyncCallback(SendCallback), handler);
+
+            }
 
 
         }
         private void SendCallback(IAsyncResult ar)
         {
-           
-                // Retrieve the socket from the state object.  
-                Socket handler = (Socket)ar.AsyncState;
 
-                // Complete sending the data to the remote device.  
-                int bytesSent = handler.EndSend(ar);
-                //  Console.WriteLine("Sent {0} bytes to client.", bytesSent);
+            // Retrieve the socket from the state object.  
+            Socket handler = (Socket)ar.AsyncState;
 
-                // handler.Shutdown(SocketShutdown.Both);
-                // handler.Close();
+            // Complete sending the data to the remote device.  
+            int bytesSent = handler.EndSend(ar);
+            //  Console.WriteLine("Sent {0} bytes to client.", bytesSent);
+
+            // handler.Shutdown(SocketShutdown.Both);
+            // handler.Close();
 
         }
     }

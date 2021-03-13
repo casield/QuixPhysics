@@ -635,11 +635,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "c:\\Users\\Casiel\\Desktop\\ciberchico420\\Games\\QuixPhysics\\QuixPhysics.csproj",
+      "projectUniqueName": "C:\\Users\\Casiel\\Desktop\\ciberchico420\\Games\\QuixPhysics\\QuixPhysics.csproj",
       "projectName": "QuixPhysics",
-      "projectPath": "c:\\Users\\Casiel\\Desktop\\ciberchico420\\Games\\QuixPhysics\\QuixPhysics.csproj",
+      "projectPath": "C:\\Users\\Casiel\\Desktop\\ciberchico420\\Games\\QuixPhysics\\QuixPhysics.csproj",
       "packagesPath": "C:\\Users\\Casiel\\.nuget\\packages\\",
-      "outputPath": "c:\\Users\\Casiel\\Desktop\\ciberchico420\\Games\\QuixPhysics\\obj\\",
+      "outputPath": "C:\\Users\\Casiel\\Desktop\\ciberchico420\\Games\\QuixPhysics\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\Casiel\\AppData\\Roaming\\NuGet\\NuGet.Config",

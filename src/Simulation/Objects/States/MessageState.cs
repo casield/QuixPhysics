@@ -12,4 +12,8 @@ namespace QuixPhysics{
         public float x;
         public float y;
     }
+    public class ShootMessage{
+         public string client;
+         public float force;
+    }
 }

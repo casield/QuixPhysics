@@ -46,7 +46,7 @@ namespace QuixPhysics
         /// <param name="gravity">Gravity to apply to dynamic bodies in the simulation.</param>
         /// <param name="linearDamping">Fraction of dynamic body linear velocity to remove per unit of time. Values range from 0 to 1. 0 is fully undamped, while values very close to 1 will remove most velocity.</param>
         /// <param name="angularDamping">Fraction of dynamic body angular velocity to remove per unit of time. Values range from 0 to 1. 0 is fully undamped, while values very close to 1 will remove most velocity.</param>
-        public QuixPoseIntegratorCallbacks(Vector3 gravity, float linearDamping = .03f, float angularDamping = .03f) : this()
+        public QuixPoseIntegratorCallbacks(Vector3 gravity, float linearDamping = .1f, float angularDamping = .03f) : this()
         {
             Gravity = gravity;
             LinearDamping = linearDamping;
@@ -84,7 +84,7 @@ namespace QuixPhysics
         }
 
     }
-    public delegate void ContactAction(PhyObject A,PhyObject B);
+    public delegate void ContactAction(PhyObject A, PhyObject B);
     public unsafe struct QuixNarrowPhaseCallbacks : INarrowPhaseCallbacks
     {
         public SpringSettings ContactSpringiness;
@@ -93,28 +93,54 @@ namespace QuixPhysics
         private Simulation simulation;
         public Simulator simulator;
 
-       // public QuickList<BodyHandle> onContactListeners;
- //QuickDictionary<CollidableReference, QuickList<PreviousCollisionData>, CollidableReferenceComparer> listeners;
+        // public QuickList<BodyHandle> onContactListeners;
+        //QuickDictionary<CollidableReference, QuickList<PreviousCollisionData>, CollidableReferenceComparer> listeners;
 
         public void Initialize(Simulation simulation)
         {
             this.simulation = simulation;
             CollidableMaterials.Initialize(simulation);
-           // onContactListeners= new QuickList<BodyHandle>(4096,simulation.BufferPool);
+            // onContactListeners= new QuickList<BodyHandle>(4096,simulation.BufferPool);
             //Use a default if the springiness value wasn't initialized.
             //if (ContactSpringiness.AngularFrequency == 0 && ContactSpringiness.TwiceDampingRatio == 0)
-                ContactSpringiness = new SpringSettings(1000f, 0.001f);
-                
+            // ContactSpringiness = new SpringSettings(1000f, 0.001f);
 
+            ContactSpringiness = new SpringSettings(10f, 0.1f);
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public bool AllowContactGeneration(int workerIndex, CollidableReference a, CollidableReference b)
         {
+            bool AcanCollide = true;
+            bool BcanCollide = true;
+            if (a.Mobility != CollidableMobility.Static || b.Mobility != CollidableMobility.Static)
+            {
+                if (a.Mobility == CollidableMobility.Dynamic)
+                {
+
+                    AcanCollide = simulator.objectsHandlers[a.BodyHandle].collidable;
+                }
+                if (a.Mobility == CollidableMobility.Static)
+                {
+
+                    AcanCollide = simulator.staticObjectsHandlers[a.StaticHandle].collidable;
+                }
+                if (b.Mobility == CollidableMobility.Dynamic)
+                {
+
+                    BcanCollide = simulator.objectsHandlers[b.BodyHandle].collidable;
+                }
+                if (b.Mobility == CollidableMobility.Static)
+                {
+
+                    BcanCollide = simulator.staticObjectsHandlers[b.StaticHandle].collidable;
+                }
+            }
+
             //While the engine won't even try creating pairs between statics at all, it will ask about kinematic-kinematic pairs.
             //Those pairs cannot emit constraints since both involved bodies have infinite inertia. Since most of the demos don't need
             //to collect information about kinematic-kinematic pairs, we'll require that at least one of the bodies needs to be dynamic.
-            return a.Mobility == CollidableMobility.Dynamic || b.Mobility == CollidableMobility.Dynamic;
+            return BcanCollide && AcanCollide;
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -128,29 +154,47 @@ namespace QuixPhysics
         {
             var a = CollidableMaterials[pair.A];
             var b = CollidableMaterials[pair.B];
- 
-            pairMaterial.FrictionCoefficient = 0f;
-            pairMaterial.MaximumRecoveryVelocity = 1000f;
+
+            pairMaterial.FrictionCoefficient = 0.5f;
+            pairMaterial.MaximumRecoveryVelocity = 2000f;
             pairMaterial.SpringSettings = ContactSpringiness;
 
-            if(simulator.OnContactListeners.ContainsKey(pair.A.BodyHandle)){
-                
-                var con = simulator.collidableToPhyObject(pair.B);
-                if(pair.A.Mobility == CollidableMobility.Static){
-                     simulator.OnStaticContactListeners[pair.A.StaticHandle].OnContact(con);
-                }else{
+
+            if (pair.A.Mobility == CollidableMobility.Static)
+            {
+                if (simulator.OnStaticContactListeners.ContainsKey(pair.A.StaticHandle))
+                {
+                    var con = simulator.collidableToPhyObject(pair.B);
+                    simulator.OnStaticContactListeners[pair.A.StaticHandle].OnContact(con);
+                }
+            }
+            else
+            {
+                if (simulator.OnContactListeners.ContainsKey(pair.A.BodyHandle))
+                {
+                    var con = simulator.collidableToPhyObject(pair.B);
                     simulator.OnContactListeners[pair.A.BodyHandle].OnContact(con);
                 }
             }
-            if(simulator.OnContactListeners.ContainsKey(pair.B.BodyHandle)){
-                
-                var con = simulator.collidableToPhyObject(pair.A);
-                if(pair.B.Mobility == CollidableMobility.Static){
-                     simulator.OnStaticContactListeners[pair.B.StaticHandle].OnContact(con);
-                }else{
+
+            if (pair.B.Mobility == CollidableMobility.Static)
+            {
+                if (simulator.OnStaticContactListeners.ContainsKey(pair.B.StaticHandle))
+                {
+                    var con = simulator.collidableToPhyObject(pair.A);
+                    simulator.OnStaticContactListeners[pair.B.StaticHandle].OnContact(con);
+                }
+            }
+            else
+            {
+                if (simulator.OnContactListeners.ContainsKey(pair.B.BodyHandle))
+                {
+                    var con = simulator.collidableToPhyObject(pair.A);
                     simulator.OnContactListeners[pair.B.BodyHandle].OnContact(con);
                 }
             }
+
+
 
             return true;
         }
