@@ -149,10 +149,10 @@ namespace QuixPhysics
                     reference.Velocity.Linear.Z += vel.Z;
                     reference.Awake = true;
                 }
-                Console.WriteLine(moveMessage.x+" / " +moveMessage.y);
+               // Console.WriteLine(moveMessage.x+" / " +moveMessage.y);
                 if (moveMessage.x == 0 && moveMessage.y == 0)
                 {
-                    Console.WriteLine(moveMessage.x+" / " +moveMessage.y);
+                   // Console.WriteLine(moveMessage.x+" / " +moveMessage.y);
                     reference.Velocity.Linear.X *= friction;
                     reference.Velocity.Linear.Z *= friction;
                     acceleration = 0;
