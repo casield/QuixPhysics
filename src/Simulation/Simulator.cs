@@ -508,11 +508,12 @@ namespace QuixPhysics
         internal void ReadCommand()
         {
             //Console.WriteLine("Read command: {0}", v);
+
             try
             {
                 foreach (var item in commandsList)
                 {
-                    // Console.WriteLine(item);
+                     Console.WriteLine(item);
                     JsonSerializerSettings setting = new JsonSerializerSettings();
                     setting.CheckAdditionalContent = false;
                     Newtonsoft.Json.Linq.JObject message = JsonConvert.DeserializeObject<Newtonsoft.Json.Linq.JObject>((string)item, setting);
