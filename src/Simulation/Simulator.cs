@@ -517,9 +517,7 @@ namespace QuixPhysics
                     
                     JsonSerializerSettings setting = new JsonSerializerSettings();
                     setting.CheckAdditionalContent = false;
-                    Console.WriteLine("$$$$$$$$$$$$$$$$");
-                    Console.WriteLine(item);
-                    Console.WriteLine("$$$$$$$$$$$$$$$$");
+                  
                     Newtonsoft.Json.Linq.JObject message = JsonConvert.DeserializeObject<Newtonsoft.Json.Linq.JObject>((string)item, setting);
                     string type = (string)message["type"];
                     switch (type)

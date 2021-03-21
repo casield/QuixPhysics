@@ -146,8 +146,7 @@ namespace QuixPhysics
                     content = state.sb.ToString();
 
                     var splited = content.Split("<L@>");
-                    Console.WriteLine(content);
-                    Console.WriteLine("###################################");
+                
                     for (int a = 0; a < splited.Length; a++)
                     {
                         if (state.simulator != null)
