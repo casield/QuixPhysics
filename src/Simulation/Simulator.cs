@@ -32,7 +32,7 @@ namespace QuixPhysics
 
         private int t = 0;
         private int tMax = 15000;
-        internal int boxToCreate = 100;
+        internal int boxToCreate = 1000;
         internal int timesPressedCreateBoxes = 0;
         internal List<PhyWorker> workers = new List<PhyWorker>();
         internal List<PhyWorker> workersToAdd = new List<PhyWorker>();
