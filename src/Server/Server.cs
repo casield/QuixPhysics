@@ -148,7 +148,7 @@ namespace QuixPhysics
                     var splited = content.Split("<L@>");
                     Console.WriteLine(content);
                     Console.WriteLine("###################################");
-                    /*for (int a = 0; a < splited.Length; a++)
+                    for (int a = 0; a < splited.Length; a++)
                     {
                         if (state.simulator != null)
                         {
@@ -159,7 +159,7 @@ namespace QuixPhysics
 
                         }
 
-                    }*/
+                    }
                     state.sb.Clear();
                     handler.BeginReceive(state.buffer, 0, ConnectionState.BufferSize, 0,
                     new AsyncCallback(ReadCallback), state);
