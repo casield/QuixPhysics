@@ -32,7 +32,8 @@ namespace QuixPhysics
 
         private int t = 0;
         private int tMax = 15000;
-        internal int boxToCreate = 1000;
+        internal int boxToCreate = 100;
+        internal int timesPressedCreateBoxes = 0;
         internal List<PhyWorker> workers = new List<PhyWorker>();
         internal List<PhyWorker> workersToAdd = new List<PhyWorker>();
         internal CommandReader commandReader;
@@ -51,7 +52,7 @@ namespace QuixPhysics
 
         public Simulator(ConnectionState state, Server server)
         {
-            var path = "Content/newt.obj";
+            var path = "Content/test.obj";
 
             using (FileStream fs = File.OpenRead(path))
             {
@@ -94,14 +95,14 @@ namespace QuixPhysics
         private void CreateNewt()
         {
             BoxState state = new BoxState();
-            state.position = new Vector3(0, 200, 0);
-            state.halfSize = new Vector3(60, 60, 60);
+            state.position = new Vector3(0, 200, 160);
+            state.halfSize = new Vector3(10, 10, 10);
             state.quaternion = Quaternion.Identity;
-            state.mass = 15;
+            state.mass = 10;
             state.uID = PhyObject.createUID();
-            state.type = "Newt";
+            state.type = "QuixBox";
             state.instantiate = true;
-            state.mesh = "Objects/newt";
+            state.mesh = "Tiles/test";
 
             CreateMesh(state);
         }
@@ -114,7 +115,8 @@ namespace QuixPhysics
 
         internal void createObjects()
         {
-            int width = 30;
+            int width = 10;
+            int sizeObj = 60;
             for (int a = 0; a < boxToCreate; a++)
             {
                 var box = new BoxState();
@@ -125,9 +127,9 @@ namespace QuixPhysics
 
                 int x = a % width;    // % is the "modulo operator", the remainder of i / width;
                 int y = a / width;    // where "/" is an integer division
-                box.position = new Vector3(x * 11, 150, y * 11);
+                box.position = new Vector3(x *sizeObj, 150+(timesPressedCreateBoxes*sizeObj), y *sizeObj);
                 box.halfSize = new Vector3(10, 10, 10);
-                box.mesh = "Objects/newt";
+                box.mesh = "Tiles/test";
                 box.instantiate = true;
                 box.quaternion = Quaternion.Identity;
                 var b = CreateMesh(box);
@@ -143,6 +145,7 @@ namespace QuixPhysics
            boxDescription.Pose = new RigidPose(new Vector3(x,300,y), Quaternion.Identity);
            Simulation.Bodies.Add(boxDescription);*/
             }
+            timesPressedCreateBoxes++;
             // Console.WriteLine("Statics size " + Simulation.Statics.Count);
         }
 
@@ -345,7 +348,6 @@ namespace QuixPhysics
         {
             LoadModel(b, out var mesh, state.halfSize);
 
-            mesh.ComputeClosedInertia(1, out var newInertia);
             //fs.Close();
 
             CollidableDescription collidableDescription = new CollidableDescription(Simulation.Shapes.Add(mesh), 0.1f);
@@ -372,6 +374,8 @@ namespace QuixPhysics
             {
                 triangles[i] = new Triangle(meshContent.Triangles[i].A, meshContent.Triangles[i].B, meshContent.Triangles[i].C);
             }
+            //scale.Y *=-1;
+            scale.Z *=-1;
             mesh = new Mesh(triangles, scale, bufferPool);
         }
 
