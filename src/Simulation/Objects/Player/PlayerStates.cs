@@ -19,6 +19,7 @@ namespace QuixPhysics
 
             PhyTimeOut timeOut = new PhyTimeOut(10, player.simulator);
             timeOut.Completed += SendMessage;
+            player.golfball.Stop();
             Snap();
         }
 
@@ -31,7 +32,7 @@ namespace QuixPhysics
         {
             player.collidable = false;
             player.Stop();
-            player.golfball.Stop();
+            //player.golfball.Stop();
             player.SetPositionToBall();
         }
 
@@ -43,11 +44,13 @@ namespace QuixPhysics
         public void OnRepeat()
         {
             // throw new NotImplementedException();
+            player.golfball.Stop();
             Snap();
         }
 
         public void Tick()
         {
+            Snap();
             //  throw new NotImplementedException();
         }
     }
@@ -158,16 +161,15 @@ namespace QuixPhysics
         {
             // Console.WriteLine("Shoooot");
             // player.golfball.GetReference().Velocity.Linear.X -= 30;
-            setCollidedTimeout = new PhyTimeOut(50, player.simulator);
-            setCollidedTimeout.Completed += SetPlayerCollided;
+            SetPlayerCollided();
 
             var radian = (player.rotationController);
             var x = (float)Math.Cos(radian);
             var y = (float)Math.Sin(radian);
-
             player.golfball.GetReference().Velocity.Linear.X -= (x * player.shootForce) * message.force;
             player.golfball.GetReference().Velocity.Linear.Z -= (y * player.shootForce) * message.force;
             player.golfball.GetReference().Velocity.Linear.Y += (player.shootForce * .34f) * message.force;
+
         }
 
         public void OnDesactivate()

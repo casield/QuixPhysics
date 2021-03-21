@@ -79,6 +79,7 @@ namespace QuixPhysics
 
         }
 
+
         private void CreateUser()
         {
             User s = new User(state.owner, this);
@@ -92,7 +93,7 @@ namespace QuixPhysics
         {
             SphereState ball = new SphereState();
             ball.radius = 3;
-            ball.position = state.position;
+            ball.position = state.position + new Vector3(0, 0, 100);
             ball.quaternion = Quaternion.Identity;
             ball.type = "GolfBall2";
             ball.mass = 1;
@@ -127,7 +128,7 @@ namespace QuixPhysics
         }
         public void TickMove()
         {
-            if (moveMessage != null && !IsSnapped())
+            if (moveMessage != null /*&& !IsSnapped()*/)
             {
                 // Console.WriteLine(bb.Velocity.Linear.Y);
                 if ((moveMessage.x != 0 || moveMessage.y != 0))
@@ -137,38 +138,39 @@ namespace QuixPhysics
                     var x = (float)Math.Cos(radian + radPad);
                     var y = (float)Math.Sin(radian + radPad);
                     Vector3 vel = new Vector3(x, 0, y);
-                    if (this.acceleration <= maxAcceleration)
+                   /* if (this.acceleration <= maxAcceleration)
                     {
                         this.acceleration += accelerationPower;
-                    }
-                    else
-                    {
-                        this.acceleration += 0.01f;
-                    }
+                    }*/
 
-                    vel.X *= acceleration;
-                    vel.Z *= acceleration;
+                    vel.X *= 3;
+                    vel.Z *= 3;
                     reference.Velocity.Linear.X += vel.X;
                     reference.Velocity.Linear.Z += vel.Z;
                     reference.Awake = true;
                 }
-
-
-
-                if ((moveMessage.x == 0 && moveMessage.y == 0))
+                Console.WriteLine(moveMessage.x+" / " +moveMessage.y);
+                if (moveMessage.x == 0 && moveMessage.y == 0)
                 {
-                    acceleration /= 1000;
+                    Console.WriteLine(moveMessage.x+" / " +moveMessage.y);
+                    reference.Velocity.Linear.X *= friction;
+                    reference.Velocity.Linear.Z *= friction;
+                    acceleration = 0;
                 }
+
+
+
+
             }
 
-            if (Math.Abs(reference.Velocity.Linear.Y) > 0.3)
-            {
-                reference.Velocity.Linear.X *= 0.99f;
-                reference.Velocity.Linear.Z *= 0.99f;
-            }
-            reference.Velocity.Linear.X *= friction;
-            reference.Velocity.Linear.Z *= friction;
+            /*     if (Math.Abs(reference.Velocity.Linear.Y) > 0.3)
+                 {
+                     reference.Velocity.Linear.X *= 0.99f;
+                     reference.Velocity.Linear.Z *= 0.99f;
+                 }*/
 
+            /* reference.Velocity.Linear.X *= friction;
+             reference.Velocity.Linear.Z *= friction;*/
 
 
         }
@@ -205,20 +207,20 @@ namespace QuixPhysics
         {
             float distance = 8;
             reference.Pose.Position = golfball.GetReference().Pose.Position;
-            reference.Pose.Position.Y += 15;
+            reference.Pose.Position.Y += 66;
 
             Vector2 xy = GetXYRotation();
-            reference.Pose.Position.X += xy.X*distance;
-            reference.Pose.Position.Z += xy.Y*distance;
+            //reference.Pose.Position.X += xy.X*distance;
+            //reference.Pose.Position.Z += xy.Y*distance;
 
 
         }
 
         public Vector2 GetXYRotation()
         {
-            var x = (float)Math.Cos(this.rotationController );
-            var y = (float)Math.Sin(this.rotationController );
-            return new Vector2(x,y);
+            var x = (float)Math.Cos(this.rotationController);
+            var y = (float)Math.Sin(this.rotationController);
+            return new Vector2(x, y);
         }
 
         private void CheckIfFall()
@@ -260,9 +262,10 @@ namespace QuixPhysics
         {
             if (Agent.ActualState() == snappedState)
             {
+                Console.WriteLine("Shotting");
                 shotState.message = message;
                 Agent.ChangeState(shotState);
-                Agent.Lock(30);
+                //Agent.Lock(30);
 
             }
 

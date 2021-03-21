@@ -160,7 +160,7 @@ namespace QuixPhysics
             pairMaterial.SpringSettings = ContactSpringiness;
 
 
-            if (pair.A.Mobility == CollidableMobility.Static)
+          /*  if (pair.A.Mobility == CollidableMobility.Static)
             {
                 if (simulator.OnStaticContactListeners.ContainsKey(pair.A.StaticHandle))
                 {
@@ -192,7 +192,7 @@ namespace QuixPhysics
                     var con = simulator.collidableToPhyObject(pair.A);
                     simulator.OnContactListeners[pair.B.BodyHandle].OnContact(con);
                 }
-            }
+            }*/
 
 
 

@@ -30,7 +30,7 @@ namespace QuixPhysics
                 throw new ArgumentException("Simulator not loaded!");
 
             // Load game content
-            _mySimulator.Load();
+            //_mySimulator.Load();
 
             // Set gameloop state
             Running = true;

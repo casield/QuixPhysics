@@ -3,6 +3,7 @@ namespace QuixPhysics
     using System;
     using System.Collections;
     using System.Collections.Generic;
+    using System.IO;
     using System.Net.Sockets;
     using System.Numerics;
     using System.Threading;
@@ -10,6 +11,8 @@ namespace QuixPhysics
     using BepuPhysics.Collidables;
     using BepuPhysics.Constraints;
     using BepuUtilities.Memory;
+    using ContentBuilder;
+    using ContentLoader;
     using MongoDB.Bson;
     using Newtonsoft.Json;
 
@@ -40,7 +43,7 @@ namespace QuixPhysics
         public Dictionary<BodyHandle, PhyObject> OnContactListeners = new Dictionary<BodyHandle, PhyObject>();
         public Dictionary<StaticHandle, PhyObject> OnStaticContactListeners = new Dictionary<StaticHandle, PhyObject>();
 
-        public Dictionary<string,User> users = new Dictionary<string, User>();
+        public Dictionary<string, User> users = new Dictionary<string, User>();
 
         public bool Disposed = false;
 
@@ -63,6 +66,8 @@ namespace QuixPhysics
             gameLoop = new GameLoop();
             gameLoop.Load(this);
 
+            CreateNewt();
+
             thread = new Thread(new ThreadStart(gameLoop.Start));
 
             commandReader = new CommandReader(this);
@@ -71,9 +76,19 @@ namespace QuixPhysics
 
         }
 
-        internal void Load()
+        private void CreateNewt()
         {
-
+            BoxState state = new BoxState();
+            state.position = new Vector3(0,500,0);
+            state.halfSize = new Vector3(60,60,60);
+            state.quaternion = Quaternion.Identity;
+            state.mass = 15;
+            state.uID = PhyObject.createUID();
+            state.type = "Newt";
+            state.instantiate = true;
+            state.mesh = "Objects/newt";
+            
+         CreateMesh(state);
         }
 
         private void CreateMap()
@@ -100,7 +115,7 @@ namespace QuixPhysics
                 box.mesh = "Board/Bomb";
                 box.instantiate = true;
                 box.quaternion = Quaternion.Identity;
-                var b  = Create(box);
+                var b = Create(box);
                 /* int x = a % width;    // % is the "modulo operator", the remainder of i / width;
                int y = a / width;    // where "/" is an integer division
                var ringBoxShape = new Box(1, 1, 1);
@@ -227,6 +242,7 @@ namespace QuixPhysics
             {
                 phy = CreateSphere((SphereState)state);
             }
+            
             if (phy.material == default(SimpleMaterial))
             {
                 collidableMaterials.Allocate(phy.bodyHandle) = new SimpleMaterial
@@ -308,6 +324,45 @@ namespace QuixPhysics
 
             var phy = CreateVanilla(state, collidableDescription, bodyInertia);
             return phy;
+        }
+
+        private PhyObject CreateMesh(BoxState state){
+            var path = "Content/newt.obj";
+            MeshContent b;
+            using (FileStream fs = File.OpenRead(path))
+            {
+                b = MeshBuilder.Build(fs);
+            }
+            LoadModel(b, out var mesh,state.halfSize);
+
+            mesh.ComputeClosedInertia(1, out var newInertia);
+            //fs.Close();
+
+            CollidableDescription collidableDescription =  new CollidableDescription(Simulation.Shapes.Add(mesh), 0.1f);
+          /*  BodyHandle staticHandle = Simulation.Bodies.Add(new StaticDescription(state.position,
+             collidableDescription));*/
+
+             mesh.ComputeClosedInertia(state.mass, out var bodyInertia);
+            
+            //CollidableDescription collidableDescription = new CollidableDescription(Simulation.Shapes.Add(sphere), 0.1f);
+           // BodyInertia bodyInertia;
+
+            //mesh.ComputeInertia(state.mass, out bodyInertia);
+
+            var phy = CreateVanilla(state, collidableDescription, bodyInertia);
+            objects.Add(state.uID, phy);
+            return phy;
+        }
+        
+        public void LoadModel(MeshContent meshContent, out Mesh mesh,Vector3 scale)
+        {
+            bufferPool.Take<Triangle>(meshContent.Triangles.Length, out var triangles);
+
+            for (int i = 0; i < meshContent.Triangles.Length; ++i)
+            {
+                triangles[i] = new Triangle(meshContent.Triangles[i].A, meshContent.Triangles[i].B, meshContent.Triangles[i].C);
+            }
+            mesh = new Mesh(triangles, scale, bufferPool);
         }
 
         private PhyObject GetPhyClass(string name)

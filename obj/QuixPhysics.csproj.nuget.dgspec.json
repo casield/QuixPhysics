@@ -48,6 +48,10 @@
               "target": "Package",
               "version": "[2.3.0, )"
             },
+            "CjClutter.ObjLoader": {
+              "target": "Package",
+              "version": "[1.0.0, )"
+            },
             "MongoDB.Driver": {
               "target": "Package",
               "version": "[2.12.0, )"
