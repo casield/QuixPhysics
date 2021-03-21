@@ -10,7 +10,7 @@ namespace QuixPhysics
     public class ConnectionState : IDisposable
     {
         // Size of receive buffer.  
-        public const int BufferSize = 1024;
+        public const int BufferSize = 2048;
 
         // Receive buffer.  
         public byte[] buffer = new byte[BufferSize];

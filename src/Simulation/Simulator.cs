@@ -121,6 +121,7 @@ namespace QuixPhysics
             {
                 var box = new BoxState();
                 box.uID = PhyObject.createUID();
+                box.uID+=""+a;
                 box.mass = 0;
                 box.type = "QuixBox";
                 // box.instantiate = false;
@@ -513,9 +514,12 @@ namespace QuixPhysics
             {
                 foreach (var item in commandsList)
                 {
-                     Console.WriteLine(item);
+                    
                     JsonSerializerSettings setting = new JsonSerializerSettings();
                     setting.CheckAdditionalContent = false;
+                    Console.WriteLine("$$$$$$$$$$$$$$$$");
+                    Console.WriteLine(item);
+                    Console.WriteLine("$$$$$$$$$$$$$$$$");
                     Newtonsoft.Json.Linq.JObject message = JsonConvert.DeserializeObject<Newtonsoft.Json.Linq.JObject>((string)item, setting);
                     string type = (string)message["type"];
                     switch (type)
