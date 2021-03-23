@@ -19,6 +19,7 @@ namespace ContentBuilder
         public unsafe static MeshContent Build(Stream dataStream)
         {
             var result = new ObjLoaderFactory().Create(new MaterialStubLoader()).Load(dataStream);
+   
             var triangles = new List<TriangleContent>();
             for (int i = 0; i < result.Groups.Count; ++i)
             {

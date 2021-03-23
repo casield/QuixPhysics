@@ -17,11 +17,14 @@ namespace QuixPhysics
         public Vector3 position { get; set; }
         public Quaternion quaternion { get; set; }
         public string uID { get; set; }
+
+        public bool isMesh {get;set;} 
         public string mesh { get; set; }
         public string type { get; set; }
         public float mass { get; set; }
         public bool instantiate { get; set; }
         public string owner { get; set; }
+        
 
 
         //public List<Vector3> faces;

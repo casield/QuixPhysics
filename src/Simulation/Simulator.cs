@@ -32,7 +32,7 @@ namespace QuixPhysics
 
         private int t = 0;
         private int tMax = 15000;
-        internal int boxToCreate = 100;
+        internal int boxToCreate = 0;
         internal int timesPressedCreateBoxes = 0;
         internal List<PhyWorker> workers = new List<PhyWorker>();
         internal List<PhyWorker> workersToAdd = new List<PhyWorker>();
@@ -47,17 +47,12 @@ namespace QuixPhysics
         public Dictionary<string, User> users = new Dictionary<string, User>();
 
         public bool Disposed = false;
-        MeshContent b;
 
 
         public Simulator(ConnectionState state, Server server)
         {
-            var path = "Content/test.obj";
 
-            using (FileStream fs = File.OpenRead(path))
-            {
-                b = MeshBuilder.Build(fs);
-            }
+            server.ReloadMeshes();
 
             collidableMaterials = new CollidableProperty<SimpleMaterial>();
 
@@ -74,7 +69,7 @@ namespace QuixPhysics
             gameLoop = new GameLoop();
             gameLoop.Load(this);
 
-            
+
 
 
 
@@ -95,16 +90,16 @@ namespace QuixPhysics
         private void CreateNewt()
         {
             BoxState state = new BoxState();
-            state.position = new Vector3(0, 200, 160);
+            state.position = new Vector3(0, 140, 160);
             state.halfSize = new Vector3(10, 10, 10);
             state.quaternion = Quaternion.Identity;
-            state.mass = 10;
+            state.mass = 0;
             state.uID = PhyObject.createUID();
             state.type = "QuixBox";
             state.instantiate = true;
             state.mesh = "Tiles/test";
 
-            CreateMesh(state);
+            // CreateMesh(state);
         }
 
         private void CreateMap()
@@ -121,14 +116,14 @@ namespace QuixPhysics
             {
                 var box = new BoxState();
                 box.uID = PhyObject.createUID();
-                box.uID+=""+a;
+                box.uID += "" + a;
                 box.mass = 0;
                 box.type = "QuixBox";
                 // box.instantiate = false;
 
                 int x = a % width;    // % is the "modulo operator", the remainder of i / width;
                 int y = a / width;    // where "/" is an integer division
-                box.position = new Vector3(x *sizeObj, 150+(timesPressedCreateBoxes*sizeObj), y *sizeObj);
+                box.position = new Vector3(x * sizeObj, 150 + (timesPressedCreateBoxes * sizeObj), y * sizeObj);
                 box.halfSize = new Vector3(10, 10, 10);
                 box.mesh = "Tiles/test";
                 box.instantiate = true;
@@ -223,6 +218,15 @@ namespace QuixPhysics
 
             }
 
+
+           foreach (var item in staticObjectsHandlers)
+           {
+               if(item.Value.needUpdate){
+                   bodies.Add(item.Value.getJSON());
+                   item.Value.needUpdate = false;
+               }
+           }
+
             if (bodies.Count > 0)
             {
                 SendMessage("update", JsonConvert.SerializeObject(bodies), connectionState.workSocket);
@@ -255,7 +259,15 @@ namespace QuixPhysics
             }
             if (state is BoxState)
             {
-                phy = CreateBox((BoxState)state);
+                if (state.isMesh)
+                {
+                    phy = CreateMesh((BoxState)state);
+                }
+                else
+                {
+                    phy = CreateBox((BoxState)state);
+                }
+
             }
             if (state is SphereState)
             {
@@ -347,23 +359,17 @@ namespace QuixPhysics
 
         private PhyObject CreateMesh(BoxState state)
         {
-            LoadModel(b, out var mesh, state.halfSize);
+            LoadModel(server.GetMesh(state.mesh), out var mesh, state.halfSize);
 
             //fs.Close();
 
             CollidableDescription collidableDescription = new CollidableDescription(Simulation.Shapes.Add(mesh), 0.1f);
-            /*  BodyHandle staticHandle = Simulation.Bodies.Add(new StaticDescription(state.position,
-               collidableDescription));*/
 
             mesh.ComputeClosedInertia(state.mass, out var bodyInertia);
 
-            //CollidableDescription collidableDescription = new CollidableDescription(Simulation.Shapes.Add(sphere), 0.1f);
-            // BodyInertia bodyInertia;
-
-            //mesh.ComputeInertia(state.mass, out bodyInertia);
-
             var phy = CreateVanilla(state, collidableDescription, bodyInertia);
             objects.Add(state.uID, phy);
+
             return phy;
         }
 
@@ -375,9 +381,10 @@ namespace QuixPhysics
             {
                 triangles[i] = new Triangle(meshContent.Triangles[i].A, meshContent.Triangles[i].B, meshContent.Triangles[i].C);
             }
-            //scale.Y *=-1;
-            scale.Z *=-1;
+
+            // scale.Y *=-1;
             mesh = new Mesh(triangles, scale, bufferPool);
+            
         }
 
         private PhyObject GetPhyClass(string name)
@@ -514,10 +521,10 @@ namespace QuixPhysics
             {
                 foreach (var item in commandsList)
                 {
-                    
+
                     JsonSerializerSettings setting = new JsonSerializerSettings();
                     setting.CheckAdditionalContent = false;
-                  
+
                     Newtonsoft.Json.Linq.JObject message = JsonConvert.DeserializeObject<Newtonsoft.Json.Linq.JObject>((string)item, setting);
                     string type = (string)message["type"];
                     switch (type)

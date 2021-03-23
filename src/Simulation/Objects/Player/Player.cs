@@ -205,15 +205,9 @@ namespace QuixPhysics
         }
         public void SetPositionToBall()
         {
-            float distance = 8;
+            float distance = 15;
             reference.Pose.Position = golfball.GetReference().Pose.Position;
-            reference.Pose.Position.Y += 66;
-
-            Vector2 xy = GetXYRotation();
-            //reference.Pose.Position.X += xy.X*distance;
-            //reference.Pose.Position.Z += xy.Y*distance;
-
-
+            reference.Pose.Position.Y += distance;
         }
 
         public Vector2 GetXYRotation()
@@ -265,7 +259,7 @@ namespace QuixPhysics
                 Console.WriteLine("Shotting");
                 shotState.message = message;
                 Agent.ChangeState(shotState);
-                //Agent.Lock(30);
+                Agent.Lock(30);
 
             }
 

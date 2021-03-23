@@ -1,6 +1,7 @@
 using System;
 using System.Numerics;
 using BepuPhysics;
+using BepuUtilities;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
@@ -52,6 +53,16 @@ namespace QuixPhysics
             }
 
         }
+
+        public virtual void SetMeshRotation(){
+            if(state.isMesh){
+            
+                var newq =  Quaternion.CreateFromYawPitchRoll(-1.57f,0,0);
+
+                 //state.quaternion = newq*state.quaternion;
+            }
+            
+        }
         internal void SendObjectMessage(string data)
         {
             JObject m = new JObject();
@@ -71,7 +82,9 @@ namespace QuixPhysics
             if (updateRotation)
             {
                 state.quaternion = description.Pose.Orientation;
+                
             }
+            SetMeshRotation();
 
             return state.getJson();
         }
@@ -105,6 +118,7 @@ namespace QuixPhysics
     public class StaticPhyObject : PhyObject
     {
         new StaticHandle bodyHandle;
+        public bool needUpdate = false;
         public virtual void Load(StaticHandle bodyHandle, ConnectionState connectionState, Simulator simulator, ObjectState state)
         {
             this.connectionState = connectionState;
@@ -112,7 +126,14 @@ namespace QuixPhysics
             this.state = state;
             this.simulator = simulator;
 
+    
+            SetMeshRotation();
             SendCreateMessage();
+        }
+        public override void SetMeshRotation()
+        {
+            base.SetMeshRotation();
+            needUpdate = true;
         }
 
         new public string getJSON()
@@ -125,6 +146,10 @@ namespace QuixPhysics
             {
                 state.quaternion = description.Pose.Orientation;
             }
+            SetMeshRotation();
+           
+
+            //SetMeshRotation();
 
             return state.getJson();
         }
@@ -132,6 +157,7 @@ namespace QuixPhysics
         {
             if (state.instantiate)
             {
+                Console.WriteLine(getJSON());
                 simulator.SendMessage("create", getJSON(), connectionState.workSocket);
             }
         }

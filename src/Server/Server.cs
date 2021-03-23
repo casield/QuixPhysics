@@ -1,9 +1,12 @@
 using System;
+using System.Collections.Generic;
+using System.IO;
 using System.Net;
 using System.Net.Sockets;
 using System.Text;
 using System.Threading;
-
+using ContentBuilder;
+using ContentLoader;
 
 namespace QuixPhysics
 {
@@ -34,14 +37,44 @@ namespace QuixPhysics
         public static ManualResetEvent allDone = new ManualResetEvent(false);
         public DataBase dataBase;
         public bool isRunning = true;
+
+        public Dictionary<String, MeshContent> meshes = new Dictionary<string, MeshContent>();
         public Server()
         {
             dataBase = new DataBase();
 
+            LoadMeshes();
+
             StartListening();
+        }
 
+        private void LoadMeshes(){
+            LoadMesh("Tiles/test");
+            LoadMesh("Tiles/hole");
+            LoadMesh("Stadiums/CrocoLoco/contorno");
+            LoadMesh("Stadiums/CrocoLoco/hole");
+            LoadMesh("Players/Bases/base");
+        }
 
+        public void ReloadMeshes(){
+            meshes.Clear();
+            LoadMeshes();
+        }
 
+        public MeshContent GetMesh(string name){
+            return meshes[name];
+        }
+
+        private void LoadMesh(string name){
+            meshes.Add(name,LoadObjFile("Content/"+name+".obj"));
+        }
+
+        private MeshContent LoadObjFile(string path){
+
+            using (FileStream fs = File.OpenRead(path))
+            {
+                return MeshBuilder.Build(fs);
+            }
         }
 
         public void StartListening()
