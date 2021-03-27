@@ -131,7 +131,7 @@ namespace QuixPhysics
             if (moveMessage != null /*&& !IsSnapped()*/)
             {
                 // Console.WriteLine(bb.Velocity.Linear.Y);
-                if ((moveMessage.x != 0 || moveMessage.y != 0))
+                if ((moveMessage.x != 0 || moveMessage.y != 0) &&reference.Velocity.Linear.Y < 4 )
                 {
                     var radPad = Math.Atan2(this.moveMessage.x, -this.moveMessage.y);
                     var radian = (this.rotationController);
@@ -149,8 +149,8 @@ namespace QuixPhysics
                     reference.Velocity.Linear.Z += vel.Z;
                     reference.Awake = true;
                 }
-               // Console.WriteLine(moveMessage.x+" / " +moveMessage.y);
-                if (moveMessage.x == 0 && moveMessage.y == 0)
+               // Console.WriteLine(" / " +reference.Velocity.Linear.Y);
+                if (moveMessage.x == 0 && moveMessage.y == 0 && reference.Velocity.Linear.Y > -0.06)
                 {
                    // Console.WriteLine(moveMessage.x+" / " +moveMessage.y);
                     reference.Velocity.Linear.X *= friction;

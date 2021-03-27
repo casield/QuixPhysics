@@ -49,11 +49,12 @@ namespace QuixPhysics
         }
 
         private void LoadMeshes(){
-            LoadMesh("Tiles/test");
-            LoadMesh("Tiles/hole");
-            LoadMesh("Stadiums/CrocoLoco/contorno");
-            LoadMesh("Stadiums/CrocoLoco/hole");
-            LoadMesh("Players/Bases/base");
+     
+            LoadMesh("Stadiums/CrocoLoco/piedra1");
+            LoadMesh("Stadiums/CrocoLoco/piedra2");
+            LoadMesh("Stadiums/CrocoLoco/stand_croco");
+            LoadMesh("Stadiums/CrocoLoco/start_position");
+
         }
 
         public void ReloadMeshes(){
