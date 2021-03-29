@@ -68,7 +68,7 @@ namespace QuixPhysics
         }
 
         private void LoadMesh(string name){
-            meshes.Add(name,LoadObjFile("Content/"+name+".obj"));
+            meshes.Add(name,LoadObjFile(@"Content/"+name+".obj"));
         }
 
         private MeshContent LoadObjFile(string path){
