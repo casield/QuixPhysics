@@ -32,7 +32,7 @@ namespace QuixPhysics
 
         private int t = 0;
         private int tMax = 15000;
-        internal int boxToCreate = 0;
+        internal int boxToCreate = 100;
         internal int timesPressedCreateBoxes = 0;
         internal List<PhyWorker> workers = new List<PhyWorker>();
         internal List<PhyWorker> workersToAdd = new List<PhyWorker>();
@@ -114,21 +114,21 @@ namespace QuixPhysics
             int sizeObj = 60;
             for (int a = 0; a < boxToCreate; a++)
             {
-                var box = new BoxState();
+                var box = new SphereState();
                 box.uID = PhyObject.createUID();
                 box.uID += "" + a;
-                box.mass = 0;
-                box.type = "QuixBox";
+                box.mass = 1;
+                box.type = "Bomb";
                 // box.instantiate = false;
 
                 int x = a % width;    // % is the "modulo operator", the remainder of i / width;
                 int y = a / width;    // where "/" is an integer division
                 box.position = new Vector3(x * sizeObj, 150 + (timesPressedCreateBoxes * sizeObj), y * sizeObj);
-                box.halfSize = new Vector3(10, 10, 10);
-                box.mesh = "Tiles/test";
+                box.radius = 10;
+                box.mesh = "Board/Bomb";
                 box.instantiate = true;
                 box.quaternion = Quaternion.Identity;
-                var b = CreateMesh(box);
+                var b = Create(box);
                 /* int x = a % width;    // % is the "modulo operator", the remainder of i / width;
                int y = a / width;    // where "/" is an integer division
                var ringBoxShape = new Box(1, 1, 1);

@@ -54,6 +54,7 @@ namespace QuixPhysics
             LoadMesh("Stadiums/CrocoLoco/piedra2");
             LoadMesh("Stadiums/CrocoLoco/stand_croco");
             LoadMesh("Stadiums/CrocoLoco/start_position");
+            LoadMesh("newt");
 
         }
 
