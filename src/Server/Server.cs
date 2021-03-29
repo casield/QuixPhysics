@@ -72,8 +72,8 @@ namespace QuixPhysics
         }
 
         private MeshContent LoadObjFile(string path){
-            var npath = File.Exists(path);
-            Console.WriteLine(npath);
+            var npath = Path.Combine("","Content/newt.obj");
+            Console.WriteLine(File.Exists(npath));
             using (FileStream fs = File.OpenRead(path))
             {
                 return MeshBuilder.Build(fs);
