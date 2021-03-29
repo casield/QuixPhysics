@@ -72,9 +72,9 @@ namespace QuixPhysics
         }
 
         private MeshContent LoadObjFile(string path){
-            var npath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory , path);
+            var npath = File.Exists(path);
             Console.WriteLine(npath);
-            using (FileStream fs = File.OpenRead(npath))
+            using (FileStream fs = File.OpenRead(path))
             {
                 return MeshBuilder.Build(fs);
             }
