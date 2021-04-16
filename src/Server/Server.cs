@@ -73,7 +73,6 @@ namespace QuixPhysics
 
         private MeshContent LoadObjFile(string path){
             var npath = Path.Combine("",path);
-            Console.WriteLine(File.Exists(npath));
             using (FileStream fs = File.OpenRead(path))
             {
                 return MeshBuilder.Build(fs);
@@ -98,6 +97,7 @@ namespace QuixPhysics
             {
                 listener.Bind(localEndPoint);
                 listener.Listen();
+                Console.Log("QuixPhysicsServer is","running");
 
                 while (isRunning)
                 {
