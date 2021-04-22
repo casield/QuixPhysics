@@ -45,6 +45,8 @@ namespace QuixPhysics
         private float maxDistanceWithBall = 20;
         private bool canShoot;
 
+        private IGauntlet gauntlet;
+
         public Player2()
         {
             this.updateRotation = false;
@@ -71,12 +73,18 @@ namespace QuixPhysics
 
             CreateBall();
             CreateUser();
+            CreateGauntlet();
 
             jumpState = new JumpState(this);
             snappedState = new SnappedState(this);
             notSnappedState = new Not_SnappedState(this);
             shotState = new ShootState(this);
 
+        }
+
+        private void CreateGauntlet(){
+            this.gauntlet = new AtractGauntlet();
+            this.gauntlet.AddPlayer(this);
         }
 
 
@@ -261,8 +269,13 @@ namespace QuixPhysics
                 Agent.ChangeState(shotState);
                 Agent.Lock(30);
 
+            }else{
+                
             }
 
+        }
+        public void UseGauntlet(){
+            gauntlet.Activate();
         }
     }
 

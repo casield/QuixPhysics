@@ -70,11 +70,6 @@ namespace QuixPhysics
             gameLoop.Load(this);
 
 
-
-
-
-
-
             CreateNewt();
 
 
@@ -219,13 +214,14 @@ namespace QuixPhysics
             }
 
 
-           foreach (var item in staticObjectsHandlers)
-           {
-               if(item.Value.needUpdate){
-                   bodies.Add(item.Value.getJSON());
-                   item.Value.needUpdate = false;
-               }
-           }
+            foreach (var item in staticObjectsHandlers)
+            {
+                if (item.Value.needUpdate)
+                {
+                    bodies.Add(item.Value.getJSON());
+                    item.Value.needUpdate = false;
+                }
+            }
 
             if (bodies.Count > 0)
             {
@@ -384,7 +380,7 @@ namespace QuixPhysics
 
             // scale.Y *=-1;
             mesh = new Mesh(triangles, scale, bufferPool);
-            
+
         }
 
         private PhyObject GetPhyClass(string name)
@@ -505,6 +501,15 @@ namespace QuixPhysics
             // Simulation.Awakener.AwakenBody(ob.bodyHandle);
             onb2.Shoot(j2);
         }
+        internal void UseGauntlet(string data)
+        {
+            Console.Log("Use gauntlet", data);
+            ShootMessage j2 = JsonConvert.DeserializeObject<ShootMessage>(data);
+            //objects[]
+            Player2 onb2 = (Player2)simulator.users[j2.client].player;
+            // Simulation.Awakener.AwakenBody(ob.bodyHandle);
+            onb2.UseGauntlet();
+        }
         internal void Jump(string data)
         {
             MoveMessage j2 = JsonConvert.DeserializeObject<MoveMessage>(data);
@@ -551,6 +556,10 @@ namespace QuixPhysics
                             //Console.WriteLine("Create boxes");
                             // simulator.boxToCreate = 10;
                             simulator.createObjects();
+                            break;
+                        case "useGauntlet":
+
+                            UseGauntlet(((object)message["data"]).ToString());
                             break;
                         case "move":
 
