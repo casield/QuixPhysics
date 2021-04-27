@@ -92,7 +92,13 @@ namespace QuixPhysics
         {
             User s = new User(state.owner, this);
 
-            simulator.users.Add(state.owner, s);
+            if(!simulator.users.ContainsKey(state.owner)){
+                simulator.users.Add(state.owner, s);
+            }else{
+                QuixConsole.Log("User has been already added");
+            }
+
+            
         }
 
 
