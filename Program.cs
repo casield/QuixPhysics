@@ -10,8 +10,7 @@ namespace QuixPhysics
     {
         static void Main(string[] args)
         {
-            Console.Write("XDDDDD");
-           // new Server();
+           new Server();
         }
     }
 }
