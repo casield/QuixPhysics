@@ -19,7 +19,7 @@ namespace QuixPhysics
 
         public DataBase()
         {
-            Console.WriteLine("Init Database");
+            QuixConsole.WriteLine("Init Database");
             MongoClient dbClient = new MongoClient("mongodb://localhost/golf");
 
             database = dbClient.GetDatabase("golf");

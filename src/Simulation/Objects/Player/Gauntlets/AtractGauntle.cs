@@ -14,7 +14,7 @@ namespace QuixPhysics{
                 timer.Completed+=OnTick;
                 golfBallRef = Player.golfball.GetReference();
                 vehicle = new Vehicle(Player.golfball);
-                Console.Log("Activaded","xd","asdasd");
+                QuixConsole.Log("Activaded","xd","asdasd");
             }
             if(isActivated()){
                 vehicle.isActive=true;

@@ -264,7 +264,7 @@ namespace QuixPhysics
         {
             if (Agent.ActualState() == snappedState)
             {
-                Console.WriteLine("Shotting");
+                QuixConsole.WriteLine("Shotting");
                 shotState.message = message;
                 Agent.ChangeState(shotState);
                 Agent.Lock(30);

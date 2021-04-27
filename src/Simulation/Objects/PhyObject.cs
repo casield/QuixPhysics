@@ -157,7 +157,7 @@ namespace QuixPhysics
         {
             if (state.instantiate)
             {
-                Console.WriteLine(getJSON());
+                QuixConsole.WriteLine(getJSON());
                 simulator.SendMessage("create", getJSON(), connectionState.workSocket);
             }
         }

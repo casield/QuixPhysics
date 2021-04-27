@@ -207,7 +207,7 @@ namespace QuixPhysics
                 }
                 catch (KeyNotFoundException e)
                 {
-                    Console.WriteLine("Key not found");
+                    QuixConsole.WriteLine("Key not found");
                 }
 
             }
@@ -286,7 +286,7 @@ namespace QuixPhysics
             }
             else
             {
-                Console.WriteLine("Objects already had that key");
+                QuixConsole.WriteLine("Objects already had that key");
             }
             return phy;
 
@@ -439,7 +439,7 @@ namespace QuixPhysics
         }
         public void Close()
         {
-            Console.WriteLine("Closing Simulator");
+            QuixConsole.WriteLine("Closing Simulator");
 
 
 
@@ -493,7 +493,7 @@ namespace QuixPhysics
         }
         internal void Shoot(string data)
         {
-            Console.WriteLine(data);
+            QuixConsole.WriteLine(data);
             ShootMessage j2 = JsonConvert.DeserializeObject<ShootMessage>(data);
             //objects[]
             Player2 onb2 = (Player2)simulator.users[j2.client].player;
@@ -502,7 +502,7 @@ namespace QuixPhysics
         }
         internal void UseGauntlet(string data)
         {
-            Console.Log("Use gauntlet", data);
+            QuixConsole.Log("Use gauntlet", data);
             ShootMessage j2 = JsonConvert.DeserializeObject<ShootMessage>(data);
             //objects[]
             Player2 onb2 = (Player2)simulator.users[j2.client].player;
@@ -618,7 +618,7 @@ namespace QuixPhysics
 
                             break;
                         default:
-                            Console.WriteLine("Command not registred " + type);
+                            QuixConsole.WriteLine("Command not registred " + type);
                             break;
 
                     }
@@ -629,14 +629,14 @@ namespace QuixPhysics
             }
             catch (InvalidOperationException e)
             {
-                Console.Log("Collection was modifieded",e);
+                QuixConsole.Log("Collection was modifieded",e);
             }
             catch (JsonReaderException e)
             {
-                Console.Log("Json Problem ", e);
+                QuixConsole.Log("Json Problem ", e);
             }
             catch(Exception e){
-                Console.WriteLine(e);
+                QuixConsole.WriteLine(e);
             }
 
 
