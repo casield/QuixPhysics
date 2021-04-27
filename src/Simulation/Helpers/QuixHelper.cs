@@ -4,7 +4,7 @@ using System.Text;
 namespace QuixPhysics
 {
 
-    public class Console
+    public class QuixConsole
     {
         private static bool isActive = true;
         private static Random _random = new Random();

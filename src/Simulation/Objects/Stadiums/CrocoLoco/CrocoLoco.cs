@@ -14,7 +14,7 @@ namespace QuixPhysics
 
         public CrocoLoco()
         {
-            Console.WriteLine("Crocoloco");
+            QuixConsole.WriteLine("Crocoloco");
 
         }
         public override void Load(BodyHandle bodyHandle, ConnectionState connectionState, Simulator simulator, ObjectState state)

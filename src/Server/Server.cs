@@ -41,7 +41,7 @@ namespace QuixPhysics
         public Dictionary<String, MeshContent> meshes = new Dictionary<string, MeshContent>();
         public Server()
         {
-            Console.Log("XD");
+            QuixConsole.Log("XD");
           /*  dataBase = new DataBase();
 
             LoadMeshes();
@@ -98,7 +98,7 @@ namespace QuixPhysics
             {
                 listener.Bind(localEndPoint);
                 listener.Listen();
-                Console.Log("QuixPhysicsServer is","running");
+                QuixConsole.Log("QuixPhysicsServer is","running");
 
                 while (isRunning)
                 {
@@ -106,7 +106,7 @@ namespace QuixPhysics
                     allDone.Reset();
 
                     // Start an asynchronous socket to listen for connections.  
-                    Console.WriteLine("Waiting for a connection...");
+                    QuixConsole.WriteLine("Waiting for a connection...");
                     listener.BeginAccept(
                         new AsyncCallback(AcceptCallback),
                         listener);
@@ -118,11 +118,11 @@ namespace QuixPhysics
             }
             catch (Exception e)
             {
-                Console.WriteLine(e.ToString());
+                QuixConsole.WriteLine(e.ToString());
 
             }
 
-            Console.WriteLine("\nPress ENTER to continue...");
+            QuixConsole.WriteLine("\nPress ENTER to continue...");
         }
 
 
@@ -149,7 +149,7 @@ namespace QuixPhysics
 
         private void CreateSimulator(ConnectionState socket)
         {
-            Console.WriteLine("Create simulator");
+            QuixConsole.WriteLine("Create simulator");
             Simulator simulator = new Simulator(socket, this);
             socket.simulator = simulator;
         }
@@ -205,7 +205,7 @@ namespace QuixPhysics
                     new AsyncCallback(ReadCallback), state);
                 }
                 }catch(SocketException e){
-                    Console.Log("Socket exception",e);
+                    QuixConsole.Log("Socket exception",e);
                 }
             }
               
