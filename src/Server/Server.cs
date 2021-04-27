@@ -50,8 +50,8 @@ namespace QuixPhysics
 
         private void LoadMeshes(){
      
-           LoadMesh("Stadiums/CrocoLoco/piedra1");
-            LoadMesh("Stadiums/CrocoLoco/piedra2");
+           LoadMesh("Stadiums/CrocoLoco/Piedra1");
+            LoadMesh("Stadiums/CrocoLoco/Piedra2");
             LoadMesh("Stadiums/CrocoLoco/stand_croco");
             LoadMesh("Stadiums/CrocoLoco/start_position");
             LoadMesh("newt");
