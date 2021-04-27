@@ -41,11 +41,12 @@ namespace QuixPhysics
         public Dictionary<String, MeshContent> meshes = new Dictionary<string, MeshContent>();
         public Server()
         {
-            dataBase = new DataBase();
+            Console.Log("XD");
+          /*  dataBase = new DataBase();
 
             LoadMeshes();
 
-            StartListening();
+            StartListening();*/
         }
 
         private void LoadMeshes(){
