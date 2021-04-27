@@ -143,6 +143,7 @@ namespace QuixPhysics
             handler.BeginReceive(state.buffer, 0, ConnectionState.BufferSize, 0,
             new AsyncCallback(ReadCallback), state);
 
+
         }
 
         private void CreateSimulator(ConnectionState socket)
@@ -167,7 +168,10 @@ namespace QuixPhysics
             // Read data from the client socket.
             if (handler.Connected)
             {
-                int bytesRead = handler.EndReceive(ar);
+                try{
+                    int bytesRead = handler.EndReceive(ar);
+              
+                
 
 
 
@@ -199,7 +203,12 @@ namespace QuixPhysics
                     handler.BeginReceive(state.buffer, 0, ConnectionState.BufferSize, 0,
                     new AsyncCallback(ReadCallback), state);
                 }
+                }catch(SocketException e){
+                    Console.Log("Socket exception",e);
+                }
             }
+              
+
 
         }
         public void Send(Socket handler, String data)
@@ -215,6 +224,8 @@ namespace QuixPhysics
                 handler.BeginSend(byteData, 0, byteData.Length, 0,
                 new AsyncCallback(SendCallback), handler);
 
+            }else{
+                handler.Close();
             }
 
 

@@ -8,7 +8,7 @@ namespace QuixPhysics{
 
 
     public class MoveMessage{
-        public string uID;
+        public string client;
         public float x;
         public float y;
     }

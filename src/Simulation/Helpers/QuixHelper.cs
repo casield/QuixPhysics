@@ -6,9 +6,13 @@ namespace QuixPhysics
 
     public class Console
     {
+        private static bool isActive = true;
         private static Random _random = new Random();
         public static void Log(params object[] array)
         {
+            if(isActive){
+
+            
    
             for (int a = 0; a < array.Length; a++)
             {
@@ -23,10 +27,14 @@ namespace QuixPhysics
             }
             System.Console.WriteLine("");
             System.Console.ResetColor();
+            }
         }
         public static void WriteLine(object obj)
         {
-            System.Console.WriteLine(obj);
+            if(isActive){
+                System.Console.WriteLine(obj);
+            }
+            
         }
         private static ConsoleColor GetRandomConsoleColor()
         {

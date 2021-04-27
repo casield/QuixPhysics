@@ -12,7 +12,7 @@ namespace QuixPhysics
         public Vector3 acceleration = new Vector3();
         private BodyReference reference;
 
-        public float maxSpeed = 2;
+        public float maxSpeed = 4;
         public float maxForce = 100f;
         public bool isActive = true;
         public Vehicle(PhyObject obj)
@@ -32,7 +32,6 @@ namespace QuixPhysics
 
                 Vector3 steer = Vector3.Subtract(desired, velocity);
                 steer = Vehicle.Limit(steer, maxForce);
-                Console.Log("Steer", steer);
                 applyForce(steer);
             }
 

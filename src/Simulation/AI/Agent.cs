@@ -33,7 +33,8 @@ namespace QuixPhysics
             this.lockedTick = 0;
         }
 
-        public bool IsLocked(){
+        public bool IsLocked()
+        {
             return isLocked;
         }
 
@@ -56,18 +57,22 @@ namespace QuixPhysics
 
         private void _checkToChangeState(AgentState ms)
         {
-            if (ms == this.state)
+            if (this.state != null)
             {
-                this.state.OnRepeat();
-            }
-            else
-            {
-                if(this.state != null){
-                   this.state.OnDesactivate(); 
+                if (ms == this.state)
+                {
+                    this.state.OnRepeat();
                 }
-                
-                this.state = ms;
-                this.state.OnActivate();
+                else
+                {
+                    if (this.state != null)
+                    {
+                        this.state.OnDesactivate();
+                    }
+
+                    this.state = ms;
+                    this.state.OnActivate();
+                }
             }
         }
 

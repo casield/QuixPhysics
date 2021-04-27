@@ -52,7 +52,7 @@ namespace QuixPhysics
         public Simulator(ConnectionState state, Server server)
         {
 
-            server.ReloadMeshes();
+           // server.ReloadMeshes();
 
             collidableMaterials = new CollidableProperty<SimpleMaterial>();
 
@@ -62,7 +62,7 @@ namespace QuixPhysics
             var targetThreadCount = Math.Max(1, Environment.ProcessorCount > 4 ? Environment.ProcessorCount - 2 : Environment.ProcessorCount - 1);
             ThreadDispatcher = new SimpleThreadDispatcher(targetThreadCount);
             narrowPhaseCallbacks = new QuixNarrowPhaseCallbacks() { CollidableMaterials = collidableMaterials, simulator = this };
-            Simulation = Simulation.Create(bufferPool, narrowPhaseCallbacks, new QuixPoseIntegratorCallbacks(new Vector3(0, -20, 0)), new PositionFirstTimestepper());
+            Simulation = Simulation.Create(bufferPool, narrowPhaseCallbacks, new QuixPoseIntegratorCallbacks(new Vector3(0, -10, 0)), new PositionFirstTimestepper());
 
             CreateMap();
             // Server.Send(state.workSocket, "Hola desde simulator");
@@ -70,7 +70,7 @@ namespace QuixPhysics
             gameLoop.Load(this);
 
 
-            CreateNewt();
+            //CreateNewt();
 
 
             thread = new Thread(new ThreadStart(gameLoop.Start));
@@ -102,7 +102,6 @@ namespace QuixPhysics
             createFloor();
             createObjects();
         }
-
         internal void createObjects()
         {
             int width = 10;
@@ -112,13 +111,13 @@ namespace QuixPhysics
                 var box = new SphereState();
                 box.uID = PhyObject.createUID();
                 box.uID += "" + a;
-                box.mass = 1;
+                box.mass = 10;
                 box.type = "Bomb";
                 // box.instantiate = false;
 
                 int x = a % width;    // % is the "modulo operator", the remainder of i / width;
                 int y = a / width;    // where "/" is an integer division
-                box.position = new Vector3(x * sizeObj, 150 + (timesPressedCreateBoxes * sizeObj), y * sizeObj);
+                box.position = new Vector3(x * sizeObj, 1050 + (timesPressedCreateBoxes * sizeObj), y * sizeObj);
                 box.radius = 10;
                 box.mesh = "Board/Bomb";
                 box.instantiate = true;
@@ -179,7 +178,7 @@ namespace QuixPhysics
         {
             //Console.WriteLine(gameTime.TotalSeconds);
             handleWorkers();
-            Simulation.Timestep(1 / 30f, ThreadDispatcher);
+            Simulation.Timestep(1 / 10f, ThreadDispatcher);
 
             ArrayList bodies = new ArrayList();
             var set = Simulation.Bodies.Sets[0];
@@ -249,7 +248,7 @@ namespace QuixPhysics
         public PhyObject Create(ObjectState state)
         {
             PhyObject phy = null;
-            if (state.uID == null)
+            if (state.uID == null || objects.ContainsKey(state.uID))
             {
                 state.uID = PhyObject.createUID();
             }
@@ -514,7 +513,7 @@ namespace QuixPhysics
         {
             MoveMessage j2 = JsonConvert.DeserializeObject<MoveMessage>(data);
             //objects[]
-            Player2 onb2 = (Player2)simulator.objects[j2.uID];
+            Player2 onb2 = (Player2)simulator.users[j2.client].player;
             // Simulation.Awakener.AwakenBody(ob.bodyHandle);
             onb2.Jump(j2);
         }
@@ -565,7 +564,7 @@ namespace QuixPhysics
 
                             MoveMessage j = JsonConvert.DeserializeObject<MoveMessage>(((object)message["data"]).ToString());
                             //objects[]
-                            Player2 onb = (Player2)simulator.objects[j.uID];
+                            Player2 onb = (Player2)simulator.users[j.client].player;
                             // Simulation.Awakener.AwakenBody(ob.bodyHandle);
                             onb.Move(j);
 
@@ -573,7 +572,7 @@ namespace QuixPhysics
                         case "rotate":
                             MoveMessage j2 = JsonConvert.DeserializeObject<MoveMessage>(((object)message["data"]).ToString());
                             //objects[]
-                            Player2 onb2 = (Player2)simulator.objects[j2.uID];
+                            Player2 onb2 = (Player2)simulator.users[j2.client].player;
                             // Simulation.Awakener.AwakenBody(ob.bodyHandle);
                             onb2.Rotate(j2);
                             break;
@@ -630,11 +629,14 @@ namespace QuixPhysics
             }
             catch (InvalidOperationException e)
             {
-                Console.WriteLine("Collection was modifyes");
+                Console.Log("Collection was modifieded",e);
             }
             catch (JsonReaderException e)
             {
-                Console.WriteLine("Json Problem " + e);
+                Console.Log("Json Problem ", e);
+            }
+            catch(Exception e){
+                Console.WriteLine(e);
             }
 
 
