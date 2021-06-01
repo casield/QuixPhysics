@@ -48,6 +48,7 @@ namespace QuixPhysics
             {
                 if (this.lockedTick == this.lockedTime)
                 {
+                    QuixConsole.Log("unLocked",lockedTick);
                     this.Unlock();
                 }
                 this.lockedTick++;
@@ -59,6 +60,7 @@ namespace QuixPhysics
         {
             if (this.state != null)
             {
+                //QuixConsole.Log("Check change");
                 if (ms == this.state)
                 {
                     this.state.OnRepeat();
@@ -71,16 +73,20 @@ namespace QuixPhysics
                     }
 
                     this.state = ms;
+                    QuixConsole.Log("State",ms.GetType().ToString());
                     this.state.OnActivate();
                 }
+            }else{
+                this.state = ms;
             }
         }
 
         public void ChangeState(AgentState state)
         {
+            QuixConsole.Log("Is locked",isLocked,state,lockedTime);
             if (!this.isLocked)
             {
-
+                //QuixConsole.Log("Changing state to",state.GetType().ToString());
                 this._checkToChangeState(state);
             }
 

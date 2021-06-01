@@ -52,7 +52,7 @@ namespace QuixPhysics
         public Simulator(ConnectionState state, Server server)
         {
 
-           // server.ReloadMeshes();
+             server.ReloadMeshes();
 
             collidableMaterials = new CollidableProperty<SimpleMaterial>();
 
@@ -503,11 +503,20 @@ namespace QuixPhysics
         internal void UseGauntlet(string data)
         {
             QuixConsole.Log("Use gauntlet", data);
-            ShootMessage j2 = JsonConvert.DeserializeObject<ShootMessage>(data);
+            GauntletMessage j2 = JsonConvert.DeserializeObject<GauntletMessage>(data);
             //objects[]
             Player2 onb2 = (Player2)simulator.users[j2.client].player;
             // Simulation.Awakener.AwakenBody(ob.bodyHandle);
-            onb2.UseGauntlet();
+            onb2.UseGauntlet(j2.active);
+        }
+         internal void Swipe(string data)
+        {
+            QuixConsole.Log("Swiping", data);
+            SwipeMessage j2 = JsonConvert.DeserializeObject<SwipeMessage>(data);
+            //objects[]
+            Player2 onb2 = (Player2)simulator.users[j2.client].player;
+            // Simulation.Awakener.AwakenBody(ob.bodyHandle);
+            onb2.Swipe(j2.degree);
         }
         internal void Jump(string data)
         {
@@ -556,7 +565,7 @@ namespace QuixPhysics
                             // simulator.boxToCreate = 10;
                             simulator.createObjects();
                             break;
-                        case "useGauntlet":
+                        case "gauntlet":
 
                             UseGauntlet(((object)message["data"]).ToString());
                             break;
@@ -581,6 +590,9 @@ namespace QuixPhysics
                             break;
                         case "shoot":
                             Shoot(((object)message["data"]).ToString());
+                            break;
+                        case "swipe":
+                            Swipe(((object)message["data"]).ToString());
                             break;
                         case "generateMap":
 

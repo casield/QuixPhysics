@@ -31,3 +31,4 @@ C:\Users\Casiel\Desktop\ciberchico420\Games\QuixPhysics\obj\Release\net5.0\ref\Q
 C:\Users\Casiel\Desktop\ciberchico420\Games\QuixPhysics\obj\Release\net5.0\QuixPhysics.pdb
 C:\Users\Casiel\Desktop\ciberchico420\Games\QuixPhysics\obj\Release\net5.0\QuixPhysics.genruntimeconfig.cache
 C:\Users\Casiel\Desktop\ciberchico420\Games\QuixPhysics\bin\Release\net5.0\CjClutter.ObjLoader.Loader.dll
+C:\Users\Casiel\Desktop\ciberchico420\Games\QuixPhysics\bin\Release\net5.0\FluentBehaviourTree.dll

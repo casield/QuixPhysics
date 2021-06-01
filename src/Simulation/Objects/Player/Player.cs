@@ -30,7 +30,6 @@ namespace QuixPhysics
         private float maxAcceleration = 15;
         private float accelerationPower = .8f;
         public float shootForce = 30;
-        public BodyReference reference;
         public Agent Agent;
 
         private JumpState jumpState;
@@ -82,7 +81,8 @@ namespace QuixPhysics
 
         }
 
-        private void CreateGauntlet(){
+        private void CreateGauntlet()
+        {
             this.gauntlet = new AtractGauntlet();
             this.gauntlet.AddPlayer(this);
         }
@@ -92,13 +92,16 @@ namespace QuixPhysics
         {
             User s = new User(state.owner, this);
 
-            if(!simulator.users.ContainsKey(state.owner)){
+            if (!simulator.users.ContainsKey(state.owner))
+            {
                 simulator.users.Add(state.owner, s);
-            }else{
+            }
+            else
+            {
                 QuixConsole.Log("User has been already added");
             }
 
-            
+
         }
 
 
@@ -145,17 +148,13 @@ namespace QuixPhysics
             if (moveMessage != null /*&& !IsSnapped()*/)
             {
                 // Console.WriteLine(bb.Velocity.Linear.Y);
-                if ((moveMessage.x != 0 || moveMessage.y != 0) &&reference.Velocity.Linear.Y < 4 )
+                if ((moveMessage.x != 0 || moveMessage.y != 0) && reference.Velocity.Linear.Y < 4)
                 {
                     var radPad = Math.Atan2(this.moveMessage.x, -this.moveMessage.y);
                     var radian = (this.rotationController);
                     var x = (float)Math.Cos(radian + radPad);
                     var y = (float)Math.Sin(radian + radPad);
                     Vector3 vel = new Vector3(x, 0, y);
-                   /* if (this.acceleration <= maxAcceleration)
-                    {
-                        this.acceleration += accelerationPower;
-                    }*/
 
                     vel.X *= 3;
                     vel.Z *= 3;
@@ -163,10 +162,10 @@ namespace QuixPhysics
                     reference.Velocity.Linear.Z += vel.Z;
                     reference.Awake = true;
                 }
-               // Console.WriteLine(" / " +reference.Velocity.Linear.Y);
+                // Console.WriteLine(" / " +reference.Velocity.Linear.Y);
                 if (moveMessage.x == 0 && moveMessage.y == 0 && reference.Velocity.Linear.Y > -0.06)
                 {
-                   // Console.WriteLine(moveMessage.x+" / " +moveMessage.y);
+                    // Console.WriteLine(moveMessage.x+" / " +moveMessage.y);
                     reference.Velocity.Linear.X *= friction;
                     reference.Velocity.Linear.Z *= friction;
                     acceleration = 0;
@@ -177,15 +176,6 @@ namespace QuixPhysics
 
             }
 
-            /*     if (Math.Abs(reference.Velocity.Linear.Y) > 0.3)
-                 {
-                     reference.Velocity.Linear.X *= 0.99f;
-                     reference.Velocity.Linear.Z *= 0.99f;
-                 }*/
-
-            /* reference.Velocity.Linear.X *= friction;
-             reference.Velocity.Linear.Z *= friction;*/
-
 
         }
 
@@ -193,7 +183,7 @@ namespace QuixPhysics
         {
             if (rotateMessage != null)
             {
-                rotationController += rotateMessage.x / 70;
+                rotationController += rotateMessage.x / 50;
                 //simulator.Simulation.Awakener.AwakenBody(bodyHandle);
                 if (Math.Abs(rotateMessage.x) > 0)
                 {
@@ -205,23 +195,32 @@ namespace QuixPhysics
         }
         private void TickSnapped()
         {
-            var distance = Vector3.Distance(reference.Pose.Position, golfball.GetReference().Pose.Position);
-            //Console.WriteLine(distance);
-            if (distance < this.maxDistanceWithBall)
+            if (this.Agent.ActualState() != snappedState)
             {
-                this.canShoot = true;
-                this.Agent.ChangeState(snappedState);
+                var distance = Vector3.Distance(reference.Pose.Position, golfball.GetReference().Pose.Position);
+                //Console.WriteLine(distance);
+                if (distance < this.maxDistanceWithBall)
+                {
+                    this.canShoot = true;
+                    this.Agent.ChangeState(snappedState);
+                }
+                else
+                {
+                    this.canShoot = false;
+                }
             }
-            else
-            {
-                this.canShoot = false;
-            }
+
         }
         public void SetPositionToBall()
         {
-            float distance = 15;
+            float distance = 10;
             reference.Pose.Position = golfball.GetReference().Pose.Position;
             reference.Pose.Position.Y += distance;
+            var x = (float)Math.Cos(rotationController);
+            var y = (float)Math.Sin(rotationController);
+
+            reference.Pose.Position.X +=x*distance;
+            reference.Pose.Position.Z +=y*distance;
         }
 
         public Vector2 GetXYRotation()
@@ -259,10 +258,12 @@ namespace QuixPhysics
         }
         public void Jump(MoveMessage message)
         {
+
             if (!Agent.IsLocked())
             {
+                QuixConsole.Log("Jump");
                 Agent.ChangeState(jumpState);
-                Agent.Lock(30);
+                Agent.Lock(130);
             }
 
         }
@@ -273,15 +274,21 @@ namespace QuixPhysics
                 QuixConsole.WriteLine("Shotting");
                 shotState.message = message;
                 Agent.ChangeState(shotState);
-                Agent.Lock(30);
+                Agent.Lock(130);
 
-            }else{
-                
+            }
+            else
+            {
+
             }
 
         }
-        public void UseGauntlet(){
-            gauntlet.Activate();
+        public void UseGauntlet(bool activate)
+        {
+            gauntlet.Activate(activate);
+        }
+        public void Swipe(double degree){
+            gauntlet.Swipe(degree);
         }
     }
 

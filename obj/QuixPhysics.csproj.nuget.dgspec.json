@@ -52,6 +52,10 @@
               "target": "Package",
               "version": "[1.0.0, )"
             },
+            "FluentBehaviourTree": {
+              "target": "Package",
+              "version": "[0.0.4, )"
+            },
             "MongoDB.Driver": {
               "target": "Package",
               "version": "[2.12.0, )"

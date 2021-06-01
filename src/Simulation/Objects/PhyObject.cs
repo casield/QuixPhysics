@@ -16,6 +16,7 @@ namespace QuixPhysics
         internal ConnectionState connectionState;
         public SimpleMaterial material;
         public bool collidable = true;
+        public BodyReference reference;
 
         public PhyObject()
         {
@@ -27,6 +28,7 @@ namespace QuixPhysics
             this.bodyHandle = bodyHandle;
             this.state = state;
             this.simulator = simulator;
+            this.reference = GetReference();
             /* if(state.quaternion == new Quaternion(0,0,0,0)){
                 this.state.quaternion = Quaternion.Identity;
             }*/
@@ -40,6 +42,7 @@ namespace QuixPhysics
         }
 
         public void Stop(){
+      
             GetReference().Velocity.Linear = Vector3.Zero;
         }
 

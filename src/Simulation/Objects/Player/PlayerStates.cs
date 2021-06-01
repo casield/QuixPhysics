@@ -15,12 +15,10 @@ namespace QuixPhysics
         public void OnActivate()
         {
             // throw new NotImplementedException();
-
-
             PhyTimeOut timeOut = new PhyTimeOut(10, player.simulator);
             timeOut.Completed += SendMessage;
-            player.golfball.Stop();
             Snap();
+            QuixConsole.Log("Snapped state");
         }
 
         private void SendMessage()
@@ -32,7 +30,7 @@ namespace QuixPhysics
         {
             player.collidable = false;
             player.Stop();
-            //player.golfball.Stop();
+            player.golfball.Stop();
             player.SetPositionToBall();
         }
 
@@ -86,7 +84,7 @@ namespace QuixPhysics
             // throw new NotImplementedException();
             SendMessage();
 
-
+            
         }
 
         public void Tick()
@@ -110,10 +108,12 @@ namespace QuixPhysics
         }
         public void OnActivate()
         {
+            
             Jump();
         }
         private void Jump()
         {
+            QuixConsole.Log("Jumping!");
             phy.reference.Awake = true;
             phy.reference.Velocity.Linear.Y += 50;
         }
@@ -161,15 +161,15 @@ namespace QuixPhysics
         {
             // Console.WriteLine("Shoooot");
             // player.golfball.GetReference().Velocity.Linear.X -= 30;
-            SetPlayerCollided();
+            
 
             var radian = (player.rotationController);
             var x = (float)Math.Cos(radian);
             var y = (float)Math.Sin(radian);
             player.golfball.GetReference().Velocity.Linear.X -= (x * player.shootForce) * message.force;
             player.golfball.GetReference().Velocity.Linear.Z -= (y * player.shootForce) * message.force;
-            player.golfball.GetReference().Velocity.Linear.Y += (player.shootForce * .34f) * message.force;
-
+            player.golfball.GetReference().Velocity.Linear.Y += (player.shootForce * .6f) * message.force;
+            SetPlayerCollided();
         }
 
         public void OnDesactivate()

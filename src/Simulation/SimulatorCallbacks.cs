@@ -113,7 +113,7 @@ namespace QuixPhysics
         {
             bool AcanCollide = true;
             bool BcanCollide = true;
-           /* if (a.Mobility != CollidableMobility.Static || b.Mobility != CollidableMobility.Static)
+           if (a.Mobility != CollidableMobility.Static || b.Mobility != CollidableMobility.Static)
             {
                 if (a.Mobility == CollidableMobility.Dynamic)
                 {
@@ -135,7 +135,7 @@ namespace QuixPhysics
 
                     BcanCollide = simulator.staticObjectsHandlers[b.StaticHandle].collidable;
                 }
-            }*/
+            }
 
             //While the engine won't even try creating pairs between statics at all, it will ask about kinematic-kinematic pairs.
             //Those pairs cannot emit constraints since both involved bodies have infinite inertia. Since most of the demos don't need
@@ -160,7 +160,7 @@ namespace QuixPhysics
             pairMaterial.SpringSettings = ContactSpringiness;
 
 
-          /*  if (pair.A.Mobility == CollidableMobility.Static)
+          if (pair.A.Mobility == CollidableMobility.Static)
             {
                 if (simulator.OnStaticContactListeners.ContainsKey(pair.A.StaticHandle))
                 {
@@ -192,7 +192,7 @@ namespace QuixPhysics
                     var con = simulator.collidableToPhyObject(pair.A);
                     simulator.OnContactListeners[pair.B.BodyHandle].OnContact(con);
                 }
-            }*/
+            }
 
 
 
