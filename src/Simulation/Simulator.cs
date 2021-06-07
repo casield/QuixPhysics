@@ -48,6 +48,8 @@ namespace QuixPhysics
 
         public bool Disposed = false;
 
+        public MapMongo map;
+
 
         public Simulator(ConnectionState state, Server server)
         {
@@ -516,7 +518,7 @@ namespace QuixPhysics
             //objects[]
             Player2 onb2 = (Player2)simulator.users[j2.client].player;
             // Simulation.Awakener.AwakenBody(ob.bodyHandle);
-            onb2.Swipe(j2.degree);
+            onb2.Swipe(j2.degree,j2.direction);
         }
         internal void Jump(string data)
         {
@@ -597,6 +599,7 @@ namespace QuixPhysics
                         case "generateMap":
 
                             var map = this.simulator.server.dataBase.GetMap((string)message["data"]);
+                            this.simulator.map = map;
 
                             foreach (var obj in map.objects)
                             {

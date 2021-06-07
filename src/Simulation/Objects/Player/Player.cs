@@ -70,15 +70,25 @@ namespace QuixPhysics
             reference = simulator.Simulation.Bodies.GetBodyReference(bodyHandle);
             simulator.OnContactListeners.Add(this.bodyHandle, this);
 
+
+            SetPositionToStartPoint();
             CreateBall();
             CreateUser();
             CreateGauntlet();
+            
 
             jumpState = new JumpState(this);
             snappedState = new SnappedState(this);
             notSnappedState = new Not_SnappedState(this);
             shotState = new ShootState(this);
 
+        }
+
+        public void SetPositionToStartPoint(){
+           QuixConsole.Log("Start position",(simulator.map.startPositions[0].AsBsonDocument["x"])) ;
+           reference.Pose.Position.X =(float) simulator.map.startPositions[0].AsBsonDocument["x"].AsDouble;
+           reference.Pose.Position.Y =(float) simulator.map.startPositions[0].AsBsonDocument["y"].AsDouble;
+           reference.Pose.Position.Z =(float) simulator.map.startPositions[0].AsBsonDocument["z"].AsDouble;
         }
 
         private void CreateGauntlet()
@@ -287,8 +297,8 @@ namespace QuixPhysics
         {
             gauntlet.Activate(activate);
         }
-        public void Swipe(double degree){
-            gauntlet.Swipe(degree);
+        public void Swipe(double degree,Vector3 direction){
+            gauntlet.Swipe(degree,direction);
         }
     }
 

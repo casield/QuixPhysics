@@ -29,7 +29,7 @@ namespace QuixPhysics
                 Player.simulator.Simulation.Awakener.AwakenBody(golfBallRef.Handle);
             }
             if(!hasStopped){
-                Player.golfball.Stop();
+               // Player.golfball.Stop();
                 hasStopped = true;
             }
             if(!active){
@@ -37,12 +37,12 @@ namespace QuixPhysics
             }
             
         }
-        public void Swipe(double degree)
+        public void Swipe(double degree,Vector3 dir)
         {
             if (isInit())
             {
                 Player.simulator.Simulation.Awakener.AwakenBody(golfBallRef.Handle);
-                float force = 10;
+                float force = 30;
                 QuixConsole.Log("Swipé log", degree);
                 Vector2 rot2d = Player.GetXYRotation();
                 Vector3 rot = new Vector3(rot2d.X,0,rot2d.Y) ;
@@ -55,9 +55,15 @@ namespace QuixPhysics
 
                 Vector3 result = Vector3.Transform(rot,matrix);
 
-                golfBallRef.Velocity.Linear.Y += force;
-                golfBallRef.Velocity.Linear.X += result.X*force;
-                golfBallRef.Velocity.Linear.Z += result.Z*force;
+                QuixConsole.Log("direction",dir);
+
+                dir.X *=-1;
+                dir.Y *=-1;
+                dir.Z *=-1;
+
+                golfBallRef.Velocity.Linear.Y += dir.Y*force;
+                golfBallRef.Velocity.Linear.X += dir.X*force;
+                golfBallRef.Velocity.Linear.Z += dir.Z*force;
 
                 QuixConsole.Log("Result",result);
                 

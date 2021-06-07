@@ -1,3 +1,4 @@
+using System.Numerics;
 using Newtonsoft.Json.Linq;
 
 namespace QuixPhysics
@@ -25,6 +26,7 @@ namespace QuixPhysics
     {
         public string client;
         public float degree;
+        public Vector3 direction;
     }
 
     public class GauntletMessage

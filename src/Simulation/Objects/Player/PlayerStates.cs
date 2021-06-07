@@ -1,4 +1,5 @@
 using System;
+using System.Numerics;
 using BepuUtilities;
 
 namespace QuixPhysics
@@ -28,7 +29,7 @@ namespace QuixPhysics
 
         private void Snap()
         {
-            player.collidable = false;
+           // player.collidable = false;
             player.Stop();
             player.golfball.Stop();
             player.SetPositionToBall();
@@ -68,7 +69,7 @@ namespace QuixPhysics
 
         private void SendMessage()
         {
-            player.collidable = true;
+           // player.collidable = true;
             player.SendObjectMessage("Snap_false");
             // Console.WriteLine("Sending");
         }
@@ -166,9 +167,15 @@ namespace QuixPhysics
             var radian = (player.rotationController);
             var x = (float)Math.Cos(radian);
             var y = (float)Math.Sin(radian);
-            player.golfball.GetReference().Velocity.Linear.X -= (x * player.shootForce) * message.force;
+            /*player.golfball.GetReference().Velocity.Linear.X -= (x * player.shootForce) * message.force;
             player.golfball.GetReference().Velocity.Linear.Z -= (y * player.shootForce) * message.force;
-            player.golfball.GetReference().Velocity.Linear.Y += (player.shootForce * .6f) * message.force;
+            player.golfball.GetReference().Velocity.Linear.Y += (player.shootForce * .6f) * message.force;*/
+            float ximp = -(x * player.shootForce) * message.force;
+            float zimp = -(y * player.shootForce) * message.force;
+            float yimp = (player.shootForce * .6f) * message.force;
+
+            Vector3 imp = new Vector3(ximp,yimp,zimp);
+            player.golfball.GetReference().ApplyLinearImpulse(imp);
             SetPlayerCollided();
         }
 
@@ -185,6 +192,7 @@ namespace QuixPhysics
 
         public void Tick()
         {
+
             // throw new System.NotImplementedException();
         }
     }
