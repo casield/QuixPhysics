@@ -567,7 +567,7 @@ namespace QuixPhysics
                                 break;
                             case "createBoxes":
                                 //Console.WriteLine("Create boxes");
-                                // simulator.boxToCreate = 10;
+                                simulator.boxToCreate = 10;
                                 simulator.createObjects();
                                 break;
                             case "gauntlet":
