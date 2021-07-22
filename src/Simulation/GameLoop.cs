@@ -52,24 +52,24 @@ namespace QuixPhysics
 
                 // Update the game
                 //QuixConsole.Log(".....");
-                int repeat =0;
+                int repeat = 0;
                 if (_mySimulator != null && !_mySimulator.Disposed)
                 {
-                  
-                
+
+
                     while (lag >= TICKS_PER_UPDATE)
                     {
-                     //  QuixConsole.Log("Inside",lag); 
-                     repeat+=1;
-                         _mySimulator.commandReader.ReadCommand();
+                        //  QuixConsole.Log("Inside",lag); 
+                        repeat += 1;
+                        _mySimulator.commandReader.ReadCommand();
                         _mySimulator.Update();
                         lag -= TICKS_PER_UPDATE;
                     }
-                        QuixConsole.Log("repeated ",repeat);
+                    //QuixConsole.Log("repeated ",repeat);
 
-                    
+
                 }
-               
+
 
                 if (_mySimulator.Disposed)
                 {
@@ -86,7 +86,7 @@ namespace QuixPhysics
 
         private double getCurrentTime()
         {
-            current_Time+=1;
+            current_Time += 1;
             return DateTime.Now.Ticks;
         }
 
