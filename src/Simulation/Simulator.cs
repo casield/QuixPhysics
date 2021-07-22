@@ -64,7 +64,7 @@ namespace QuixPhysics
             var targetThreadCount = Math.Max(1, Environment.ProcessorCount > 4 ? Environment.ProcessorCount - 2 : Environment.ProcessorCount - 1);
             ThreadDispatcher = new SimpleThreadDispatcher(targetThreadCount);
             narrowPhaseCallbacks = new QuixNarrowPhaseCallbacks() { CollidableMaterials = collidableMaterials, simulator = this };
-            Simulation = Simulation.Create(bufferPool, narrowPhaseCallbacks, new QuixPoseIntegratorCallbacks(new Vector3(0, -10, 0)), new PositionFirstTimestepper());
+            Simulation = Simulation.Create(bufferPool, narrowPhaseCallbacks, new QuixPoseIntegratorCallbacks(new Vector3(0, -5, 0)), new PositionFirstTimestepper());
 
             CreateMap();
             // Server.Send(state.workSocket, "Hola desde simulator");
@@ -180,7 +180,7 @@ namespace QuixPhysics
         {
             //Console.WriteLine(gameTime.TotalSeconds);
             handleWorkers();
-            Simulation.Timestep(1 / 10f, ThreadDispatcher);
+            Simulation.Timestep(1/60f, ThreadDispatcher);
 
             ArrayList bodies = new ArrayList();
             var set = Simulation.Bodies.Sets[0];

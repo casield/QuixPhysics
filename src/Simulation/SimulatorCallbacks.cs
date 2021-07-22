@@ -105,7 +105,7 @@ namespace QuixPhysics
             //if (ContactSpringiness.AngularFrequency == 0 && ContactSpringiness.TwiceDampingRatio == 0)
             // ContactSpringiness = new SpringSettings(1000f, 0.001f);
 
-            ContactSpringiness = new SpringSettings(1f, 0.1f);
+            ContactSpringiness = new SpringSettings(30, 1);
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]

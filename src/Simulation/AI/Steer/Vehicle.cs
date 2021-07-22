@@ -12,8 +12,8 @@ namespace QuixPhysics
         public Vector3 acceleration = new Vector3();
         private BodyReference reference;
 
-        public float maxSpeed = 4;
-        public float maxForce = 100f;
+        public float maxSpeed = .2f;
+        public float maxForce = 10f;
         public bool isActive = true;
         public Vehicle(PhyObject obj)
         {

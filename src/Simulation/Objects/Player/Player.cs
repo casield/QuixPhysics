@@ -19,16 +19,11 @@ namespace QuixPhysics
     public class Player2 : PhyObject
     {
         MoveMessage moveMessage;
-        private float friction = 0.90f;
-        private float maxVelocity = 300;
-
-        private float moveMultiplier = .05f;
+        private float friction = .998f;
         private MoveMessage rotateMessage;
 
         public float rotationController = 0;
         private float acceleration = 0;
-        private float maxAcceleration = 15;
-        private float accelerationPower = .8f;
         public float shootForce = 30;
         public Agent Agent;
 
@@ -166,8 +161,8 @@ namespace QuixPhysics
                     var y = (float)Math.Sin(radian + radPad);
                     Vector3 vel = new Vector3(x, 0, y);
 
-                    vel.X *= 3;
-                    vel.Z *= 3;
+                    vel.X *= .3f;
+                    vel.Z *= .3f;
                     reference.Velocity.Linear.X += vel.X;
                     reference.Velocity.Linear.Z += vel.Z;
                     reference.Awake = true;

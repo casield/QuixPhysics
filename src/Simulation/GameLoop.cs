@@ -7,6 +7,8 @@ namespace QuixPhysics
     public class GameLoop
     {
         private Simulator _mySimulator;
+        private double MS_PER_FRAME = 1;
+    
 
         /// <summary>
         /// Status of GameLoop
@@ -41,6 +43,7 @@ namespace QuixPhysics
             while (Running)
             {
                 // Calculate the time elapsed since the last game loop cycle
+                double start = DateTime.Now.Ticks;
                 TimeSpan GameTime = DateTime.Now - _previousGameTime;
                 // Update the current previous game time
                 _previousGameTime = _previousGameTime + GameTime;
@@ -57,7 +60,7 @@ namespace QuixPhysics
                 }
 
                 // Update Game at 60fps
-                Thread.Sleep(8);
+                //Thread.Sleep((int)(1));
             }
 
 
