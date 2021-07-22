@@ -535,9 +535,9 @@ namespace QuixPhysics
 
             try
             {
-                foreach (var item in commandsList)
-                {
-
+                ArrayList newC = commandsList;
+                for(int a=0;a<commandsList.Count;a++){
+                    var item = commandsList[a];
                     JsonSerializerSettings setting = new JsonSerializerSettings();
                     setting.CheckAdditionalContent = false;
 
@@ -639,7 +639,10 @@ namespace QuixPhysics
 
                     }
 
+                
                 }
+
+                    
 
                 commandsList.Clear();
             }
