@@ -7,7 +7,7 @@ namespace QuixPhysics
     public class GameLoop
     {
         private Simulator _mySimulator;
-        private double MS_PER_UPDATE = .01;//.01;
+        private double TICKS_PER_UPDATE = 10000;//.01;
         private double current_Time = 0;
 
 
@@ -55,19 +55,21 @@ namespace QuixPhysics
                 int repeat =0;
                 if (_mySimulator != null && !_mySimulator.Disposed)
                 {
-                    _mySimulator.commandReader.ReadCommand();
-                    while (lag >= MS_PER_UPDATE)
+                  
+                
+                    while (lag >= TICKS_PER_UPDATE)
                     {
                      //  QuixConsole.Log("Inside",lag); 
                      repeat+=1;
-                       
+                         _mySimulator.commandReader.ReadCommand();
                         _mySimulator.Update();
-                        lag -= MS_PER_UPDATE;
+                        lag -= TICKS_PER_UPDATE;
                     }
+                        QuixConsole.Log("repeated ",repeat);
 
                     
                 }
-               QuixConsole.Log("repeated ",repeat);
+               
 
                 if (_mySimulator.Disposed)
                 {
@@ -85,7 +87,7 @@ namespace QuixPhysics
         private double getCurrentTime()
         {
             current_Time+=1;
-            return current_Time;
+            return DateTime.Now.Ticks;
         }
 
         /// <summary>

@@ -514,7 +514,7 @@ namespace QuixPhysics
         }
          internal void Swipe(string data)
         {
-            QuixConsole.Log("Swiping", data);
+            
             SwipeMessage j2 = JsonConvert.DeserializeObject<SwipeMessage>(data);
             //objects[]
             Player2 onb2 = (Player2)simulator.users[j2.client].player;

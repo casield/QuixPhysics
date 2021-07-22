@@ -19,7 +19,7 @@ namespace QuixPhysics
             PhyTimeOut timeOut = new PhyTimeOut(10, player.simulator);
             timeOut.Completed += SendMessage;
             Snap();
-            QuixConsole.Log("Snapped state");
+
         }
 
         private void SendMessage()

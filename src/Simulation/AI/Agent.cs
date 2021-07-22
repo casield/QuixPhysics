@@ -48,7 +48,7 @@ namespace QuixPhysics
             {
                 if (this.lockedTick == this.lockedTime)
                 {
-                    QuixConsole.Log("unLocked",lockedTick);
+                    
                     this.Unlock();
                 }
                 this.lockedTick++;
@@ -73,7 +73,7 @@ namespace QuixPhysics
                     }
 
                     this.state = ms;
-                    QuixConsole.Log("State",ms.GetType().ToString());
+                    
                     this.state.OnActivate();
                 }
             }else{
