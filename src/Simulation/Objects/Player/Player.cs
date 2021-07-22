@@ -266,7 +266,7 @@ namespace QuixPhysics
 
             if (!Agent.IsLocked())
             {
-                QuixConsole.Log("Jump");
+                
                 Agent.ChangeState(jumpState);
                 Agent.Lock(130);
             }
