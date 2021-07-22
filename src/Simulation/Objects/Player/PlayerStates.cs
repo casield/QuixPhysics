@@ -114,7 +114,7 @@ namespace QuixPhysics
         }
         private void Jump()
         {
-            QuixConsole.Log("Jumping!");
+           
             phy.reference.Awake = true;
             phy.reference.Velocity.Linear.Y += 50;
         }
