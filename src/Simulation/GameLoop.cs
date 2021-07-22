@@ -7,8 +7,9 @@ namespace QuixPhysics
     public class GameLoop
     {
         private Simulator _mySimulator;
-        private double MS_PER_FRAME = 1;
-    
+        private double MS_PER_UPDATE = .01;//.01;
+        private double current_Time = 0;
+
 
         /// <summary>
         /// Status of GameLoop
@@ -38,32 +39,53 @@ namespace QuixPhysics
             Running = true;
 
             // Set previous game time
-            DateTime _previousGameTime = DateTime.Now;
+            double previous = getCurrentTime();
+            double lag = 0.0;
 
             while (Running)
             {
                 // Calculate the time elapsed since the last game loop cycle
-                double start = DateTime.Now.Ticks;
-                TimeSpan GameTime = DateTime.Now - _previousGameTime;
-                // Update the current previous game time
-                _previousGameTime = _previousGameTime + GameTime;
+                double current = getCurrentTime();
+                double elapsed = current - previous;
+                previous = current;
+                lag += elapsed;
+
                 // Update the game
+                //QuixConsole.Log(".....");
+                int repeat =0;
                 if (_mySimulator != null && !_mySimulator.Disposed)
                 {
+                    _mySimulator.commandReader.ReadCommand();
+                    while (lag >= MS_PER_UPDATE)
+                    {
+                     //  QuixConsole.Log("Inside",lag); 
+                     repeat+=1;
+                       
+                        _mySimulator.Update();
+                        lag -= MS_PER_UPDATE;
+                    }
 
-                    _mySimulator.Update(GameTime);
+                    
                 }
+               QuixConsole.Log("repeated ",repeat);
 
                 if (_mySimulator.Disposed)
                 {
                     Running = false;
                 }
+                //QuixConsole.Log("End", DateTime.Now.Ticks - start);
 
                 // Update Game at 60fps
                 //Thread.Sleep((int)(1));
             }
 
 
+        }
+
+        private double getCurrentTime()
+        {
+            current_Time+=1;
+            return current_Time;
         }
 
         /// <summary>

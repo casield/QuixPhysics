@@ -36,7 +36,7 @@ namespace QuixPhysics
         internal int timesPressedCreateBoxes = 0;
         internal List<PhyWorker> workers = new List<PhyWorker>();
         internal List<PhyWorker> workersToAdd = new List<PhyWorker>();
-        internal CommandReader commandReader;
+        public CommandReader commandReader;
         internal Thread thread;
 
         public QuixNarrowPhaseCallbacks narrowPhaseCallbacks;
@@ -176,9 +176,10 @@ namespace QuixPhysics
             }
         }
 
-        internal void Update(TimeSpan gameTime)
+        internal void Update()
         {
             //Console.WriteLine(gameTime.TotalSeconds);
+            //commandReader.ReadCommand();
             handleWorkers();
             Simulation.Timestep(1/60f, ThreadDispatcher);
 
@@ -229,7 +230,7 @@ namespace QuixPhysics
                 SendMessage("update", JsonConvert.SerializeObject(bodies), connectionState.workSocket);
             }
 
-            commandReader.ReadCommand();
+            
 
 
         }
@@ -480,7 +481,7 @@ namespace QuixPhysics
             GC.WaitForPendingFinalizers();
         }
     }
-    class CommandReader
+   public class CommandReader
     {
         private ArrayList commandsList = new ArrayList();
         private Simulator simulator;

@@ -83,7 +83,7 @@ namespace QuixPhysics
 
         public void ChangeState(AgentState state)
         {
-            QuixConsole.Log("Is locked",isLocked,state,lockedTime);
+        
             if (!this.isLocked)
             {
                 //QuixConsole.Log("Changing state to",state.GetType().ToString());
