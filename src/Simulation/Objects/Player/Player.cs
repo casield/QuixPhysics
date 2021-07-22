@@ -80,7 +80,6 @@ namespace QuixPhysics
         }
 
         public void SetPositionToStartPoint(){
-           QuixConsole.Log("Start position",(simulator.map.startPositions[0].AsBsonDocument["x"])) ;
            reference.Pose.Position.X =(float) simulator.map.startPositions[0].AsBsonDocument["x"].AsDouble;
            reference.Pose.Position.Y =(float) simulator.map.startPositions[0].AsBsonDocument["y"].AsDouble;
            reference.Pose.Position.Z =(float) simulator.map.startPositions[0].AsBsonDocument["z"].AsDouble;
@@ -240,7 +239,7 @@ namespace QuixPhysics
 
             if (this.reference.Pose.Position.Y < -50)
             {
-                this.SetPositionToBall();
+                this.SetPositionToStartPoint();
             }
 
         }
