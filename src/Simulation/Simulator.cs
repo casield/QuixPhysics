@@ -54,7 +54,7 @@ namespace QuixPhysics
         public Simulator(ConnectionState state, Server server)
         {
 
-             server.ReloadMeshes();
+            server.ReloadMeshes();
 
             collidableMaterials = new CollidableProperty<SimpleMaterial>();
 
@@ -181,7 +181,7 @@ namespace QuixPhysics
             //Console.WriteLine(gameTime.TotalSeconds);
             //commandReader.ReadCommand();
             handleWorkers();
-            Simulation.Timestep(1/60f, ThreadDispatcher);
+            Simulation.Timestep(1 / 60f, ThreadDispatcher);
 
             ArrayList bodies = new ArrayList();
             var set = Simulation.Bodies.Sets[0];
@@ -230,7 +230,7 @@ namespace QuixPhysics
                 SendMessage("update", JsonConvert.SerializeObject(bodies), connectionState.workSocket);
             }
 
-            
+
 
 
         }
@@ -481,7 +481,7 @@ namespace QuixPhysics
             GC.WaitForPendingFinalizers();
         }
     }
-   public class CommandReader
+    public class CommandReader
     {
         private ArrayList commandsList = new ArrayList();
         private Simulator simulator;
@@ -512,14 +512,14 @@ namespace QuixPhysics
             // Simulation.Awakener.AwakenBody(ob.bodyHandle);
             onb2.UseGauntlet(j2.active);
         }
-         internal void Swipe(string data)
+        internal void Swipe(string data)
         {
-            
+
             SwipeMessage j2 = JsonConvert.DeserializeObject<SwipeMessage>(data);
             //objects[]
             Player2 onb2 = (Player2)simulator.users[j2.client].player;
             // Simulation.Awakener.AwakenBody(ob.bodyHandle);
-            onb2.Swipe(j2.degree,j2.direction);
+            onb2.Swipe(j2.degree, j2.direction);
         }
         internal void Jump(string data)
         {
@@ -536,125 +536,131 @@ namespace QuixPhysics
             try
             {
                 ArrayList newC = commandsList;
-                for(int a=0;a<commandsList.Count;a++){
+                for (int a = 0; a < commandsList.Count; a++)
+                {
                     var item = commandsList[a];
                     JsonSerializerSettings setting = new JsonSerializerSettings();
                     setting.CheckAdditionalContent = false;
-
-                    Newtonsoft.Json.Linq.JObject message = JsonConvert.DeserializeObject<Newtonsoft.Json.Linq.JObject>((string)item, setting);
-                    string type = (string)message["type"];
-                    switch (type)
+                    if (item != null)
                     {
-                        case "create":
+                        Newtonsoft.Json.Linq.JObject message = JsonConvert.DeserializeObject<Newtonsoft.Json.Linq.JObject>((string)item, setting);
+                        string type = (string)message["type"];
+                        switch (type)
+                        {
+                            case "create":
 
-                            // Console.WriteLine(message);
+                                // Console.WriteLine(message);
 
-                            if (message["data"]["halfSize"] != null)
-                            {
-                                BoxState ob = JsonConvert.DeserializeObject<BoxState>(((object)message["data"]).ToString());
-                                simulator.Create(ob);
-                            }
+                                if (message["data"]["halfSize"] != null)
+                                {
+                                    BoxState ob = JsonConvert.DeserializeObject<BoxState>(((object)message["data"]).ToString());
+                                    simulator.Create(ob);
+                                }
 
-                            if (message["data"]["radius"] != null)
-                            {
-                                SphereState ob = JsonConvert.DeserializeObject<SphereState>(((object)message["data"]).ToString());
-                                simulator.Create(ob);
+                                if (message["data"]["radius"] != null)
+                                {
+                                    SphereState ob = JsonConvert.DeserializeObject<SphereState>(((object)message["data"]).ToString());
+                                    simulator.Create(ob);
+                                    break;
+                                }
+
                                 break;
-                            }
+                            case "createBoxes":
+                                //Console.WriteLine("Create boxes");
+                                // simulator.boxToCreate = 10;
+                                simulator.createObjects();
+                                break;
+                            case "gauntlet":
 
-                            break;
-                        case "createBoxes":
-                            //Console.WriteLine("Create boxes");
-                            // simulator.boxToCreate = 10;
-                            simulator.createObjects();
-                            break;
-                        case "gauntlet":
+                                UseGauntlet(((object)message["data"]).ToString());
+                                break;
+                            case "move":
 
-                            UseGauntlet(((object)message["data"]).ToString());
-                            break;
-                        case "move":
+                                MoveMessage j = JsonConvert.DeserializeObject<MoveMessage>(((object)message["data"]).ToString());
+                                //objects[]
+                                Player2 onb = (Player2)simulator.users[j.client].player;
+                                // Simulation.Awakener.AwakenBody(ob.bodyHandle);
+                                onb.Move(j);
 
-                            MoveMessage j = JsonConvert.DeserializeObject<MoveMessage>(((object)message["data"]).ToString());
-                            //objects[]
-                            Player2 onb = (Player2)simulator.users[j.client].player;
-                            // Simulation.Awakener.AwakenBody(ob.bodyHandle);
-                            onb.Move(j);
+                                break;
+                            case "rotate":
+                                MoveMessage j2 = JsonConvert.DeserializeObject<MoveMessage>(((object)message["data"]).ToString());
+                                //objects[]
+                                Player2 onb2 = (Player2)simulator.users[j2.client].player;
+                                // Simulation.Awakener.AwakenBody(ob.bodyHandle);
+                                onb2.Rotate(j2);
+                                break;
+                            case "jump":
+                                Jump(((object)message["data"]).ToString());
+                                break;
+                            case "shoot":
+                                Shoot(((object)message["data"]).ToString());
+                                break;
+                            case "swipe":
+                                Swipe(((object)message["data"]).ToString());
+                                break;
+                            case "generateMap":
 
-                            break;
-                        case "rotate":
-                            MoveMessage j2 = JsonConvert.DeserializeObject<MoveMessage>(((object)message["data"]).ToString());
-                            //objects[]
-                            Player2 onb2 = (Player2)simulator.users[j2.client].player;
-                            // Simulation.Awakener.AwakenBody(ob.bodyHandle);
-                            onb2.Rotate(j2);
-                            break;
-                        case "jump":
-                            Jump(((object)message["data"]).ToString());
-                            break;
-                        case "shoot":
-                            Shoot(((object)message["data"]).ToString());
-                            break;
-                        case "swipe":
-                            Swipe(((object)message["data"]).ToString());
-                            break;
-                        case "generateMap":
+                                var map = this.simulator.server.dataBase.GetMap((string)message["data"]);
+                                this.simulator.map = map;
 
-                            var map = this.simulator.server.dataBase.GetMap((string)message["data"]);
-                            this.simulator.map = map;
-
-                            foreach (var obj in map.objects)
-                            {
-
-                                //obj.ToJson();
-                                if (obj.Contains("halfSize"))
+                                foreach (var obj in map.objects)
                                 {
 
-                                    obj["halfSize"].AsBsonDocument.Remove("__refId");
-                                    obj.Remove("_id");
-                                    var stri = JsonConvert.DeserializeObject<BoxState>(obj.ToJson());
-                                    stri.quaternion = JsonConvert.DeserializeObject<Quaternion>(obj["quat"].ToJson());
+                                    //obj.ToJson();
+                                    if (obj.Contains("halfSize"))
+                                    {
 
-                                    this.simulator.Create(stri);
+                                        obj["halfSize"].AsBsonDocument.Remove("__refId");
+                                        obj.Remove("_id");
+                                        var stri = JsonConvert.DeserializeObject<BoxState>(obj.ToJson());
+                                        stri.quaternion = JsonConvert.DeserializeObject<Quaternion>(obj["quat"].ToJson());
+
+                                        this.simulator.Create(stri);
+                                    }
+                                    if (obj.Contains("radius"))
+                                    {
+
+                                        // obj["radius"].AsBsonDocument.Remove("__refId");
+                                        obj.Remove("_id");
+                                        var stri = JsonConvert.DeserializeObject<SphereState>(obj.ToJson());
+                                        stri.quaternion = JsonConvert.DeserializeObject<Quaternion>(obj["quat"].ToJson());
+
+                                        this.simulator.Create(stri);
+                                    }
                                 }
-                                if (obj.Contains("radius"))
-                                {
+                                break;
+                            case "close":
+                                //Console.WriteLine("Close");
+                                simulator.Close();
 
-                                    // obj["radius"].AsBsonDocument.Remove("__refId");
-                                    obj.Remove("_id");
-                                    var stri = JsonConvert.DeserializeObject<SphereState>(obj.ToJson());
-                                    stri.quaternion = JsonConvert.DeserializeObject<Quaternion>(obj["quat"].ToJson());
+                                break;
+                            default:
+                                QuixConsole.WriteLine("Command not registred " + type);
+                                break;
 
-                                    this.simulator.Create(stri);
-                                }
-                            }
-                            break;
-                        case "close":
-                            //Console.WriteLine("Close");
-                            simulator.Close();
+                        }
 
-                            break;
-                        default:
-                            QuixConsole.WriteLine("Command not registred " + type);
-                            break;
 
                     }
 
-                
                 }
 
-                    
+
+
 
                 commandsList.Clear();
             }
             catch (InvalidOperationException e)
             {
-                QuixConsole.Log("Collection was modifieded",e);
+                QuixConsole.Log("Collection was modifieded", e);
             }
             catch (JsonReaderException e)
             {
                 QuixConsole.Log("Json Problem ", e);
             }
-            catch(Exception e){
+            catch (Exception e)
+            {
                 QuixConsole.WriteLine(e);
             }
 
