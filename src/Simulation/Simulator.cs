@@ -125,17 +125,6 @@ namespace QuixPhysics
                 box.instantiate = true;
                 box.quaternion = Quaternion.Identity;
                 var b = Create(box);
-                /* int x = a % width;    // % is the "modulo operator", the remainder of i / width;
-               int y = a / width;    // where "/" is an integer division
-               var ringBoxShape = new Box(1, 1, 1);
-               ringBoxShape.ComputeInertia(1, out var ringBoxInertia);
-               var boxDescription = BodyDescription.CreateDynamic(new Vector3(), ringBoxInertia,
-                                  new CollidableDescription(Simulation.Shapes.Add(ringBoxShape), 0.1f),
-                                  new BodyActivityDescription(0.01f));
-               new BodyActivityDescription(0.01f);
-
-           boxDescription.Pose = new RigidPose(new Vector3(x,300,y), Quaternion.Identity);
-           Simulation.Bodies.Add(boxDescription);*/
             }
             timesPressedCreateBoxes++;
             // Console.WriteLine("Statics size " + Simulation.Statics.Count);
@@ -566,7 +555,7 @@ namespace QuixPhysics
 
                                 break;
                             case "createBoxes":
-                                //Console.WriteLine("Create boxes");
+                                Console.WriteLine("Create boxes");
                                 simulator.boxToCreate = 10;
                                 simulator.createObjects();
                                 break;

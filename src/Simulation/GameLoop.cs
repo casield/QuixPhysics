@@ -65,7 +65,7 @@ namespace QuixPhysics
                         _mySimulator.Update();
                         lag -= TICKS_PER_UPDATE;
                     }
-                    QuixConsole.Log("repeated ",repeat);
+                   // QuixConsole.Log("repeated ",repeat);
 
 
                 }
