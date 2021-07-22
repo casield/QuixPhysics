@@ -152,12 +152,14 @@ namespace QuixPhysics
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public unsafe bool ConfigureContactManifold<TManifold>(int workerIndex, CollidablePair pair, ref TManifold manifold, out PairMaterialProperties pairMaterial) where TManifold : struct, IContactManifold<TManifold>
         {
+              pairMaterial.FrictionCoefficient = 0.5f;
+            pairMaterial.MaximumRecoveryVelocity = 20f;
+            pairMaterial.SpringSettings = ContactSpringiness;
+          
             var a = CollidableMaterials[pair.A];
             var b = CollidableMaterials[pair.B];
 
-            pairMaterial.FrictionCoefficient = 0.5f;
-            pairMaterial.MaximumRecoveryVelocity = 20f;
-            pairMaterial.SpringSettings = ContactSpringiness;
+          
 
 
           if (pair.A.Mobility == CollidableMobility.Static)

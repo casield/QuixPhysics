@@ -108,6 +108,8 @@ namespace QuixPhysics
         {
             int width = 10;
             int sizeObj = 60;
+            int max=3000;
+            var random = new Random();
             for (int a = 0; a < boxToCreate; a++)
             {
                 var box = new SphereState();
@@ -119,7 +121,8 @@ namespace QuixPhysics
 
                 int x = a % width;    // % is the "modulo operator", the remainder of i / width;
                 int y = a / width;    // where "/" is an integer division
-                box.position = new Vector3(x * sizeObj, 1050 + (timesPressedCreateBoxes * sizeObj), y * sizeObj);
+                //box.position = new Vector3(x * sizeObj, 1050 + (timesPressedCreateBoxes * sizeObj), y * sizeObj);
+                box.position = new Vector3(random.Next(-max,max),2500,random.Next(-max,max));
                 box.radius = 10;
                 box.mesh = "Board/Bomb";
                 box.instantiate = true;
