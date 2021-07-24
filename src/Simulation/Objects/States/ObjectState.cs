@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Numerics;
+using System.Text;
 using MongoDB.Bson;
 using MongoDB.Bson.IO;
 using MongoDB.Bson.Serialization.Attributes;
@@ -24,15 +25,20 @@ namespace QuixPhysics
         public float mass { get; set; }
         public bool instantiate { get; set; }
         public string owner { get; set; }
+
+        private StringBuilder builder;
+
+        public ObjectState(){
+            builder = new StringBuilder();
+        }
         
-
-
-        //public List<Vector3> faces;
-
-
         internal string getJson()
         {
             return Newtonsoft.Json.JsonConvert.SerializeObject(this);
+        }
+        internal string getPosRot(){
+            double[] b = new double[]{position.X,position.Y,position.Z,quaternion.X,quaternion.Y,quaternion.Z,quaternion.W};
+            return b.ToString();
         }
 
 

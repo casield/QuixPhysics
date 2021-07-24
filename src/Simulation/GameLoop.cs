@@ -61,8 +61,9 @@ namespace QuixPhysics
                     {
                         //  QuixConsole.Log("Inside",lag); 
                         repeat += 1;
+                      
+                        _mySimulator.Update();  
                         _mySimulator.commandReader.ReadCommand();
-                        _mySimulator.Update();
                         lag -= TICKS_PER_UPDATE;
                     }
                    // QuixConsole.Log("repeated ",repeat);

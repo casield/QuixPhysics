@@ -108,7 +108,7 @@ namespace QuixPhysics
         {
             int width = 10;
             int sizeObj = 60;
-            int max=3000;
+            int max = 3000;
             var random = new Random();
             for (int a = 0; a < boxToCreate; a++)
             {
@@ -122,7 +122,7 @@ namespace QuixPhysics
                 int x = a % width;    // % is the "modulo operator", the remainder of i / width;
                 int y = a / width;    // where "/" is an integer division
                 //box.position = new Vector3(x * sizeObj, 1050 + (timesPressedCreateBoxes * sizeObj), y * sizeObj);
-                box.position = new Vector3(random.Next(-max,max),2500,random.Next(-max,max));
+                box.position = new Vector3(random.Next(-max, max), 2500, random.Next(-max, max));
                 box.radius = 10;
                 box.mesh = "Board/Bomb";
                 box.instantiate = true;
@@ -175,8 +175,11 @@ namespace QuixPhysics
             handleWorkers();
             Simulation.Timestep(1 / 60f, ThreadDispatcher);
 
-            ArrayList bodies = new ArrayList();
+            // ArrayList bodies = new ArrayList();
             var set = Simulation.Bodies.Sets[0];
+            string[] bodies2 = new string[set.Count + staticObjectsHandlers.Count];
+            int bodiesAdded = 0;
+
 
             if (t == tMax)
             {
@@ -195,7 +198,9 @@ namespace QuixPhysics
                     var handle = set.IndexToHandle[bodyIndex];
                     if (objectsHandlers[handle].state.instantiate)
                     {
-                        bodies.Add(objectsHandlers[handle].getJSON());
+                        //bodies.Add(objectsHandlers[handle].getJSON());
+                        bodies2[bodyIndex] = objectsHandlers[handle].getJSON();
+                        bodiesAdded += 1;
                     }
 
 
@@ -212,14 +217,17 @@ namespace QuixPhysics
             {
                 if (item.Value.needUpdate)
                 {
-                    bodies.Add(item.Value.getJSON());
+                    //bodies.Add(item.Value.getJSON());
+                    bodies2[bodiesAdded] = item.Value.getJSON();
                     item.Value.needUpdate = false;
+                    bodiesAdded += 1;
                 }
             }
 
-            if (bodies.Count > 0)
+            if (bodiesAdded > 0)
             {
-                SendMessage("update", JsonConvert.SerializeObject(bodies), connectionState.workSocket);
+                var slice = bodies2[0..bodiesAdded];
+                SendMessage("update", JsonConvert.SerializeObject(slice), connectionState.workSocket);
             }
 
 
@@ -264,16 +272,6 @@ namespace QuixPhysics
                 phy = CreateSphere((SphereState)state);
             }
 
-            if (phy.material == default(SimpleMaterial))
-            {
-                collidableMaterials.Allocate(phy.bodyHandle) = new SimpleMaterial
-                {
-                    FrictionCoefficient = .1f,
-                    MaximumRecoveryVelocity = float.MaxValue,
-                    SpringSettings = new SpringSettings(1f, 1.5f)
-                };
-
-            }
 
             if (!objects.ContainsKey(state.uID))
             {
@@ -299,7 +297,12 @@ namespace QuixPhysics
                 boxDescription.Pose = new RigidPose(state.position, state.quaternion);
                 var bodyHandle = Simulation.Bodies.Add(boxDescription);
 
-
+                collidableMaterials.Allocate(bodyHandle) = new SimpleMaterial
+                {
+                    FrictionCoefficient = .1f,
+                    MaximumRecoveryVelocity = float.MaxValue,
+                    SpringSettings = new SpringSettings(1f, 1.5f)
+                };
 
                 phy = SetUpPhyObject(bodyHandle, state);
                 objectsHandlers.Add(bodyHandle, phy);
@@ -311,6 +314,13 @@ namespace QuixPhysics
                 StaticDescription description = new StaticDescription(state.position, state.quaternion, collidableDescription);
                 StaticHandle handle = Simulation.Statics.Add(description);
                 //collidableMaterials.Allocate(handle) = new SimpleMaterial { FrictionCoefficient = 1, MaximumRecoveryVelocity = float.MaxValue, SpringSettings = new SpringSettings(1f, 1f) };
+               
+                 collidableMaterials.Allocate(handle) = new SimpleMaterial
+                {
+                    FrictionCoefficient = 1f,
+                    MaximumRecoveryVelocity = float.MaxValue,
+                    SpringSettings = new SpringSettings(30, 1f)
+                };
                 phy = SetUpPhyObject(handle, state);
                 staticObjectsHandlers.Add(handle, (StaticPhyObject)phy);
                 //objectsHandlers.Add(handle,phy);
@@ -471,192 +481,6 @@ namespace QuixPhysics
 
             // Wait for all finalizers to complete before continuing.
             GC.WaitForPendingFinalizers();
-        }
-    }
-    public class CommandReader
-    {
-        private ArrayList commandsList = new ArrayList();
-        private Simulator simulator;
-
-        public CommandReader(Simulator _simulator)
-        {
-            simulator = _simulator;
-        }
-        internal void AddCommandToBeRead(string v)
-        {
-            commandsList.Add(v);
-        }
-        internal void Shoot(string data)
-        {
-            QuixConsole.WriteLine(data);
-            ShootMessage j2 = JsonConvert.DeserializeObject<ShootMessage>(data);
-            //objects[]
-            Player2 onb2 = (Player2)simulator.users[j2.client].player;
-            // Simulation.Awakener.AwakenBody(ob.bodyHandle);
-            onb2.Shoot(j2);
-        }
-        internal void UseGauntlet(string data)
-        {
-            QuixConsole.Log("Use gauntlet", data);
-            GauntletMessage j2 = JsonConvert.DeserializeObject<GauntletMessage>(data);
-            //objects[]
-            Player2 onb2 = (Player2)simulator.users[j2.client].player;
-            // Simulation.Awakener.AwakenBody(ob.bodyHandle);
-            onb2.UseGauntlet(j2.active);
-        }
-        internal void Swipe(string data)
-        {
-
-            SwipeMessage j2 = JsonConvert.DeserializeObject<SwipeMessage>(data);
-            //objects[]
-            Player2 onb2 = (Player2)simulator.users[j2.client].player;
-            // Simulation.Awakener.AwakenBody(ob.bodyHandle);
-            onb2.Swipe(j2.degree, j2.direction);
-        }
-        internal void Jump(string data)
-        {
-            MoveMessage j2 = JsonConvert.DeserializeObject<MoveMessage>(data);
-            //objects[]
-            Player2 onb2 = (Player2)simulator.users[j2.client].player;
-            // Simulation.Awakener.AwakenBody(ob.bodyHandle);
-            onb2.Jump(j2);
-        }
-        internal void ReadCommand()
-        {
-            //Console.WriteLine("Read command: {0}", v);
-
-            try
-            {
-                ArrayList newC = commandsList;
-                for (int a = 0; a < commandsList.Count; a++)
-                {
-                    var item = commandsList[a];
-                    JsonSerializerSettings setting = new JsonSerializerSettings();
-                    setting.CheckAdditionalContent = false;
-                    if (item != null)
-                    {
-                        Newtonsoft.Json.Linq.JObject message = JsonConvert.DeserializeObject<Newtonsoft.Json.Linq.JObject>((string)item, setting);
-                        string type = (string)message["type"];
-                        switch (type)
-                        {
-                            case "create":
-
-                                // Console.WriteLine(message);
-
-                                if (message["data"]["halfSize"] != null)
-                                {
-                                    BoxState ob = JsonConvert.DeserializeObject<BoxState>(((object)message["data"]).ToString());
-                                    simulator.Create(ob);
-                                }
-
-                                if (message["data"]["radius"] != null)
-                                {
-                                    SphereState ob = JsonConvert.DeserializeObject<SphereState>(((object)message["data"]).ToString());
-                                    simulator.Create(ob);
-                                    break;
-                                }
-
-                                break;
-                            case "createBoxes":
-                                Console.WriteLine("Create boxes");
-                                simulator.boxToCreate = 10;
-                                simulator.createObjects();
-                                break;
-                            case "gauntlet":
-
-                                UseGauntlet(((object)message["data"]).ToString());
-                                break;
-                            case "move":
-
-                                MoveMessage j = JsonConvert.DeserializeObject<MoveMessage>(((object)message["data"]).ToString());
-                                //objects[]
-                                Player2 onb = (Player2)simulator.users[j.client].player;
-                                // Simulation.Awakener.AwakenBody(ob.bodyHandle);
-                                onb.Move(j);
-
-                                break;
-                            case "rotate":
-                                MoveMessage j2 = JsonConvert.DeserializeObject<MoveMessage>(((object)message["data"]).ToString());
-                                //objects[]
-                                Player2 onb2 = (Player2)simulator.users[j2.client].player;
-                                // Simulation.Awakener.AwakenBody(ob.bodyHandle);
-                                onb2.Rotate(j2);
-                                break;
-                            case "jump":
-                                Jump(((object)message["data"]).ToString());
-                                break;
-                            case "shoot":
-                                Shoot(((object)message["data"]).ToString());
-                                break;
-                            case "swipe":
-                                Swipe(((object)message["data"]).ToString());
-                                break;
-                            case "generateMap":
-
-                                var map = this.simulator.server.dataBase.GetMap((string)message["data"]);
-                                this.simulator.map = map;
-
-                                foreach (var obj in map.objects)
-                                {
-
-                                    //obj.ToJson();
-                                    if (obj.Contains("halfSize"))
-                                    {
-
-                                        obj["halfSize"].AsBsonDocument.Remove("__refId");
-                                        obj.Remove("_id");
-                                        var stri = JsonConvert.DeserializeObject<BoxState>(obj.ToJson());
-                                        stri.quaternion = JsonConvert.DeserializeObject<Quaternion>(obj["quat"].ToJson());
-
-                                        this.simulator.Create(stri);
-                                    }
-                                    if (obj.Contains("radius"))
-                                    {
-
-                                        // obj["radius"].AsBsonDocument.Remove("__refId");
-                                        obj.Remove("_id");
-                                        var stri = JsonConvert.DeserializeObject<SphereState>(obj.ToJson());
-                                        stri.quaternion = JsonConvert.DeserializeObject<Quaternion>(obj["quat"].ToJson());
-
-                                        this.simulator.Create(stri);
-                                    }
-                                }
-                                break;
-                            case "close":
-                                //Console.WriteLine("Close");
-                                simulator.Close();
-
-                                break;
-                            default:
-                                QuixConsole.WriteLine("Command not registred " + type);
-                                break;
-
-                        }
-
-
-                    }
-
-                }
-
-
-
-
-                commandsList.Clear();
-            }
-            catch (InvalidOperationException e)
-            {
-                QuixConsole.Log("Collection was modifieded", e);
-            }
-            catch (JsonReaderException e)
-            {
-                QuixConsole.Log("Json Problem ", e);
-            }
-            catch (Exception e)
-            {
-                QuixConsole.WriteLine(e);
-            }
-
-
         }
     }
 }

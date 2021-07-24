@@ -42,7 +42,7 @@ namespace QuixPhysics
             if (isInit())
             {
                 Player.simulator.Simulation.Awakener.AwakenBody(golfBallRef.Handle);
-                float force = 30;
+                float force = 70;
                 QuixConsole.Log("Swipé log", degree);
                 Vector2 rot2d = Player.GetXYRotation();
                 Vector3 rot = new Vector3(rot2d.X,0,rot2d.Y) ;

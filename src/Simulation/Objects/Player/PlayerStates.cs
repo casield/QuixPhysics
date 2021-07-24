@@ -29,10 +29,11 @@ namespace QuixPhysics
 
         private void Snap()
         {
-           // player.collidable = false;
+           // player.collidable = false; 
+           player.SetPositionToBall();
             player.Stop();
             player.golfball.Stop();
-            player.SetPositionToBall();
+           
         }
 
         public void OnDesactivate()
@@ -42,15 +43,12 @@ namespace QuixPhysics
 
         public void OnRepeat()
         {
-            // throw new NotImplementedException();
-            player.golfball.Stop();
             Snap();
         }
 
         public void Tick()
         {
             Snap();
-            //  throw new NotImplementedException();
         }
     }
     class Not_SnappedState : AgentState
@@ -177,6 +175,7 @@ namespace QuixPhysics
             Vector3 imp = new Vector3(ximp,yimp,zimp);
             player.golfball.GetReference().ApplyLinearImpulse(imp);
             SetPlayerCollided();
+            player.SetNotSnapped();
         }
 
         public void OnDesactivate()

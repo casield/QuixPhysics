@@ -214,7 +214,8 @@ namespace QuixPhysics
         }
         public void Send(Socket handler, String data)
         {
-
+            try{
+                
             // Convert the string data to byte data using ASCII encoding.  
             data += "<L@>";
             byte[] byteData = Encoding.ASCII.GetBytes(data);
@@ -228,6 +229,10 @@ namespace QuixPhysics
             }else{
                 handler.Close();
             }
+            }catch(SocketException e){
+                QuixConsole.Log("Error in Send",e);
+            }
+
 
 
         }
