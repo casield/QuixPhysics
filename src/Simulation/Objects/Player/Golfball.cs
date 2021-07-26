@@ -13,9 +13,9 @@ namespace QuixPhysics
         {
 
         }
-        public override void Load(Handle bodyHandle, ConnectionState connectionState, Simulator simulator, ObjectState state,Guid guid)
+        public override void Load(Handle bodyHandle, ConnectionState connectionState, Simulator simulator, ObjectState state,Guid guid,Room room)
         {
-            base.Load(bodyHandle, connectionState, simulator, state,guid);
+            base.Load(bodyHandle, connectionState, simulator, state,guid,room);
 
             simulator.collidableMaterials[bodyHandle.bodyHandle].collidable = true;
             simulator.collidableMaterials[bodyHandle.bodyHandle].SpringSettings = new SpringSettings(5f, .000001f);

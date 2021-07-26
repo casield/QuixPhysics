@@ -50,6 +50,7 @@ namespace QuixPhysics
             {
                 var newroom = new Room(simulator, new RoomInfo { maxPlayers = 100, position = new Vector3(), roomId = roomId });
                 simulator.roomManager.AddRoom(newroom);
+                room = newroom;
             }
             return room;
         }

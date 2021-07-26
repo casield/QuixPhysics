@@ -54,9 +54,9 @@ namespace QuixPhysics
             Agent = new Agent(this);
 
         }
-        public override void Load(Handle bodyHandle, ConnectionState connectionState, Simulator simulator, ObjectState state, Guid guid)
+        public override void Load(Handle bodyHandle, ConnectionState connectionState, Simulator simulator, ObjectState state, Guid guid,Room room)
         {
-            base.Load(bodyHandle, connectionState, simulator, state, guid);
+            base.Load(bodyHandle, connectionState, simulator, state, guid,room);
             PhyInterval worker = new PhyInterval(1, simulator);
             worker.Completed += Tick;
 
@@ -100,7 +100,7 @@ namespace QuixPhysics
             ball.owner = state.owner;
             ball.mesh = "Objects/Balls/Vanilla/Vanilla";
 
-            golfball = (GolfBall2)simulator.Create(ball);
+            golfball = (GolfBall2)simulator.Create(ball,room);
         }
         public bool IsSnapped()
         {
@@ -147,6 +147,7 @@ namespace QuixPhysics
                     reference.Velocity.Linear.X += vel.X;
                     reference.Velocity.Linear.Z += vel.Z;
                     reference.Awake = true;
+                   
                 }
                 // Console.WriteLine(" / " +reference.Velocity.Linear.Y);
                 if (moveMessage.x == 0 && moveMessage.y == 0 && reference.Velocity.Linear.Y > -0.06)
@@ -156,10 +157,6 @@ namespace QuixPhysics
                     reference.Velocity.Linear.Z *= (float)playerStats.friction;
                     acceleration = 0;
                 }
-
-
-
-
             }
 
 
@@ -203,7 +200,7 @@ namespace QuixPhysics
         public void SetPositionToBall()
         {
             simulator.Simulation.Awakener.AwakenBody(golfball.reference.Handle);
-            float distance = maxDistanceWithBall - 1;
+            float distance = maxDistanceWithBall;
             var newPos = reference.Pose.Position;
             var x = -(float)Math.Cos(rotationController);
             var y = -(float)Math.Sin(rotationController);
@@ -215,9 +212,11 @@ namespace QuixPhysics
         }
         public void SetPositionToStartPoint()
         {
-            reference.Pose.Position.X = (float)simulator.map.startPositions[0].AsBsonDocument["x"].AsDouble;
+           /* reference.Pose.Position.X = (float)simulator.map.startPositions[0].AsBsonDocument["x"].AsDouble;
             reference.Pose.Position.Y = (float)simulator.map.startPositions[0].AsBsonDocument["y"].AsDouble;
-            reference.Pose.Position.Z = (float)simulator.map.startPositions[0].AsBsonDocument["z"].AsDouble;
+            reference.Pose.Position.Z = (float)simulator.map.startPositions[0].AsBsonDocument["z"].AsDouble;*/
+    
+            reference.Pose.Position = room.gamemode.GetStartPoint(this.user);
         }
 
         public Vector2 GetXYRotation()

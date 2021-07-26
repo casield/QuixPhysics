@@ -13,13 +13,16 @@ namespace QuixPhysics{
 
         public RoomInfo info;
         private Simulator simulator;
-        Gamemode gamemode;
+        public Gamemode gamemode;
 
         public Dictionary<string,User> users = new Dictionary<string, User>();
-        
+        internal MapMongo map;
+
         public Room(Simulator simulator,RoomInfo info){
             this.info = info;
             this.simulator = simulator;
+            simulator.createObjects(this);
+            SetGameMode(new Arena(simulator,this));
             
         }
 

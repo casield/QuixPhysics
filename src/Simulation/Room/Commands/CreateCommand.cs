@@ -18,7 +18,7 @@ namespace QuixPhysics{
                  
                 BoxState ob = message.ToObject<BoxState>();
 
-                simulator.Create(ob);
+                simulator.Create(ob,room);
             }
 
             if (message["radius"] != null)
@@ -26,7 +26,7 @@ namespace QuixPhysics{
                 
                 SphereState ob = message.ToObject<SphereState>();
 
-                simulator.Create(ob);
+                simulator.Create(ob,room);
                 
             }
         }

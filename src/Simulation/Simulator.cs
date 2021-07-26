@@ -50,7 +50,7 @@ namespace QuixPhysics
 
         public bool Disposed = false;
 
-        public MapMongo map;
+
 
         public OVarManager oVarManager;
 
@@ -74,7 +74,6 @@ namespace QuixPhysics
             narrowPhaseCallbacks = new QuixNarrowPhaseCallbacks() { CollidableMaterials = collidableMaterials, simulator = this };
             Simulation = Simulation.Create(bufferPool, narrowPhaseCallbacks, new QuixPoseIntegratorCallbacks(new Vector3(0, -5, 0)), new PositionFirstTimestepper());
 
-            CreateMap();
 
             gameLoop = new GameLoop();
             gameLoop.Load(this);
@@ -110,12 +109,12 @@ namespace QuixPhysics
             // CreateMesh(state);
         }
 
-        private void CreateMap()
+        /*private void CreateMap()
         {
             createFloor();
             createObjects();
-        }
-        internal void createObjects()
+        }*/
+        internal void createObjects(Room room)
         {
             int width = 10;
             int sizeObj = 60;
@@ -138,24 +137,10 @@ namespace QuixPhysics
                 box.mesh = "Board/Bomb";
                 box.instantiate = true;
                 box.quaternion = Quaternion.Identity;
-                var b = Create(box);
+                var b = Create(box,room);
             }
             timesPressedCreateBoxes++;
             // Console.WriteLine("Statics size " + Simulation.Statics.Count);
-        }
-
-        private void createFloor()
-        {
-            // Simulation.Statics.Add(new StaticDescription(new Vector3(0, -0.5f, 0), new CollidableDescription(Simulation.Shapes.Add(new Box(5000, 1, 5000)), 0.1f)));
-            BoxState box = new BoxState();
-            box.position = new Vector3(0, 0, 0);
-            box.uID = PhyObject.createUID();
-            box.mass = 0;
-            box.quaternion = Quaternion.Identity;
-            box.type = "QuixBox";
-            box.halfSize = new Vector3(5000, 1, 5000);
-
-            // Create(box);
         }
         private void handleWorkers()
         {
@@ -263,7 +248,7 @@ namespace QuixPhysics
             server.Send(socket, JsonConvert.SerializeObject(mess, Formatting.None));
         }
 
-        public PhyObject Create(ObjectState state)
+        public PhyObject Create(ObjectState state,Room room)
         {
             PhyObject phy = null;
             if (state.uID == null || objects.ContainsKey(state.uID))
@@ -274,17 +259,17 @@ namespace QuixPhysics
             {
                 if (state.isMesh)
                 {
-                    phy = CreateMesh((BoxState)state);
+                    phy = CreateMesh((BoxState)state,room);
                 }
                 else
                 {
-                    phy = CreateBox((BoxState)state);
+                    phy = CreateBox((BoxState)state,room);
                 }
 
             }
             if (state is SphereState)
             {
-                phy = CreateSphere((SphereState)state);
+                phy = CreateSphere((SphereState)state,room);
             }
 
 
@@ -299,7 +284,7 @@ namespace QuixPhysics
             return phy;
 
         }
-        private PhyObject CreateVanilla(ObjectState state, CollidableDescription collidableDescription, BodyInertia bodyInertia)
+        private PhyObject CreateVanilla(ObjectState state, CollidableDescription collidableDescription, BodyInertia bodyInertia,Room room)
         {
             PhyObject phy;
             Guid guid = Guid.NewGuid();
@@ -322,7 +307,7 @@ namespace QuixPhysics
 
                 SimpleMaterial allocatedMat = collidableMaterials.Allocate(bodyHandle) = material;
 
-                phy = SetUpPhyObject(new Handle{bodyHandle = bodyHandle}, state, guid);
+                phy = SetUpPhyObject(new Handle{bodyHandle = bodyHandle}, state, guid,room);
 
                 objectsHandlers.Add(bodyHandle, phy);
                 allObjects.Add(guid, phy);
@@ -335,7 +320,7 @@ namespace QuixPhysics
                 StaticHandle handle = Simulation.Statics.Add(description);
 
                 collidableMaterials.Allocate(handle) = material;
-                phy = SetUpPhyObject(new Handle{staticHandle = handle}, state, guid);
+                phy = SetUpPhyObject(new Handle{staticHandle = handle}, state, guid,room);
 
                 staticObjectsHandlers.Add(handle, phy);
                 allObjects.Add(guid, phy);
@@ -345,7 +330,7 @@ namespace QuixPhysics
 
             return phy;
         }
-        private PhyObject CreateBox(BoxState state)
+        private PhyObject CreateBox(BoxState state,Room room)
         {
             var box = new Box(state.halfSize.X, state.halfSize.Y, state.halfSize.Z);
 
@@ -355,12 +340,12 @@ namespace QuixPhysics
             box.ComputeInertia(state.mass, out bodyInertia);
 
 
-            var phy = CreateVanilla(state, collidableDescription, bodyInertia);
+            var phy = CreateVanilla(state, collidableDescription, bodyInertia,room);
             return phy;
 
         }
 
-        private PhyObject CreateSphere(SphereState state)
+        private PhyObject CreateSphere(SphereState state,Room room)
         {
 
             var sphere = new Sphere(state.radius);
@@ -369,11 +354,11 @@ namespace QuixPhysics
 
             sphere.ComputeInertia(state.mass, out bodyInertia);
 
-            var phy = CreateVanilla(state, collidableDescription, bodyInertia);
+            var phy = CreateVanilla(state, collidableDescription, bodyInertia,room);
             return phy;
         }
 
-        private PhyObject CreateMesh(BoxState state)
+        private PhyObject CreateMesh(BoxState state,Room room)
         {
             LoadModel(server.GetMesh(state.mesh), out var mesh, state.halfSize);
 
@@ -383,7 +368,7 @@ namespace QuixPhysics
 
             mesh.ComputeClosedInertia(state.mass, out var bodyInertia);
 
-            var phy = CreateVanilla(state, collidableDescription, bodyInertia);
+            var phy = CreateVanilla(state, collidableDescription, bodyInertia,room);
             objects.Add(state.uID, phy);
 
             return phy;
@@ -418,12 +403,12 @@ namespace QuixPhysics
             return phy;
         }
 
-        private PhyObject SetUpPhyObject(Handle bodyHandle, ObjectState state, Guid guid)
+        private PhyObject SetUpPhyObject(Handle bodyHandle, ObjectState state, Guid guid,Room room)
         {
 
             PhyObject phy = GetPhyClass(state.type);
 
-            phy.Load(bodyHandle, connectionState, this, state,guid);
+            phy.Load(bodyHandle, connectionState, this, state,guid,room);
            
             return phy;
         }

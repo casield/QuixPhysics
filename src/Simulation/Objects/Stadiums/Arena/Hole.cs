@@ -7,9 +7,9 @@ namespace QuixPhysics{
         public Hole(){
             
         }
-        public override void Load(Handle bodyHandle, ConnectionState connectionState, Simulator simulator, ObjectState state, Guid guid)
+        public override void Load(Handle bodyHandle, ConnectionState connectionState, Simulator simulator, ObjectState state, Guid guid,Room room)
         {
-            base.Load(bodyHandle, connectionState, simulator, state, guid);
+            base.Load(bodyHandle, connectionState, simulator, state, guid,room);
              simulator.OnContactListeners.Add(guid,this);
              
            

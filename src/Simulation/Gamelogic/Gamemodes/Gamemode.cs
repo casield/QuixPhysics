@@ -1,3 +1,5 @@
+using System.Numerics;
+
 namespace QuixPhysics{
     public interface IGamemode{
         string name {get;set;}
@@ -11,11 +13,12 @@ namespace QuixPhysics{
         void Finish();
         void Pause();
         void Update();
+        Vector3 GetStartPoint(User user);
         
     }
     public abstract class Gamemode : IGamemode
     {
-        private Simulator simulator;
+        internal Simulator simulator;
 
         public string name { get; set; }
         public User winner { get; set; }
@@ -49,6 +52,11 @@ namespace QuixPhysics{
         public virtual void Update()
         {
         
+        }
+
+        public virtual Vector3 GetStartPoint(User user)
+        {
+           return new Vector3(0,1200,0);
         }
     }
 }

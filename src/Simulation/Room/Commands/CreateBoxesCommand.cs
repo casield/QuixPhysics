@@ -12,7 +12,7 @@ namespace QuixPhysics
         {
            
             simulator.boxToCreate = 10;
-            simulator.createObjects();
+            simulator.createObjects(room);
         }
     }
 }

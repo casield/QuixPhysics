@@ -13,8 +13,12 @@ namespace QuixPhysics
         }
         public override void OnRead(JObject message, Room room)
         {
-            var map = this.simulator.server.dataBase.GetMap(message["name"].ToString());
-            this.simulator.map = map;
+           GenerateMap(message["name"].ToString(),room);
+        }
+        public void GenerateMap(string name,Room room)
+        {
+            var map = this.simulator.server.dataBase.GetMap(name);
+            room.map = map;
 
             foreach (var obj in map.objects)
             {
@@ -28,7 +32,7 @@ namespace QuixPhysics
                     var stri = JsonConvert.DeserializeObject<BoxState>(obj.ToJson());
                     stri.quaternion = JsonConvert.DeserializeObject<Quaternion>(obj["quat"].ToJson());
 
-                    this.simulator.Create(stri);
+                    this.simulator.Create(stri,room);
                 }
                 if (obj.Contains("radius"))
                 {
@@ -38,7 +42,7 @@ namespace QuixPhysics
                     var stri = JsonConvert.DeserializeObject<SphereState>(obj.ToJson());
                     stri.quaternion = JsonConvert.DeserializeObject<Quaternion>(obj["quat"].ToJson());
 
-                    this.simulator.Create(stri);
+                    this.simulator.Create(stri,room);
                 }
             }
         }

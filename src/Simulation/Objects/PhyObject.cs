@@ -37,12 +37,14 @@ namespace QuixPhysics
         public BodyReference reference;
         public Guid guid;
 
+        public Room room;
+
         public bool needUpdate = false;
         public PhyObject()
         {
 
         }
-        public virtual void Load(Handle bodyHandle, ConnectionState connectionState, Simulator simulator, ObjectState state, Guid guid)
+        public virtual void Load(Handle bodyHandle, ConnectionState connectionState, Simulator simulator, ObjectState state, Guid guid, Room room)
         {
             this.connectionState = connectionState;
             this.bodyHandle = bodyHandle;
@@ -50,7 +52,7 @@ namespace QuixPhysics
             this.simulator = simulator;
             this.reference = GetReference();
             this.guid = guid;
-
+            this.room = room;
 
             SendCreateMessage();
         }
@@ -101,6 +103,7 @@ namespace QuixPhysics
 
         public virtual string getJSON()
         {
+
             if (bodyHandle.bodyHandle != default)
             {
                 BodyDescription description;
@@ -115,6 +118,7 @@ namespace QuixPhysics
                 SetMeshRotation();
 
             }
+            
             if (bodyHandle.staticHandle != default)
             {
                 StaticDescription description;
