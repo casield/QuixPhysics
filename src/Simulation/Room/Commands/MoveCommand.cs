@@ -10,7 +10,7 @@ namespace QuixPhysics
         public override void OnRead(JObject message)
         {
            // base.OnRead(message);
-            MoveMessage j = message.ToObject<MoveMessage>();
+            XYMessage j = message.ToObject<XYMessage>();
             Player2 onb = (Player2)simulator.users[j.clientId].player;
             // Simulation.Awakener.AwakenBody(ob.bodyHandle);
             onb.Move(j);

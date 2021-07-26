@@ -7,42 +7,62 @@ using Newtonsoft.Json.Linq;
 
 namespace QuixPhysics
 {
+    public interface IPhyObject
+    {
+        ObjectState state { get; set; }
+        Simulator simulator { get; set; }
+        bool updateRotation { get; set; }
+        ConnectionState connectionState { get; set; }
+        SimpleMaterial material { get; set; }
+        BodyReference reference { get; set; }
+        Guid guid { get; set; }
+
+        Handle handle { get; set; }
+        void Load(Handle handle, ConnectionState connectionState, Simulator simulator, ObjectState state, Guid guid);
+        BodyReference GetReference();
+    }
+    public struct Handle
+    {
+        public BodyHandle bodyHandle { get; set; }
+        public StaticHandle staticHandle { get; set; }
+    }
     public class PhyObject
     {
         public ObjectState state;
-        public BodyHandle bodyHandle;
+        public Handle bodyHandle;
         internal Simulator simulator;
         internal bool updateRotation = true;
         internal ConnectionState connectionState;
         public SimpleMaterial material;
-        public bool collidable = true;
         public BodyReference reference;
+        public Guid guid;
 
+        public bool needUpdate = false;
         public PhyObject()
         {
 
         }
-        public virtual void Load(BodyHandle bodyHandle, ConnectionState connectionState, Simulator simulator, ObjectState state)
+        public virtual void Load(Handle bodyHandle, ConnectionState connectionState, Simulator simulator, ObjectState state, Guid guid)
         {
             this.connectionState = connectionState;
             this.bodyHandle = bodyHandle;
             this.state = state;
             this.simulator = simulator;
             this.reference = GetReference();
-            /* if(state.quaternion == new Quaternion(0,0,0,0)){
-                this.state.quaternion = Quaternion.Identity;
-            }*/
+            this.guid = guid;
+
 
             SendCreateMessage();
         }
 
         public BodyReference GetReference()
         {
-            return simulator.Simulation.Bodies.GetBodyReference(bodyHandle);
+            return simulator.Simulation.Bodies.GetBodyReference(bodyHandle.bodyHandle);
         }
 
-        public void Stop(){
-      
+        public void Stop()
+        {
+
             GetReference().Velocity.Linear = Vector3.Zero;
         }
 
@@ -57,14 +77,17 @@ namespace QuixPhysics
 
         }
 
-        public virtual void SetMeshRotation(){
-            if(state.isMesh){
-            
-                var newq =  Quaternion.CreateFromYawPitchRoll(-1.57f,0,0);
+        public virtual void SetMeshRotation()
+        {
+            if (state.isMesh)
+            {
 
-                 //state.quaternion = newq*state.quaternion;
+                var newq = Quaternion.CreateFromYawPitchRoll(-1.57f, 0, 0);
+
+                //state.quaternion = newq*state.quaternion;
             }
-            
+            needUpdate = true;
+
         }
         internal void SendObjectMessage(string data)
         {
@@ -76,18 +99,34 @@ namespace QuixPhysics
         }
 
 
-        public string getJSON()
+        public virtual string getJSON()
         {
-            BodyDescription description;
-            simulator.Simulation.Bodies.GetDescription(bodyHandle, out description);
-
-            state.position = description.Pose.Position;
-            if (updateRotation)
+            if (bodyHandle.bodyHandle != default)
             {
-                state.quaternion = description.Pose.Orientation;
-                
+                BodyDescription description;
+                simulator.Simulation.Bodies.GetDescription(bodyHandle.bodyHandle, out description);
+
+                state.position = description.Pose.Position;
+                if (updateRotation)
+                {
+                    state.quaternion = description.Pose.Orientation;
+
+                }
+                SetMeshRotation();
+
             }
-            SetMeshRotation();
+            if (bodyHandle.staticHandle != default)
+            {
+                StaticDescription description;
+                simulator.Simulation.Statics.GetDescription(bodyHandle.staticHandle, out description);
+
+                state.position = description.Pose.Position;
+                if (updateRotation)
+                {
+                    state.quaternion = description.Pose.Orientation;
+                }
+                SetMeshRotation();
+            }
 
             return state.getJson();
         }
@@ -98,48 +137,23 @@ namespace QuixPhysics
 
         public static string createUID()
         {
-            /*var bytes = new byte[5];
-            var random = new Random();
-            random.NextBytes(bytes);
-            var idStr = (Math.Floor((double)(random.Next() * 25)) + 10).ToString() + "_";
-            // add a timestamp in milliseconds (base 36 again) as the base
-            idStr += (Math.Floor((double)(random.Next() * 25)) + 10).ToString();*/
 
-            return Guid.NewGuid().ToString().GetHashCode().ToString("x"); ;
+            return Guid.NewGuid().ToString().GetHashCode().ToString(); ;
         }
 
-        public virtual void Move(MoveMessage message)
-        {
 
-        }
         public virtual void OnContact(PhyObject obj)
         {
 
         }
     }
 
-    public class StaticPhyObject : PhyObject
+    /*public class StaticPhyObject : PhyObject
     {
         new StaticHandle bodyHandle;
         public bool needUpdate = false;
-        public virtual void Load(StaticHandle bodyHandle, ConnectionState connectionState, Simulator simulator, ObjectState state)
-        {
-            this.connectionState = connectionState;
-            this.bodyHandle = bodyHandle;
-            this.state = state;
-            this.simulator = simulator;
 
-    
-            SetMeshRotation();
-            SendCreateMessage();
-        }
-        public override void SetMeshRotation()
-        {
-            base.SetMeshRotation();
-            needUpdate = true;
-        }
-
-        new public string getJSON()
+        public override string getJSON()
         {
             StaticDescription description;
             simulator.Simulation.Statics.GetDescription(bodyHandle, out description);
@@ -150,20 +164,15 @@ namespace QuixPhysics
                 state.quaternion = description.Pose.Orientation;
             }
             SetMeshRotation();
-           
 
-            //SetMeshRotation();
 
             return state.getJson();
         }
-        new public void SendCreateMessage()
+        public override void SetMeshRotation()
         {
-            if (state.instantiate)
-            {
-                QuixConsole.WriteLine(getJSON());
-                simulator.SendMessage("create", getJSON(), connectionState.workSocket);
-            }
-        }
+            base.SetMeshRotation();
+            needUpdate = true;
 
-    }
+        }
+    }*/
 }

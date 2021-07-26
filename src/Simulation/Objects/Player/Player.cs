@@ -18,9 +18,9 @@ namespace QuixPhysics
     }
     public class Player2 : PhyObject
     {
-        MoveMessage moveMessage;
-        private float friction = .998f;
-        private MoveMessage rotateMessage;
+        XYMessage moveMessage;
+        private float friction = .99f;
+        private XYMessage rotateMessage;
 
         public float rotationController = 0;
         private float acceleration = 0;
@@ -40,6 +40,7 @@ namespace QuixPhysics
         private bool canShoot;
 
         private IGauntlet gauntlet;
+        internal User user;
 
         public Player2()
         {
@@ -47,23 +48,18 @@ namespace QuixPhysics
             Agent = new Agent(this);
 
         }
-        public override void Load(BodyHandle bodyHandle, ConnectionState connectionState, Simulator simulator, ObjectState state)
+        public override void Load(Handle bodyHandle, ConnectionState connectionState, Simulator simulator, ObjectState state, Guid guid)
         {
-            base.Load(bodyHandle, connectionState, simulator, state);
+            base.Load(bodyHandle, connectionState, simulator, state, guid);
             PhyInterval worker = new PhyInterval(1, simulator);
             worker.Completed += Tick;
 
 
-            material = new SimpleMaterial
-            {
-                FrictionCoefficient = 1,
-                MaximumRecoveryVelocity = float.MaxValue,
-                SpringSettings = new SpringSettings(1f, .5f)
-            };
-            simulator.collidableMaterials.Allocate(bodyHandle) = material;
+            simulator.collidableMaterials[bodyHandle.bodyHandle].collidable = true;
+            simulator.collidableMaterials[bodyHandle.bodyHandle].SpringSettings = new SpringSettings(1f, .5f);
 
-            reference = simulator.Simulation.Bodies.GetBodyReference(bodyHandle);
-            simulator.OnContactListeners.Add(this.bodyHandle, this);
+            reference = simulator.Simulation.Bodies.GetBodyReference(bodyHandle.bodyHandle);
+            simulator.OnContactListeners.Add(this.guid, this);
 
 
             SetPositionToStartPoint();
@@ -77,8 +73,8 @@ namespace QuixPhysics
             notSnappedState = new Not_SnappedState(this);
             shotState = new ShootState(this);
 
-        }
 
+        }
 
 
         private void CreateGauntlet()
@@ -91,6 +87,7 @@ namespace QuixPhysics
         private void CreateUser()
         {
             User s = new User(state.owner, this);
+            this.user = s;
 
             if (!simulator.users.ContainsKey(state.owner))
             {
@@ -124,7 +121,8 @@ namespace QuixPhysics
         {
             return Agent.ActualState() == snappedState;
         }
-        public void SetNotSnapped(){
+        public void SetNotSnapped()
+        {
             this.Agent.ChangeState(notSnappedState);
         }
 
@@ -148,7 +146,7 @@ namespace QuixPhysics
         }
         public void TickMove()
         {
-            if (moveMessage.clientId!=null /*&& !IsSnapped()*/)
+            if (moveMessage.clientId != null /*&& !IsSnapped()*/)
             {
                 // Console.WriteLine(bb.Velocity.Linear.Y);
                 if ((moveMessage.x != 0 || moveMessage.y != 0) && reference.Velocity.Linear.Y < 4)
@@ -186,7 +184,7 @@ namespace QuixPhysics
         {
             if (rotateMessage.clientId != null)
             {
-                rotationController += rotateMessage.x / 50;
+                rotationController += rotateMessage.x / 80;
                 //simulator.Simulation.Awakener.AwakenBody(bodyHandle);
                 if (Math.Abs(rotateMessage.x) > 0)
                 {
@@ -217,9 +215,9 @@ namespace QuixPhysics
         public void SetPositionToBall()
         {
             simulator.Simulation.Awakener.AwakenBody(golfball.reference.Handle);
-            float distance = maxDistanceWithBall-1;
+            float distance = maxDistanceWithBall - 1;
             var newPos = reference.Pose.Position;
-           // newPos.Y += distance;
+            // newPos.Y += distance;
             var x = -(float)Math.Cos(rotationController);
             var y = -(float)Math.Sin(rotationController);
 
@@ -242,27 +240,34 @@ namespace QuixPhysics
             return new Vector2(x, y);
         }
 
+        public void OnFall()
+        {
+            this.user.gems.Update(((int)this.user.gems.value) / 2);
+        }
+
         private void CheckIfFall()
         {
 
             if (this.reference.Pose.Position.Y < -50)
             {
                 this.SetPositionToStartPoint();
+                OnFall();
             }
 
-             if (this.golfball.reference.Pose.Position.Y < -50)
+            if (this.golfball.reference.Pose.Position.Y < -50)
             {
                 this.golfball.reference.Pose.Position = reference.Pose.Position;
+                OnFall();
             }
 
         }
 
 
-        public override void Move(MoveMessage message)
+        public void Move(XYMessage message)
         {
-            base.Move(message);
+
             moveMessage = message;
-            
+
             if (Agent.ActualState() != notSnappedState)
             {
                 Agent.ChangeState(notSnappedState);
@@ -270,11 +275,11 @@ namespace QuixPhysics
             }
 
         }
-        public void Rotate(MoveMessage message)
+        public void Rotate(XYMessage message)
         {
             rotateMessage = message;
         }
-        public void Jump(MoveMessage message)
+        public void Jump(XYMessage message)
         {
 
             if (!Agent.IsLocked())

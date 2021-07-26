@@ -3,7 +3,7 @@ using Newtonsoft.Json.Linq;
 
 namespace QuixPhysics
 {
-    public class MessageState
+    public struct MessageState
     {
         public string type;
         public object data;
@@ -16,7 +16,7 @@ namespace QuixPhysics
     }
 
 
-    public struct MoveMessage : Message
+    public struct XYMessage : Message
     {
         public float x;
         public float y;
@@ -24,14 +24,14 @@ namespace QuixPhysics
         public string roomId { get; set; }
         public string clientId { get; set; }
     }
-    public class ShootMessage : Message
+    public struct ShootMessage : Message
     {
         public string roomId { get; set; }
         public string clientId { get; set; }
         public float force;
     }
 
-    public class SwipeMessage : Message
+    public struct SwipeMessage : Message
     {
         public string roomId { get; set; }
         public string clientId { get; set; }
@@ -39,7 +39,7 @@ namespace QuixPhysics
         public Vector3 direction;
     }
 
-    public class GauntletMessage : Message
+    public struct GauntletMessage : Message
     {
         public string roomId { get; set; }
         public string clientId { get; set; }

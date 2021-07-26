@@ -12,7 +12,7 @@ namespace QuixPhysics{
         }
         public override void OnRead(JObject message)
         {
-            QuixConsole.Log("Message",message);
+            
             if (message["halfSize"] != null)
             {
                  

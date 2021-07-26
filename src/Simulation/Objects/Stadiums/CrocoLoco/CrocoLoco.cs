@@ -19,9 +19,9 @@ namespace QuixPhysics
             
 
         }
-        public override void Load(BodyHandle bodyHandle, ConnectionState connectionState, Simulator simulator, ObjectState state)
+        public override void Load(Handle bodyHandle, ConnectionState connectionState, Simulator simulator, ObjectState state,Guid guid)
         {
-            base.Load(bodyHandle, connectionState, simulator, state);
+            base.Load(bodyHandle, connectionState, simulator, state,guid);
             vehicle = new Vehicle(this);
 
             PhyInterval worker = new PhyInterval(1, simulator);

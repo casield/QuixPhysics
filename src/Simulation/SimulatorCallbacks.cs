@@ -18,6 +18,8 @@ namespace QuixPhysics
         public SpringSettings SpringSettings;
         public float FrictionCoefficient;
         public float MaximumRecoveryVelocity;
+        public bool collidable;
+        public Guid guid;
     }
 
 
@@ -113,37 +115,19 @@ namespace QuixPhysics
             //if (ContactSpringiness.AngularFrequency == 0 && ContactSpringiness.TwiceDampingRatio == 0)
             // ContactSpringiness = new SpringSettings(1000f, 0.001f);
 
-           // ContactSpringiness = new SpringSettings(5, 0.0000001f);
+            // ContactSpringiness = new SpringSettings(5, 0.0000001f);
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public bool AllowContactGeneration(int workerIndex, CollidableReference a, CollidableReference b)
         {
-            bool AcanCollide = true;
-            bool BcanCollide = true;
-            /* if (a.Mobility != CollidableMobility.Static || b.Mobility != CollidableMobility.Static)
-              {
-                  if (a.Mobility == CollidableMobility.Dynamic)
-                  {
 
-                      AcanCollide = simulator.objectsHandlers[a.BodyHandle].collidable;
-                  }
-                  if (a.Mobility == CollidableMobility.Static)
-                  {
 
-                      AcanCollide = simulator.staticObjectsHandlers[a.StaticHandle].collidable;
-                  }
-                  if (b.Mobility == CollidableMobility.Dynamic)
-                  {
+            var coA = CollidableMaterials[a];
+            var coB = CollidableMaterials[b];
 
-                      BcanCollide = simulator.objectsHandlers[b.BodyHandle].collidable;
-                  }
-                  if (b.Mobility == CollidableMobility.Static)
-                  {
-
-                      BcanCollide = simulator.staticObjectsHandlers[b.StaticHandle].collidable;
-                  }
-              }*/
+            bool AcanCollide = coA.collidable;
+            bool BcanCollide = coB.collidable;
 
             //While the engine won't even try creating pairs between statics at all, it will ask about kinematic-kinematic pairs.
             //Those pairs cannot emit constraints since both involved bodies have infinite inertia. Since most of the demos don't need
@@ -160,51 +144,20 @@ namespace QuixPhysics
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public unsafe bool ConfigureContactManifold<TManifold>(int workerIndex, CollidablePair pair, ref TManifold manifold, out PairMaterialProperties pairMaterial) where TManifold : struct, IContactManifold<TManifold>
         {
-            /*pairMaterial.FrictionCoefficient = 0.5f;
-            pairMaterial.MaximumRecoveryVelocity = 20f;
-            pairMaterial.SpringSettings = ContactSpringiness;*/
-        
-            /*pairMaterial.FrictionCoefficient = 1f;
-            pairMaterial.MaximumRecoveryVelocity = float.MaxValue;
-            pairMaterial.SpringSettings = ContactSpringiness;*/
 
             var a = CollidableMaterials[pair.A];
             var b = CollidableMaterials[pair.B];
 
-            /* if (pair.A.Mobility == CollidableMobility.Static)
-             {
-                 if (simulator.OnStaticContactListeners.ContainsKey(pair.A.StaticHandle))
-                 {
-                     var con = simulator.collidableToPhyObject(pair.B);
-                     simulator.OnStaticContactListeners[pair.A.StaticHandle].OnContact(con);
-                 }
-             }
-             else
-             {
-                 if (simulator.OnContactListeners.ContainsKey(pair.A.BodyHandle))
-                 {
-                     var con = simulator.collidableToPhyObject(pair.B);
-                     simulator.OnContactListeners[pair.A.BodyHandle].OnContact(con);
-                 }
-             }
 
-             if (pair.B.Mobility == CollidableMobility.Static)
-             {
-                 if (simulator.OnStaticContactListeners.ContainsKey(pair.B.StaticHandle))
-                 {
-                     var con = simulator.collidableToPhyObject(pair.A);
-                     simulator.OnStaticContactListeners[pair.B.StaticHandle].OnContact(con);
-                 }
-             }
-             else
-             {
-                 if (simulator.OnContactListeners.ContainsKey(pair.B.BodyHandle))
-                 {
-                     var con = simulator.collidableToPhyObject(pair.A);
-                     simulator.OnContactListeners[pair.B.BodyHandle].OnContact(con);
-                 }
-             }*/
-    
+            if (simulator.OnContactListeners.ContainsKey(a.guid))
+            {
+                simulator.OnContactListeners[a.guid].OnContact(simulator.allObjects[b.guid]);
+            }
+            if (simulator.OnContactListeners.ContainsKey(b.guid))
+            {
+
+                simulator.OnContactListeners[b.guid].OnContact(simulator.allObjects[a.guid]);
+            }
 
             pairMaterial.FrictionCoefficient = a.FrictionCoefficient * b.FrictionCoefficient;
             pairMaterial.MaximumRecoveryVelocity = MathF.Max(a.MaximumRecoveryVelocity, b.MaximumRecoveryVelocity);

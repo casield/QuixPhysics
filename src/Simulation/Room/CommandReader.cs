@@ -28,6 +28,7 @@ namespace QuixPhysics
             commandDictionary.Add("createBoxes", new CreateBoxesCommand(simulator));
             commandDictionary.Add("gauntlet", new GauntletCommand(simulator));
             commandDictionary.Add("swipe", new SwipeCommand(simulator));
+            commandDictionary.Add("OVar", new OVarCommand(simulator));
             commandDictionary.Add("close", new CloseCommand(simulator));
         }
         internal void AddCommandToBeRead(string v)
@@ -69,6 +70,10 @@ namespace QuixPhysics
             catch (JsonReaderException e)
             {
                 QuixConsole.Log("Json Problem ", e);
+            }
+            catch(InvalidCastException e){
+                QuixConsole.Log("Invalid cast",e);
+               // commandsList.Clear();
             }
             catch (Exception e)
             {

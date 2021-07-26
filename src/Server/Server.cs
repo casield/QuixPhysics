@@ -54,6 +54,9 @@ namespace QuixPhysics
             LoadMesh("Stadiums/CrocoLoco/piedra2");
             LoadMesh("Stadiums/CrocoLoco/stand_croco");
             LoadMesh("Stadiums/CrocoLoco/start_position");
+            LoadMesh("Stadiums/arena/Hoyo");
+            LoadMesh("Stadiums/arena/Cosa");
+            LoadMesh("Stadiums/arena/Montana1");
             LoadMesh("newt");
             QuixConsole.Log("Reload meshes");
 
@@ -238,12 +241,16 @@ namespace QuixPhysics
         }
         private void SendCallback(IAsyncResult ar)
         {
-
-            // Retrieve the socket from the state object.  
-            Socket handler = (Socket)ar.AsyncState;
+            try{
+                 Socket handler = (Socket)ar.AsyncState;
 
             // Complete sending the data to the remote device.  
             int bytesSent = handler.EndSend(ar);
+            }catch(ObjectDisposedException e){
+                QuixConsole.Log("Disposed object",e);
+            }
+            // Retrieve the socket from the state object.  
+           
             //  Console.WriteLine("Sent {0} bytes to client.", bytesSent);
 
             // handler.Shutdown(SocketShutdown.Both);

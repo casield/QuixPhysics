@@ -15,6 +15,7 @@ namespace QuixPhysics
     using ContentLoader;
     using MongoDB.Bson;
     using Newtonsoft.Json;
+    using OVars;
 
     public class Simulator : IDisposable
     {
@@ -24,7 +25,9 @@ namespace QuixPhysics
         public Simulation Simulation { get; }
         public GameLoop gameLoop = null;
         public Dictionary<BodyHandle, PhyObject> objectsHandlers = new Dictionary<BodyHandle, PhyObject>();
-        public Dictionary<StaticHandle, StaticPhyObject> staticObjectsHandlers = new Dictionary<StaticHandle, StaticPhyObject>();
+        public Dictionary<StaticHandle, PhyObject> staticObjectsHandlers = new Dictionary<StaticHandle, PhyObject>();
+
+
         public Dictionary<string, PhyObject> objects = new Dictionary<string, PhyObject>();
         public CollidableProperty<SimpleMaterial> collidableMaterials;
         public ConnectionState connectionState;
@@ -40,21 +43,25 @@ namespace QuixPhysics
         internal Thread thread;
 
         public QuixNarrowPhaseCallbacks narrowPhaseCallbacks;
+        public Dictionary<Guid, PhyObject> allObjects = new Dictionary<Guid, PhyObject>();
 
-        public Dictionary<BodyHandle, PhyObject> OnContactListeners = new Dictionary<BodyHandle, PhyObject>();
-        public Dictionary<StaticHandle, PhyObject> OnStaticContactListeners = new Dictionary<StaticHandle, PhyObject>();
-
+        public Dictionary<Guid, PhyObject> OnContactListeners = new Dictionary<Guid, PhyObject>();
+    
         public Dictionary<string, User> users = new Dictionary<string, User>();
 
         public bool Disposed = false;
 
         public MapMongo map;
 
+        public OVarManager oVarManager;
+
 
         public Simulator(ConnectionState state, Server server)
         {
 
             server.ReloadMeshes();
+
+
 
             collidableMaterials = new CollidableProperty<SimpleMaterial>();
 
@@ -67,12 +74,12 @@ namespace QuixPhysics
             Simulation = Simulation.Create(bufferPool, narrowPhaseCallbacks, new QuixPoseIntegratorCallbacks(new Vector3(0, -5, 0)), new PositionFirstTimestepper());
 
             CreateMap();
-            // Server.Send(state.workSocket, "Hola desde simulator");
+
             gameLoop = new GameLoop();
             gameLoop.Load(this);
 
 
-            //CreateNewt();
+            oVarManager = new OVarManager(this);
 
 
             thread = new Thread(new ThreadStart(gameLoop.Start));
@@ -172,64 +179,68 @@ namespace QuixPhysics
         {
             //Console.WriteLine(gameTime.TotalSeconds);
             //commandReader.ReadCommand();
-            handleWorkers();
-            Simulation.Timestep(1 / 60f, ThreadDispatcher);
-
-            // ArrayList bodies = new ArrayList();
-            var set = Simulation.Bodies.Sets[0];
-            string[] bodies2 = new string[set.Count + staticObjectsHandlers.Count];
-            int bodiesAdded = 0;
-
-
-            if (t == tMax)
+            if (Simulation != null && ThreadDispatcher != null)
             {
-                // createObjects();
-                t = 0;
-            }
-            t++;
+                handleWorkers();
+                Simulation.Timestep(1 / 60f, ThreadDispatcher);
+
+                // ArrayList bodies = new ArrayList();
+                var set = Simulation.Bodies.Sets[0];
+                string[] bodies2 = new string[allObjects.Count];
+                int bodiesAdded = 0;
 
 
-            for (var bodyIndex = 0; bodyIndex < set.Count; ++bodyIndex)
-            {
-                try
+                if (t == tMax)
                 {
-                    //var handle = set.IndexToHandle[bodyIndex];
-                    // if(objects.ContainsValue())
-                    var handle = set.IndexToHandle[bodyIndex];
-                    if (objectsHandlers[handle].state.instantiate)
+                    // createObjects();
+                    t = 0;
+                }
+                t++;
+
+
+                for (var bodyIndex = 0; bodyIndex < set.Count; ++bodyIndex)
+                {
+                    try
                     {
-                        //bodies.Add(objectsHandlers[handle].getJSON());
-                        bodies2[bodyIndex] = objectsHandlers[handle].getJSON();
-                        bodiesAdded += 1;
+                        //var handle = set.IndexToHandle[bodyIndex];
+                        // if(objects.ContainsValue())
+                        var handle = set.IndexToHandle[bodyIndex];
+                        if (objectsHandlers[handle].state.instantiate)
+                        {
+                            //bodies.Add(objectsHandlers[handle].getJSON());
+                            bodies2[bodyIndex] = objectsHandlers[handle].getJSON();
+                            bodiesAdded += 1;
+                        }
+
+
+                    }
+                    catch (KeyNotFoundException e)
+                    {
+                        QuixConsole.WriteLine("Key not found");
                     }
 
-
                 }
-                catch (KeyNotFoundException e)
+
+
+                foreach (var item in staticObjectsHandlers)
                 {
-                    QuixConsole.WriteLine("Key not found");
+                    if (item.Value.needUpdate)
+                    {
+                        //bodies.Add(item.Value.getJSON());
+                        bodies2[bodiesAdded] = item.Value.getJSON();
+                        item.Value.needUpdate = false;
+                        bodiesAdded += 1;
+                    }
                 }
 
-            }
-
-
-            foreach (var item in staticObjectsHandlers)
-            {
-                if (item.Value.needUpdate)
+                if (bodiesAdded > 0)
                 {
-                    //bodies.Add(item.Value.getJSON());
-                    bodies2[bodiesAdded] = item.Value.getJSON();
-                    item.Value.needUpdate = false;
-                    bodiesAdded += 1;
+                    var slice = bodies2[0..bodiesAdded];
+                    SendMessage("update", JsonConvert.SerializeObject(slice), connectionState.workSocket);
                 }
-            }
 
-            if (bodiesAdded > 0)
-            {
-                var slice = bodies2[0..bodiesAdded];
-                SendMessage("update", JsonConvert.SerializeObject(slice), connectionState.workSocket);
-            }
 
+            }
 
 
 
@@ -287,7 +298,15 @@ namespace QuixPhysics
         private PhyObject CreateVanilla(ObjectState state, CollidableDescription collidableDescription, BodyInertia bodyInertia)
         {
             PhyObject phy;
-
+            Guid guid = Guid.NewGuid();
+            var material = new SimpleMaterial
+            {
+                FrictionCoefficient = 1f,
+                MaximumRecoveryVelocity = float.MaxValue,
+                SpringSettings = new SpringSettings(30, 1f),
+                collidable = true,
+                guid = guid
+            };
             if (state.mass != 0)
             {
                 BodyDescription boxDescription = BodyDescription.CreateDynamic(state.position, bodyInertia,
@@ -297,15 +316,12 @@ namespace QuixPhysics
                 boxDescription.Pose = new RigidPose(state.position, state.quaternion);
                 var bodyHandle = Simulation.Bodies.Add(boxDescription);
 
-                collidableMaterials.Allocate(bodyHandle) = new SimpleMaterial
-                {
-                    FrictionCoefficient = .1f,
-                    MaximumRecoveryVelocity = float.MaxValue,
-                    SpringSettings = new SpringSettings(1f, 1.5f)
-                };
+                SimpleMaterial allocatedMat = collidableMaterials.Allocate(bodyHandle) = material;
 
-                phy = SetUpPhyObject(bodyHandle, state);
+                phy = SetUpPhyObject(new Handle{bodyHandle = bodyHandle}, state, guid);
+
                 objectsHandlers.Add(bodyHandle, phy);
+                allObjects.Add(guid, phy);
 
             }
             else
@@ -313,17 +329,13 @@ namespace QuixPhysics
 
                 StaticDescription description = new StaticDescription(state.position, state.quaternion, collidableDescription);
                 StaticHandle handle = Simulation.Statics.Add(description);
-                //collidableMaterials.Allocate(handle) = new SimpleMaterial { FrictionCoefficient = 1, MaximumRecoveryVelocity = float.MaxValue, SpringSettings = new SpringSettings(1f, 1f) };
-               
-                 collidableMaterials.Allocate(handle) = new SimpleMaterial
-                {
-                    FrictionCoefficient = 1f,
-                    MaximumRecoveryVelocity = float.MaxValue,
-                    SpringSettings = new SpringSettings(30, 1f)
-                };
-                phy = SetUpPhyObject(handle, state);
-                staticObjectsHandlers.Add(handle, (StaticPhyObject)phy);
-                //objectsHandlers.Add(handle,phy);
+
+                collidableMaterials.Allocate(handle) = material;
+                phy = SetUpPhyObject(new Handle{staticHandle = handle}, state, guid);
+
+                staticObjectsHandlers.Add(handle, phy);
+                allObjects.Add(guid, phy);
+
             }
 
 
@@ -402,32 +414,33 @@ namespace QuixPhysics
             return phy;
         }
 
-        private PhyObject SetUpPhyObject(BodyHandle bodyHandle, ObjectState state)
+        private PhyObject SetUpPhyObject(Handle bodyHandle, ObjectState state, Guid guid)
         {
 
             PhyObject phy = GetPhyClass(state.type);
 
-            phy.Load(bodyHandle, connectionState, this, state);
-
+            phy.Load(bodyHandle, connectionState, this, state,guid);
+           
             return phy;
         }
-        private StaticPhyObject SetUpPhyObject(StaticHandle staticHandle, ObjectState state)
+        /*private StaticPhyObject SetUpPhyObject(StaticHandle staticHandle, ObjectState state, Guid guid)
         {
             StaticPhyObject phy = (StaticPhyObject)GetPhyClass(state.type);
 
-            phy.Load(staticHandle, connectionState, this, state);
+            phy.Load(staticHandle, connectionState, this, state,guid);
+           
 
             return phy;
-        }
+        }*/
 
         public PhyObject handleToPhyObject(BodyHandle handle)
         {
             PhyObject obj = objectsHandlers[handle];
             return obj;
         }
-        public StaticPhyObject handleToPhyObject(StaticHandle handle)
+        public PhyObject handleToPhyObject(StaticHandle handle)
         {
-            StaticPhyObject obj = staticObjectsHandlers[handle];
+            PhyObject obj = staticObjectsHandlers[handle];
 
             return obj;
         }

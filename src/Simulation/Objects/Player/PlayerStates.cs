@@ -147,7 +147,7 @@ namespace QuixPhysics
 
         private void SetPlayerCollided()
         {
-            player.collidable = true;
+          //  player.collidable = true;
         }
 
         public void OnActivate()

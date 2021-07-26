@@ -1,5 +1,5 @@
 namespace QuixPhysics{
-    public class QuixBox:StaticPhyObject{
+    public class QuixBox:PhyObject{
 
     }
 }
