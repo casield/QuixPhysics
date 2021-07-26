@@ -5,7 +5,7 @@ namespace QuixPhysics
 {
     public interface ICommand
     {
-        public void OnRead(JObject message);
+        public void OnRead(JObject message,Room room);
         public void Send(JObject message);
     }
 
@@ -17,7 +17,7 @@ namespace QuixPhysics
         {
             simulator = _simulator;
         }
-        public virtual void OnRead(JObject message)
+        public virtual void OnRead(JObject message,Room room)
         {
             throw new System.NotImplementedException();
         }

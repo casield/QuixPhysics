@@ -11,7 +11,7 @@ namespace QuixPhysics
         {
 
         }
-        public override void OnRead(JObject message)
+        public override void OnRead(JObject message, Room room)
         {
             var map = this.simulator.server.dataBase.GetMap(message["name"].ToString());
             this.simulator.map = map;

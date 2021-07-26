@@ -10,72 +10,99 @@ namespace QuixPhysics
         Player2 Player;
         BodyReference golfBallRef;
         Vehicle vehicle;
-        Boolean hasStopped = false;
+        private PhyTimeOut shootInterval;
+        private bool canUse = false;
+
+        private bool hasCharge = false;
+
+        public void Init()
+        {
+            var timer = new PhyInterval(1, Player.simulator);
+            timer.Completed += OnTick;
+            golfBallRef = Player.golfball.GetReference();
+            vehicle = new Vehicle(Player.golfball);
+            vehicle.isActive = false;
+            Player.simulator.Simulation.Awakener.AwakenBody(golfBallRef.Handle);
+            Player.ShootListeners += OnShoot;
+        }
         public void Activate(bool active)
         {
-            if (!isInit())
+            if (hasCharge)
             {
-                var timer = new PhyInterval(1, Player.simulator);
-                timer.Completed += OnTick;
-                golfBallRef = Player.golfball.GetReference();
-                vehicle = new Vehicle(Player.golfball);
-                Player.simulator.Simulation.Awakener.AwakenBody(golfBallRef.Handle);
+                
+                
+                CreateInterval();
+                canUse = true;
+                hasCharge = false;
+                
+                
             }
-            if (isInit())
+            if (canUse)
             {
-                //golfBallRef.
-                QuixConsole.Log("Gauntlet", active);
                 vehicle.isActive = active;
-                Player.simulator.Simulation.Awakener.AwakenBody(golfBallRef.Handle);
+                if (active)
+                {
+                    Player.simulator.Simulation.Awakener.AwakenBody(golfBallRef.Handle);
+                }
+                Player.cameraLocked = true;
             }
-            if(!hasStopped){
-               // Player.golfball.Stop();
-                hasStopped = true;
-            }
-            if(!active){
-                hasStopped = false;
-            }
-            
+
+
         }
-        public void Swipe(double degree,Vector3 dir)
+        public void Swipe(double degree, Vector3 dir)
         {
-            if (isInit())
+            if (canUse)
             {
+                hasCharge = false;
                 Player.simulator.Simulation.Awakener.AwakenBody(golfBallRef.Handle);
-                float force = 70;
+                float force = 40;
                 QuixConsole.Log("Swipé log", degree);
-                Vector2 rot2d = Player.GetXYRotation();
-                Vector3 rot = new Vector3(rot2d.X,0,rot2d.Y) ;
-               /* golfBallRef.Velocity.Linear.Y += force;
-                golfBallRef.Velocity.Linear.X -= rot.X*force;
-                golfBallRef.Velocity.Linear.Z -= rot.Y*force;*/
 
-                Quaternion quat = QuaternionEx.CreateFromAxisAngle( rot,(float)degree);
-                Matrix4x4 matrix = Matrix4x4.CreateFromQuaternion(quat);
+                dir.X *= -1;
+                dir.Y *= -1;
+                dir.Z *= -1;
 
-                Vector3 result = Vector3.Transform(rot,matrix);
+                golfBallRef.Velocity.Linear.Y += dir.Y * (force);
+                golfBallRef.Velocity.Linear.X = dir.X * force;
+                golfBallRef.Velocity.Linear.Z = dir.Z * force;
 
-                QuixConsole.Log("direction",dir);
 
-                dir.X *=-1;
-                dir.Y *=-1;
-                dir.Z *=-1;
-
-                golfBallRef.Velocity.Linear.Y += dir.Y*force;
-                golfBallRef.Velocity.Linear.X += dir.X*force;
-                golfBallRef.Velocity.Linear.Z += dir.Z*force;
-
-                QuixConsole.Log("Result",result);
-                
-
-                
-
-               
             }
 
         }
 
+        private void OnShoot(ShootMessage message)
+        {
+            canUse = true;
+            hasCharge = true;
+            Player.cameraLocked = true;
+            CreateInterval();
+            
 
+        }
+
+        private void CreateInterval()
+        {
+            if (shootInterval == null)
+            {
+                shootInterval = new PhyTimeOut(2000, Player.simulator, true);
+                shootInterval.Completed += OnShooTimeCompleted;
+            }else{
+                if(hasCharge){
+                    shootInterval.Reset();
+                }
+                
+            }
+        }
+
+        private void OnShooTimeCompleted()
+        {
+            canUse = false;
+            shootInterval = null;
+
+            vehicle.isActive = false;
+            Player.cameraLocked = false;
+        }
 
         private bool isInit()
         {
@@ -86,12 +113,12 @@ namespace QuixPhysics
         {
             if (Player != null)
             {
-                
+
                 vehicle.Seek(Player.reference.Pose.Position);
                 vehicle.Update();
                 if (Player.IsSnapped())
                 {
-                    
+
                     vehicle.isActive = false;
                 }
             }

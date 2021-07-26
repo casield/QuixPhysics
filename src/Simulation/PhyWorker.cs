@@ -12,6 +12,7 @@ namespace QuixPhysics
         public event PhyAction Completed;
         private Simulator simulator;
         public bool destroy = false;
+        public bool paused = false;
         public PhyWorker(int time, Simulator _simulator)
         {
             this.time = time;
@@ -59,16 +60,25 @@ namespace QuixPhysics
 
         public bool tick()
         {
-            if (time == tickTime)
+            if (!paused)
             {
-                OnCompleted();
-                return true;
+                if (time == tickTime)
+                {
+                    OnCompleted();
+                    return true;
+                }
+                tickTime++;
+                OnTick();
             }
-            tickTime++;
-            OnTick();
+
 
 
             return false;
+        }
+        public void Reset()
+        {
+            tickTime = 0;
+            paused = false;
         }
 
     }
@@ -85,14 +95,22 @@ namespace QuixPhysics
     }
     public class PhyTimeOut : PhyWorker
     {
-        public PhyTimeOut(int time, Simulator _simulator) : base(time, _simulator)
+        private bool shouldDestroy = true;
+
+        public PhyTimeOut(int time, Simulator _simulator, bool shouldDestroy) : base(time, _simulator)
         {
+            this.shouldDestroy = shouldDestroy;
         }
         protected override void OnCompleted()
         {
             base.OnCompleted();
-            this.tickTime = 0;
-            Destroy();
+            if (shouldDestroy)
+            {
+                Destroy();
+            }else{
+                paused = true;
+            }
+
         }
 
 

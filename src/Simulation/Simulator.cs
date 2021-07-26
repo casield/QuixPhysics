@@ -47,13 +47,14 @@ namespace QuixPhysics
 
         public Dictionary<Guid, PhyObject> OnContactListeners = new Dictionary<Guid, PhyObject>();
     
-        public Dictionary<string, User> users = new Dictionary<string, User>();
 
         public bool Disposed = false;
 
         public MapMongo map;
 
         public OVarManager oVarManager;
+
+        public RoomManager roomManager;
 
 
         public Simulator(ConnectionState state, Server server)
@@ -80,6 +81,7 @@ namespace QuixPhysics
 
 
             oVarManager = new OVarManager(this);
+            roomManager = new RoomManager(this);
 
 
             thread = new Thread(new ThreadStart(gameLoop.Start));
@@ -90,6 +92,8 @@ namespace QuixPhysics
 
 
         }
+
+        
 
         private void CreateNewt()
         {

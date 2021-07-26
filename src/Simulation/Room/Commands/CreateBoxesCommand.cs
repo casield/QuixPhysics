@@ -8,7 +8,7 @@ namespace QuixPhysics
         {
         }
 
-        public override void OnRead(JObject message)
+        public override void OnRead(JObject message, Room room)
         {
            
             simulator.boxToCreate = 10;

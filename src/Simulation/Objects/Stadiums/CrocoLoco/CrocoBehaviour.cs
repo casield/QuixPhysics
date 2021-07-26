@@ -34,7 +34,7 @@ namespace QuixPhysics
 
         private bool IsAnyPlayerVisible(TimeData arg)
         {
-            foreach (var user in crocoLoco.simulator.users)
+           /* foreach (var user in crocoLoco.simulator.users)
             {
                 var distance = Vector3.Distance(crocoLoco.reference.Pose.Position,user.Value.player.reference.Pose.Position);
                 QuixConsole.Log(distance);
@@ -42,6 +42,7 @@ namespace QuixPhysics
                     return true;
                 }
             }
+            return false;*/
             return false;
         }
 

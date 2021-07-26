@@ -8,23 +8,24 @@ using Newtonsoft.Json;
 namespace QuixPhysics
 {
     public delegate void OnContact(BodyHandle contact);
-    public struct PlayerStruct
+    public struct PlayerStats
     {
-        public BodyHandle handle;
-        //public char[] uID;
-        // public string uID;
-        //public event OnContact onContact;
+        public double force;
+        public double friction;
+        public double speed;
 
     }
     public class Player2 : PhyObject
     {
         XYMessage moveMessage;
-        private float friction = .99f;
+
         private XYMessage rotateMessage;
 
         public float rotationController = 0;
         private float acceleration = 0;
-        public float shootForce = 30;
+
+
+        public PlayerStats playerStats = new PlayerStats { force = 30, friction = .99,speed=25 };
         public Agent Agent;
 
         private JumpState jumpState;
@@ -35,12 +36,17 @@ namespace QuixPhysics
         internal delegate void OnContactAction(PhyObject obj);
         internal event OnContactAction ContactListeners;
 
+        internal delegate void OnShootAction(ShootMessage message);
+        internal event OnShootAction ShootListeners;
+
         public GolfBall2 golfball;
         private float maxDistanceWithBall = 20;
         private bool canShoot;
 
         private IGauntlet gauntlet;
         internal User user;
+
+        public bool cameraLocked = false;
 
         public Player2()
         {
@@ -64,7 +70,6 @@ namespace QuixPhysics
 
             SetPositionToStartPoint();
             CreateBall();
-            CreateUser();
             CreateGauntlet();
 
 
@@ -81,28 +86,8 @@ namespace QuixPhysics
         {
             this.gauntlet = new AtractGauntlet();
             this.gauntlet.AddPlayer(this);
+            this.gauntlet.Init();
         }
-
-
-        private void CreateUser()
-        {
-            User s = new User(state.owner, this);
-            this.user = s;
-
-            if (!simulator.users.ContainsKey(state.owner))
-            {
-                simulator.users.Add(state.owner, s);
-            }
-            else
-            {
-                QuixConsole.Log("User has been already added");
-            }
-
-
-        }
-
-
-
         private void CreateBall()
         {
             SphereState ball = new SphereState();
@@ -157,8 +142,8 @@ namespace QuixPhysics
                     var y = (float)Math.Sin(radian + radPad);
                     Vector3 vel = new Vector3(x, 0, y);
 
-                    vel.X *= .3f;
-                    vel.Z *= .3f;
+                    vel.X *= (float)playerStats.speed/100;
+                    vel.Z *= (float)playerStats.speed/100;
                     reference.Velocity.Linear.X += vel.X;
                     reference.Velocity.Linear.Z += vel.Z;
                     reference.Awake = true;
@@ -167,8 +152,8 @@ namespace QuixPhysics
                 if (moveMessage.x == 0 && moveMessage.y == 0 && reference.Velocity.Linear.Y > -0.06)
                 {
                     // Console.WriteLine(moveMessage.x+" / " +moveMessage.y);
-                    reference.Velocity.Linear.X *= friction;
-                    reference.Velocity.Linear.Z *= friction;
+                    reference.Velocity.Linear.X *= (float)playerStats.friction;
+                    reference.Velocity.Linear.Z *= (float)playerStats.friction;
                     acceleration = 0;
                 }
 
@@ -182,16 +167,19 @@ namespace QuixPhysics
 
         private void TickRotation()
         {
-            if (rotateMessage.clientId != null)
+            if (!cameraLocked)
             {
-                rotationController += rotateMessage.x / 80;
-                //simulator.Simulation.Awakener.AwakenBody(bodyHandle);
-                if (Math.Abs(rotateMessage.x) > 0)
+                if (rotateMessage.clientId != null)
                 {
-                    reference.Awake = true;
-                }
+                    rotationController += rotateMessage.x / 80;
+                    //simulator.Simulation.Awakener.AwakenBody(bodyHandle);
+                    if (Math.Abs(rotateMessage.x) > 0)
+                    {
+                        reference.Awake = true;
+                    }
 
-                state.quaternion = QuaternionEx.CreateFromYawPitchRoll(-rotationController, 0, 0);
+                    state.quaternion = QuaternionEx.CreateFromYawPitchRoll(-rotationController, 0, 0);
+                }
             }
         }
         private void TickSnapped()
@@ -217,7 +205,6 @@ namespace QuixPhysics
             simulator.Simulation.Awakener.AwakenBody(golfball.reference.Handle);
             float distance = maxDistanceWithBall - 1;
             var newPos = reference.Pose.Position;
-            // newPos.Y += distance;
             var x = -(float)Math.Cos(rotationController);
             var y = -(float)Math.Sin(rotationController);
 
@@ -294,16 +281,17 @@ namespace QuixPhysics
         {
             if (Agent.ActualState() == snappedState)
             {
-                QuixConsole.WriteLine("Shotting");
                 shotState.message = message;
                 Agent.ChangeState(shotState);
                 Agent.Lock(130);
+                ShootListeners?.Invoke(message);
 
             }
             else
             {
 
             }
+
 
         }
         public void UseGauntlet(bool activate)

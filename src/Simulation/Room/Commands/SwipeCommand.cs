@@ -7,11 +7,11 @@ namespace QuixPhysics
         public SwipeCommand(Simulator _simulator) : base(_simulator)
         {
         }
-        public override void OnRead(JObject message)
+        public override void OnRead(JObject message, Room room)
         {
              SwipeMessage j2 = message.ToObject<SwipeMessage>();
             //objects[]
-            Player2 onb2 = (Player2)simulator.users[j2.clientId].player;
+            Player2 onb2 = (Player2)room.users[j2.clientId].player;
             // Simulation.Awakener.AwakenBody(ob.bodyHandle);
             onb2.Swipe(j2.degree, j2.direction);
         }

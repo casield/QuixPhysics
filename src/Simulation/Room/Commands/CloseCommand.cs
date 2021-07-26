@@ -7,7 +7,7 @@ namespace QuixPhysics
         public CloseCommand(Simulator _simulator) : base(_simulator)
         {
         }
-        public override void OnRead(JObject message)
+        public override void OnRead(JObject message, Room room)
         {
           simulator.Close();
 

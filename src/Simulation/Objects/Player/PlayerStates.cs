@@ -16,7 +16,7 @@ namespace QuixPhysics
         public void OnActivate()
         {
             // throw new NotImplementedException();
-            PhyTimeOut timeOut = new PhyTimeOut(10, player.simulator);
+            PhyTimeOut timeOut = new PhyTimeOut(10, player.simulator,true);
             timeOut.Completed += SendMessage;
             Snap();
 
@@ -158,21 +158,18 @@ namespace QuixPhysics
 
         public void Shoot()
         {
-            // Console.WriteLine("Shoooot");
-            // player.golfball.GetReference().Velocity.Linear.X -= 30;
-            
-
+   
             var radian = (player.rotationController);
             var x = (float)Math.Cos(radian);
             var y = (float)Math.Sin(radian);
-            /*player.golfball.GetReference().Velocity.Linear.X -= (x * player.shootForce) * message.force;
-            player.golfball.GetReference().Velocity.Linear.Z -= (y * player.shootForce) * message.force;
-            player.golfball.GetReference().Velocity.Linear.Y += (player.shootForce * .6f) * message.force;*/
-            float ximp = -(x * player.shootForce) * message.force;
-            float zimp = -(y * player.shootForce) * message.force;
-            float yimp = (player.shootForce * .6f) * message.force;
+            double ximp = -(x * player.playerStats.force) * message.force;
+            double zimp = -(y * player.playerStats.force) * message.force;
+            double yimp = (player.playerStats.force * .6f) * message.force;
 
-            Vector3 imp = new Vector3(ximp,yimp,zimp);
+            QuixConsole.Log("Force",message.force);
+
+
+            Vector3 imp = new Vector3((float)ximp,(float)yimp,(float)zimp);
             player.golfball.GetReference().ApplyLinearImpulse(imp);
             SetPlayerCollided();
             player.SetNotSnapped();

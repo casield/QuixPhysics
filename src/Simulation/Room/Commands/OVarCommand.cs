@@ -10,7 +10,7 @@ namespace QuixPhysics
         {
             oVarManager= simulator.oVarManager;
         }
-        public override void OnRead(JObject message)
+        public override void OnRead(JObject message, Room room)
         {
             var m = message.ToObject<OVarMessage>();
             if(m.a == "up"){

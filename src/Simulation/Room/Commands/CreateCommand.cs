@@ -10,7 +10,7 @@ namespace QuixPhysics{
         {
             serializer = new JsonSerializer();
         }
-        public override void OnRead(JObject message)
+        public override void OnRead(JObject message, Room room)
         {
             
             if (message["halfSize"] != null)

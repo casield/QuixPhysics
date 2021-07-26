@@ -20,6 +20,7 @@ namespace QuixPhysics
             simulator = _simulator;
 
             commandDictionary.Add("create", new CreateCommand(simulator));
+            commandDictionary.Add("join", new JoinCommand(simulator));
             commandDictionary.Add("generateMap", new GenerateMapCommand(simulator));
             commandDictionary.Add("move", new MoveCommand(simulator));
             commandDictionary.Add("shoot", new ShootCommand(simulator));
@@ -34,6 +35,23 @@ namespace QuixPhysics
         internal void AddCommandToBeRead(string v)
         {
             commandsList.Add(v);
+        }
+
+        internal Room GetRoom(string roomId)
+        {
+            var contains = simulator.roomManager.rooms.ContainsKey(roomId);
+            Room room = null;
+
+            if (contains)
+            {
+                room = simulator.roomManager.rooms[roomId];
+            }
+            else
+            {
+                var newroom = new Room(simulator, new RoomInfo { maxPlayers = 100, position = new Vector3(), roomId = roomId });
+                simulator.roomManager.AddRoom(newroom);
+            }
+            return room;
         }
 
         internal void ReadCommand()
@@ -53,8 +71,13 @@ namespace QuixPhysics
                         if (commandDictionary.ContainsKey(type))
                         {
                             JObject data = (JObject)message["data"];
+                            var room = GetRoom(((string)data["roomId"]));
 
-                            commandDictionary[type].OnRead(data);
+                            commandDictionary[type].OnRead(data,room);
+                        }
+                        else
+                        {
+                            QuixConsole.Log("Command not registred " + type);
                         }
 
                     }
@@ -71,9 +94,10 @@ namespace QuixPhysics
             {
                 QuixConsole.Log("Json Problem ", e);
             }
-            catch(InvalidCastException e){
-                QuixConsole.Log("Invalid cast",e);
-               // commandsList.Clear();
+            catch (InvalidCastException e)
+            {
+                QuixConsole.Log("Invalid cast", e);
+                // commandsList.Clear();
             }
             catch (Exception e)
             {
