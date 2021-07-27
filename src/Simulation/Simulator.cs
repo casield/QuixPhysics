@@ -23,7 +23,7 @@ namespace QuixPhysics
 
         public SimpleThreadDispatcher ThreadDispatcher { get; }
         public Simulation Simulation { get; }
-        public int TIME_TO_SEND_TICK = 50;
+        public int TIME_TO_SEND_TICK = 100;
 
         public GameLoop gameLoop = null;
         public Dictionary<BodyHandle, PhyObject> objectsHandlers = new Dictionary<BodyHandle, PhyObject>();

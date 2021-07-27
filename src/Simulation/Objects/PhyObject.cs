@@ -152,31 +152,4 @@ namespace QuixPhysics
         }
     }
 
-    /*public class StaticPhyObject : PhyObject
-    {
-        new StaticHandle bodyHandle;
-        public bool needUpdate = false;
-
-        public override string getJSON()
-        {
-            StaticDescription description;
-            simulator.Simulation.Statics.GetDescription(bodyHandle, out description);
-
-            state.position = description.Pose.Position;
-            if (updateRotation)
-            {
-                state.quaternion = description.Pose.Orientation;
-            }
-            SetMeshRotation();
-
-
-            return state.getJson();
-        }
-        public override void SetMeshRotation()
-        {
-            base.SetMeshRotation();
-            needUpdate = true;
-
-        }
-    }*/
 }

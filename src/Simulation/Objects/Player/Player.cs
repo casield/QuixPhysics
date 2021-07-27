@@ -194,14 +194,12 @@ namespace QuixPhysics
 
                     if (Math.Abs(rotateMessage.x) > 0)
                     {
-                        reference.Awake = true;
-                        //rotationController += rotateMessage.x;
-                        
+                        reference.Awake = true;  
                         rotationAcceleration += rotationSpeed*rotateMessage.x;
                         rotationAcceleration = Math.Clamp(rotationAcceleration,-maxAcc,maxAcc);
                         rotationAcceleration/=100;
                         QuixConsole.Log(rotationAcceleration);
-                       // rotationAcceleration/=2;
+
 
                     }
                     
@@ -209,17 +207,7 @@ namespace QuixPhysics
                     {
                         rotationAcceleration *= .92f;
                     }
-
-                    
-
-
-
                     rotationController += rotationAcceleration;
-
-
-
-
-
                     state.quaternion = QuaternionEx.CreateFromYawPitchRoll(-rotationController, 0, 0);
                 }
             }
