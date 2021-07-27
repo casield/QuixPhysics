@@ -24,7 +24,7 @@ namespace QuixPhysics
 
         public User CreateUser(string clientId, Room room)
         {
-            if (room.users.ContainsKey(clientId))
+            if (!room.users.ContainsKey(clientId))
             {
                 var box = new SphereState();
                 box.radius = 10;
