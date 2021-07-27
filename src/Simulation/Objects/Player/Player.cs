@@ -207,7 +207,7 @@ namespace QuixPhysics
                     
                     if (rotateMessage.x == 0)
                     {
-                        rotationAcceleration *= .97f;
+                        rotationAcceleration *= .92f;
                     }
 
                     
