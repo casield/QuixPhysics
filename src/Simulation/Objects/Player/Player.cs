@@ -10,9 +10,9 @@ namespace QuixPhysics
     public delegate void OnContact(BodyHandle contact);
     public struct PlayerStats
     {
-        public double force;
-        public double friction;
-        public double speed;
+        public float force;
+        public float friction;
+        public float speed;
 
     }
     public struct OverBoardStats{
@@ -27,7 +27,7 @@ namespace QuixPhysics
         public float rotationController = 0;
 
 
-        public PlayerStats playerStats = new PlayerStats { force = 30, friction = .99, speed = 15 };
+        public PlayerStats playerStats = new PlayerStats { force = 30, friction = .99f, speed = 15 };
         public OverBoardStats overStats = new OverBoardStats { acceleration=.5f };
 
         private float moveAcceleration = 0;
@@ -163,6 +163,8 @@ namespace QuixPhysics
 
                 }else{
                     moveAcceleration = 0;
+                     reference.Velocity.Linear.X *= playerStats.friction;
+                    reference.Velocity.Linear.Z *= playerStats.friction;
                 }
 
 

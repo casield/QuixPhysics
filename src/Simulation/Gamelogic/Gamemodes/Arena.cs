@@ -28,7 +28,8 @@ namespace QuixPhysics
             {
 
                 var index = users.IndexOf(user);
-                if (room.map.startPositions.Count > index)
+                
+                if (index >-1 && room.map.startPositions.Count-1 > index)
                 {
                     var point = new Vector3((float)room.map.startPositions[index].AsBsonDocument["x"].AsDouble,
                         (float)room.map.startPositions[index].AsBsonDocument["y"].AsDouble,
