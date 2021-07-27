@@ -222,11 +222,10 @@ namespace QuixPhysics
         }
         public void SetPositionToStartPoint()
         {
-            /* reference.Pose.Position.X = (float)simulator.map.startPositions[0].AsBsonDocument["x"].AsDouble;
-             reference.Pose.Position.Y = (float)simulator.map.startPositions[0].AsBsonDocument["y"].AsDouble;
-             reference.Pose.Position.Z = (float)simulator.map.startPositions[0].AsBsonDocument["z"].AsDouble;*/
-
-            reference.Pose.Position = room.gamemode.GetStartPoint(this.user);
+            if(room != null && room.gamemode != null){
+                reference.Pose.Position = room.gamemode.GetStartPoint(this.user);
+            }
+            
         }
 
         public Vector2 GetXYRotation()
@@ -247,7 +246,7 @@ namespace QuixPhysics
 
         private void CheckIfFall()
         {
-
+           
             if (this.reference.Pose.Position.Y < -50)
             {
                 this.SetPositionToStartPoint();
