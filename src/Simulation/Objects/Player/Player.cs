@@ -13,7 +13,7 @@ namespace QuixPhysics
         public float force;
         public float friction;
         public float speed;
-
+        public float maxSpeed;
     }
     public struct OverBoardStats
     {
@@ -22,14 +22,15 @@ namespace QuixPhysics
     public class Player2 : PhyObject
     {
         XYMessage moveMessage;
+        XYMessage forceMoveMessage;
 
         private XYMessage rotateMessage;
 
         public float rotationController = 0;
 
 
-        public PlayerStats playerStats = new PlayerStats { force = 30, friction = .99f, speed = 15 };
-        public OverBoardStats overStats = new OverBoardStats { acceleration = .5f };
+        public PlayerStats playerStats = new PlayerStats { force = 30, friction = .99f, speed = .1f,maxSpeed=2 };
+        public OverBoardStats overStats = new OverBoardStats { acceleration = .1f };
 
         private float moveAcceleration = 0;
         public Agent Agent;
@@ -144,21 +145,23 @@ namespace QuixPhysics
                 // Console.WriteLine(bb.Velocity.Linear.Y);
                 if ((moveMessage.x != 0 || moveMessage.y != 0))
                 {
-                    var radPad = Math.Atan2(this.moveMessage.x, -this.moveMessage.y);
+                    var radPad = Math.Atan2(this.moveMessage.x, -(this.moveMessage.y));
                     var radian = (this.rotationController);
                     var x = (float)Math.Cos(radian + radPad);
                     var y = (float)Math.Sin(radian + radPad);
                     Vector3 vel = new Vector3(x, 0, y);
 
-                    vel.X *= (float)playerStats.speed / 1000;
-                    vel.Z *= (float)playerStats.speed / 1000;
+                    float distance = Vector2.Distance(new Vector2(),new Vector2(forceMoveMessage.x,forceMoveMessage.y))/100;
 
-                    moveAcceleration += overStats.acceleration;
+                    vel.X *= (float)playerStats.speed*distance;
+                    vel.Z *= (float)playerStats.speed*distance;
 
-                    moveAcceleration = (float)Math.Clamp(moveAcceleration, 0, playerStats.speed);
+                    moveAcceleration += overStats.acceleration*(float)Math.Atan2(this.forceMoveMessage.x, -(this.forceMoveMessage.y));;
 
-                    reference.Velocity.Linear.X += vel.X * moveAcceleration;
-                    reference.Velocity.Linear.Z += vel.Z * moveAcceleration;
+                    moveAcceleration = (float)Math.Clamp(moveAcceleration, 0, playerStats.maxSpeed);
+
+                    reference.Velocity.Linear.X += ((vel.X) * moveAcceleration);
+                    reference.Velocity.Linear.Z += ((vel.Z) * moveAcceleration);
 
                     reference.Awake = true;
 
@@ -290,6 +293,8 @@ namespace QuixPhysics
 
             //QuixConsole.Log("fake", fx, fy);
             moveMessage = message;
+            forceMoveMessage.x = MathF.Abs(message.x);
+            forceMoveMessage.y = MathF.Abs(message.y);
 
 
             if (message.x != 0 && message.y != 0)
@@ -300,8 +305,8 @@ namespace QuixPhysics
                 var angle = (float)Math.Atan2(moveMessage.x, moveMessage.y);
                 var fx = (float)MathF.Cos(angle);
                 var fy = (float)MathF.Sin(angle);
-                message.x = fx;
-                message.y = fy;
+                message.x = fx *moveMessage.x;
+                message.y = fy * moveMessage.y;
             }
 
 
