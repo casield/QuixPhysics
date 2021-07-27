@@ -29,7 +29,7 @@ namespace QuixPhysics
         public float rotationController = 0;
 
 
-        public PlayerStats playerStats = new PlayerStats { force = 30, friction = .99f, speed = .1f,maxSpeed=2 };
+        public PlayerStats playerStats = new PlayerStats { force = 30, friction = .9f, speed = .1f,maxSpeed=2 };
         public OverBoardStats overStats = new OverBoardStats { acceleration = .1f };
 
         private float moveAcceleration = 0;
@@ -299,7 +299,7 @@ namespace QuixPhysics
 
             if (message.x != 0 && message.y != 0)
             {
-                var number_of_chunks = 12;
+                var number_of_chunks = 16;
                 var size_of_chunk = (360 / number_of_chunks);
 
                 var angle = (float)Math.Atan2(moveMessage.x, moveMessage.y);
