@@ -15,6 +15,9 @@ namespace QuixPhysics
         public double speed;
 
     }
+    public struct OverBoardStats{
+        public float acceleration;
+    }
     public class Player2 : PhyObject
     {
         XYMessage moveMessage;
@@ -22,10 +25,12 @@ namespace QuixPhysics
         private XYMessage rotateMessage;
 
         public float rotationController = 0;
-        private float acceleration = 0;
 
 
-        public PlayerStats playerStats = new PlayerStats { force = 30, friction = .99,speed=25 };
+        public PlayerStats playerStats = new PlayerStats { force = 30, friction = .99, speed = 15 };
+        public OverBoardStats overStats = new OverBoardStats { acceleration=.5f };
+
+        private float moveAcceleration = 0;
         public Agent Agent;
 
         private JumpState jumpState;
@@ -54,9 +59,9 @@ namespace QuixPhysics
             Agent = new Agent(this);
 
         }
-        public override void Load(Handle bodyHandle, ConnectionState connectionState, Simulator simulator, ObjectState state, Guid guid,Room room)
+        public override void Load(Handle bodyHandle, ConnectionState connectionState, Simulator simulator, ObjectState state, Guid guid, Room room)
         {
-            base.Load(bodyHandle, connectionState, simulator, state, guid,room);
+            base.Load(bodyHandle, connectionState, simulator, state, guid, room);
             PhyInterval worker = new PhyInterval(1, simulator);
             worker.Completed += Tick;
 
@@ -78,7 +83,7 @@ namespace QuixPhysics
             notSnappedState = new Not_SnappedState(this);
             shotState = new ShootState(this);
 
-    
+
 
 
         }
@@ -102,7 +107,7 @@ namespace QuixPhysics
             ball.owner = state.owner;
             ball.mesh = "Objects/Balls/Vanilla/Vanilla";
 
-            golfball = (GolfBall2)simulator.Create(ball,room);
+            golfball = (GolfBall2)simulator.Create(ball, room);
         }
         public bool IsSnapped()
         {
@@ -136,7 +141,7 @@ namespace QuixPhysics
             if (moveMessage.clientId != null /*&& !IsSnapped()*/)
             {
                 // Console.WriteLine(bb.Velocity.Linear.Y);
-                if ((moveMessage.x != 0 || moveMessage.y != 0) && reference.Velocity.Linear.Y < 4)
+                if ((moveMessage.x != 0 || moveMessage.y != 0))
                 {
                     var radPad = Math.Atan2(this.moveMessage.x, -this.moveMessage.y);
                     var radian = (this.rotationController);
@@ -144,21 +149,24 @@ namespace QuixPhysics
                     var y = (float)Math.Sin(radian + radPad);
                     Vector3 vel = new Vector3(x, 0, y);
 
-                    vel.X *= (float)playerStats.speed/100;
-                    vel.Z *= (float)playerStats.speed/100;
-                    reference.Velocity.Linear.X += vel.X;
-                    reference.Velocity.Linear.Z += vel.Z;
+                    vel.X *= (float)playerStats.speed/1000;
+                    vel.Z *= (float)playerStats.speed/1000;
+
+                    moveAcceleration += overStats.acceleration;
+
+                    moveAcceleration = (float)Math.Clamp(moveAcceleration,0,playerStats.speed);
+
+                    reference.Velocity.Linear.X += vel.X*moveAcceleration;
+                    reference.Velocity.Linear.Z += vel.Z*moveAcceleration;
+
                     reference.Awake = true;
-                   
+
+                }else{
+                    moveAcceleration = 0;
                 }
-                // Console.WriteLine(" / " +reference.Velocity.Linear.Y);
-                if (moveMessage.x == 0 && moveMessage.y == 0 && reference.Velocity.Linear.Y > -0.06)
-                {
-                    // Console.WriteLine(moveMessage.x+" / " +moveMessage.y);
-                    reference.Velocity.Linear.X *= (float)playerStats.friction;
-                    reference.Velocity.Linear.Z *= (float)playerStats.friction;
-                    acceleration = 0;
-                }
+
+
+
             }
 
 
@@ -202,7 +210,7 @@ namespace QuixPhysics
         public void SetPositionToBall()
         {
             simulator.Simulation.Awakener.AwakenBody(golfball.reference.Handle);
-            float distance = maxDistanceWithBall-.5f;
+            float distance = maxDistanceWithBall - .5f;
             var newPos = reference.Pose.Position;
             var x = -(float)Math.Cos(rotationController);
             var y = -(float)Math.Sin(rotationController);
@@ -214,10 +222,10 @@ namespace QuixPhysics
         }
         public void SetPositionToStartPoint()
         {
-           /* reference.Pose.Position.X = (float)simulator.map.startPositions[0].AsBsonDocument["x"].AsDouble;
-            reference.Pose.Position.Y = (float)simulator.map.startPositions[0].AsBsonDocument["y"].AsDouble;
-            reference.Pose.Position.Z = (float)simulator.map.startPositions[0].AsBsonDocument["z"].AsDouble;*/
-    
+            /* reference.Pose.Position.X = (float)simulator.map.startPositions[0].AsBsonDocument["x"].AsDouble;
+             reference.Pose.Position.Y = (float)simulator.map.startPositions[0].AsBsonDocument["y"].AsDouble;
+             reference.Pose.Position.Z = (float)simulator.map.startPositions[0].AsBsonDocument["z"].AsDouble;*/
+
             reference.Pose.Position = room.gamemode.GetStartPoint(this.user);
         }
 
@@ -230,7 +238,11 @@ namespace QuixPhysics
 
         public void OnFall()
         {
-            this.user.gems.Update(((int)this.user.gems.value) / 2);
+            if (this.user != null)
+            {
+                this.user.gems.Update(((int)this.user.gems.value) / 2);
+            }
+
         }
 
         private void CheckIfFall()

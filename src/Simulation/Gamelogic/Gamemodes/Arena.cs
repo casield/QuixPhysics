@@ -37,7 +37,10 @@ namespace QuixPhysics
                 }
                 else
                 {
-                    return new Vector3(0, 500, 0);
+                     var point = new Vector3((float)room.map.startPositions[0].AsBsonDocument["x"].AsDouble,
+                        (float)room.map.startPositions[0].AsBsonDocument["y"].AsDouble,
+                             (float)room.map.startPositions[0].AsBsonDocument["z"].AsDouble);
+                    return point;
                 }
 
             }

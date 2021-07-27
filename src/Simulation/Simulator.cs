@@ -23,6 +23,8 @@ namespace QuixPhysics
 
         public SimpleThreadDispatcher ThreadDispatcher { get; }
         public Simulation Simulation { get; }
+        public int TIME_TO_SEND_TICK = 50;
+
         public GameLoop gameLoop = null;
         public Dictionary<BodyHandle, PhyObject> objectsHandlers = new Dictionary<BodyHandle, PhyObject>();
         public Dictionary<StaticHandle, PhyObject> staticObjectsHandlers = new Dictionary<StaticHandle, PhyObject>();
@@ -55,7 +57,7 @@ namespace QuixPhysics
         public OVarManager oVarManager;
 
         public RoomManager roomManager;
-
+        private int updateTick;
 
         public Simulator(ConnectionState state, Server server)
         {
@@ -108,12 +110,6 @@ namespace QuixPhysics
 
             // CreateMesh(state);
         }
-
-        /*private void CreateMap()
-        {
-            createFloor();
-            createObjects();
-        }*/
         internal void createObjects(Room room)
         {
             int width = 10;
@@ -174,7 +170,19 @@ namespace QuixPhysics
                 Simulation.Timestep(1 / 60f, ThreadDispatcher);
 
                 // ArrayList bodies = new ArrayList();
-                var set = Simulation.Bodies.Sets[0];
+                if(updateTick ==TIME_TO_SEND_TICK){
+                    SendUpdate();
+                    updateTick = 0;
+                }else{
+                    updateTick++;
+                }
+            }
+
+
+
+        }
+        public void SendUpdate(){
+             var set = Simulation.Bodies.Sets[0];
                 string[] bodies2 = new string[allObjects.Count];
                 int bodiesAdded = 0;
 
@@ -227,12 +235,6 @@ namespace QuixPhysics
                     var slice = bodies2[0..bodiesAdded];
                     SendMessage("update", JsonConvert.SerializeObject(slice), connectionState.workSocket);
                 }
-
-
-            }
-
-
-
         }
         public void SendMessage(string type, Newtonsoft.Json.Linq.JObject message, Socket socket)
         {
@@ -412,15 +414,6 @@ namespace QuixPhysics
            
             return phy;
         }
-        /*private StaticPhyObject SetUpPhyObject(StaticHandle staticHandle, ObjectState state, Guid guid)
-        {
-            StaticPhyObject phy = (StaticPhyObject)GetPhyClass(state.type);
-
-            phy.Load(staticHandle, connectionState, this, state,guid);
-           
-
-            return phy;
-        }*/
 
         public PhyObject handleToPhyObject(BodyHandle handle)
         {
