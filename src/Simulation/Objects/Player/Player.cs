@@ -194,14 +194,14 @@ namespace QuixPhysics
 
                     if (Math.Abs(rotateMessage.x) > 0)
                     {
-                        reference.Awake = true;  
-                        rotationAcceleration += rotationSpeed*rotateMessage.x;
-                        rotationAcceleration = Math.Clamp(rotationAcceleration,-maxAcc,maxAcc);
-                        rotationAcceleration/=100;
+                        reference.Awake = true;
+                        rotationAcceleration += rotationSpeed * rotateMessage.x;
+                        rotationAcceleration = Math.Clamp(rotationAcceleration, -maxAcc, maxAcc);
+                        rotationAcceleration /= 100;
 
 
                     }
-                    
+
                     if (rotateMessage.x == 0)
                     {
                         rotationAcceleration *= .9f;
@@ -287,15 +287,22 @@ namespace QuixPhysics
 
         public void Move(XYMessage message)
         {
+
+            //QuixConsole.Log("fake", fx, fy);
             moveMessage = message;
 
-            var degree = Math.Atan2(moveMessage.x, moveMessage.y);
 
-            QuixConsole.Log("Rad", degree);
+            if (message.x != 0 && message.y != 0)
+            {
+                var number_of_chunks = 8;
+                var size_of_chunk = (360 / number_of_chunks);
 
-            moveMessage.x = moveMessage.x == 0 ? 0 : moveMessage.x > 0 ? 1 : -1;
-            moveMessage.y = moveMessage.y == 0 ? 0 : moveMessage.y > 0 ? 1 : -1;
-
+                var angle = (float)Math.Atan2(moveMessage.x, moveMessage.y);
+                var fx = (float)MathF.Cos(angle);
+                var fy = (float)MathF.Sin(angle);
+                message.x = fx;
+                message.y = fy;
+            }
 
 
             // moveMessage.y = moveMessage.y >
