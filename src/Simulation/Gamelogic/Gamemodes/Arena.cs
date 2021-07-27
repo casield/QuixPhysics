@@ -12,7 +12,6 @@ namespace QuixPhysics
         public Arena(Simulator simulator, Room room) : base(simulator)
         {
             this.room = room;
-            QuixConsole.Log("Hola",room.info.roomId);
         }
         public override void OnJoin(User user)
         {
@@ -27,16 +26,24 @@ namespace QuixPhysics
         {
             if (room.map != null)
             {
-               
+
                 var index = users.IndexOf(user);
-                var point = new Vector3((float)room.map.startPositions[index].AsBsonDocument["x"].AsDouble,
-                (float)room.map.startPositions[index].AsBsonDocument["y"].AsDouble,
-                 (float)room.map.startPositions[index].AsBsonDocument["z"].AsDouble);
-                return point;
+                if (room.map.startPositions.Count > index)
+                {
+                    var point = new Vector3((float)room.map.startPositions[index].AsBsonDocument["x"].AsDouble,
+                        (float)room.map.startPositions[index].AsBsonDocument["y"].AsDouble,
+                             (float)room.map.startPositions[index].AsBsonDocument["z"].AsDouble);
+                    return point;
+                }
+                else
+                {
+                    return new Vector3(0, 500, 0);
+                }
+
             }
             else
             {
-                 QuixConsole.Log("GetStartPoint");
+                QuixConsole.Log("GetStartPoint");
                 return base.GetStartPoint(user);
             }
 

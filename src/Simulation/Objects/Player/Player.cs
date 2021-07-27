@@ -78,6 +78,8 @@ namespace QuixPhysics
             notSnappedState = new Not_SnappedState(this);
             shotState = new ShootState(this);
 
+    
+
 
         }
 
@@ -200,7 +202,7 @@ namespace QuixPhysics
         public void SetPositionToBall()
         {
             simulator.Simulation.Awakener.AwakenBody(golfball.reference.Handle);
-            float distance = maxDistanceWithBall;
+            float distance = maxDistanceWithBall-.5f;
             var newPos = reference.Pose.Position;
             var x = -(float)Math.Cos(rotationController);
             var y = -(float)Math.Sin(rotationController);
