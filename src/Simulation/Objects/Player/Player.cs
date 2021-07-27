@@ -15,7 +15,8 @@ namespace QuixPhysics
         public float speed;
 
     }
-    public struct OverBoardStats{
+    public struct OverBoardStats
+    {
         public float acceleration;
     }
     public class Player2 : PhyObject
@@ -28,7 +29,7 @@ namespace QuixPhysics
 
 
         public PlayerStats playerStats = new PlayerStats { force = 30, friction = .99f, speed = 15 };
-        public OverBoardStats overStats = new OverBoardStats { acceleration=.5f };
+        public OverBoardStats overStats = new OverBoardStats { acceleration = .5f };
 
         private float moveAcceleration = 0;
         public Agent Agent;
@@ -149,21 +150,23 @@ namespace QuixPhysics
                     var y = (float)Math.Sin(radian + radPad);
                     Vector3 vel = new Vector3(x, 0, y);
 
-                    vel.X *= (float)playerStats.speed/1000;
-                    vel.Z *= (float)playerStats.speed/1000;
+                    vel.X *= (float)playerStats.speed / 1000;
+                    vel.Z *= (float)playerStats.speed / 1000;
 
                     moveAcceleration += overStats.acceleration;
 
-                    moveAcceleration = (float)Math.Clamp(moveAcceleration,0,playerStats.speed);
+                    moveAcceleration = (float)Math.Clamp(moveAcceleration, 0, playerStats.speed);
 
-                    reference.Velocity.Linear.X += vel.X*moveAcceleration;
-                    reference.Velocity.Linear.Z += vel.Z*moveAcceleration;
+                    reference.Velocity.Linear.X += vel.X * moveAcceleration;
+                    reference.Velocity.Linear.Z += vel.Z * moveAcceleration;
 
                     reference.Awake = true;
 
-                }else{
+                }
+                else
+                {
                     moveAcceleration = 0;
-                     reference.Velocity.Linear.X *= playerStats.friction;
+                    reference.Velocity.Linear.X *= playerStats.friction;
                     reference.Velocity.Linear.Z *= playerStats.friction;
                 }
 
@@ -174,18 +177,48 @@ namespace QuixPhysics
 
         }
 
+        private float rotationAcceleration = 0f;
+        private float maxAcc = .5f;
+
+        private float rotationSpeed = 2.6f;
+
         private void TickRotation()
         {
             if (!cameraLocked)
             {
                 if (rotateMessage.clientId != null)
                 {
-                    rotationController += rotateMessage.x / 80;
-                    //simulator.Simulation.Awakener.AwakenBody(bodyHandle);
+
+
+                    reference.Awake = true;
+
                     if (Math.Abs(rotateMessage.x) > 0)
                     {
                         reference.Awake = true;
+                        //rotationController += rotateMessage.x;
+                        
+                        rotationAcceleration += rotationSpeed*rotateMessage.x;
+                        rotationAcceleration = Math.Clamp(rotationAcceleration,-maxAcc,maxAcc);
+                        rotationAcceleration/=100;
+                        QuixConsole.Log(rotationAcceleration);
+                       // rotationAcceleration/=2;
+
                     }
+                    
+                    if (rotateMessage.x == 0)
+                    {
+                        rotationAcceleration *= .97f;
+                    }
+
+                    
+
+
+
+                    rotationController += rotationAcceleration;
+
+
+
+
 
                     state.quaternion = QuaternionEx.CreateFromYawPitchRoll(-rotationController, 0, 0);
                 }
@@ -224,10 +257,11 @@ namespace QuixPhysics
         }
         public void SetPositionToStartPoint()
         {
-            if(room != null && room.gamemode != null){
+            if (room != null && room.gamemode != null)
+            {
                 reference.Pose.Position = room.gamemode.GetStartPoint(this.user);
             }
-            
+
         }
 
         public Vector2 GetXYRotation()
@@ -248,7 +282,7 @@ namespace QuixPhysics
 
         private void CheckIfFall()
         {
-           
+
             if (this.reference.Pose.Position.Y < -50)
             {
                 this.SetPositionToStartPoint();
@@ -266,8 +300,18 @@ namespace QuixPhysics
 
         public void Move(XYMessage message)
         {
-
             moveMessage = message;
+
+            var degree = Math.Atan2(moveMessage.x, moveMessage.y);
+
+            QuixConsole.Log("Rad", degree);
+
+            moveMessage.x = moveMessage.x == 0 ? 0 : moveMessage.x > 0 ? 1 : -1;
+            moveMessage.y = moveMessage.y == 0 ? 0 : moveMessage.y > 0 ? 1 : -1;
+
+
+
+            // moveMessage.y = moveMessage.y >
 
             if (Agent.ActualState() != notSnappedState)
             {
