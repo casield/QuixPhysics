@@ -299,7 +299,7 @@ namespace QuixPhysics
 
             if (message.x != 0 && message.y != 0)
             {
-                var number_of_chunks = 10;
+                var number_of_chunks = 12;
                 var size_of_chunk = (360 / number_of_chunks);
 
                 var angle = (float)Math.Atan2(moveMessage.x, moveMessage.y);
