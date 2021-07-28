@@ -29,8 +29,8 @@ namespace QuixPhysics
         public float rotationController = 0;
 
 
-        public PlayerStats playerStats = new PlayerStats { force = 30, friction = .9f, speed = .1f,maxSpeed=2 };
-        public OverBoardStats overStats = new OverBoardStats { acceleration = .1f };
+        public PlayerStats playerStats = new PlayerStats { force = 30, friction = .99f, speed = .15f, maxSpeed = 1f };
+        public OverBoardStats overStats = new OverBoardStats { acceleration = .06f };
 
         private float moveAcceleration = 0;
         public Agent Agent;
@@ -151,14 +151,17 @@ namespace QuixPhysics
                     var y = (float)Math.Sin(radian + radPad);
                     Vector3 vel = new Vector3(x, 0, y);
 
-                    float distance = Vector2.Distance(new Vector2(),new Vector2(forceMoveMessage.x,forceMoveMessage.y))/100;
+                    float force = Vector2.Distance(new Vector2(), new Vector2(forceMoveMessage.x, forceMoveMessage.y)) / 100;
 
-                    vel.X *= (float)playerStats.speed*distance;
-                    vel.Z *= (float)playerStats.speed*distance;
+                    vel.X *= (float)playerStats.speed * force;
+                    vel.Z *= (float)playerStats.speed * force;
 
-                    moveAcceleration += overStats.acceleration*(float)Math.Atan2(this.forceMoveMessage.x, -(this.forceMoveMessage.y));;
+                   
+                        moveAcceleration += overStats.acceleration;
 
-                    moveAcceleration = (float)Math.Clamp(moveAcceleration, 0, playerStats.maxSpeed);
+                        moveAcceleration = (float)Math.Clamp(moveAcceleration, 0, playerStats.maxSpeed);
+                    
+
 
                     reference.Velocity.Linear.X += ((vel.X) * moveAcceleration);
                     reference.Velocity.Linear.Z += ((vel.Z) * moveAcceleration);
@@ -305,7 +308,7 @@ namespace QuixPhysics
                 var angle = (float)Math.Atan2(moveMessage.x, moveMessage.y);
                 var fx = (float)MathF.Cos(angle);
                 var fy = (float)MathF.Sin(angle);
-                message.x = fx *moveMessage.x;
+                message.x = fx * moveMessage.x;
                 message.y = fy * moveMessage.y;
             }
 
