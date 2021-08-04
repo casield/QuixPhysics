@@ -26,19 +26,9 @@ namespace QuixPhysics
         public bool instantiate { get; set; }
         public string owner { get; set; }
 
-        private StringBuilder builder;
-
-        public ObjectState(){
-            builder = new StringBuilder();
-        }
-        
         internal string getJson()
         {
             return Newtonsoft.Json.JsonConvert.SerializeObject(this);
-        }
-        internal string getPosRot(){
-            double[] b = new double[]{position.X,position.Y,position.Z,quaternion.X,quaternion.Y,quaternion.Z,quaternion.W};
-            return b.ToString();
         }
 
 

@@ -10,7 +10,6 @@ namespace QuixPhysics
     {
         static void Main(string[] args)
         {
-            new QuixNavMesh();
            new Server();
            
         }

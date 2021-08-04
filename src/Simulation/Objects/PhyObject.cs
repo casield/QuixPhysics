@@ -1,6 +1,8 @@
 using System;
+using System.Diagnostics;
 using System.Numerics;
 using BepuPhysics;
+using BepuPhysics.Collidables;
 using BepuUtilities;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
@@ -39,6 +41,8 @@ namespace QuixPhysics
 
         public Room room;
 
+        public TypedIndex shapeIndex;
+
         public bool needUpdate = false;
         public PhyObject()
         {
@@ -59,8 +63,16 @@ namespace QuixPhysics
 
         public BodyReference GetReference()
         {
+            Debug.Assert(state.mass==0,"This phyobject is not dynamic");
             return simulator.Simulation.Bodies.GetBodyReference(bodyHandle.bodyHandle);
         }
+
+        public StaticReference GetStaticReference(){
+            Debug.Assert(state.mass!=0,"This phyobject is not static");
+             return simulator.Simulation.Statics.GetStaticReference(bodyHandle.staticHandle);
+        }
+
+        
 
         public void Stop()
         {
@@ -104,7 +116,7 @@ namespace QuixPhysics
         public virtual string getJSON()
         {
 
-            if (bodyHandle.bodyHandle != default)
+            if (state.mass !=0)
             {
                 BodyDescription description;
                 simulator.Simulation.Bodies.GetDescription(bodyHandle.bodyHandle, out description);
@@ -119,7 +131,7 @@ namespace QuixPhysics
 
             }
             
-            if (bodyHandle.staticHandle != default)
+            if (state.mass ==0)
             {
                 StaticDescription description;
                 simulator.Simulation.Statics.GetDescription(bodyHandle.staticHandle, out description);
@@ -138,6 +150,7 @@ namespace QuixPhysics
         {
 
         }
+
 
         public static string createUID()
         {

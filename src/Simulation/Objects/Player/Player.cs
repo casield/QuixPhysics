@@ -55,6 +55,12 @@ namespace QuixPhysics
 
         public bool cameraLocked = false;
 
+         private float rotationAcceleration = 0f;
+        private float maxAcc = .5f;
+
+        private float rotationSpeed = 2.6f;
+        private LookObject lookObject;
+
         public Player2()
         {
             this.updateRotation = false;
@@ -78,15 +84,13 @@ namespace QuixPhysics
             SetPositionToStartPoint();
             CreateBall();
             CreateGauntlet();
+            CreateLookObject();
 
 
             jumpState = new JumpState(this);
             snappedState = new SnappedState(this);
             notSnappedState = new Not_SnappedState(this);
             shotState = new ShootState(this);
-
-
-
 
         }
 
@@ -96,6 +100,10 @@ namespace QuixPhysics
             this.gauntlet = new AtractGauntlet();
             this.gauntlet.AddPlayer(this);
             this.gauntlet.Init();
+        }
+        private void CreateLookObject(){
+           lookObject =(LookObject) simulator.Create(new BoxState(){instantiate=true,mass=0,type="LookObject",uID=createUID()},room);
+           lookObject.SetPlayer(this);
         }
         private void CreateBall()
         {
@@ -135,6 +143,7 @@ namespace QuixPhysics
                 TickRotation();
 
                 Agent.Tick();
+                lookObject.FollowBall();
             }
 
         }
@@ -183,10 +192,6 @@ namespace QuixPhysics
 
         }
 
-        private float rotationAcceleration = 0f;
-        private float maxAcc = .5f;
-
-        private float rotationSpeed = 2.6f;
 
         private void TickRotation()
         {

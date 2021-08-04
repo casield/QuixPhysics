@@ -168,7 +168,7 @@ namespace QuixPhysics
             {
                 handleWorkers();
                 Simulation.Timestep(1 / 60f, ThreadDispatcher);
-
+                
                 // ArrayList bodies = new ArrayList();
                 if(updateTick ==TIME_TO_SEND_TICK){
                     SendUpdate();
@@ -186,13 +186,6 @@ namespace QuixPhysics
                 string[] bodies2 = new string[allObjects.Count];
                 int bodiesAdded = 0;
 
-
-                if (t == tMax)
-                {
-                    // createObjects();
-                    t = 0;
-                }
-                t++;
 
 
                 for (var bodyIndex = 0; bodyIndex < set.Count; ++bodyIndex)
@@ -225,6 +218,7 @@ namespace QuixPhysics
                     {
                         //bodies.Add(item.Value.getJSON());
                         bodies2[bodiesAdded] = item.Value.getJSON();
+                       // QuixConsole.Log("Updating",item.Value.state.type,item.Value.state.position);
                         item.Value.needUpdate = false;
                         bodiesAdded += 1;
                     }
@@ -366,11 +360,15 @@ namespace QuixPhysics
 
             //fs.Close();
 
-            CollidableDescription collidableDescription = new CollidableDescription(Simulation.Shapes.Add(mesh), 0.1f);
+            TypedIndex shapeIndex = Simulation.Shapes.Add(mesh);
+
+            CollidableDescription collidableDescription = new CollidableDescription(shapeIndex, 0.1f);
+            
 
             mesh.ComputeClosedInertia(state.mass, out var bodyInertia);
 
             var phy = CreateVanilla(state, collidableDescription, bodyInertia,room);
+            phy.shapeIndex = shapeIndex;
             objects.Add(state.uID, phy);
 
             return phy;
@@ -387,6 +385,7 @@ namespace QuixPhysics
 
             // scale.Y *=-1;
             mesh = new Mesh(triangles, scale, bufferPool);
+
 
         }
 

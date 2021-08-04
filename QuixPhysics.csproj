@@ -12,10 +12,11 @@
     <PackageReference Include="MongoDB.Driver" Version="2.12.0"/>
     <PackageReference Include="CjClutter.ObjLoader" Version="1.0.0"/>
     <PackageReference Include="FluentBehaviourTree" Version="0.0.4"/>
+    <PackageReference Include="Aspose.3D" Version="21.7.0"/>
   </ItemGroup>
-      <ItemGroup>
-     <Reference Include="CoreSharpNav">
-       <HintPath>lib/CoreSharpNav.dll</HintPath>
-     </Reference>
-    </ItemGroup>
+  <ItemGroup>
+    <Reference Include="CoreSharpNav">
+      <HintPath>lib/CoreSharpNav.dll</HintPath>
+    </Reference>
+  </ItemGroup>
 </Project>

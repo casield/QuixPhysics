@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Numerics;
 using MongoDB.Bson;
 using Newtonsoft.Json;
@@ -15,10 +16,12 @@ namespace QuixPhysics
         {
            GenerateMap(message["name"].ToString(),room);
         }
-        public void GenerateMap(string name,Room room)
+        public List<PhyObject> GenerateMap(string name,Room room)
         {
             var map = this.simulator.server.dataBase.GetMap(name);
             room.map = map;
+
+            List<PhyObject> objects = new List<PhyObject>();
 
             foreach (var obj in map.objects)
             {
@@ -31,8 +34,8 @@ namespace QuixPhysics
                     obj.Remove("_id");
                     var stri = JsonConvert.DeserializeObject<BoxState>(obj.ToJson());
                     stri.quaternion = JsonConvert.DeserializeObject<Quaternion>(obj["quat"].ToJson());
-
-                    this.simulator.Create(stri,room);
+                    var phy = this.simulator.Create(stri,room);
+                     objects.Add(phy);
                 }
                 if (obj.Contains("radius"))
                 {
@@ -41,10 +44,12 @@ namespace QuixPhysics
                     obj.Remove("_id");
                     var stri = JsonConvert.DeserializeObject<SphereState>(obj.ToJson());
                     stri.quaternion = JsonConvert.DeserializeObject<Quaternion>(obj["quat"].ToJson());
-
-                    this.simulator.Create(stri,room);
+                    var phy = this.simulator.Create(stri,room);
+                     objects.Add(phy);
                 }
             }
+
+            return objects;
         }
     }
 }

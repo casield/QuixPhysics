@@ -57,7 +57,10 @@ namespace QuixPhysics
             LoadMesh("Stadiums/arena/Hoyo");
             LoadMesh("Stadiums/arena/Cosa");
             LoadMesh("Stadiums/arena/Montana1");
+            LoadMesh("Stadiums/Test/Cube1");
+            LoadMesh("Stadiums/Test/Cube2");
             LoadMesh("newt");
+            LoadMesh("15Cube");
             QuixConsole.Log("Reload meshes");
 
         }
@@ -72,7 +75,9 @@ namespace QuixPhysics
         }
 
         private void LoadMesh(string name){
-            meshes.Add(name,LoadObjFile(@"Content/"+name+".obj"));
+            var meshcontent = LoadObjFile(@"Content/"+name+".obj");
+            
+            meshes.Add(name,meshcontent);
         }
 
         private MeshContent LoadObjFile(string path){
