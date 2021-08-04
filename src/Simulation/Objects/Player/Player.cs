@@ -55,11 +55,11 @@ namespace QuixPhysics
 
         public bool cameraLocked = false;
 
-         private float rotationAcceleration = 0f;
+        private float rotationAcceleration = 0f;
         private float maxAcc = .5f;
 
         private float rotationSpeed = 2.6f;
-        private LookObject lookObject;
+        public LookObject lookObject;
 
         public Player2()
         {
@@ -101,9 +101,17 @@ namespace QuixPhysics
             this.gauntlet.AddPlayer(this);
             this.gauntlet.Init();
         }
-        private void CreateLookObject(){
-           lookObject =(LookObject) simulator.Create(new BoxState(){instantiate=true,mass=0,type="LookObject",uID=createUID()},room);
-           lookObject.SetPlayer(this);
+        private void CreateLookObject()
+        {
+            lookObject = (LookObject)simulator.Create(new BoxState()
+            {
+                instantiate = true,
+                mass = 0,
+
+                type = "LookObject",
+                owner = state.uID
+            }, room);
+            lookObject.SetPlayer(this);
         }
         private void CreateBall()
         {
@@ -118,6 +126,7 @@ namespace QuixPhysics
             ball.mesh = "Objects/Balls/Vanilla/Vanilla";
 
             golfball = (GolfBall2)simulator.Create(ball, room);
+            golfball.SetPlayer(this);
         }
         public bool IsSnapped()
         {
@@ -143,7 +152,7 @@ namespace QuixPhysics
                 TickRotation();
 
                 Agent.Tick();
-                lookObject.FollowBall();
+                lookObject.Update();
             }
 
         }
@@ -165,11 +174,11 @@ namespace QuixPhysics
                     vel.X *= (float)playerStats.speed * force;
                     vel.Z *= (float)playerStats.speed * force;
 
-                   
-                        moveAcceleration += overStats.acceleration;
 
-                        moveAcceleration = (float)Math.Clamp(moveAcceleration, 0, playerStats.maxSpeed);
-                    
+                    moveAcceleration += overStats.acceleration;
+
+                    moveAcceleration = (float)Math.Clamp(moveAcceleration, 0, playerStats.maxSpeed);
+
 
 
                     reference.Velocity.Linear.X += ((vel.X) * moveAcceleration);
@@ -199,8 +208,6 @@ namespace QuixPhysics
             {
                 if (rotateMessage.clientId != null)
                 {
-
-
                     reference.Awake = true;
 
                     if (Math.Abs(rotateMessage.x) > 0)
@@ -212,15 +219,50 @@ namespace QuixPhysics
 
 
                     }
+                    if (rotateMessage.y > .05)
+                    {
+                        lookObject.AddY(rotateMessage.y);
+                        lookObject.Lock();
+                    }
+
+                    if (rotateMessage.y == 0)
+                    {
+                        lookObject.Release();
+                    }
 
                     if (rotateMessage.x == 0)
                     {
                         rotationAcceleration *= .9f;
                     }
-                    rotationController += rotationAcceleration;
-                    state.quaternion = QuaternionEx.CreateFromYawPitchRoll(-rotationController, 0, 0);
+                    if (lookObject.watching is Player2)
+                    {
+                        rotationController += rotationAcceleration;
+                    }
+                    else
+                    {
+
+
+                        var prod = AngleBetweenVector2(lookObject.GetStaticReference().Pose.Position, reference.Pose.Position);
+                        rotationController = prod;
+                    }
+
+
+
+                    state.quaternion = QuaternionEx.CreateFromYawPitchRoll(-(rotationController), 0, 0);
+
+
                 }
             }
+        }
+
+        float AngleBetweenVector2(Vector3 vec1, Vector3 vec2)
+        {
+            var deltx = vec1.X - vec2.X;
+            var delty = vec1.Z - vec2.Z;
+
+
+            var rot = MathF.Atan2(-delty, -deltx);
+            return rot;
         }
         private void TickSnapped()
         {

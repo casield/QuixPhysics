@@ -218,7 +218,7 @@ namespace QuixPhysics
                     {
                         //bodies.Add(item.Value.getJSON());
                         bodies2[bodiesAdded] = item.Value.getJSON();
-                       // QuixConsole.Log("Updating",item.Value.state.type,item.Value.state.position);
+                        //QuixConsole.Log("Updating",item.Value.state.type,item.Value.state.position);
                         item.Value.needUpdate = false;
                         bodiesAdded += 1;
                     }
@@ -292,6 +292,9 @@ namespace QuixPhysics
                 collidable = true,
                 guid = guid
             };
+            if(state.quaternion == new Quaternion()){
+                state.quaternion = Quaternion.Identity;
+            }
             if (state.mass != 0)
             {
                 BodyDescription boxDescription = BodyDescription.CreateDynamic(state.position, bodyInertia,

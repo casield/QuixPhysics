@@ -8,6 +8,7 @@ namespace QuixPhysics
     {
 
         public BodyReference reference;
+        private Player2 player;
 
         public GolfBall2()
         {
@@ -22,6 +23,16 @@ namespace QuixPhysics
 
 
             reference = GetReference();
+        }
+        internal override void OnObjectMessage(string data, string clientId, string roomId)
+        {
+            base.OnObjectMessage(data, clientId, roomId);
+            QuixConsole.Log("Mensaje para bola");
+            player.lookObject.ChangeWatching(this);
+            
+        }
+        public void SetPlayer(Player2 player2){
+            this.player = player2;
         }
     }
 }

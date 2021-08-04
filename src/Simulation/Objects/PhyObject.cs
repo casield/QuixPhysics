@@ -111,6 +111,9 @@ namespace QuixPhysics
             simulator.SendMessage("objectMessage", m.ToString(), connectionState.workSocket);
 
         }
+        internal virtual void OnObjectMessage(string data,string clientId,string roomId){
+
+        }
 
 
         public virtual string getJSON()
@@ -142,6 +145,10 @@ namespace QuixPhysics
                     state.quaternion = description.Pose.Orientation;
                 }
                 SetMeshRotation();
+            }
+
+            if(state.quaternion.W == 0){
+                QuixConsole.Log("Error",state.type);
             }
 
             return state.getJson();

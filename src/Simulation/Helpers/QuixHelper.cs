@@ -43,6 +43,9 @@ namespace QuixPhysics
         }
         private static ConsoleColor GetConsoleColor(int index){
               var consoleColors = Enum.GetValues(typeof(ConsoleColor));
+              if(index >= consoleColors.Length){
+                  index = 0;
+              }
             var color = (ConsoleColor)consoleColors.GetValue(index);
             return color.ToString().Contains("Black")?ConsoleColor.DarkRed:color;
         }

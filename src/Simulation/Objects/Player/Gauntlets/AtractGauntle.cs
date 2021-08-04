@@ -111,7 +111,7 @@ namespace QuixPhysics
 
         private void OnTick()
         {
-            if (Player != null)
+            if (Player != null && Player.reference.Exists)
             {
 
                 vehicle.Seek(Player.reference.Pose.Position);

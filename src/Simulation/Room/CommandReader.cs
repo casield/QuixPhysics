@@ -29,6 +29,8 @@ namespace QuixPhysics
             commandDictionary.Add("createBoxes", new CreateBoxesCommand(simulator));
             commandDictionary.Add("gauntlet", new GauntletCommand(simulator));
             commandDictionary.Add("swipe", new SwipeCommand(simulator));
+            commandDictionary.Add("objectMessage", new ObjectMessageCommand(simulator));
+
             commandDictionary.Add("OVar", new OVarCommand(simulator));
             commandDictionary.Add("close", new CloseCommand(simulator));
         }
