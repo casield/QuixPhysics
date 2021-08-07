@@ -149,7 +149,7 @@ namespace QuixPhysics
             foreach (var item in workers)
             {
                 item.tick();
-                if (item.destroy)
+                if (item.ShouldDestroy())
                 {
                     toDelete.Add(item);
                 }
@@ -167,6 +167,7 @@ namespace QuixPhysics
             if (Simulation != null && ThreadDispatcher != null)
             {
                 handleWorkers();
+                
                 Simulation.Timestep(1 / 60f, ThreadDispatcher);
                 
                 // ArrayList bodies = new ArrayList();
@@ -243,6 +244,7 @@ namespace QuixPhysics
             // Console.WriteLine(JsonConvert.SerializeObject(mess));
             server.Send(socket, JsonConvert.SerializeObject(mess, Formatting.None));
         }
+
 
         public PhyObject Create(ObjectState state,Room room)
         {

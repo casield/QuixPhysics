@@ -1,5 +1,6 @@
 using System;
 using System.Numerics;
+using System.Threading.Tasks;
 using BepuPhysics;
 using BepuPhysics.Constraints;
 using BepuUtilities;
@@ -60,6 +61,7 @@ namespace QuixPhysics
 
         private float rotationSpeed = 2.6f;
         public LookObject lookObject;
+        private PhyInterval worker;
 
         public Player2()
         {
@@ -70,7 +72,7 @@ namespace QuixPhysics
         public override void Load(Handle bodyHandle, ConnectionState connectionState, Simulator simulator, ObjectState state, Guid guid, Room room)
         {
             base.Load(bodyHandle, connectionState, simulator, state, guid, room);
-            PhyInterval worker = new PhyInterval(1, simulator);
+            worker = new PhyInterval(1, simulator);
             worker.Completed += Tick;
 
 
@@ -115,18 +117,18 @@ namespace QuixPhysics
         }
         private void CreateBall()
         {
-            SphereState ball = new SphereState();
-            ball.radius = 3;
-            ball.position = state.position;
-            ball.quaternion = Quaternion.Identity;
-            ball.type = "GolfBall2";
-            ball.mass = 1;
-            ball.instantiate = true;
-            ball.owner = state.owner;
-            ball.mesh = "Objects/Balls/Vanilla/Vanilla";
+             SphereState ball = new SphereState();
+             ball.radius = 3;
+             ball.position = state.position;
+             ball.quaternion = Quaternion.Identity;
+             ball.type = "GolfBall2";
+             ball.mass = 1;
+             ball.instantiate = true;
+             ball.owner = state.owner;
+             ball.mesh = "Objects/Balls/Vanilla/Vanilla";
 
-            golfball = (GolfBall2)simulator.Create(ball, room);
-            golfball.SetPlayer(this);
+             golfball = (GolfBall2)simulator.Create(ball, room);
+             golfball.SetPlayer(this);
         }
         public bool IsSnapped()
         {
@@ -139,7 +141,7 @@ namespace QuixPhysics
 
         public override void OnContact(PhyObject obj)
         {
-            base.OnContact(obj);
+            //base.OnContact(obj);
             ContactListeners?.Invoke(obj);
         }
         public void Tick()
@@ -266,20 +268,24 @@ namespace QuixPhysics
         }
         private void TickSnapped()
         {
-            if (this.Agent.ActualState() != snappedState)
+            if (golfball != null)
             {
-                var distance = Vector3.Distance(reference.Pose.Position, golfball.GetReference().Pose.Position);
-                //Console.WriteLine(distance);
-                if (distance < this.maxDistanceWithBall)
+                if (this.Agent.ActualState() != snappedState)
                 {
-                    this.canShoot = true;
-                    this.Agent.ChangeState(snappedState);
-                }
-                else
-                {
-                    this.canShoot = false;
+                    var distance = Vector3.Distance(reference.Pose.Position, golfball.GetReference().Pose.Position);
+                    //Console.WriteLine(distance);
+                    if (distance < this.maxDistanceWithBall)
+                    {
+                        this.canShoot = true;
+                        this.Agent.ChangeState(snappedState);
+                    }
+                    else
+                    {
+                        this.canShoot = false;
+                    }
                 }
             }
+
 
         }
         public void SetPositionToBall()
@@ -296,12 +302,8 @@ namespace QuixPhysics
             golfball.reference.Pose.Position = newPos;
         }
         public void SetPositionToStartPoint()
-        {
-            if (room != null && room.gamemode != null)
-            {
+        {  
                 reference.Pose.Position = room.gamemode.GetStartPoint(this.user);
-            }
-
         }
 
         public Vector2 GetXYRotation()
@@ -329,11 +331,16 @@ namespace QuixPhysics
                 OnFall();
             }
 
-            if (this.golfball.reference.Pose.Position.Y < -50)
+            if (golfball != null)
             {
-                this.golfball.reference.Pose.Position = reference.Pose.Position;
-                OnFall();
+                if (this.golfball.reference.Pose.Position.Y < -50)
+                {
+                    this.golfball.reference.Pose.Position = reference.Pose.Position;
+                    OnFall();
+                }
             }
+
+
 
         }
 
@@ -408,6 +415,13 @@ namespace QuixPhysics
         public void Swipe(double degree, Vector3 direction)
         {
             gauntlet.Swipe(degree, direction);
+        }
+
+        public override void Destroy()
+        {
+            base.Destroy();
+            worker.Destroy();
+            
         }
     }
 

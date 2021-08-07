@@ -21,7 +21,7 @@ namespace QuixPhysics{
         public Room(Simulator simulator,RoomInfo info){
             this.info = info;
             this.simulator = simulator;
-            simulator.createObjects(this);
+            //simulator.createObjects(this);
             SetGameMode(new Arena(simulator,this));
             
         }

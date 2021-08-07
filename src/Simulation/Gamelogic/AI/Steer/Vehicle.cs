@@ -5,72 +5,74 @@ using BepuUtilities;
 
 namespace QuixPhysics
 {
+
+    public class VehicleProps
+    {
+        public Vector3 maxSpeed = new Vector3(0.2f, .5f, 0.2f);
+        public Vector3 velocity = new Vector3();
+        public Vector3 acceleration = new Vector3();
+        public float slowingDistance = 100;
+    }
     public class Vehicle
     {
         public PhyObject obj;
-        public Vector3 velocity = new Vector3();
-        public Vector3 acceleration = new Vector3();
-        private BodyReference reference;
 
-        public float maxSpeed = .2f;
-        public float maxForce = 10f;
+        private BodyReference reference;
         public bool isActive = true;
+        public VehicleProps props;
         public Vehicle(PhyObject obj)
         {
             this.obj = obj;
             reference = obj.GetReference();
 
+            props = new VehicleProps();
+
         }
 
-        public void Seek(Vector3 target)
+        public void SeekFlee(Vector3 target,Boolean seeking)
         {
             if (isActive)
             {
                 Vector3 desired = Vector3.Subtract(target, reference.Pose.Position);
                 desired = Vector3.Normalize(desired);
-                desired = Vector3.Multiply(desired, maxSpeed);
+                desired = Vector3.Multiply(desired, props.maxSpeed);
 
-                Vector3 steer = Vector3.Subtract(desired, velocity);
-                steer = Vehicle.Limit(steer, maxForce);
-                applyForce(steer);
+                Vector3 steer = Vector3.Subtract(desired, props.velocity);
+                //steer = Vector3.Clamp(steer, -props.maxForce, props.maxForce);
+                
+                ApplyForce(seeking? steer:-steer);
             }
-
-
         }
-
-        private static float LimitFloat(float f, float min,float max){
-            if(f < min){
-                return min;
-            }
-            if(f>max){
-                return max;
-            }
-            return f;
-        }
-
-        private static Vector3 Limit(Vector3 limitVector, float limit)
+        public void Arrive(Vector3 target)
         {
-            limitVector.X = LimitFloat(limitVector.X,-limit,limit);
-            limitVector.Y = LimitFloat(limitVector.Y,-limit,limit);
-            limitVector.Z = LimitFloat(limitVector.Z,-limit,limit);
-            return limitVector;
-        }
 
-        private void applyForce(Vector3 force)
+            if (isActive)
+            {
+                Vector3 target_offset = Vector3.Subtract(target, reference.Pose.Position);
+                float distance = target_offset.Length();
+                var ramped_speed = Vector3.Multiply(props.maxSpeed, (distance /props.slowingDistance));
+                var clipped_speed = Vector3.Min(ramped_speed,props.maxSpeed);
+                var desired_velocity = Vector3.Multiply(Vector3.Divide(clipped_speed,distance),target_offset);
+                var steer = Vector3.Subtract(desired_velocity,props.velocity);
+                ApplyForce(steer);
+            }
+        }
+        private void ApplyForce(Vector3 force)
         {
-            acceleration = Vector3.Add(acceleration, force);
+            props.acceleration = Vector3.Add(props.acceleration, force);
         }
 
         public void Update()
         {
             if (isActive)
             {
-                acceleration = Limit(acceleration,maxSpeed);
-                Vector3 velocity = Vector3.Add(reference.Velocity.Linear, acceleration);
-                
+
+                props.acceleration = Vector3.Clamp(props.acceleration, -props.maxSpeed, props.maxSpeed);// Limit(acceleration,maxSpeed);
+                Vector3 velocity = Vector3.Add(reference.Velocity.Linear, props.acceleration);
+
                 reference.Velocity.Linear = velocity;
 
-                acceleration = Vector3.Multiply(acceleration, 0);
+                props.acceleration = Vector3.Multiply(props.acceleration, 0);
             }
 
         }

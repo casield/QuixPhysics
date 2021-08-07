@@ -11,7 +11,7 @@ namespace QuixPhysics
         public event PhyAction Tick;
         public event PhyAction Completed;
         private Simulator simulator;
-        public bool destroy = false;
+        private bool destroy = false;
         public bool paused = false;
         public PhyWorker(int time, Simulator _simulator)
         {
@@ -25,6 +25,10 @@ namespace QuixPhysics
 
 
         }
+
+        public bool ShouldDestroy(){
+            return destroy;
+        }
         protected virtual void OnTick()
         {
             Tick?.Invoke();
@@ -33,7 +37,7 @@ namespace QuixPhysics
         {
             Completed?.Invoke();
         }
-        protected void Destroy()
+        public void Destroy()
         {
             destroy = true;
             RemoveAllListeners();
@@ -114,24 +118,5 @@ namespace QuixPhysics
         }
 
 
-    }
-    public class Waiter
-    {
-        public int time;
-        private int tickTime;
-        public Waiter(int time)
-        {
-            this.time = time;
-        }
-        public bool Wait()
-        {
-            tickTime++;
-            if (time == tickTime)
-            {
-                time = 0;
-                return true;
-            }
-            return false;
-        }
     }
 }

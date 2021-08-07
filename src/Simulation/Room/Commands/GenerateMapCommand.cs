@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Numerics;
+using System.Threading.Tasks;
 using MongoDB.Bson;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
@@ -14,16 +15,17 @@ namespace QuixPhysics
         }
         public override void OnRead(JObject message, Room room)
         {
-           GenerateMap(message["name"].ToString(),room);
+           //GenerateMap(message["name"].ToString(),room);
         }
         public List<PhyObject> GenerateMap(string name,Room room)
         {
-            var map = this.simulator.server.dataBase.GetMap(name);
-            room.map = map;
-
             List<PhyObject> objects = new List<PhyObject>();
+            var map =  this.simulator.server.dataBase.GetMap(name).ContinueWith(a=>{
+                room.map = a.Result;
 
-            foreach (var obj in map.objects)
+            
+
+            foreach (var obj in room.map.objects)
             {
 
                 //obj.ToJson();
@@ -49,6 +51,9 @@ namespace QuixPhysics
                 }
             }
 
+            
+            });
+            map.Wait();
             return objects;
         }
     }

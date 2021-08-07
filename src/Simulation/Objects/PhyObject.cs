@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Numerics;
 using BepuPhysics;
@@ -9,6 +10,7 @@ using Newtonsoft.Json.Linq;
 
 namespace QuixPhysics
 {
+    public delegate void DestroyAction(PhyObject obj);
     public interface IPhyObject
     {
         ObjectState state { get; set; }
@@ -44,6 +46,10 @@ namespace QuixPhysics
         public TypedIndex shapeIndex;
 
         public bool needUpdate = false;
+
+        private List<PhyWorker> workers = new List<PhyWorker>();
+
+        public event DestroyAction OnDelete;
         public PhyObject()
         {
 
@@ -58,21 +64,36 @@ namespace QuixPhysics
             this.guid = guid;
             this.room = room;
 
+
+
             SendCreateMessage();
+        }
+
+        public PhyWorker AddWorker(PhyWorker worker)
+        {
+
+            workers.Add(worker);
+            return worker;
+        }
+
+        public void SetPosition(ref RigidPose r, Vector3 position)
+        {
+            r.Position = position;
         }
 
         public BodyReference GetReference()
         {
-            Debug.Assert(state.mass==0,"This phyobject is not dynamic");
+            Debug.Assert(state.mass == 0, "This phyobject is not dynamic");
             return simulator.Simulation.Bodies.GetBodyReference(bodyHandle.bodyHandle);
         }
 
-        public StaticReference GetStaticReference(){
-            Debug.Assert(state.mass!=0,"This phyobject is not static");
-             return simulator.Simulation.Statics.GetStaticReference(bodyHandle.staticHandle);
+        public StaticReference GetStaticReference()
+        {
+            Debug.Assert(state.mass != 0, "This phyobject is not static");
+            return simulator.Simulation.Statics.GetStaticReference(bodyHandle.staticHandle);
         }
 
-        
+
 
         public void Stop()
         {
@@ -111,7 +132,8 @@ namespace QuixPhysics
             simulator.SendMessage("objectMessage", m.ToString(), connectionState.workSocket);
 
         }
-        internal virtual void OnObjectMessage(string data,string clientId,string roomId){
+        internal virtual void OnObjectMessage(string data, string clientId, string roomId)
+        {
 
         }
 
@@ -119,7 +141,7 @@ namespace QuixPhysics
         public virtual string getJSON()
         {
 
-            if (state.mass !=0)
+            if (state.mass != 0)
             {
                 BodyDescription description;
                 simulator.Simulation.Bodies.GetDescription(bodyHandle.bodyHandle, out description);
@@ -133,8 +155,8 @@ namespace QuixPhysics
                 SetMeshRotation();
 
             }
-            
-            if (state.mass ==0)
+
+            if (state.mass == 0)
             {
                 StaticDescription description;
                 simulator.Simulation.Statics.GetDescription(bodyHandle.staticHandle, out description);
@@ -147,16 +169,14 @@ namespace QuixPhysics
                 SetMeshRotation();
             }
 
-            if(state.quaternion.W == 0){
-                QuixConsole.Log("Error",state.type);
+            if (state.quaternion.W == 0)
+            {
+                QuixConsole.Log("Error", state.type);
             }
 
             return state.getJson();
         }
-        public void getDescription()
-        {
 
-        }
 
 
         public static string createUID()
@@ -168,8 +188,36 @@ namespace QuixPhysics
 
         public virtual void OnContact(PhyObject obj)
         {
+            throw new NotImplementedException("Type :" + obj.state.type);
+        }
+
+        public virtual void Destroy()
+        {
+            if (state.mass == 0)
+            {
+                simulator.staticObjectsHandlers.Remove(bodyHandle.staticHandle);
+                simulator.Simulation.Statics.Remove(bodyHandle.staticHandle);
+            }
+            else
+            {
+                simulator.Simulation.Bodies.Remove(bodyHandle.bodyHandle);
+            }
+            simulator.objects.Remove(state.uID);
+
+            JObject j = new JObject();
+            j["uID"] = state.uID;
+
+            simulator.SendMessage("delete", j, connectionState.workSocket);
+
+            foreach (var item in workers)
+            {
+                item.Destroy();
+            }
+            OnDelete?.Invoke(this);
 
         }
+
+
     }
 
 }

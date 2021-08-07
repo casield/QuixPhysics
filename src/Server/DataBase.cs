@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Numerics;
+using System.Threading.Tasks;
 using MongoDB.Bson;
 using MongoDB.Bson.Serialization;
 using MongoDB.Bson.Serialization.Attributes;
@@ -30,19 +31,20 @@ namespace QuixPhysics
         }
 
 
-        public MapMongo GetMap(string mapname)
+        public async Task<MapMongo> GetMap(string mapname)
         {
             var filter = new BsonDocument("name", mapname);
             filter.ToJson();
-            var find = maps.Find(filter).First<MapMongo>();
-            return find;
+
+            var find = await maps.FindAsync(filter);
+            return await find.FirstAsync<MapMongo>();
         }
     }
 
     [BsonIgnoreExtraElements]
     public class MapMongo
     {
- 
+
         public List<BsonDocument> objects { set; get; }
         public BsonArray startPositions { set; get; }
         public string name;

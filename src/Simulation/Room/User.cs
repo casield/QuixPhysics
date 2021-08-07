@@ -22,7 +22,7 @@ namespace QuixPhysics
 
             gems = new OVar("gems" + id, 1, oVarManager);
 
-            PhyInterval interval = new PhyInterval(1000, simulator);
+            PhyInterval interval = new PhyInterval(10000, simulator);
             interval.Completed += TickGem;
 
 

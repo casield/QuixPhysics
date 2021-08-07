@@ -9,20 +9,21 @@ namespace QuixPhysics
     {
         public List<User> users = new List<User>();
         private int MIN_USERS = 1;
-        private Room room;
+        public Room room;
         private Simulator simulator;
         private QuixNavMesh navMesh;
-
-
+        private UserLoader userLoader;
         private static int TURNS_TO_WIN = 3;
         private List<User> turnWinners = new List<User>();
-        
+
 
         public Arena(Simulator simulator, Room room) : base(simulator)
         {
             this.room = room;
             this.simulator = simulator;
             navMesh = new QuixNavMesh(simulator);
+            userLoader = new UserLoader(simulator, this);
+            GenerateMap();
         }
         public override void OnJoin(User user)
         {
@@ -31,6 +32,9 @@ namespace QuixPhysics
             {
                 Start();
             }
+
+            userLoader.OnEnter(user);
+
         }
 
         public override Vector3 GetStartPoint(User user)
@@ -67,16 +71,34 @@ namespace QuixPhysics
         {
             foreach (var item in users)
             {
-                item.player.SetPositionToStartPoint();
+               item.player.SetPositionToStartPoint();
+                QuixConsole.Log("Created", room.gamemode.GetStartPoint(item));
             }
         }
-        public override void Start()
+
+        private void GenerateMap()
         {
             GenerateMapCommand command = new GenerateMapCommand(simulator);
 
             var objs = command.GenerateMap("isla", room);
-            QuixConsole.Log("Start");
+            
             simulator.createObjects(room);
+        }
+
+        private void OnMapLoaded(System.Action obj)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public override void Start()
+        {
+            if(room.map == null){ 
+                
+                Start();
+               
+                return;
+            }
+            QuixConsole.Log("map",room.map.name);
             SetPlayersToStart();
 
             /*PhyTimeOut p = new PhyTimeOut(500, simulator, true);
@@ -84,15 +106,15 @@ namespace QuixPhysics
 
             //CreateVillan();
 
-            BoxState st = new BoxState() { mass = 0, type = "Villan", instantiate = false, halfSize = new Vector3(1, 100, 1), position = new Vector3(0, 0, 0), mesh = "15Cube", isMesh = true };
+            /*BoxState st = new BoxState() { mass = 0, type = "Villan", instantiate = false, halfSize = new Vector3(1, 100, 1), position = new Vector3(0, 0, 0), mesh = "15Cube", isMesh = true };
             var s = simulator.Create(st, room);
 
             QuixConsole.Log("Villian created");
 
-            objs.Add(s);
+            objs.Add(s);*/
 
 
-           // navMesh.CreateMesh(objs, "test");
+            // navMesh.CreateMesh(objs, "test");
 
             //CreateMap();
 
@@ -111,24 +133,27 @@ namespace QuixPhysics
 
         }
 
-        internal void OnHoleWin(User winner){
+        internal void OnHoleWin(User winner)
+        {
 
             int gemsWon = 0;
             foreach (var item in users)
             {
                 //TODO ADD GEMS FROM ALL SOURCES
-                if(item!=winner){
-                    gemsWon+=(int)item.gems.value;
+                if (item != winner)
+                {
+                    gemsWon += (int)item.gems.value;
                 }
-               
+
             }
-            gemsWon/=users.Count;
+            gemsWon /= users.Count;
             turnWinners.Add(winner);
-            winner.gems.Update((int)winner.gems.value+gemsWon);
-            if(turnWinners.Count==TURNS_TO_WIN){
+            winner.gems.Update((int)winner.gems.value + gemsWon);
+            if (turnWinners.Count == TURNS_TO_WIN)
+            {
                 Finish();
             }
-            
+
         }
 
         public override void Finish()
@@ -136,16 +161,20 @@ namespace QuixPhysics
             User winner = null;
             foreach (var user in users)
             {
-                if(winner == null){
+                if (winner == null)
+                {
                     winner = user;
-                }else{
-                    if((int)winner.gems.value > (int)user.gems.value){
+                }
+                else
+                {
+                    if ((int)winner.gems.value > (int)user.gems.value)
+                    {
                         winner = user;
                     }
                 }
             }
 
-            QuixConsole.Log("Winner!",winner.sessionId);
+            QuixConsole.Log("Winner!", winner.sessionId);
         }
 
 
