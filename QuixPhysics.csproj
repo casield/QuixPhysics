@@ -16,7 +16,7 @@
   </ItemGroup>
   <ItemGroup>
     <Reference Include="CoreSharpNav">
-      <HintPath>lib/CoreSharpNav.dll</HintPath>
+      <HintPath>C:/Users/Casiel/Desktop/ciberchico420/Games/CoreSharpNav/bin/Debug/net5.0/CoreSharpNav.dll</HintPath>
     </Reference>
   </ItemGroup>
 </Project>

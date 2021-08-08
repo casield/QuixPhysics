@@ -10,7 +10,7 @@ namespace QuixPhysics{
         }
 
         public void AddRoom(Room room){
-            rooms.Add(room.info.roomId,room);
+            rooms.Add(room.props.roomId,room);
         }
 
         public void Update(){

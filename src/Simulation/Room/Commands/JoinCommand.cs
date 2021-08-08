@@ -3,11 +3,6 @@ using Newtonsoft.Json.Linq;
 
 namespace QuixPhysics
 {
-    struct JoinCommandParams
-    {
-        string roomId;
-        string clientId;
-    }
     internal class JoinCommand : Command
     {
         public RoomManager roomManager;
@@ -26,24 +21,10 @@ namespace QuixPhysics
         {
             if (!room.users.ContainsKey(clientId))
             {
-                var box = new SphereState();
-                box.radius = 10;
-                box.uID = PhyObject.createUID();
-                box.instantiate = true;
-                box.type = "Player2";
-                box.mesh = "Players/Sol/sol_prefab";
-                box.quaternion = Quaternion.Identity;
-                box.mass = 30;
-                box.owner = clientId;
-                box.position = new Vector3(0, 0, 0);
 
-
-                var player = (Player2)simulator.Create(box, room);
-
-
-                User user = new User(clientId, player);
+                User user = new User(clientId, room);
                 room.AddUser(user);
-                player.user = user;
+    
                  return user;
             }else{
                 return room.users[clientId];

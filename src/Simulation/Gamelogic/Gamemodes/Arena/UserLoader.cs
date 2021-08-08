@@ -1,48 +1,34 @@
+using System.Diagnostics;
 using System.Numerics;
 
 namespace QuixPhysics
 {
-    public class UserLoader
+    public class UserLoader:ArenaHelper
     {
-        Simulator simulator;
-        private Arena arena;
-
-        public UserLoader(Simulator simulator, Arena arena)
+        public UserLoader(Simulator simulator, Arena arena) : base(simulator, arena)
         {
-            this.simulator = simulator;
-            this.arena = arena;
         }
 
-        public void OnEnter(User user)
+        public void LoadItems(User user)
         {
             //Create Gematorium
 
-            CreateGematorium(user);
+            arena.navObjects.Add(CreateGematorium(user));
 
             //Load saved Items
         }
 
-        private void CreateGematorium(User user)
+        private Gematorium CreateGematorium(User user)
         {
             var pos = arena.GetStartPoint(user);
-          
-            var gematorium = simulator.Create(Gematorium.Build(pos, Quaternion.Identity, user), arena.room);
-            gematorium.needUpdate=true;
+            pos.Y = floor.GetTop(Gematorium.SIZE);
+            pos.X += 300;
+            var gembox = Gematorium.Build(pos, Quaternion.Identity, user);
+            var gematorium = simulator.Create(gembox, arena.room);
 
-              QuixConsole.Log("Gematorium",gematorium.state.position);
-           /* var gematorium2 = simulator.Create(
-                  new BoxState()
-                  {
-                      position = gematorium.state.position,
-                      quaternion = gematorium.state.quaternion,
-                      halfSize = ((BoxState)gematorium.state).halfSize,
-                      instantiate = true,
-                      mass = 0,
-            
-
-                      type = "QuixBox"
-                  }, arena.room
-        );*/
+            QuixConsole.Log("Gematorium",gematorium.state.position);
+            return (Gematorium)gematorium;
         }
+
     }
 }

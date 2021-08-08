@@ -2,77 +2,82 @@ using System.Collections.Generic;
 using System.IO;
 using System.Numerics;
 using Aspose.ThreeD;
+using SharpNav;
 
 namespace QuixPhysics
 {
+    public struct ArenaProps
+    {
+        public float MIN_USERS;
+        public float TURNS_TO_WIN;
+    }
     public class Arena : Gamemode
     {
+        public ArenaProps props = new ArenaProps() { MIN_USERS = 1, TURNS_TO_WIN = 3 };
         public List<User> users = new List<User>();
-        private int MIN_USERS = 1;
-        public Room room;
-        private Simulator simulator;
-        private QuixNavMesh navMesh;
+
+
         private UserLoader userLoader;
-        private static int TURNS_TO_WIN = 3;
+
         private List<User> turnWinners = new List<User>();
 
+        public List<PhyObject> navObjects = new List<PhyObject>();
+        private NavMesh navMesh;
+        public TiledNavMesh tiledNavMesh;
+        private string navMeshName;
+        private AIManager aIManager;
 
-        public Arena(Simulator simulator, Room room) : base(simulator)
+        public Arena(Simulator simulator, Room room) : base(simulator, room)
         {
             this.room = room;
             this.simulator = simulator;
-            navMesh = new QuixNavMesh(simulator);
             userLoader = new UserLoader(simulator, this);
+            aIManager = new AIManager(simulator, this);
             GenerateMap();
         }
         public override void OnJoin(User user)
         {
             users.Add(user);
-            if (users.Count == MIN_USERS)
+
+
+            userLoader.LoadItems(user);
+            if (users.Count == props.MIN_USERS)
             {
                 Start();
             }
-
-            userLoader.OnEnter(user);
 
         }
 
         public override Vector3 GetStartPoint(User user)
         {
+            var point = new Vector3();
             if (room.map != null)
             {
 
                 var index = users.IndexOf(user);
 
-                if (index > -1 && room.map.startPositions.Count - 1 > index)
+                if (index <= -1 || room.map.startPositions.Count - 1 > index)
                 {
-                    var point = new Vector3((float)room.map.startPositions[index].AsBsonDocument["x"].AsDouble,
-                        (float)room.map.startPositions[index].AsBsonDocument["y"].AsDouble,
-                             (float)room.map.startPositions[index].AsBsonDocument["z"].AsDouble);
-                    return point;
-                }
-                else
-                {
-                    var point = new Vector3((float)room.map.startPositions[0].AsBsonDocument["x"].AsDouble,
-                       (float)room.map.startPositions[0].AsBsonDocument["y"].AsDouble,
-                            (float)room.map.startPositions[0].AsBsonDocument["z"].AsDouble);
-                    return point;
+                    index = 0;
+
                 }
 
+                var x = float.Parse(room.map.startPositions[index].AsBsonDocument["x"].ToString());
+                var y = float.Parse(room.map.startPositions[index].AsBsonDocument["y"].ToString());
+                var z = float.Parse(room.map.startPositions[index].AsBsonDocument["z"].ToString());
+                point = new Vector3(x, y, z);
+
             }
-            else
-            {
-                QuixConsole.Log("GetStartPoint");
-                return base.GetStartPoint(user);
-            }
+            return point;
 
         }
-        private void SetPlayersToStart()
+        private void CreatePlayers()
         {
             foreach (var item in users)
             {
-               item.player.SetPositionToStartPoint();
-                QuixConsole.Log("Created", room.gamemode.GetStartPoint(item));
+
+                var startpoint = room.gamemode.GetStartPoint(item);
+                item.CreatePlayer(startpoint);
             }
         }
 
@@ -81,58 +86,51 @@ namespace QuixPhysics
             GenerateMapCommand command = new GenerateMapCommand(simulator);
 
             var objs = command.GenerateMap("isla", room);
-            
-            simulator.createObjects(room);
-        }
+            navObjects.AddRange(objs);
 
-        private void OnMapLoaded(System.Action obj)
-        {
-            throw new System.NotImplementedException();
+            userLoader.OnMapsLoaded();
+            aIManager.OnMapsLoaded();
+            simulator.createObjects(room);
         }
 
         public override void Start()
         {
-            if(room.map == null){ 
-                
-                Start();
-               
-                return;
-            }
-            QuixConsole.Log("map",room.map.name);
-            SetPlayersToStart();
 
-            /*PhyTimeOut p = new PhyTimeOut(500, simulator, true);
-            p.Completed += CreateVillan;*/
-
-            //CreateVillan();
-
-            /*BoxState st = new BoxState() { mass = 0, type = "Villan", instantiate = false, halfSize = new Vector3(1, 100, 1), position = new Vector3(0, 0, 0), mesh = "15Cube", isMesh = true };
-            var s = simulator.Create(st, room);
-
-            QuixConsole.Log("Villian created");
-
-            objs.Add(s);*/
+            CreatePlayers();
 
 
-            // navMesh.CreateMesh(objs, "test");
+            GenerateNavMesh();
+            aIManager.OnStart();
 
-            //CreateMap();
 
+            QuixConsole.Log("NavMesh", navMeshName);
         }
 
-        private void CreateVillan()
+        private void GenerateNavMesh()
         {
-            BoxState st = new BoxState() { mass = 0, type = "Villan", instantiate = false, halfSize = new Vector3(1, 1, 1), position = new Vector3(0, 0, 0), mesh = "15Cube", isMesh = true };
-            var s = simulator.Create(st, room);
+            QuixNavMesh qinavMesh = new QuixNavMesh(simulator);
+            navMeshName = "Arena";
+            var settings = NavMeshGenerationSettings.Default;
+            float resizer = 1;
+            settings.AgentHeight = 1f/resizer;
+            settings.AgentRadius = 1f/resizer;
+          //  settings.MaxEdgeError = 0;
+            
+            settings.CellSize = 30f/resizer;
 
-            QuixConsole.Log("Villian created");
 
+            //Creates the mesh .obj
+            qinavMesh.CreateMesh(navObjects, navMeshName,resizer);
+            //Then it generates de NavMesh
+            navMesh = qinavMesh.GenerateNavMesh(navMeshName, settings);
+            
+            
+            //Save it to a file .snb
+            qinavMesh.SaveNavMeshToFile(navMeshName);
+            //Read it from .snb
+            tiledNavMesh = qinavMesh.GetTiledNavMesh(navMeshName);
+            
         }
-        private void CreateMap()
-        {
-
-        }
-
         internal void OnHoleWin(User winner)
         {
 
@@ -149,7 +147,7 @@ namespace QuixPhysics
             gemsWon /= users.Count;
             turnWinners.Add(winner);
             winner.gems.Update((int)winner.gems.value + gemsWon);
-            if (turnWinners.Count == TURNS_TO_WIN)
+            if (turnWinners.Count == props.TURNS_TO_WIN)
             {
                 Finish();
             }

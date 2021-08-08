@@ -34,9 +34,6 @@ namespace QuixPhysics
         public CollidableProperty<SimpleMaterial> collidableMaterials;
         public ConnectionState connectionState;
         internal Server server;
-
-        private int t = 0;
-        private int tMax = 15000;
         internal int boxToCreate = 10;
         internal int timesPressedCreateBoxes = 0;
         internal List<PhyWorker> workers = new List<PhyWorker>();
@@ -74,6 +71,7 @@ namespace QuixPhysics
             var targetThreadCount = Math.Max(1, Environment.ProcessorCount > 4 ? Environment.ProcessorCount - 2 : Environment.ProcessorCount - 1);
             ThreadDispatcher = new SimpleThreadDispatcher(targetThreadCount);
             narrowPhaseCallbacks = new QuixNarrowPhaseCallbacks() { CollidableMaterials = collidableMaterials, simulator = this };
+            new Tests(this);
             Simulation = Simulation.Create(bufferPool, narrowPhaseCallbacks, new QuixPoseIntegratorCallbacks(new Vector3(0, -5, 0)), new PositionFirstTimestepper());
 
 
@@ -113,7 +111,6 @@ namespace QuixPhysics
         internal void createObjects(Room room)
         {
             int width = 10;
-            int sizeObj = 60;
             int max = 3000;
             var random = new Random();
             for (int a = 0; a < boxToCreate; a++)
@@ -207,7 +204,7 @@ namespace QuixPhysics
                     }
                     catch (KeyNotFoundException e)
                     {
-                        QuixConsole.WriteLine("Key not found");
+                        QuixConsole.Log("Key not found",e);
                     }
 
                 }

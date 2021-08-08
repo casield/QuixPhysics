@@ -56,17 +56,16 @@ namespace QuixPhysics
                 if (_mySimulator != null && !_mySimulator.Disposed)
                 {
 
-
                     while (lag >= TICKS_PER_UPDATE)
                     {
                         //  QuixConsole.Log("Inside",lag); 
                         repeat += 1;
-                      
+
                         _mySimulator.Update();  
-                        _mySimulator.commandReader.ReadCommand();
+                         _mySimulator.commandReader.ReadCommand();
                         lag -= TICKS_PER_UPDATE;
                     }
-                   // QuixConsole.Log("repeated ",repeat);
+                    // QuixConsole.Log("repeated ",repeat);
 
 
                 }

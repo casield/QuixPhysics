@@ -7,7 +7,7 @@ namespace QuixPhysics
     public class LookTarget : PhyObject
     {
         private PhyInterval timer;
-        StaticReference reference;
+        StaticReference sReference;
         float rotation = 0;
         float distance = 152;
         float velocity = 0.1f;
@@ -16,15 +16,13 @@ namespace QuixPhysics
         StaticDescription description;
 
         Vector3 position = new Vector3();
-
-        int destroyTick = 0;
         public override void Load(Handle bodyHandle, ConnectionState connectionState, Simulator simulator, ObjectState state, Guid guid, Room room)
         {
             base.Load(bodyHandle, connectionState, simulator, state, guid, room);
             timer = new PhyInterval(1, simulator);
-            reference = GetStaticReference();
+            sReference = GetStaticReference();
 
-            position = reference.Pose.Position;
+            position = sReference.Pose.Position;
             timer.Tick += Update;
             handle = bodyHandle.staticHandle;
 
@@ -34,7 +32,7 @@ namespace QuixPhysics
 
         private void Update()
         {
-            if (reference.Exists)
+            if (sReference.Exists)
             {
                 var x = MathF.Cos(rotation) * distance;
                 var y = MathF.Sin(rotation) * distance;

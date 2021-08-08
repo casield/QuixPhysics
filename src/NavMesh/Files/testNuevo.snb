@@ -1,0 +1,3559 @@
+{
+  "meta": {
+    "version": {
+      "snj": 3,
+      "sharpnav": "1.0.0"
+    }
+  },
+  "origin": {
+    "X": -3143.4,
+    "Y": -129.08,
+    "Z": -4401.1
+  },
+  "tileWidth": 6290.0,
+  "tileHeight": 8810.0,
+  "maxTiles": 1.0,
+  "maxPolys": 33.0,
+  "tiles": [
+    {
+      "polyId": 64,
+      "location": {
+        "X": 0,
+        "Y": 0
+      },
+      "layer": 0,
+      "salt": 1,
+      "bounds": {
+        "Min": {
+          "X": -3143.4,
+          "Y": -129.08,
+          "Z": -4401.1
+        },
+        "Max": {
+          "X": 3146.6,
+          "Y": 531.52,
+          "Z": 4408.9
+        }
+      },
+      "polys": [
+        {
+          "PolyType": 0,
+          "Links": [],
+          "Verts": [
+            0,
+            1,
+            2,
+            3,
+            0,
+            0
+          ],
+          "Neis": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "Tag": null,
+          "VertCount": 4,
+          "Area": 255
+        },
+        {
+          "PolyType": 0,
+          "Links": [
+            {
+              "Reference": 66,
+              "Edge": 2,
+              "Side": 255,
+              "BMin": 0,
+              "BMax": 0
+            },
+            {
+              "Reference": 74,
+              "Edge": 0,
+              "Side": 255,
+              "BMin": 0,
+              "BMax": 0
+            }
+          ],
+          "Verts": [
+            4,
+            5,
+            6,
+            0,
+            0,
+            0
+          ],
+          "Neis": [
+            11,
+            0,
+            3,
+            0,
+            0,
+            0
+          ],
+          "Tag": null,
+          "VertCount": 3,
+          "Area": 255
+        },
+        {
+          "PolyType": 0,
+          "Links": [
+            {
+              "Reference": 67,
+              "Edge": 2,
+              "Side": 255,
+              "BMin": 0,
+              "BMax": 0
+            },
+            {
+              "Reference": 65,
+              "Edge": 0,
+              "Side": 255,
+              "BMin": 0,
+              "BMax": 0
+            }
+          ],
+          "Verts": [
+            4,
+            6,
+            7,
+            8,
+            9,
+            0
+          ],
+          "Neis": [
+            2,
+            0,
+            4,
+            0,
+            0,
+            0
+          ],
+          "Tag": null,
+          "VertCount": 5,
+          "Area": 255
+        },
+        {
+          "PolyType": 0,
+          "Links": [
+            {
+              "Reference": 66,
+              "Edge": 5,
+              "Side": 255,
+              "BMin": 0,
+              "BMax": 0
+            },
+            {
+              "Reference": 69,
+              "Edge": 3,
+              "Side": 255,
+              "BMin": 0,
+              "BMax": 0
+            },
+            {
+              "Reference": 72,
+              "Edge": 1,
+              "Side": 255,
+              "BMin": 0,
+              "BMax": 0
+            }
+          ],
+          "Verts": [
+            7,
+            10,
+            11,
+            12,
+            13,
+            8
+          ],
+          "Neis": [
+            0,
+            9,
+            0,
+            6,
+            0,
+            3
+          ],
+          "Tag": null,
+          "VertCount": 6,
+          "Area": 255
+        },
+        {
+          "PolyType": 0,
+          "Links": [
+            {
+              "Reference": 71,
+              "Edge": 3,
+              "Side": 255,
+              "BMin": 0,
+              "BMax": 0
+            },
+            {
+              "Reference": 79,
+              "Edge": 1,
+              "Side": 255,
+              "BMin": 0,
+              "BMax": 0
+            }
+          ],
+          "Verts": [
+            14,
+            15,
+            16,
+            17,
+            0,
+            0
+          ],
+          "Neis": [
+            0,
+            16,
+            0,
+            8,
+            0,
+            0
+          ],
+          "Tag": null,
+          "VertCount": 4,
+          "Area": 255
+        },
+        {
+          "PolyType": 0,
+          "Links": [
+            {
+              "Reference": 67,
+              "Edge": 4,
+              "Side": 255,
+              "BMin": 0,
+              "BMax": 0
+            },
+            {
+              "Reference": 71,
+              "Edge": 1,
+              "Side": 255,
+              "BMin": 0,
+              "BMax": 0
+            }
+          ],
+          "Verts": [
+            12,
+            14,
+            19,
+            20,
+            13,
+            0
+          ],
+          "Neis": [
+            0,
+            8,
+            0,
+            0,
+            4,
+            0
+          ],
+          "Tag": null,
+          "VertCount": 5,
+          "Area": 255
+        },
+        {
+          "PolyType": 0,
+          "Links": [
+            {
+              "Reference": 71,
+              "Edge": 2,
+              "Side": 255,
+              "BMin": 0,
+              "BMax": 0
+            },
+            {
+              "Reference": 82,
+              "Edge": 1,
+              "Side": 255,
+              "BMin": 0,
+              "BMax": 0
+            }
+          ],
+          "Verts": [
+            17,
+            18,
+            19,
+            0,
+            0,
+            0
+          ],
+          "Neis": [
+            0,
+            19,
+            8,
+            0,
+            0,
+            0
+          ],
+          "Tag": null,
+          "VertCount": 3,
+          "Area": 255
+        },
+        {
+          "PolyType": 0,
+          "Links": [
+            {
+              "Reference": 69,
+              "Edge": 2,
+              "Side": 255,
+              "BMin": 0,
+              "BMax": 0
+            },
+            {
+              "Reference": 70,
+              "Edge": 1,
+              "Side": 255,
+              "BMin": 0,
+              "BMax": 0
+            },
+            {
+              "Reference": 68,
+              "Edge": 0,
+              "Side": 255,
+              "BMin": 0,
+              "BMax": 0
+            }
+          ],
+          "Verts": [
+            14,
+            17,
+            19,
+            0,
+            0,
+            0
+          ],
+          "Neis": [
+            5,
+            7,
+            6,
+            0,
+            0,
+            0
+          ],
+          "Tag": null,
+          "VertCount": 3,
+          "Area": 255
+        },
+        {
+          "PolyType": 0,
+          "Links": [
+            {
+              "Reference": 67,
+              "Edge": 5,
+              "Side": 255,
+              "BMin": 0,
+              "BMax": 0
+            },
+            {
+              "Reference": 80,
+              "Edge": 3,
+              "Side": 255,
+              "BMin": 0,
+              "BMax": 0
+            },
+            {
+              "Reference": 77,
+              "Edge": 1,
+              "Side": 255,
+              "BMin": 0,
+              "BMax": 0
+            }
+          ],
+          "Verts": [
+            10,
+            21,
+            22,
+            23,
+            24,
+            11
+          ],
+          "Neis": [
+            0,
+            14,
+            0,
+            17,
+            0,
+            4
+          ],
+          "Tag": null,
+          "VertCount": 6,
+          "Area": 255
+        },
+        {
+          "PolyType": 0,
+          "Links": [
+            {
+              "Reference": 74,
+              "Edge": 2,
+              "Side": 255,
+              "BMin": 0,
+              "BMax": 0
+            },
+            {
+              "Reference": 77,
+              "Edge": 0,
+              "Side": 255,
+              "BMin": 0,
+              "BMax": 0
+            }
+          ],
+          "Verts": [
+            28,
+            29,
+            5,
+            27,
+            0,
+            0
+          ],
+          "Neis": [
+            14,
+            0,
+            11,
+            0,
+            0,
+            0
+          ],
+          "Tag": null,
+          "VertCount": 4,
+          "Area": 255
+        },
+        {
+          "PolyType": 0,
+          "Links": [
+            {
+              "Reference": 75,
+              "Edge": 3,
+              "Side": 255,
+              "BMin": 0,
+              "BMax": 0
+            },
+            {
+              "Reference": 65,
+              "Edge": 1,
+              "Side": 255,
+              "BMin": 0,
+              "BMax": 0
+            },
+            {
+              "Reference": 73,
+              "Edge": 0,
+              "Side": 255,
+              "BMin": 0,
+              "BMax": 0
+            }
+          ],
+          "Verts": [
+            27,
+            5,
+            4,
+            25,
+            0,
+            0
+          ],
+          "Neis": [
+            10,
+            2,
+            0,
+            12,
+            0,
+            0
+          ],
+          "Tag": null,
+          "VertCount": 4,
+          "Area": 255
+        },
+        {
+          "PolyType": 0,
+          "Links": [
+            {
+              "Reference": 74,
+              "Edge": 2,
+              "Side": 255,
+              "BMin": 0,
+              "BMax": 0
+            },
+            {
+              "Reference": 88,
+              "Edge": 0,
+              "Side": 255,
+              "BMin": 0,
+              "BMax": 0
+            }
+          ],
+          "Verts": [
+            25,
+            26,
+            27,
+            0,
+            0,
+            0
+          ],
+          "Neis": [
+            25,
+            0,
+            11,
+            0,
+            0,
+            0
+          ],
+          "Tag": null,
+          "VertCount": 3,
+          "Area": 255
+        },
+        {
+          "PolyType": 0,
+          "Links": [
+            {
+              "Reference": 78,
+              "Edge": 2,
+              "Side": 255,
+              "BMin": 0,
+              "BMax": 0
+            },
+            {
+              "Reference": 87,
+              "Edge": 0,
+              "Side": 255,
+              "BMin": 0,
+              "BMax": 0
+            }
+          ],
+          "Verts": [
+            30,
+            31,
+            32,
+            28,
+            0,
+            0
+          ],
+          "Neis": [
+            24,
+            0,
+            15,
+            0,
+            0,
+            0
+          ],
+          "Tag": null,
+          "VertCount": 4,
+          "Area": 255
+        },
+        {
+          "PolyType": 0,
+          "Links": [
+            {
+              "Reference": 78,
+              "Edge": 5,
+              "Side": 255,
+              "BMin": 0,
+              "BMax": 0
+            },
+            {
+              "Reference": 73,
+              "Edge": 4,
+              "Side": 255,
+              "BMin": 0,
+              "BMax": 0
+            },
+            {
+              "Reference": 72,
+              "Edge": 2,
+              "Side": 255,
+              "BMin": 0,
+              "BMax": 0
+            },
+            {
+              "Reference": 84,
+              "Edge": 0,
+              "Side": 255,
+              "BMin": 0,
+              "BMax": 0
+            }
+          ],
+          "Verts": [
+            33,
+            34,
+            22,
+            21,
+            29,
+            28
+          ],
+          "Neis": [
+            21,
+            0,
+            9,
+            0,
+            10,
+            15
+          ],
+          "Tag": null,
+          "VertCount": 6,
+          "Area": 255
+        },
+        {
+          "PolyType": 0,
+          "Links": [
+            {
+              "Reference": 77,
+              "Edge": 2,
+              "Side": 255,
+              "BMin": 0,
+              "BMax": 0
+            },
+            {
+              "Reference": 76,
+              "Edge": 0,
+              "Side": 255,
+              "BMin": 0,
+              "BMax": 0
+            }
+          ],
+          "Verts": [
+            28,
+            32,
+            33,
+            0,
+            0,
+            0
+          ],
+          "Neis": [
+            13,
+            0,
+            14,
+            0,
+            0,
+            0
+          ],
+          "Tag": null,
+          "VertCount": 3,
+          "Area": 255
+        },
+        {
+          "PolyType": 0,
+          "Links": [
+            {
+              "Reference": 80,
+              "Edge": 3,
+              "Side": 255,
+              "BMin": 0,
+              "BMax": 0
+            },
+            {
+              "Reference": 68,
+              "Edge": 1,
+              "Side": 255,
+              "BMin": 0,
+              "BMax": 0
+            }
+          ],
+          "Verts": [
+            38,
+            16,
+            15,
+            24,
+            0,
+            0
+          ],
+          "Neis": [
+            0,
+            5,
+            0,
+            17,
+            0,
+            0
+          ],
+          "Tag": null,
+          "VertCount": 4,
+          "Area": 255
+        },
+        {
+          "PolyType": 0,
+          "Links": [
+            {
+              "Reference": 72,
+              "Edge": 5,
+              "Side": 255,
+              "BMin": 0,
+              "BMax": 0
+            },
+            {
+              "Reference": 79,
+              "Edge": 4,
+              "Side": 255,
+              "BMin": 0,
+              "BMax": 0
+            },
+            {
+              "Reference": 81,
+              "Edge": 3,
+              "Side": 255,
+              "BMin": 0,
+              "BMax": 0
+            },
+            {
+              "Reference": 86,
+              "Edge": 1,
+              "Side": 255,
+              "BMin": 0,
+              "BMax": 0
+            }
+          ],
+          "Verts": [
+            23,
+            35,
+            36,
+            37,
+            38,
+            24
+          ],
+          "Neis": [
+            0,
+            23,
+            0,
+            18,
+            16,
+            9
+          ],
+          "Tag": null,
+          "VertCount": 6,
+          "Area": 255
+        },
+        {
+          "PolyType": 0,
+          "Links": [
+            {
+              "Reference": 82,
+              "Edge": 3,
+              "Side": 255,
+              "BMin": 0,
+              "BMax": 0
+            },
+            {
+              "Reference": 80,
+              "Edge": 1,
+              "Side": 255,
+              "BMin": 0,
+              "BMax": 0
+            }
+          ],
+          "Verts": [
+            41,
+            38,
+            37,
+            39,
+            0,
+            0
+          ],
+          "Neis": [
+            0,
+            17,
+            0,
+            19,
+            0,
+            0
+          ],
+          "Tag": null,
+          "VertCount": 4,
+          "Area": 255
+        },
+        {
+          "PolyType": 0,
+          "Links": [
+            {
+              "Reference": 94,
+              "Edge": 3,
+              "Side": 255,
+              "BMin": 0,
+              "BMax": 0
+            },
+            {
+              "Reference": 81,
+              "Edge": 2,
+              "Side": 255,
+              "BMin": 0,
+              "BMax": 0
+            },
+            {
+              "Reference": 70,
+              "Edge": 0,
+              "Side": 255,
+              "BMin": 0,
+              "BMax": 0
+            }
+          ],
+          "Verts": [
+            19,
+            18,
+            41,
+            39,
+            40,
+            0
+          ],
+          "Neis": [
+            7,
+            0,
+            18,
+            31,
+            0,
+            0
+          ],
+          "Tag": null,
+          "VertCount": 5,
+          "Area": 255
+        },
+        {
+          "PolyType": 0,
+          "Links": [
+            {
+              "Reference": 85,
+              "Edge": 2,
+              "Side": 255,
+              "BMin": 0,
+              "BMax": 0
+            },
+            {
+              "Reference": 89,
+              "Edge": 0,
+              "Side": 255,
+              "BMin": 0,
+              "BMax": 0
+            }
+          ],
+          "Verts": [
+            43,
+            44,
+            45,
+            42,
+            0,
+            0
+          ],
+          "Neis": [
+            26,
+            0,
+            22,
+            0,
+            0,
+            0
+          ],
+          "Tag": null,
+          "VertCount": 4,
+          "Area": 255
+        },
+        {
+          "PolyType": 0,
+          "Links": [
+            {
+              "Reference": 85,
+              "Edge": 2,
+              "Side": 255,
+              "BMin": 0,
+              "BMax": 0
+            },
+            {
+              "Reference": 77,
+              "Edge": 0,
+              "Side": 255,
+              "BMin": 0,
+              "BMax": 0
+            }
+          ],
+          "Verts": [
+            34,
+            33,
+            42,
+            48,
+            0,
+            0
+          ],
+          "Neis": [
+            14,
+            0,
+            22,
+            0,
+            0,
+            0
+          ],
+          "Tag": null,
+          "VertCount": 4,
+          "Area": 255
+        },
+        {
+          "PolyType": 0,
+          "Links": [
+            {
+              "Reference": 84,
+              "Edge": 5,
+              "Side": 255,
+              "BMin": 0,
+              "BMax": 0
+            },
+            {
+              "Reference": 86,
+              "Edge": 4,
+              "Side": 255,
+              "BMin": 0,
+              "BMax": 0
+            },
+            {
+              "Reference": 93,
+              "Edge": 2,
+              "Side": 255,
+              "BMin": 0,
+              "BMax": 0
+            },
+            {
+              "Reference": 83,
+              "Edge": 0,
+              "Side": 255,
+              "BMin": 0,
+              "BMax": 0
+            }
+          ],
+          "Verts": [
+            42,
+            45,
+            46,
+            47,
+            36,
+            48
+          ],
+          "Neis": [
+            20,
+            0,
+            30,
+            0,
+            23,
+            21
+          ],
+          "Tag": null,
+          "VertCount": 6,
+          "Area": 255
+        },
+        {
+          "PolyType": 0,
+          "Links": [
+            {
+              "Reference": 85,
+              "Edge": 2,
+              "Side": 255,
+              "BMin": 0,
+              "BMax": 0
+            },
+            {
+              "Reference": 80,
+              "Edge": 0,
+              "Side": 255,
+              "BMin": 0,
+              "BMax": 0
+            }
+          ],
+          "Verts": [
+            36,
+            35,
+            48,
+            0,
+            0,
+            0
+          ],
+          "Neis": [
+            17,
+            0,
+            22,
+            0,
+            0,
+            0
+          ],
+          "Tag": null,
+          "VertCount": 3,
+          "Area": 255
+        },
+        {
+          "PolyType": 0,
+          "Links": [
+            {
+              "Reference": 90,
+              "Edge": 2,
+              "Side": 255,
+              "BMin": 0,
+              "BMax": 0
+            },
+            {
+              "Reference": 76,
+              "Edge": 0,
+              "Side": 255,
+              "BMin": 0,
+              "BMax": 0
+            }
+          ],
+          "Verts": [
+            31,
+            30,
+            53,
+            52,
+            0,
+            0
+          ],
+          "Neis": [
+            13,
+            0,
+            27,
+            0,
+            0,
+            0
+          ],
+          "Tag": null,
+          "VertCount": 4,
+          "Area": 255
+        },
+        {
+          "PolyType": 0,
+          "Links": [
+            {
+              "Reference": 92,
+              "Edge": 2,
+              "Side": 255,
+              "BMin": 0,
+              "BMax": 0
+            },
+            {
+              "Reference": 75,
+              "Edge": 1,
+              "Side": 255,
+              "BMin": 0,
+              "BMax": 0
+            }
+          ],
+          "Verts": [
+            54,
+            26,
+            25,
+            0,
+            0,
+            0
+          ],
+          "Neis": [
+            0,
+            12,
+            29,
+            0,
+            0,
+            0
+          ],
+          "Tag": null,
+          "VertCount": 3,
+          "Area": 255
+        },
+        {
+          "PolyType": 0,
+          "Links": [
+            {
+              "Reference": 92,
+              "Edge": 3,
+              "Side": 255,
+              "BMin": 0,
+              "BMax": 0
+            },
+            {
+              "Reference": 83,
+              "Edge": 1,
+              "Side": 255,
+              "BMin": 0,
+              "BMax": 0
+            }
+          ],
+          "Verts": [
+            51,
+            44,
+            43,
+            52,
+            0,
+            0
+          ],
+          "Neis": [
+            0,
+            20,
+            0,
+            29,
+            0,
+            0
+          ],
+          "Tag": null,
+          "VertCount": 4,
+          "Area": 255
+        },
+        {
+          "PolyType": 0,
+          "Links": [
+            {
+              "Reference": 92,
+              "Edge": 2,
+              "Side": 255,
+              "BMin": 0,
+              "BMax": 0
+            },
+            {
+              "Reference": 87,
+              "Edge": 0,
+              "Side": 255,
+              "BMin": 0,
+              "BMax": 0
+            }
+          ],
+          "Verts": [
+            52,
+            53,
+            54,
+            0,
+            0,
+            0
+          ],
+          "Neis": [
+            24,
+            0,
+            29,
+            0,
+            0,
+            0
+          ],
+          "Tag": null,
+          "VertCount": 3,
+          "Area": 255
+        },
+        {
+          "PolyType": 0,
+          "Links": [
+            {
+              "Reference": 95,
+              "Edge": 4,
+              "Side": 255,
+              "BMin": 0,
+              "BMax": 0
+            },
+            {
+              "Reference": 92,
+              "Edge": 1,
+              "Side": 255,
+              "BMin": 0,
+              "BMax": 0
+            }
+          ],
+          "Verts": [
+            50,
+            51,
+            25,
+            55,
+            49,
+            0
+          ],
+          "Neis": [
+            0,
+            29,
+            0,
+            0,
+            32,
+            0
+          ],
+          "Tag": null,
+          "VertCount": 5,
+          "Area": 255
+        },
+        {
+          "PolyType": 0,
+          "Links": [
+            {
+              "Reference": 91,
+              "Edge": 3,
+              "Side": 255,
+              "BMin": 0,
+              "BMax": 0
+            },
+            {
+              "Reference": 88,
+              "Edge": 2,
+              "Side": 255,
+              "BMin": 0,
+              "BMax": 0
+            },
+            {
+              "Reference": 90,
+              "Edge": 1,
+              "Side": 255,
+              "BMin": 0,
+              "BMax": 0
+            },
+            {
+              "Reference": 89,
+              "Edge": 0,
+              "Side": 255,
+              "BMin": 0,
+              "BMax": 0
+            }
+          ],
+          "Verts": [
+            51,
+            52,
+            54,
+            25,
+            0,
+            0
+          ],
+          "Neis": [
+            26,
+            27,
+            25,
+            28,
+            0,
+            0
+          ],
+          "Tag": null,
+          "VertCount": 4,
+          "Area": 255
+        },
+        {
+          "PolyType": 0,
+          "Links": [
+            {
+              "Reference": 96,
+              "Edge": 2,
+              "Side": 255,
+              "BMin": 0,
+              "BMax": 0
+            },
+            {
+              "Reference": 85,
+              "Edge": 0,
+              "Side": 255,
+              "BMin": 0,
+              "BMax": 0
+            }
+          ],
+          "Verts": [
+            47,
+            46,
+            56,
+            58,
+            0,
+            0
+          ],
+          "Neis": [
+            22,
+            0,
+            33,
+            0,
+            0,
+            0
+          ],
+          "Tag": null,
+          "VertCount": 4,
+          "Area": 255
+        },
+        {
+          "PolyType": 0,
+          "Links": [
+            {
+              "Reference": 96,
+              "Edge": 2,
+              "Side": 255,
+              "BMin": 0,
+              "BMax": 0
+            },
+            {
+              "Reference": 82,
+              "Edge": 0,
+              "Side": 255,
+              "BMin": 0,
+              "BMax": 0
+            }
+          ],
+          "Verts": [
+            40,
+            39,
+            58,
+            0,
+            0,
+            0
+          ],
+          "Neis": [
+            19,
+            0,
+            33,
+            0,
+            0,
+            0
+          ],
+          "Tag": null,
+          "VertCount": 3,
+          "Area": 255
+        },
+        {
+          "PolyType": 0,
+          "Links": [
+            {
+              "Reference": 96,
+              "Edge": 2,
+              "Side": 255,
+              "BMin": 0,
+              "BMax": 0
+            },
+            {
+              "Reference": 91,
+              "Edge": 1,
+              "Side": 255,
+              "BMin": 0,
+              "BMax": 0
+            }
+          ],
+          "Verts": [
+            56,
+            50,
+            49,
+            0,
+            0,
+            0
+          ],
+          "Neis": [
+            0,
+            28,
+            33,
+            0,
+            0,
+            0
+          ],
+          "Tag": null,
+          "VertCount": 3,
+          "Area": 255
+        },
+        {
+          "PolyType": 0,
+          "Links": [
+            {
+              "Reference": 95,
+              "Edge": 4,
+              "Side": 255,
+              "BMin": 0,
+              "BMax": 0
+            },
+            {
+              "Reference": 93,
+              "Edge": 3,
+              "Side": 255,
+              "BMin": 0,
+              "BMax": 0
+            },
+            {
+              "Reference": 94,
+              "Edge": 2,
+              "Side": 255,
+              "BMin": 0,
+              "BMax": 0
+            }
+          ],
+          "Verts": [
+            49,
+            57,
+            40,
+            58,
+            56,
+            0
+          ],
+          "Neis": [
+            0,
+            0,
+            31,
+            30,
+            32,
+            0
+          ],
+          "Tag": null,
+          "VertCount": 5,
+          "Area": 255
+        }
+      ],
+      "verts": [
+        {
+          "X": -3123.4,
+          "Y": -119.08,
+          "Z": -4381.1
+        },
+        {
+          "X": -3123.4,
+          "Y": -119.08,
+          "Z": 4388.9
+        },
+        {
+          "X": 3126.6,
+          "Y": -119.08,
+          "Z": 4388.9
+        },
+        {
+          "X": 3126.6,
+          "Y": -119.08,
+          "Z": -4381.1
+        },
+        {
+          "X": -3123.4,
+          "Y": 119.119995,
+          "Z": -281.1001
+        },
+        {
+          "X": -253.3999,
+          "Y": 119.119995,
+          "Z": -271.1001
+        },
+        {
+          "X": -253.3999,
+          "Y": 119.119995,
+          "Z": -331.1001
+        },
+        {
+          "X": -203.3999,
+          "Y": 119.119995,
+          "Z": -341.1001
+        },
+        {
+          "X": -203.3999,
+          "Y": 119.119995,
+          "Z": -4381.1
+        },
+        {
+          "X": -3123.4,
+          "Y": 119.119995,
+          "Z": -4381.1
+        },
+        {
+          "X": -153.3999,
+          "Y": 119.119995,
+          "Z": -321.1001
+        },
+        {
+          "X": 186.6001,
+          "Y": 119.119995,
+          "Z": -321.1001
+        },
+        {
+          "X": 236.6001,
+          "Y": 119.119995,
+          "Z": -341.1001
+        },
+        {
+          "X": 236.6001,
+          "Y": 119.119995,
+          "Z": -4381.1
+        },
+        {
+          "X": 286.6001,
+          "Y": 119.119995,
+          "Z": -331.1001
+        },
+        {
+          "X": 286.6001,
+          "Y": 119.119995,
+          "Z": -261.1001
+        },
+        {
+          "X": 336.6001,
+          "Y": 119.119995,
+          "Z": -251.1001
+        },
+        {
+          "X": 426.6001,
+          "Y": 119.119995,
+          "Z": -261.1001
+        },
+        {
+          "X": 436.6001,
+          "Y": 119.119995,
+          "Z": -211.1001
+        },
+        {
+          "X": 3126.6,
+          "Y": 119.119995,
+          "Z": -211.1001
+        },
+        {
+          "X": 3126.6,
+          "Y": 119.119995,
+          "Z": -4381.1
+        },
+        {
+          "X": -173.3999,
+          "Y": 119.119995,
+          "Z": -241.1001
+        },
+        {
+          "X": -53.399902,
+          "Y": 119.119995,
+          "Z": -51.100098
+        },
+        {
+          "X": 46.600098,
+          "Y": 119.119995,
+          "Z": -51.100098
+        },
+        {
+          "X": 206.6001,
+          "Y": 119.119995,
+          "Z": -241.1001
+        },
+        {
+          "X": -3123.4,
+          "Y": 119.119995,
+          "Z": 188.8999
+        },
+        {
+          "X": -463.3999,
+          "Y": 119.119995,
+          "Z": 188.8999
+        },
+        {
+          "X": -453.3999,
+          "Y": 119.119995,
+          "Z": 138.8999
+        },
+        {
+          "X": -383.3999,
+          "Y": 119.119995,
+          "Z": 138.8999
+        },
+        {
+          "X": -253.3999,
+          "Y": 119.119995,
+          "Z": -261.1001
+        },
+        {
+          "X": -363.3999,
+          "Y": 119.119995,
+          "Z": 198.8999
+        },
+        {
+          "X": -253.3999,
+          "Y": 119.119995,
+          "Z": 208.8999
+        },
+        {
+          "X": -243.3999,
+          "Y": 119.119995,
+          "Z": 168.8999
+        },
+        {
+          "X": -173.3999,
+          "Y": 119.119995,
+          "Z": 168.8999
+        },
+        {
+          "X": -53.399902,
+          "Y": 119.119995,
+          "Z": 28.899902
+        },
+        {
+          "X": 46.600098,
+          "Y": 119.119995,
+          "Z": 18.899902
+        },
+        {
+          "X": 266.6001,
+          "Y": 119.119995,
+          "Z": 148.8999
+        },
+        {
+          "X": 346.6001,
+          "Y": 119.119995,
+          "Z": 138.8999
+        },
+        {
+          "X": 356.6001,
+          "Y": 119.119995,
+          "Z": -161.1001
+        },
+        {
+          "X": 366.6001,
+          "Y": 119.119995,
+          "Z": 188.8999
+        },
+        {
+          "X": 3126.6,
+          "Y": 119.119995,
+          "Z": 188.8999
+        },
+        {
+          "X": 426.6001,
+          "Y": 119.119995,
+          "Z": -161.1001
+        },
+        {
+          "X": -153.3999,
+          "Y": 119.119995,
+          "Z": 178.8999
+        },
+        {
+          "X": -173.3999,
+          "Y": 119.119995,
+          "Z": 268.8999
+        },
+        {
+          "X": -53.399902,
+          "Y": 119.119995,
+          "Z": 358.8999
+        },
+        {
+          "X": -43.399902,
+          "Y": 119.119995,
+          "Z": 338.8999
+        },
+        {
+          "X": 46.600098,
+          "Y": 119.119995,
+          "Z": 358.8999
+        },
+        {
+          "X": 286.6001,
+          "Y": 119.119995,
+          "Z": 238.8999
+        },
+        {
+          "X": 36.600098,
+          "Y": 119.119995,
+          "Z": 38.899902
+        },
+        {
+          "X": -3.3999023,
+          "Y": 119.119995,
+          "Z": 4388.9
+        },
+        {
+          "X": -3.3999023,
+          "Y": 119.119995,
+          "Z": 438.8999
+        },
+        {
+          "X": -53.399902,
+          "Y": 119.119995,
+          "Z": 428.8999
+        },
+        {
+          "X": -243.3999,
+          "Y": 119.119995,
+          "Z": 268.8999
+        },
+        {
+          "X": -373.3999,
+          "Y": 119.119995,
+          "Z": 238.8999
+        },
+        {
+          "X": -453.3999,
+          "Y": 119.119995,
+          "Z": 238.8999
+        },
+        {
+          "X": -3123.4,
+          "Y": 119.119995,
+          "Z": 4388.9
+        },
+        {
+          "X": 46.600098,
+          "Y": 119.119995,
+          "Z": 428.8999
+        },
+        {
+          "X": 3126.6,
+          "Y": 119.119995,
+          "Z": 4388.9
+        },
+        {
+          "X": 356.6001,
+          "Y": 119.119995,
+          "Z": 238.8999
+        }
+      ],
+      "detailMeshes": [
+        {
+          "VertexIndex": 0,
+          "VertexCount": 0,
+          "TriangleIndex": 0,
+          "TriangleCount": 2
+        },
+        {
+          "VertexIndex": 0,
+          "VertexCount": 0,
+          "TriangleIndex": 2,
+          "TriangleCount": 1
+        },
+        {
+          "VertexIndex": 0,
+          "VertexCount": 0,
+          "TriangleIndex": 3,
+          "TriangleCount": 3
+        },
+        {
+          "VertexIndex": 0,
+          "VertexCount": 0,
+          "TriangleIndex": 6,
+          "TriangleCount": 4
+        },
+        {
+          "VertexIndex": 0,
+          "VertexCount": 0,
+          "TriangleIndex": 10,
+          "TriangleCount": 2
+        },
+        {
+          "VertexIndex": 0,
+          "VertexCount": 0,
+          "TriangleIndex": 12,
+          "TriangleCount": 3
+        },
+        {
+          "VertexIndex": 0,
+          "VertexCount": 0,
+          "TriangleIndex": 15,
+          "TriangleCount": 1
+        },
+        {
+          "VertexIndex": 0,
+          "VertexCount": 0,
+          "TriangleIndex": 16,
+          "TriangleCount": 1
+        },
+        {
+          "VertexIndex": 0,
+          "VertexCount": 4,
+          "TriangleIndex": 17,
+          "TriangleCount": 12
+        },
+        {
+          "VertexIndex": 4,
+          "VertexCount": 0,
+          "TriangleIndex": 29,
+          "TriangleCount": 2
+        },
+        {
+          "VertexIndex": 4,
+          "VertexCount": 0,
+          "TriangleIndex": 31,
+          "TriangleCount": 2
+        },
+        {
+          "VertexIndex": 4,
+          "VertexCount": 0,
+          "TriangleIndex": 33,
+          "TriangleCount": 1
+        },
+        {
+          "VertexIndex": 4,
+          "VertexCount": 0,
+          "TriangleIndex": 34,
+          "TriangleCount": 2
+        },
+        {
+          "VertexIndex": 4,
+          "VertexCount": 0,
+          "TriangleIndex": 36,
+          "TriangleCount": 4
+        },
+        {
+          "VertexIndex": 4,
+          "VertexCount": 0,
+          "TriangleIndex": 40,
+          "TriangleCount": 1
+        },
+        {
+          "VertexIndex": 4,
+          "VertexCount": 7,
+          "TriangleIndex": 41,
+          "TriangleCount": 16
+        },
+        {
+          "VertexIndex": 11,
+          "VertexCount": 0,
+          "TriangleIndex": 57,
+          "TriangleCount": 4
+        },
+        {
+          "VertexIndex": 11,
+          "VertexCount": 0,
+          "TriangleIndex": 61,
+          "TriangleCount": 2
+        },
+        {
+          "VertexIndex": 11,
+          "VertexCount": 0,
+          "TriangleIndex": 63,
+          "TriangleCount": 3
+        },
+        {
+          "VertexIndex": 11,
+          "VertexCount": 4,
+          "TriangleIndex": 66,
+          "TriangleCount": 10
+        },
+        {
+          "VertexIndex": 15,
+          "VertexCount": 0,
+          "TriangleIndex": 76,
+          "TriangleCount": 2
+        },
+        {
+          "VertexIndex": 15,
+          "VertexCount": 0,
+          "TriangleIndex": 78,
+          "TriangleCount": 4
+        },
+        {
+          "VertexIndex": 15,
+          "VertexCount": 0,
+          "TriangleIndex": 82,
+          "TriangleCount": 1
+        },
+        {
+          "VertexIndex": 15,
+          "VertexCount": 0,
+          "TriangleIndex": 83,
+          "TriangleCount": 2
+        },
+        {
+          "VertexIndex": 15,
+          "VertexCount": 0,
+          "TriangleIndex": 85,
+          "TriangleCount": 1
+        },
+        {
+          "VertexIndex": 15,
+          "VertexCount": 0,
+          "TriangleIndex": 86,
+          "TriangleCount": 2
+        },
+        {
+          "VertexIndex": 15,
+          "VertexCount": 0,
+          "TriangleIndex": 88,
+          "TriangleCount": 1
+        },
+        {
+          "VertexIndex": 15,
+          "VertexCount": 0,
+          "TriangleIndex": 89,
+          "TriangleCount": 3
+        },
+        {
+          "VertexIndex": 15,
+          "VertexCount": 0,
+          "TriangleIndex": 92,
+          "TriangleCount": 2
+        },
+        {
+          "VertexIndex": 15,
+          "VertexCount": 0,
+          "TriangleIndex": 94,
+          "TriangleCount": 2
+        },
+        {
+          "VertexIndex": 15,
+          "VertexCount": 0,
+          "TriangleIndex": 96,
+          "TriangleCount": 1
+        },
+        {
+          "VertexIndex": 15,
+          "VertexCount": 0,
+          "TriangleIndex": 97,
+          "TriangleCount": 1
+        },
+        {
+          "VertexIndex": 15,
+          "VertexCount": 0,
+          "TriangleIndex": 98,
+          "TriangleCount": 3
+        }
+      ],
+      "detailVerts": [
+        {
+          "X": -163.3999,
+          "Y": 119.31999,
+          "Z": -281.1001
+        },
+        {
+          "X": -164.82837,
+          "Y": -129.08,
+          "Z": -275.38574
+        },
+        {
+          "X": -170.54272,
+          "Y": -129.08,
+          "Z": -252.52881
+        },
+        {
+          "X": -171.97144,
+          "Y": 119.31999,
+          "Z": -246.81445
+        },
+        {
+          "X": 280.88574,
+          "Y": 119.31999,
+          "Z": -259.6714
+        },
+        {
+          "X": 275.17163,
+          "Y": -129.08,
+          "Z": -258.24316
+        },
+        {
+          "X": 252.31445,
+          "Y": -129.08,
+          "Z": -252.52881
+        },
+        {
+          "X": 246.6001,
+          "Y": 119.31999,
+          "Z": -251.1001
+        },
+        {
+          "X": 246.6001,
+          "Y": 119.31999,
+          "Z": -251.1001
+        },
+        {
+          "X": 252.31445,
+          "Y": -129.08,
+          "Z": -252.52881
+        },
+        {
+          "X": 275.1714,
+          "Y": -129.08,
+          "Z": -258.24268
+        },
+        {
+          "X": -163.3999,
+          "Y": 119.31999,
+          "Z": 223.8999
+        },
+        {
+          "X": -164.6499,
+          "Y": -129.08,
+          "Z": 229.5249
+        },
+        {
+          "X": -170.8999,
+          "Y": -129.08,
+          "Z": 257.6499
+        },
+        {
+          "X": -172.1499,
+          "Y": 119.31999,
+          "Z": 263.2749
+        }
+      ],
+      "detailTris": [
+        {
+          "VertexHash0": 3,
+          "VertexHash1": 0,
+          "VertexHash2": 2,
+          "Flags": 17
+        },
+        {
+          "VertexHash0": 0,
+          "VertexHash1": 1,
+          "VertexHash2": 2,
+          "Flags": 5
+        },
+        {
+          "VertexHash0": 2,
+          "VertexHash1": 0,
+          "VertexHash2": 1,
+          "Flags": 21
+        },
+        {
+          "VertexHash0": 4,
+          "VertexHash1": 0,
+          "VertexHash2": 3,
+          "Flags": 17
+        },
+        {
+          "VertexHash0": 0,
+          "VertexHash1": 1,
+          "VertexHash2": 3,
+          "Flags": 1
+        },
+        {
+          "VertexHash0": 1,
+          "VertexHash1": 2,
+          "VertexHash2": 3,
+          "Flags": 5
+        },
+        {
+          "VertexHash0": 5,
+          "VertexHash1": 0,
+          "VertexHash2": 4,
+          "Flags": 17
+        },
+        {
+          "VertexHash0": 0,
+          "VertexHash1": 1,
+          "VertexHash2": 4,
+          "Flags": 1
+        },
+        {
+          "VertexHash0": 1,
+          "VertexHash1": 2,
+          "VertexHash2": 4,
+          "Flags": 1
+        },
+        {
+          "VertexHash0": 2,
+          "VertexHash1": 3,
+          "VertexHash2": 4,
+          "Flags": 5
+        },
+        {
+          "VertexHash0": 3,
+          "VertexHash1": 0,
+          "VertexHash2": 2,
+          "Flags": 17
+        },
+        {
+          "VertexHash0": 0,
+          "VertexHash1": 1,
+          "VertexHash2": 2,
+          "Flags": 5
+        },
+        {
+          "VertexHash0": 4,
+          "VertexHash1": 0,
+          "VertexHash2": 3,
+          "Flags": 17
+        },
+        {
+          "VertexHash0": 0,
+          "VertexHash1": 1,
+          "VertexHash2": 3,
+          "Flags": 1
+        },
+        {
+          "VertexHash0": 1,
+          "VertexHash1": 2,
+          "VertexHash2": 3,
+          "Flags": 5
+        },
+        {
+          "VertexHash0": 2,
+          "VertexHash1": 0,
+          "VertexHash2": 1,
+          "Flags": 21
+        },
+        {
+          "VertexHash0": 2,
+          "VertexHash1": 0,
+          "VertexHash2": 1,
+          "Flags": 21
+        },
+        {
+          "VertexHash0": 5,
+          "VertexHash1": 0,
+          "VertexHash2": 8,
+          "Flags": 5
+        },
+        {
+          "VertexHash0": 0,
+          "VertexHash1": 7,
+          "VertexHash2": 8,
+          "Flags": 21
+        },
+        {
+          "VertexHash0": 0,
+          "VertexHash1": 6,
+          "VertexHash2": 7,
+          "Flags": 21
+        },
+        {
+          "VertexHash0": 0,
+          "VertexHash1": 6,
+          "VertexHash2": 6,
+          "Flags": 21
+        },
+        {
+          "VertexHash0": 6,
+          "VertexHash1": 7,
+          "VertexHash2": 6,
+          "Flags": 21
+        },
+        {
+          "VertexHash0": 7,
+          "VertexHash1": 8,
+          "VertexHash2": 6,
+          "Flags": 21
+        },
+        {
+          "VertexHash0": 8,
+          "VertexHash1": 9,
+          "VertexHash2": 6,
+          "Flags": 21
+        },
+        {
+          "VertexHash0": 9,
+          "VertexHash1": 1,
+          "VertexHash2": 6,
+          "Flags": 21
+        },
+        {
+          "VertexHash0": 1,
+          "VertexHash1": 2,
+          "VertexHash2": 6,
+          "Flags": 17
+        },
+        {
+          "VertexHash0": 2,
+          "VertexHash1": 3,
+          "VertexHash2": 6,
+          "Flags": 1
+        },
+        {
+          "VertexHash0": 3,
+          "VertexHash1": 4,
+          "VertexHash2": 6,
+          "Flags": 1
+        },
+        {
+          "VertexHash0": 4,
+          "VertexHash1": 5,
+          "VertexHash2": 6,
+          "Flags": 1
+        },
+        {
+          "VertexHash0": 3,
+          "VertexHash1": 0,
+          "VertexHash2": 2,
+          "Flags": 17
+        },
+        {
+          "VertexHash0": 0,
+          "VertexHash1": 1,
+          "VertexHash2": 2,
+          "Flags": 5
+        },
+        {
+          "VertexHash0": 3,
+          "VertexHash1": 0,
+          "VertexHash2": 2,
+          "Flags": 17
+        },
+        {
+          "VertexHash0": 0,
+          "VertexHash1": 1,
+          "VertexHash2": 2,
+          "Flags": 5
+        },
+        {
+          "VertexHash0": 2,
+          "VertexHash1": 0,
+          "VertexHash2": 1,
+          "Flags": 21
+        },
+        {
+          "VertexHash0": 3,
+          "VertexHash1": 0,
+          "VertexHash2": 2,
+          "Flags": 17
+        },
+        {
+          "VertexHash0": 0,
+          "VertexHash1": 1,
+          "VertexHash2": 2,
+          "Flags": 5
+        },
+        {
+          "VertexHash0": 5,
+          "VertexHash1": 0,
+          "VertexHash2": 4,
+          "Flags": 17
+        },
+        {
+          "VertexHash0": 0,
+          "VertexHash1": 3,
+          "VertexHash2": 4,
+          "Flags": 4
+        },
+        {
+          "VertexHash0": 0,
+          "VertexHash1": 2,
+          "VertexHash2": 3,
+          "Flags": 4
+        },
+        {
+          "VertexHash0": 0,
+          "VertexHash1": 1,
+          "VertexHash2": 2,
+          "Flags": 5
+        },
+        {
+          "VertexHash0": 2,
+          "VertexHash1": 0,
+          "VertexHash2": 1,
+          "Flags": 21
+        },
+        {
+          "VertexHash0": 3,
+          "VertexHash1": 0,
+          "VertexHash2": 9,
+          "Flags": 17
+        },
+        {
+          "VertexHash0": 0,
+          "VertexHash1": 8,
+          "VertexHash2": 9,
+          "Flags": 4
+        },
+        {
+          "VertexHash0": 0,
+          "VertexHash1": 7,
+          "VertexHash2": 8,
+          "Flags": 4
+        },
+        {
+          "VertexHash0": 0,
+          "VertexHash1": 6,
+          "VertexHash2": 7,
+          "Flags": 4
+        },
+        {
+          "VertexHash0": 0,
+          "VertexHash1": 5,
+          "VertexHash2": 6,
+          "Flags": 4
+        },
+        {
+          "VertexHash0": 0,
+          "VertexHash1": 4,
+          "VertexHash2": 5,
+          "Flags": 4
+        },
+        {
+          "VertexHash0": 0,
+          "VertexHash1": 10,
+          "VertexHash2": 4,
+          "Flags": 4
+        },
+        {
+          "VertexHash0": 0,
+          "VertexHash1": 1,
+          "VertexHash2": 10,
+          "Flags": 1
+        },
+        {
+          "VertexHash0": 1,
+          "VertexHash1": 2,
+          "VertexHash2": 10,
+          "Flags": 5
+        },
+        {
+          "VertexHash0": 2,
+          "VertexHash1": 4,
+          "VertexHash2": 10,
+          "Flags": 21
+        },
+        {
+          "VertexHash0": 4,
+          "VertexHash1": 5,
+          "VertexHash2": 10,
+          "Flags": 21
+        },
+        {
+          "VertexHash0": 5,
+          "VertexHash1": 9,
+          "VertexHash2": 10,
+          "Flags": 21
+        },
+        {
+          "VertexHash0": 5,
+          "VertexHash1": 6,
+          "VertexHash2": 9,
+          "Flags": 21
+        },
+        {
+          "VertexHash0": 6,
+          "VertexHash1": 8,
+          "VertexHash2": 9,
+          "Flags": 21
+        },
+        {
+          "VertexHash0": 6,
+          "VertexHash1": 7,
+          "VertexHash2": 8,
+          "Flags": 21
+        },
+        {
+          "VertexHash0": 7,
+          "VertexHash1": 3,
+          "VertexHash2": 8,
+          "Flags": 21
+        },
+        {
+          "VertexHash0": 5,
+          "VertexHash1": 0,
+          "VertexHash2": 4,
+          "Flags": 17
+        },
+        {
+          "VertexHash0": 0,
+          "VertexHash1": 1,
+          "VertexHash2": 4,
+          "Flags": 1
+        },
+        {
+          "VertexHash0": 1,
+          "VertexHash1": 2,
+          "VertexHash2": 4,
+          "Flags": 1
+        },
+        {
+          "VertexHash0": 2,
+          "VertexHash1": 3,
+          "VertexHash2": 4,
+          "Flags": 5
+        },
+        {
+          "VertexHash0": 3,
+          "VertexHash1": 0,
+          "VertexHash2": 2,
+          "Flags": 17
+        },
+        {
+          "VertexHash0": 0,
+          "VertexHash1": 1,
+          "VertexHash2": 2,
+          "Flags": 5
+        },
+        {
+          "VertexHash0": 4,
+          "VertexHash1": 0,
+          "VertexHash2": 3,
+          "Flags": 17
+        },
+        {
+          "VertexHash0": 0,
+          "VertexHash1": 2,
+          "VertexHash2": 3,
+          "Flags": 4
+        },
+        {
+          "VertexHash0": 0,
+          "VertexHash1": 1,
+          "VertexHash2": 2,
+          "Flags": 5
+        },
+        {
+          "VertexHash0": 3,
+          "VertexHash1": 4,
+          "VertexHash2": 6,
+          "Flags": 21
+        },
+        {
+          "VertexHash0": 4,
+          "VertexHash1": 5,
+          "VertexHash2": 6,
+          "Flags": 21
+        },
+        {
+          "VertexHash0": 4,
+          "VertexHash1": 4,
+          "VertexHash2": 5,
+          "Flags": 21
+        },
+        {
+          "VertexHash0": 4,
+          "VertexHash1": 5,
+          "VertexHash2": 4,
+          "Flags": 21
+        },
+        {
+          "VertexHash0": 5,
+          "VertexHash1": 6,
+          "VertexHash2": 4,
+          "Flags": 21
+        },
+        {
+          "VertexHash0": 6,
+          "VertexHash1": 7,
+          "VertexHash2": 4,
+          "Flags": 21
+        },
+        {
+          "VertexHash0": 7,
+          "VertexHash1": 0,
+          "VertexHash2": 4,
+          "Flags": 21
+        },
+        {
+          "VertexHash0": 0,
+          "VertexHash1": 3,
+          "VertexHash2": 4,
+          "Flags": 21
+        },
+        {
+          "VertexHash0": 0,
+          "VertexHash1": 2,
+          "VertexHash2": 3,
+          "Flags": 20
+        },
+        {
+          "VertexHash0": 0,
+          "VertexHash1": 1,
+          "VertexHash2": 2,
+          "Flags": 5
+        },
+        {
+          "VertexHash0": 3,
+          "VertexHash1": 0,
+          "VertexHash2": 2,
+          "Flags": 17
+        },
+        {
+          "VertexHash0": 0,
+          "VertexHash1": 1,
+          "VertexHash2": 2,
+          "Flags": 5
+        },
+        {
+          "VertexHash0": 5,
+          "VertexHash1": 0,
+          "VertexHash2": 4,
+          "Flags": 17
+        },
+        {
+          "VertexHash0": 0,
+          "VertexHash1": 3,
+          "VertexHash2": 4,
+          "Flags": 4
+        },
+        {
+          "VertexHash0": 0,
+          "VertexHash1": 2,
+          "VertexHash2": 3,
+          "Flags": 4
+        },
+        {
+          "VertexHash0": 0,
+          "VertexHash1": 1,
+          "VertexHash2": 2,
+          "Flags": 5
+        },
+        {
+          "VertexHash0": 2,
+          "VertexHash1": 0,
+          "VertexHash2": 1,
+          "Flags": 21
+        },
+        {
+          "VertexHash0": 3,
+          "VertexHash1": 0,
+          "VertexHash2": 2,
+          "Flags": 17
+        },
+        {
+          "VertexHash0": 0,
+          "VertexHash1": 1,
+          "VertexHash2": 2,
+          "Flags": 5
+        },
+        {
+          "VertexHash0": 2,
+          "VertexHash1": 0,
+          "VertexHash2": 1,
+          "Flags": 21
+        },
+        {
+          "VertexHash0": 3,
+          "VertexHash1": 0,
+          "VertexHash2": 2,
+          "Flags": 17
+        },
+        {
+          "VertexHash0": 0,
+          "VertexHash1": 1,
+          "VertexHash2": 2,
+          "Flags": 5
+        },
+        {
+          "VertexHash0": 2,
+          "VertexHash1": 0,
+          "VertexHash2": 1,
+          "Flags": 21
+        },
+        {
+          "VertexHash0": 4,
+          "VertexHash1": 0,
+          "VertexHash2": 3,
+          "Flags": 17
+        },
+        {
+          "VertexHash0": 0,
+          "VertexHash1": 1,
+          "VertexHash2": 3,
+          "Flags": 1
+        },
+        {
+          "VertexHash0": 1,
+          "VertexHash1": 2,
+          "VertexHash2": 3,
+          "Flags": 5
+        },
+        {
+          "VertexHash0": 3,
+          "VertexHash1": 0,
+          "VertexHash2": 2,
+          "Flags": 17
+        },
+        {
+          "VertexHash0": 0,
+          "VertexHash1": 1,
+          "VertexHash2": 2,
+          "Flags": 5
+        },
+        {
+          "VertexHash0": 3,
+          "VertexHash1": 0,
+          "VertexHash2": 2,
+          "Flags": 17
+        },
+        {
+          "VertexHash0": 0,
+          "VertexHash1": 1,
+          "VertexHash2": 2,
+          "Flags": 5
+        },
+        {
+          "VertexHash0": 2,
+          "VertexHash1": 0,
+          "VertexHash2": 1,
+          "Flags": 21
+        },
+        {
+          "VertexHash0": 2,
+          "VertexHash1": 0,
+          "VertexHash2": 1,
+          "Flags": 21
+        },
+        {
+          "VertexHash0": 4,
+          "VertexHash1": 0,
+          "VertexHash2": 3,
+          "Flags": 17
+        },
+        {
+          "VertexHash0": 0,
+          "VertexHash1": 2,
+          "VertexHash2": 3,
+          "Flags": 4
+        },
+        {
+          "VertexHash0": 0,
+          "VertexHash1": 1,
+          "VertexHash2": 2,
+          "Flags": 5
+        }
+      ],
+      "offMeshConnections": [],
+      "bvTree": {
+        "nodes": [
+          {
+            "Bounds": {
+              "Min": {
+                "X": 2,
+                "Y": 1,
+                "Z": 2
+              },
+              "Max": {
+                "X": 627,
+                "Y": 25,
+                "Z": 879
+              }
+            },
+            "Index": -65
+          },
+          {
+            "Bounds": {
+              "Min": {
+                "X": 2,
+                "Y": 1,
+                "Z": 2
+              },
+              "Max": {
+                "X": 627,
+                "Y": 25,
+                "Z": 879
+              }
+            },
+            "Index": -31
+          },
+          {
+            "Bounds": {
+              "Min": {
+                "X": 2,
+                "Y": 1,
+                "Z": 2
+              },
+              "Max": {
+                "X": 627,
+                "Y": 25,
+                "Z": 879
+              }
+            },
+            "Index": -15
+          },
+          {
+            "Bounds": {
+              "Min": {
+                "X": 2,
+                "Y": 1,
+                "Z": 2
+              },
+              "Max": {
+                "X": 627,
+                "Y": 25,
+                "Z": 879
+              }
+            },
+            "Index": -7
+          },
+          {
+            "Bounds": {
+              "Min": {
+                "X": 2,
+                "Y": 1,
+                "Z": 2
+              },
+              "Max": {
+                "X": 627,
+                "Y": 25,
+                "Z": 879
+              }
+            },
+            "Index": -3
+          },
+          {
+            "Bounds": {
+              "Min": {
+                "X": 2,
+                "Y": 1,
+                "Z": 2
+              },
+              "Max": {
+                "X": 627,
+                "Y": 1,
+                "Z": 879
+              }
+            },
+            "Index": 0
+          },
+          {
+            "Bounds": {
+              "Min": {
+                "X": 2,
+                "Y": 24,
+                "Z": 2
+              },
+              "Max": {
+                "X": 294,
+                "Y": 25,
+                "Z": 412
+              }
+            },
+            "Index": 2
+          },
+          {
+            "Bounds": {
+              "Min": {
+                "X": 294,
+                "Y": 24,
+                "Z": 2
+              },
+              "Max": {
+                "X": 627,
+                "Y": 25,
+                "Z": 419
+              }
+            },
+            "Index": -3
+          },
+          {
+            "Bounds": {
+              "Min": {
+                "X": 294,
+                "Y": 24,
+                "Z": 2
+              },
+              "Max": {
+                "X": 338,
+                "Y": 25,
+                "Z": 408
+              }
+            },
+            "Index": 3
+          },
+          {
+            "Bounds": {
+              "Min": {
+                "X": 338,
+                "Y": 24,
+                "Z": 2
+              },
+              "Max": {
+                "X": 627,
+                "Y": 25,
+                "Z": 419
+              }
+            },
+            "Index": 5
+          },
+          {
+            "Bounds": {
+              "Min": {
+                "X": 2,
+                "Y": 24,
+                "Z": 407
+              },
+              "Max": {
+                "X": 627,
+                "Y": 25,
+                "Z": 435
+              }
+            },
+            "Index": -7
+          },
+          {
+            "Bounds": {
+              "Min": {
+                "X": 2,
+                "Y": 24,
+                "Z": 407
+              },
+              "Max": {
+                "X": 335,
+                "Y": 25,
+                "Z": 435
+              }
+            },
+            "Index": -3
+          },
+          {
+            "Bounds": {
+              "Min": {
+                "X": 2,
+                "Y": 24,
+                "Z": 407
+              },
+              "Max": {
+                "X": 289,
+                "Y": 25,
+                "Z": 413
+              }
+            },
+            "Index": 1
+          },
+          {
+            "Bounds": {
+              "Min": {
+                "X": 297,
+                "Y": 24,
+                "Z": 408
+              },
+              "Max": {
+                "X": 335,
+                "Y": 25,
+                "Z": 435
+              }
+            },
+            "Index": 8
+          },
+          {
+            "Bounds": {
+              "Min": {
+                "X": 343,
+                "Y": 24,
+                "Z": 407
+              },
+              "Max": {
+                "X": 627,
+                "Y": 25,
+                "Z": 419
+              }
+            },
+            "Index": -3
+          },
+          {
+            "Bounds": {
+              "Min": {
+                "X": 343,
+                "Y": 24,
+                "Z": 407
+              },
+              "Max": {
+                "X": 357,
+                "Y": 25,
+                "Z": 415
+              }
+            },
+            "Index": 4
+          },
+          {
+            "Bounds": {
+              "Min": {
+                "X": 343,
+                "Y": 24,
+                "Z": 407
+              },
+              "Max": {
+                "X": 627,
+                "Y": 25,
+                "Z": 419
+              }
+            },
+            "Index": 7
+          },
+          {
+            "Bounds": {
+              "Min": {
+                "X": 2,
+                "Y": 24,
+                "Z": 412
+              },
+              "Max": {
+                "X": 627,
+                "Y": 25,
+                "Z": 459
+              }
+            },
+            "Index": -15
+          },
+          {
+            "Bounds": {
+              "Min": {
+                "X": 2,
+                "Y": 24,
+                "Z": 412
+              },
+              "Max": {
+                "X": 350,
+                "Y": 25,
+                "Z": 459
+              }
+            },
+            "Index": -7
+          },
+          {
+            "Bounds": {
+              "Min": {
+                "X": 2,
+                "Y": 24,
+                "Z": 412
+              },
+              "Max": {
+                "X": 289,
+                "Y": 25,
+                "Z": 459
+              }
+            },
+            "Index": -3
+          },
+          {
+            "Bounds": {
+              "Min": {
+                "X": 2,
+                "Y": 24,
+                "Z": 412
+              },
+              "Max": {
+                "X": 289,
+                "Y": 25,
+                "Z": 459
+              }
+            },
+            "Index": 10
+          },
+          {
+            "Bounds": {
+              "Min": {
+                "X": 269,
+                "Y": 24,
+                "Z": 413
+              },
+              "Max": {
+                "X": 289,
+                "Y": 25,
+                "Z": 454
+              }
+            },
+            "Index": 9
+          },
+          {
+            "Bounds": {
+              "Min": {
+                "X": 276,
+                "Y": 24,
+                "Z": 414
+              },
+              "Max": {
+                "X": 350,
+                "Y": 25,
+                "Z": 457
+              }
+            },
+            "Index": -3
+          },
+          {
+            "Bounds": {
+              "Min": {
+                "X": 276,
+                "Y": 24,
+                "Z": 414
+              },
+              "Max": {
+                "X": 309,
+                "Y": 25,
+                "Z": 457
+              }
+            },
+            "Index": 13
+          },
+          {
+            "Bounds": {
+              "Min": {
+                "X": 319,
+                "Y": 24,
+                "Z": 416
+              },
+              "Max": {
+                "X": 350,
+                "Y": 25,
+                "Z": 455
+              }
+            },
+            "Index": 16
+          },
+          {
+            "Bounds": {
+              "Min": {
+                "X": 335,
+                "Y": 24,
+                "Z": 414
+              },
+              "Max": {
+                "X": 627,
+                "Y": 25,
+                "Z": 459
+              }
+            },
+            "Index": -7
+          },
+          {
+            "Bounds": {
+              "Min": {
+                "X": 335,
+                "Y": 24,
+                "Z": 414
+              },
+              "Max": {
+                "X": 357,
+                "Y": 25,
+                "Z": 459
+              }
+            },
+            "Index": -3
+          },
+          {
+            "Bounds": {
+              "Min": {
+                "X": 335,
+                "Y": 24,
+                "Z": 414
+              },
+              "Max": {
+                "X": 350,
+                "Y": 25,
+                "Z": 424
+              }
+            },
+            "Index": 15
+          },
+          {
+            "Bounds": {
+              "Min": {
+                "X": 349,
+                "Y": 24,
+                "Z": 424
+              },
+              "Max": {
+                "X": 357,
+                "Y": 25,
+                "Z": 459
+              }
+            },
+            "Index": 17
+          },
+          {
+            "Bounds": {
+              "Min": {
+                "X": 351,
+                "Y": 24,
+                "Z": 414
+              },
+              "Max": {
+                "X": 627,
+                "Y": 25,
+                "Z": 459
+              }
+            },
+            "Index": -3
+          },
+          {
+            "Bounds": {
+              "Min": {
+                "X": 351,
+                "Y": 24,
+                "Z": 419
+              },
+              "Max": {
+                "X": 627,
+                "Y": 25,
+                "Z": 459
+              }
+            },
+            "Index": 18
+          },
+          {
+            "Bounds": {
+              "Min": {
+                "X": 357,
+                "Y": 24,
+                "Z": 414
+              },
+              "Max": {
+                "X": 627,
+                "Y": 25,
+                "Z": 419
+              }
+            },
+            "Index": 6
+          },
+          {
+            "Bounds": {
+              "Min": {
+                "X": 2,
+                "Y": 24,
+                "Z": 442
+              },
+              "Max": {
+                "X": 627,
+                "Y": 25,
+                "Z": 879
+              }
+            },
+            "Index": -33
+          },
+          {
+            "Bounds": {
+              "Min": {
+                "X": 2,
+                "Y": 24,
+                "Z": 454
+              },
+              "Max": {
+                "X": 314,
+                "Y": 25,
+                "Z": 879
+              }
+            },
+            "Index": -15
+          },
+          {
+            "Bounds": {
+              "Min": {
+                "X": 2,
+                "Y": 24,
+                "Z": 454
+              },
+              "Max": {
+                "X": 309,
+                "Y": 25,
+                "Z": 483
+              }
+            },
+            "Index": -7
+          },
+          {
+            "Bounds": {
+              "Min": {
+                "X": 2,
+                "Y": 24,
+                "Z": 454
+              },
+              "Max": {
+                "X": 309,
+                "Y": 25,
+                "Z": 483
+              }
+            },
+            "Index": -3
+          },
+          {
+            "Bounds": {
+              "Min": {
+                "X": 2,
+                "Y": 24,
+                "Z": 454
+              },
+              "Max": {
+                "X": 269,
+                "Y": 25,
+                "Z": 459
+              }
+            },
+            "Index": 11
+          },
+          {
+            "Bounds": {
+              "Min": {
+                "X": 2,
+                "Y": 24,
+                "Z": 459
+              },
+              "Max": {
+                "X": 309,
+                "Y": 25,
+                "Z": 483
+              }
+            },
+            "Index": 28
+          },
+          {
+            "Bounds": {
+              "Min": {
+                "X": 276,
+                "Y": 24,
+                "Z": 454
+              },
+              "Max": {
+                "X": 297,
+                "Y": 25,
+                "Z": 461
+              }
+            },
+            "Index": -3
+          },
+          {
+            "Bounds": {
+              "Min": {
+                "X": 276,
+                "Y": 24,
+                "Z": 454
+              },
+              "Max": {
+                "X": 297,
+                "Y": 25,
+                "Z": 457
+              }
+            },
+            "Index": 14
+          },
+          {
+            "Bounds": {
+              "Min": {
+                "X": 276,
+                "Y": 24,
+                "Z": 454
+              },
+              "Max": {
+                "X": 290,
+                "Y": 25,
+                "Z": 461
+              }
+            },
+            "Index": 12
+          },
+          {
+            "Bounds": {
+              "Min": {
+                "X": 2,
+                "Y": 24,
+                "Z": 459
+              },
+              "Max": {
+                "X": 314,
+                "Y": 25,
+                "Z": 879
+              }
+            },
+            "Index": -7
+          },
+          {
+            "Bounds": {
+              "Min": {
+                "X": 2,
+                "Y": 24,
+                "Z": 459
+              },
+              "Max": {
+                "X": 314,
+                "Y": 25,
+                "Z": 879
+              }
+            },
+            "Index": -3
+          },
+          {
+            "Bounds": {
+              "Min": {
+                "X": 2,
+                "Y": 24,
+                "Z": 459
+              },
+              "Max": {
+                "X": 314,
+                "Y": 25,
+                "Z": 879
+              }
+            },
+            "Index": 27
+          },
+          {
+            "Bounds": {
+              "Min": {
+                "X": 2,
+                "Y": 24,
+                "Z": 459
+              },
+              "Max": {
+                "X": 269,
+                "Y": 25,
+                "Z": 464
+              }
+            },
+            "Index": 24
+          },
+          {
+            "Bounds": {
+              "Min": {
+                "X": 269,
+                "Y": 24,
+                "Z": 460
+              },
+              "Max": {
+                "X": 290,
+                "Y": 25,
+                "Z": 467
+              }
+            },
+            "Index": -3
+          },
+          {
+            "Bounds": {
+              "Min": {
+                "X": 269,
+                "Y": 24,
+                "Z": 464
+              },
+              "Max": {
+                "X": 290,
+                "Y": 25,
+                "Z": 467
+              }
+            },
+            "Index": 26
+          },
+          {
+            "Bounds": {
+              "Min": {
+                "X": 277,
+                "Y": 24,
+                "Z": 460
+              },
+              "Max": {
+                "X": 290,
+                "Y": 25,
+                "Z": 467
+              }
+            },
+            "Index": 23
+          },
+          {
+            "Bounds": {
+              "Min": {
+                "X": 290,
+                "Y": 24,
+                "Z": 442
+              },
+              "Max": {
+                "X": 627,
+                "Y": 25,
+                "Z": 879
+              }
+            },
+            "Index": -17
+          },
+          {
+            "Bounds": {
+              "Min": {
+                "X": 297,
+                "Y": 24,
+                "Z": 442
+              },
+              "Max": {
+                "X": 343,
+                "Y": 25,
+                "Z": 476
+              }
+            },
+            "Index": -7
+          },
+          {
+            "Bounds": {
+              "Min": {
+                "X": 297,
+                "Y": 24,
+                "Z": 443
+              },
+              "Max": {
+                "X": 318,
+                "Y": 25,
+                "Z": 476
+              }
+            },
+            "Index": -3
+          },
+          {
+            "Bounds": {
+              "Min": {
+                "X": 297,
+                "Y": 24,
+                "Z": 443
+              },
+              "Max": {
+                "X": 318,
+                "Y": 25,
+                "Z": 458
+              }
+            },
+            "Index": 20
+          },
+          {
+            "Bounds": {
+              "Min": {
+                "X": 297,
+                "Y": 24,
+                "Z": 458
+              },
+              "Max": {
+                "X": 310,
+                "Y": 25,
+                "Z": 476
+              }
+            },
+            "Index": 19
+          },
+          {
+            "Bounds": {
+              "Min": {
+                "X": 299,
+                "Y": 24,
+                "Z": 442
+              },
+              "Max": {
+                "X": 343,
+                "Y": 25,
+                "Z": 476
+              }
+            },
+            "Index": -3
+          },
+          {
+            "Bounds": {
+              "Min": {
+                "X": 299,
+                "Y": 24,
+                "Z": 444
+              },
+              "Max": {
+                "X": 343,
+                "Y": 25,
+                "Z": 476
+              }
+            },
+            "Index": 21
+          },
+          {
+            "Bounds": {
+              "Min": {
+                "X": 318,
+                "Y": 24,
+                "Z": 442
+              },
+              "Max": {
+                "X": 341,
+                "Y": 25,
+                "Z": 455
+              }
+            },
+            "Index": 22
+          },
+          {
+            "Bounds": {
+              "Min": {
+                "X": 290,
+                "Y": 24,
+                "Z": 459
+              },
+              "Max": {
+                "X": 627,
+                "Y": 25,
+                "Z": 879
+              }
+            },
+            "Index": -9
+          },
+          {
+            "Bounds": {
+              "Min": {
+                "X": 314,
+                "Y": 24,
+                "Z": 459
+              },
+              "Max": {
+                "X": 627,
+                "Y": 25,
+                "Z": 879
+              }
+            },
+            "Index": -3
+          },
+          {
+            "Bounds": {
+              "Min": {
+                "X": 314,
+                "Y": 24,
+                "Z": 459
+              },
+              "Max": {
+                "X": 627,
+                "Y": 25,
+                "Z": 879
+              }
+            },
+            "Index": 32
+          },
+          {
+            "Bounds": {
+              "Min": {
+                "X": 350,
+                "Y": 24,
+                "Z": 459
+              },
+              "Max": {
+                "X": 627,
+                "Y": 25,
+                "Z": 464
+              }
+            },
+            "Index": 30
+          },
+          {
+            "Bounds": {
+              "Min": {
+                "X": 290,
+                "Y": 24,
+                "Z": 464
+              },
+              "Max": {
+                "X": 350,
+                "Y": 25,
+                "Z": 879
+              }
+            },
+            "Index": -5
+          },
+          {
+            "Bounds": {
+              "Min": {
+                "X": 319,
+                "Y": 24,
+                "Z": 464
+              },
+              "Max": {
+                "X": 350,
+                "Y": 25,
+                "Z": 483
+              }
+            },
+            "Index": 29
+          },
+          {
+            "Bounds": {
+              "Min": {
+                "X": 290,
+                "Y": 24,
+                "Z": 467
+              },
+              "Max": {
+                "X": 319,
+                "Y": 25,
+                "Z": 879
+              }
+            },
+            "Index": -3
+          },
+          {
+            "Bounds": {
+              "Min": {
+                "X": 290,
+                "Y": 24,
+                "Z": 467
+              },
+              "Max": {
+                "X": 309,
+                "Y": 25,
+                "Z": 483
+              }
+            },
+            "Index": 25
+          },
+          {
+            "Bounds": {
+              "Min": {
+                "X": 314,
+                "Y": 24,
+                "Z": 483
+              },
+              "Max": {
+                "X": 319,
+                "Y": 25,
+                "Z": 879
+              }
+            },
+            "Index": 31
+          },
+          {
+            "Bounds": {
+              "Min": {
+                "X": 0,
+                "Y": 0,
+                "Z": 0
+              },
+              "Max": {
+                "X": 0,
+                "Y": 0,
+                "Z": 0
+              }
+            },
+            "Index": 0
+          }
+        ]
+      },
+      "bvQuantFactor": 0.1,
+      "bvNodeCount": 66,
+      "walkableClimb": 0.9
+    }
+  ]
+}

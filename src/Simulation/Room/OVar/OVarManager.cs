@@ -10,7 +10,6 @@ namespace OVars
 
         private Simulator simulator;
         private Dictionary<string, OVar> oVars = new Dictionary<string, OVar>();
-        private static int MAX_OVARS = 10;
         private int added = 0;
 
         public OVarManager(Simulator _simulator)

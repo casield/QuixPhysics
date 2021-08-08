@@ -7,7 +7,6 @@ namespace QuixPhysics
     public class GolfBall2 : PhyObject
     {
 
-        public BodyReference reference;
         private Player2 player;
 
         public GolfBall2()
@@ -22,7 +21,7 @@ namespace QuixPhysics
             simulator.collidableMaterials[bodyHandle.bodyHandle].SpringSettings = new SpringSettings(5f, .000001f);
 
 
-            reference = GetReference();
+            bodyReference = GetBodyReference();
         }
         internal override void OnObjectMessage(string data, string clientId, string roomId)
         {

@@ -84,7 +84,7 @@ namespace QuixPhysics
         {
             if (watching.state.mass != 0)
             {
-                SetPosition(watching.GetReference().Pose.Position);
+                SetPosition(watching.GetBodyReference().Pose.Position);
             }
             else
             {

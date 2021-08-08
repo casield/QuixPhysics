@@ -79,7 +79,7 @@ namespace QuixPhysics
             simulator.collidableMaterials[bodyHandle.bodyHandle].collidable = true;
             simulator.collidableMaterials[bodyHandle.bodyHandle].SpringSettings = new SpringSettings(1f, .5f);
 
-            reference = simulator.Simulation.Bodies.GetBodyReference(bodyHandle.bodyHandle);
+            bodyReference = simulator.Simulation.Bodies.GetBodyReference(bodyHandle.bodyHandle);
             simulator.OnContactListeners.Add(this.guid, this);
 
 
@@ -146,7 +146,7 @@ namespace QuixPhysics
         }
         public void Tick()
         {
-            if (reference.Exists)
+            if (bodyReference.Exists)
             {
                 CheckIfFall();
                 TickSnapped();
@@ -183,17 +183,17 @@ namespace QuixPhysics
 
 
 
-                    reference.Velocity.Linear.X += ((vel.X) * moveAcceleration);
-                    reference.Velocity.Linear.Z += ((vel.Z) * moveAcceleration);
+                    bodyReference.Velocity.Linear.X += ((vel.X) * moveAcceleration);
+                    bodyReference.Velocity.Linear.Z += ((vel.Z) * moveAcceleration);
 
-                    reference.Awake = true;
+                    bodyReference.Awake = true;
 
                 }
                 else
                 {
                     moveAcceleration = 0;
-                    reference.Velocity.Linear.X *= playerStats.friction;
-                    reference.Velocity.Linear.Z *= playerStats.friction;
+                    bodyReference.Velocity.Linear.X *= playerStats.friction;
+                    bodyReference.Velocity.Linear.Z *= playerStats.friction;
                 }
 
 
@@ -210,11 +210,11 @@ namespace QuixPhysics
             {
                 if (rotateMessage.clientId != null)
                 {
-                    reference.Awake = true;
+                    bodyReference.Awake = true;
 
                     if (Math.Abs(rotateMessage.x) > 0)
                     {
-                        reference.Awake = true;
+                        bodyReference.Awake = true;
                         rotationAcceleration += rotationSpeed * rotateMessage.x;
                         rotationAcceleration = Math.Clamp(rotationAcceleration, -maxAcc, maxAcc);
                         rotationAcceleration /= 100;
@@ -244,7 +244,7 @@ namespace QuixPhysics
                     {
 
 
-                        var prod = AngleBetweenVector2(lookObject.GetStaticReference().Pose.Position, reference.Pose.Position);
+                        var prod = AngleBetweenVector2(lookObject.GetStaticReference().Pose.Position, bodyReference.Pose.Position);
                         rotationController = prod;
                     }
 
@@ -272,7 +272,7 @@ namespace QuixPhysics
             {
                 if (this.Agent.ActualState() != snappedState)
                 {
-                    var distance = Vector3.Distance(reference.Pose.Position, golfball.GetReference().Pose.Position);
+                    var distance = Vector3.Distance(bodyReference.Pose.Position, golfball.GetBodyReference().Pose.Position);
                     //Console.WriteLine(distance);
                     if (distance < this.maxDistanceWithBall)
                     {
@@ -290,20 +290,20 @@ namespace QuixPhysics
         }
         public void SetPositionToBall()
         {
-            simulator.Simulation.Awakener.AwakenBody(golfball.reference.Handle);
+            simulator.Simulation.Awakener.AwakenBody(golfball.bodyReference.Handle);
             float distance = maxDistanceWithBall - .5f;
-            var newPos = reference.Pose.Position;
+            var newPos = bodyReference.Pose.Position;
             var x = -(float)Math.Cos(rotationController);
             var y = -(float)Math.Sin(rotationController);
 
             newPos.X += x * distance;
             newPos.Z += y * distance;
 
-            golfball.reference.Pose.Position = newPos;
+            golfball.bodyReference.Pose.Position = newPos;
         }
         public void SetPositionToStartPoint()
         {  
-                reference.Pose.Position = room.gamemode.GetStartPoint(this.user);
+                bodyReference.Pose.Position = room.gamemode.GetStartPoint(this.user);
         }
 
         public Vector2 GetXYRotation()
@@ -325,7 +325,7 @@ namespace QuixPhysics
         private void CheckIfFall()
         {
 
-            if (this.reference.Pose.Position.Y < -50)
+            if (this.bodyReference.Pose.Position.Y < -50)
             {
                 this.SetPositionToStartPoint();
                 OnFall();
@@ -333,9 +333,9 @@ namespace QuixPhysics
 
             if (golfball != null)
             {
-                if (this.golfball.reference.Pose.Position.Y < -50)
+                if (this.golfball.bodyReference.Pose.Position.Y < -50)
                 {
-                    this.golfball.reference.Pose.Position = reference.Pose.Position;
+                    this.golfball.bodyReference.Pose.Position = bodyReference.Pose.Position;
                     OnFall();
                 }
             }

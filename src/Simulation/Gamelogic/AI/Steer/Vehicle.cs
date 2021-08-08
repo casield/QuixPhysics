@@ -9,6 +9,7 @@ namespace QuixPhysics
     public class VehicleProps
     {
         public Vector3 maxSpeed = new Vector3(0.2f, .5f, 0.2f);
+        
         public Vector3 velocity = new Vector3();
         public Vector3 acceleration = new Vector3();
         public float slowingDistance = 100;
@@ -17,23 +18,19 @@ namespace QuixPhysics
     {
         public PhyObject obj;
 
-        private BodyReference reference;
         public bool isActive = true;
         public VehicleProps props;
-        public Vehicle(PhyObject obj)
-        {
-            this.obj = obj;
-            reference = obj.GetReference();
-
-            props = new VehicleProps();
-
+        public Vehicle(PhyObject phyObject, VehicleProps props){
+            this.obj = phyObject;
+       
+            this.props = props;
         }
 
         public void SeekFlee(Vector3 target,Boolean seeking)
         {
             if (isActive)
             {
-                Vector3 desired = Vector3.Subtract(target, reference.Pose.Position);
+                Vector3 desired = Vector3.Subtract(target, obj.GetPosition());
                 desired = Vector3.Normalize(desired);
                 desired = Vector3.Multiply(desired, props.maxSpeed);
 
@@ -48,7 +45,7 @@ namespace QuixPhysics
 
             if (isActive)
             {
-                Vector3 target_offset = Vector3.Subtract(target, reference.Pose.Position);
+                Vector3 target_offset = Vector3.Subtract(target, obj.GetPosition());
                 float distance = target_offset.Length();
                 var ramped_speed = Vector3.Multiply(props.maxSpeed, (distance /props.slowingDistance));
                 var clipped_speed = Vector3.Min(ramped_speed,props.maxSpeed);
@@ -66,11 +63,11 @@ namespace QuixPhysics
         {
             if (isActive)
             {
-
+                obj.Awake();
                 props.acceleration = Vector3.Clamp(props.acceleration, -props.maxSpeed, props.maxSpeed);// Limit(acceleration,maxSpeed);
-                Vector3 velocity = Vector3.Add(reference.Velocity.Linear, props.acceleration);
+                Vector3 velocity = Vector3.Add(obj.bodyReference.Velocity.Linear, props.acceleration);
 
-                reference.Velocity.Linear = velocity;
+                obj.bodyReference.Velocity.Linear = velocity;
 
                 props.acceleration = Vector3.Multiply(props.acceleration, 0);
             }

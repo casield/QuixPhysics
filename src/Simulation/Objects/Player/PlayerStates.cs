@@ -113,8 +113,8 @@ namespace QuixPhysics
         private void Jump()
         {
            
-            phy.reference.Awake = true;
-            phy.reference.Velocity.Linear.Y += 50;
+            phy.bodyReference.Awake = true;
+            phy.bodyReference.Velocity.Linear.Y += 50;
         }
 
         public void OnDesactivate()
@@ -170,7 +170,7 @@ namespace QuixPhysics
 
 
             Vector3 imp = new Vector3((float)ximp,(float)yimp,(float)zimp);
-            player.golfball.GetReference().ApplyLinearImpulse(imp);
+            player.golfball.GetBodyReference().ApplyLinearImpulse(imp);
             SetPlayerCollided();
             player.SetNotSnapped();
         }

@@ -23,8 +23,8 @@ namespace QuixPhysics
             {
                 var timer = new PhyInterval(1, Player.simulator);
                 timer.Completed += OnTick;
-                golfBallRef = Player.golfball.GetReference();
-                vehicle = new Vehicle(Player.golfball);
+                golfBallRef = Player.golfball.GetBodyReference();
+                vehicle = new Vehicle(Player.golfball, new VehicleProps());
                 vehicle.isActive = false;
                 Player.simulator.Simulation.Awakener.AwakenBody(golfBallRef.Handle);
                 Player.ShootListeners += OnShoot;
@@ -128,7 +128,7 @@ namespace QuixPhysics
 
         private void OnTick()
         {
-            if (Player != null && Player.reference.Exists)
+            if (Player != null && Player.bodyReference.Exists)
             {
 
                 vehicle.Arrive(Player.lookObject.staticReference.Pose.Position);

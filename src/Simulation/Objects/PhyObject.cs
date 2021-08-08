@@ -38,7 +38,8 @@ namespace QuixPhysics
         internal bool updateRotation = true;
         internal ConnectionState connectionState;
         public SimpleMaterial material;
-        public BodyReference reference;
+        public BodyReference bodyReference;
+        public StaticReference staticReference;
         public Guid guid;
 
         public Room room;
@@ -50,6 +51,11 @@ namespace QuixPhysics
         private List<PhyWorker> workers = new List<PhyWorker>();
 
         public event DestroyAction OnDelete;
+
+        public StaticDescription staticDescription;
+        public BodyDescription bodyDescription;
+
+
         public PhyObject()
         {
 
@@ -60,13 +66,43 @@ namespace QuixPhysics
             this.bodyHandle = bodyHandle;
             this.state = state;
             this.simulator = simulator;
-            this.reference = GetReference();
+            
             this.guid = guid;
             this.room = room;
+
+            SetReference();
+            SetDescription();
 
 
 
             SendCreateMessage();
+        }
+
+        private void SetDescription()
+        {
+            if (state.mass == 0)
+            {
+                StaticDescription description;
+                simulator.Simulation.Statics.GetDescription(bodyHandle.staticHandle, out description);
+                staticDescription = description;
+            }
+            else
+            {
+                BodyDescription description;
+                simulator.Simulation.Bodies.GetDescription(bodyHandle.bodyHandle, out description);
+                bodyDescription = description;
+            }
+        }
+        private void SetReference()
+        {
+            if (state.mass == 0)
+            {
+                staticReference = GetStaticReference();
+            }
+            else
+            {
+                bodyReference = GetBodyReference();
+            }
         }
 
         public PhyWorker AddWorker(PhyWorker worker)
@@ -76,20 +112,39 @@ namespace QuixPhysics
             return worker;
         }
 
-        public void SetPosition(ref RigidPose r, Vector3 position)
+        public void SetPosition(Vector3 position)
         {
-            r.Position = position;
+
+            if (state.mass == 0)
+            {
+               
+                staticDescription.Pose.Position = position;
+                simulator.Simulation.Statics.ApplyDescription(bodyHandle.staticHandle,staticDescription);
+            }else{
+                bodyReference.Pose.Position = position;
+            }
+        }
+        public Vector3 GetPosition(){
+            if(state.mass==0){
+                return staticReference.Pose.Position;
+            }else{
+                return bodyReference.Pose.Position;
+            }
         }
 
-        public BodyReference GetReference()
+        public BodyReference GetBodyReference()
         {
-            Debug.Assert(state.mass == 0, "This phyobject is not dynamic");
+            if(state.mass == 0){
+                throw new Exception(state.type+" is not dynamic");
+            }
             return simulator.Simulation.Bodies.GetBodyReference(bodyHandle.bodyHandle);
         }
 
         public StaticReference GetStaticReference()
         {
-            Debug.Assert(state.mass != 0, "This phyobject is not static");
+          if(state.mass != 0){
+                throw new Exception(state.type+" is not static");
+            }
             return simulator.Simulation.Statics.GetStaticReference(bodyHandle.staticHandle);
         }
 
@@ -98,7 +153,12 @@ namespace QuixPhysics
         public void Stop()
         {
 
-            GetReference().Velocity.Linear = Vector3.Zero;
+            GetBodyReference().Velocity.Linear = Vector3.Zero;
+        }
+        public void Awake(){
+            if(state.mass!=0){
+                simulator.Simulation.Awakener.AwakenBody(bodyHandle.bodyHandle);
+            }
         }
 
 
