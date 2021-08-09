@@ -32,27 +32,41 @@ namespace QuixPhysics
 
 
             arena = (Arena)room.gamemode;
-            vehicle = new Vehicle(this, new VehicleProps() { maxSpeed = new Vector3(0.1f, 0.1f, 0.1f) });
+            vehicle = new Vehicle(this, new VehicleProps() { maxSpeed = new Vector3(.5f, 1f, .5f) });
             vehicle.isActive = true;
 
             navMeshQuery = new NavMeshQuery(arena.tiledNavMesh, 2048);
 
             trail = new Trail(simulator, this, navMeshQuery);
+            trail.OnLastPoint += OnLastPoint;
 
 
             AddWorker(new PhyInterval(1, simulator)).Completed += Update;
 
         }
 
+        private void OnLastPoint()
+        {
+         
+           var random = navMeshQuery.FindRandomPoint();  
+            QuixConsole.Log("On Last point",random);
+            trail.SetTarget(random.Position);
+            
+           // seekPosition = random.Position;
+           // trail
+            
+        }
+
         private void Update()
         {
             if (trail.hasFinished)
             {
-                vehicle.Arrive(seekPosition);
+                //vehicle.Arrive(seekPosition);
+              QuixConsole.Log("Has finished");
             }
             else
             {
-                vehicle.SeekFlee(trail.GetNextPoint(), true);
+                vehicle.SeekFlee(trail.GetPoint(), true);
             }
 
             vehicle.Update();
@@ -60,9 +74,15 @@ namespace QuixPhysics
 
         public void LookPlayer(Player2 player)
         {
-            trail.SetTarget(player.GetPosition());
+            QuixConsole.Log("Look player");
+           /* var random = navMeshQuery.FindRandomPoint();
+            trail.SetTarget(random.Position);
             trail.Start();
-            seekPosition = player.GetPosition();
+            //trail.GetNextPoint();
+            seekPosition = random.Position;*/
+              trail.SetTarget(player.GetPosition());
+              trail.Start();
+              seekPosition = player.GetPosition();
         }
     }
 }

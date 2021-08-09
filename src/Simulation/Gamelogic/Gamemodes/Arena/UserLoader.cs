@@ -13,7 +13,8 @@ namespace QuixPhysics
         {
             //Create Gematorium
 
-            arena.navObjects.Add(CreateGematorium(user));
+            //arena.navObjects.Add(CreateGematorium(user));
+            CreateGematorium(user);
 
             //Load saved Items
         }

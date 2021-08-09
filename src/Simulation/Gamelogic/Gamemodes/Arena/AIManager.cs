@@ -27,7 +27,7 @@ namespace QuixPhysics
             float size = 60;
             var v = new SphereState()
             {
-                position = new Vector3(-1500,floor.GetTop(size*2),-620),
+                position = new Vector3(-1900,floor.GetTop(size*2),-1000),
                 quaternion = Quaternion.Identity,
                 //halfSize = new Vector3(size,size, size),
                radius=size,

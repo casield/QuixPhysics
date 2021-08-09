@@ -111,25 +111,28 @@ namespace QuixPhysics
             QuixNavMesh qinavMesh = new QuixNavMesh(simulator);
             navMeshName = "Arena";
             var settings = NavMeshGenerationSettings.Default;
-            float resizer = 1;
-            settings.AgentHeight = 1f/resizer;
-            settings.AgentRadius = 1f/resizer;
-          //  settings.MaxEdgeError = 0;
-            
-            settings.CellSize = 30f/resizer;
 
+            //Resizes the mesh and the navmesh
+            float resizer = 1;
+            float mulre = (100/resizer);
+
+    			settings.CellSize = 0.3f*mulre;
+				settings.CellHeight = 0.2f*mulre;
+				settings.MaxClimb = 0.9f*mulre;
+				settings.AgentHeight = 2.0f*mulre;
+				settings.AgentRadius = 0.6f*mulre;
 
             //Creates the mesh .obj
-            qinavMesh.CreateMesh(navObjects, navMeshName,resizer);
+            qinavMesh.CreateMesh(navObjects, navMeshName, resizer);
             //Then it generates de NavMesh
             navMesh = qinavMesh.GenerateNavMesh(navMeshName, settings);
-            
-            
+
+
             //Save it to a file .snb
             qinavMesh.SaveNavMeshToFile(navMeshName);
             //Read it from .snb
             tiledNavMesh = qinavMesh.GetTiledNavMesh(navMeshName);
-            
+
         }
         internal void OnHoleWin(User winner)
         {
