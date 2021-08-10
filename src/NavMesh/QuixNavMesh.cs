@@ -131,13 +131,7 @@ namespace QuixPhysics
 
                             QuaternionEx.GetAxisAngleFromQuaternion(state.quaternion, out Vector3 axis, out float angle);
 
-                            //var noventa = Quaternion.CreateFromAxisAngle(new Vector3(axis.Z, axis.Y, -axis.X), -angle); // ORIGINAL
-                            //var noventa = Quaternion.CreateFromAxisAngle(new Vector3(axis.Z, axis.Y, -axis.X), -angle);
                              var noventa = Quaternion.CreateFromAxisAngle(new Vector3(-axis.X, -axis.Y, -axis.Z), -angle);
-
-                            // noventa = new Quaternion(-0.5f, -0.5f, -0.5f, 0.5f);
-
-
 
                             node.Transform.Rotation = new Aspose.ThreeD.Utilities.Quaternion(noventa.W,noventa.X,noventa.Y,noventa.Z);
 
@@ -147,14 +141,6 @@ namespace QuixPhysics
                     }
                 }
 
-               // QuaternionEx.GetAxisAngleFromQuaternion(state.quaternion, out Vector3 axisMax, out float angleMax);
-
-               // var noventaMax = Aspose.ThreeD.Utilities.Quaternion.FromAngleAxis(0.785*i,new Aspose.ThreeD.Utilities.Vector3(.5,.5,0));
-               // scene.RootNode.Transform.Rotation = new Aspose.ThreeD.Utilities.Quaternion(noventaMax.x, noventaMax.y, noventaMax.z, noventaMax.w);
-                //scene.RootNode.Transform.Scale = new Aspose.ThreeD.Utilities.Vector3(resizer);
-
-                // Create a Cylinder model
-                //scene.RootNode.CreateChildNode("cylinder", new Aspose.ThreeD.Entities.Pyramid());
                 using (FileStream fs = File.Create(FILES_DIR + name +".obj"))
                 {
                     scene.Save(fs, FileFormat.WavefrontOBJ);
@@ -166,6 +152,31 @@ namespace QuixPhysics
             }
             return name;
         }
+
+        public static bool PointInPoly(Vector3 pt,NavPolyId polyId,TiledNavMesh navMesh)
+		{
+            NavTile curTile;
+            NavPoly curPoly;
+            navMesh.TryGetTileAndPolyByRef(polyId,out curTile,out curPoly);
+
+            int nverts = curPoly.VertCount;
+            Vector3[] verts = curTile.Verts;
+            
+			bool c = false;
+
+			for (int i = 0, j = nverts - 1; i < nverts; j = i++)
+			{
+				Vector3 vi = verts[i];
+				Vector3 vj = verts[j];
+				if (((vi.Z > pt.Z) != (vj.Z > pt.Z)) &&
+					(pt.X < (vj.X - vi.X) * (pt.Z - vi.Z) / (vj.Z - vi.Z) + vi.X))
+				{
+					c = !c;
+				}
+			}
+
+			return c;
+		}
 
 
     }

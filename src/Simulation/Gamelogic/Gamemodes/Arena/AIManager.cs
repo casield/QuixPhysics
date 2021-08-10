@@ -31,13 +31,13 @@ namespace QuixPhysics
                 quaternion = Quaternion.Identity,
                 //halfSize = new Vector3(size,size, size),
                radius=size,
-                mass = 10,
+                mass = 1,
                 instantiate = true,
                 type = "Villan"
             };
             Villan villan = (Villan)simulator.Create(v, room);
             User user = arena.users.Find(e => { return true; });
-            villan.LookPlayer(user.player);
+            villan.LookTarget(user.player);
 
         }
     }

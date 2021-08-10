@@ -18,8 +18,14 @@ namespace QuixPhysics
         private bool canAddPath = true;
 
         private Trail trail;
+        public bool Started = false;
 
-        private Vector3 seekPosition;
+        private Vector3 arrivePosition;
+        private Player2 target;
+
+        private Vector3 firstPosition;
+        private PhyWaiter pointWaiter;
+        private Vector3 lastPosition;
 
         public Villan()
         {
@@ -30,59 +36,166 @@ namespace QuixPhysics
             //state.mesh = "Board/Crocodile/Crocodile";
             base.Load(bodyHandle, connectionState, simulator, state, guid, room);
 
+            simulator.collidableMaterials[bodyHandle.bodyHandle].collidable = true;
+            simulator.collidableMaterials[bodyHandle.bodyHandle].FrictionCoefficient = .1f;
+
 
             arena = (Arena)room.gamemode;
-            vehicle = new Vehicle(this, new VehicleProps() { maxSpeed = new Vector3(.5f, 1f, .5f) });
+            vehicle = new Vehicle(this, new VehicleProps() { maxSpeed = new Vector3(.5f, .2f, .5f) });
             vehicle.isActive = true;
 
             navMeshQuery = new NavMeshQuery(arena.tiledNavMesh, 2048);
+            pointWaiter = new PhyWaiter(3000);
+
+
 
             trail = new Trail(simulator, this, navMeshQuery);
             trail.OnLastPoint += OnLastPoint;
+            trail.OnPathStuck += OnStuck;
+            firstPosition = state.position;
 
+            trail.Start();
 
             AddWorker(new PhyInterval(1, simulator)).Completed += Update;
 
         }
 
+
+
+        private bool IsFalling()
+        {
+            return GetPosition().Y < -50;
+        }
+
         private void OnLastPoint()
         {
-         
-           var random = navMeshQuery.FindRandomPoint();  
-            QuixConsole.Log("On Last point",random);
+            trail.Restart();
+            trail.Start();
+
+            if (IsTargetVisible())
+            {
+                LookTarget(target);
+            }
+            else
+            {
+                LookRandomPoint();
+            }
+        }
+        private void OnStuck()
+        {
+            /*  trail.Start();
+              LookRandomPoint();*/
+            QuixConsole.Log("Stucked");
+            OnLastPoint();
+
+        }
+        public void LookRandomPoint()
+        {
+            var closepo = navMeshQuery.FindNearestPoly(GetPosition(), trail.GetExtend());
+            navMeshQuery.FindRandomConnectedPoint(ref closepo, out NavPoint random);
+            QuixConsole.Log("On Last point", random);
+
+            arrivePosition = random.Position;
             trail.SetTarget(random.Position);
-            
-           // seekPosition = random.Position;
-           // trail
-            
         }
 
         private void Update()
         {
-            if (trail.hasFinished)
+            if (trail.IsActive())
             {
-                //vehicle.Arrive(seekPosition);
-              QuixConsole.Log("Has finished");
+                if (trail.hasFinished)
+                {
+                    vehicle.Arrive(arrivePosition);
+                    if (Distance(arrivePosition) < 100)
+                    {
+                        Stop();
+                        trail.Stop();
+                    }
+
+                }
+                else
+                {
+                    vehicle.SeekFlee(trail.GetPoint(), true);
+                }
+                if (IsFalling())
+                {
+                    OnFall();
+                }
+
             }
             else
             {
-                vehicle.SeekFlee(trail.GetPoint(), true);
+                if (Distance(target.GetPosition()) < 1000)
+                {
+                    trail.Start();
+                    LookTarget(target);
+                }
             }
+
+            CheckPositionForStuck();
+
+
 
             vehicle.Update();
         }
 
-        public void LookPlayer(Player2 player)
+        private void OnFall()
         {
-            QuixConsole.Log("Look player");
-           /* var random = navMeshQuery.FindRandomPoint();
-            trail.SetTarget(random.Position);
-            trail.Start();
-            //trail.GetNextPoint();
-            seekPosition = random.Position;*/
-              trail.SetTarget(player.GetPosition());
-              trail.Start();
-              seekPosition = player.GetPosition();
+            SetPosition(firstPosition);
+            OnLastPoint();
+        }
+
+        private void CheckPositionForStuck()
+        {
+            var distance = Distance(lastPosition);
+            if (distance < 5)
+            {
+                if (pointWaiter.Tick())
+                {
+                    //Too many time in one point
+                    OnStuck();
+                    pointWaiter.Reset();
+
+                }
+
+
+
+            }
+            else
+            {
+                lastPosition = GetPosition();
+            }
+
+            //  QuixConsole.Log("Dis", Distance(lastPosition));
+
+
+
+        }
+        public float Distance(Vector3 target)
+        {
+            return Vector3.Distance(GetPosition(), target);
+        }
+
+        public bool IsTargetVisible()
+        {
+            //TODO> Best player detection
+            return Distance(target.GetPosition()) < 400;
+        }
+
+        public void LookTarget(Player2 target)
+        {
+            if (trail.SetTarget(target.GetPosition()))
+            {
+                this.target = target;
+                QuixConsole.Log("Look player");
+
+                arrivePosition = target.GetPosition();
+
+            }
+        }
+        public void ChangeTarget()
+        {
+
         }
     }
 }

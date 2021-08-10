@@ -119,4 +119,33 @@ namespace QuixPhysics
 
 
     }
+    public class PhyWaiter {
+        private int tick =0;
+        private int time = 1;
+        public event PhyAction OnCompleteListeners;
+        public PhyWaiter(int time){
+            this.time = time;
+        }
+        public bool Tick(){
+            tick++;
+            if(tick==time){
+                OnTimeCompleted();
+                Reset();
+                return true;
+            }
+            return false;
+        }
+        public int GetTick(){
+            return tick;
+        }
+        public void Reset(){
+            tick=0;
+        }
+        public void SetTime(int newTime){
+            time = newTime;
+        }
+        private void OnTimeCompleted(){
+            OnCompleteListeners?.Invoke();
+        }
+    }
 }
