@@ -39,13 +39,18 @@ namespace QuixPhysics
         public bool isRunning = true;
 
         public Dictionary<String, MeshContent> meshes = new Dictionary<string, MeshContent>();
+        private Simulator simulator;
+
         public Server()
         {
             dataBase = new DataBase();
 
             LoadMeshes();
+            CreateSimulator();
 
             StartListening();
+
+            
         }
 
         private void LoadMeshes(){
@@ -146,8 +151,9 @@ namespace QuixPhysics
             // Create the state object.  
             ConnectionState state = new ConnectionState();
             state.workSocket = handler;
+            state.simulator = simulator;
 
-            CreateSimulator(state);
+            //NewRoom(state);
 
             handler.BeginReceive(state.buffer, 0, ConnectionState.BufferSize, 0,
             new AsyncCallback(ReadCallback), state);
@@ -155,11 +161,11 @@ namespace QuixPhysics
 
         }
 
-        private void CreateSimulator(ConnectionState socket)
+        private void CreateSimulator()
         {
             QuixConsole.WriteLine("Create simulator");
-            Simulator simulator = new Simulator(socket, this);
-            socket.simulator = simulator;
+            simulator = new Simulator(this);
+            
         }
         public void ReadCallback(IAsyncResult ar)
         {
@@ -179,10 +185,6 @@ namespace QuixPhysics
             {
                 try{
                     int bytesRead = handler.EndReceive(ar);
-              
-                
-
-
 
                 if (bytesRead > 0)
                 {
@@ -195,14 +197,15 @@ namespace QuixPhysics
                     content = state.sb.ToString();
 
                     var splited = content.Split("<L@>");
-                
                     for (int a = 0; a < splited.Length; a++)
                     {
                         if (state.simulator != null)
                         {
                             if (splited[a] != "")
                             {
-                                state.simulator.commandReader.AddCommandToBeRead(splited[a]);
+                                
+                                state.simulator.commandReader.AddCommandToBeRead(splited[a],state);
+                                
                             }
 
                         }

@@ -20,7 +20,7 @@ namespace QuixPhysics
             var objs = command.GenerateMap("testnav", room);
             navObjects.AddRange(objs);
 
-            simulator.createObjects(room);
+            room.factory.createObjects();
 
             CreateNavMesh();
         }

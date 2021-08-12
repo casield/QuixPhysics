@@ -200,7 +200,7 @@ namespace QuixPhysics
 
             PhyObject phy = GetPhyClass(state.type);
 
-            phy.Load(bodyHandle, simulator.connectionState, simulator, state, guid, room);
+            phy.Load(bodyHandle, room.connectionState, simulator, state, guid, room);
 
             return phy;
         }
@@ -251,8 +251,35 @@ namespace QuixPhysics
             if (bodiesAdded > 0)
             {
                 var slice = bodies2[0..bodiesAdded];
-                simulator.SendMessage("update", JsonConvert.SerializeObject(slice), simulator.connectionState.workSocket);
+                simulator.SendMessage("update", JsonConvert.SerializeObject(slice), room.connectionState.workSocket);
             }
+        }
+         internal void createObjects()
+        {
+            int width = 10;
+            int max = 3000;
+            var random = new Random();
+            for (int a = 0; a < 40; a++)
+            {
+                var box = new SphereState();
+                box.uID = PhyObject.createUID();
+                box.uID += "" + a;
+                box.mass = 10;
+                box.type = "Bomb";
+                // box.instantiate = false;
+
+                int x = a % width;    // % is the "modulo operator", the remainder of i / width;
+                int y = a / width;    // where "/" is an integer division
+                //box.position = new Vector3(x * sizeObj, 1050 + (timesPressedCreateBoxes * sizeObj), y * sizeObj);
+                box.position = new Vector3(random.Next(-max, max), 2500, random.Next(-max, max));
+                box.radius = 10;
+                box.mesh = "Board/Bomb";
+                box.instantiate = true;
+                box.quaternion = Quaternion.Identity;
+               // var b = Create(box,room);
+            }
+            //timesPressedCreateBoxes++;
+            // Console.WriteLine("Statics size " + Simulation.Statics.Count);*/
         }
         internal void Dispose()
         {

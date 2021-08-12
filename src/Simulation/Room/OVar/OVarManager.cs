@@ -8,13 +8,13 @@ namespace OVars
     public class OVarManager
     {
 
-        private Simulator simulator;
+        private Room room;
         private Dictionary<string, OVar> oVars = new Dictionary<string, OVar>();
         private int added = 0;
 
-        public OVarManager(Simulator _simulator)
+        public OVarManager(Room _room)
         {
-            simulator = _simulator;
+            room = _room;
 
 
         }
@@ -45,7 +45,7 @@ namespace OVars
             j.Add("i",oVar.name);
             j.Add("v",new JValue(oVar.value));
             
-            simulator.SendMessage("OVar", j, simulator.connectionState.workSocket);
+            room.simulator.SendMessage("OVar", j, room.connectionState.workSocket);
         }
     }
 }

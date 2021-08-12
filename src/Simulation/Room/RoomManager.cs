@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Numerics;
 
 namespace QuixPhysics{
     public class RoomManager {
@@ -9,8 +10,14 @@ namespace QuixPhysics{
             this.simulator = simulator;
         }
 
-        public void AddRoom(Room room){
+        private void AddRoom(Room room){
             rooms.Add(room.props.roomId,room);
+        }
+        public Room NewRoom(ConnectionState state,string roomId){
+            Room room = new Room(simulator,new RoomInfo(){maxPlayers=10,position=new Vector3(),roomId=roomId},state);
+            AddRoom(room);
+
+            return room;
         }
 
         public void Update(){

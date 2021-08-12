@@ -94,7 +94,7 @@ namespace QuixPhysics
 
             userLoader.OnMapsLoaded();
             aIManager.OnMapsLoaded();
-            simulator.createObjects(room);
+            room.factory.createObjects();
         }
 
         public override void Start()

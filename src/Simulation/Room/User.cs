@@ -18,7 +18,7 @@ namespace QuixPhysics
         public User(string id, Room room)
         {
             sessionId = id;
-            oVarManager = room.simulator.oVarManager;
+            oVarManager = room.oVarManager;
             simulator = room.simulator;
 
             gems = new OVar("gems" + id, 1, oVarManager);

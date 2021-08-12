@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Numerics;
+using OVars;
 
 namespace QuixPhysics
 {
@@ -22,14 +23,19 @@ namespace QuixPhysics
         internal MapMongo map;
 
         public PhyObjectFactory factory;
+        public OVarManager oVarManager;
+        public ConnectionState connectionState;
 
-        public Room(Simulator simulator, RoomInfo info)
+        public Room(Simulator simulator, RoomInfo info, ConnectionState connectionState)
         {
             this.props = info;
             this.simulator = simulator;
             factory = new PhyObjectFactory(this);
+            oVarManager = new OVarManager(this);
+            this.connectionState = connectionState;
             //simulator.createObjects(this);
             SetGameMode(new Arena(simulator, this));
+
 
         }
 
@@ -50,7 +56,8 @@ namespace QuixPhysics
 
         public void Dispose()
         {
-           factory.Dispose();
+            factory.Dispose();
+            connectionState.Dispose();
         }
     }
 }

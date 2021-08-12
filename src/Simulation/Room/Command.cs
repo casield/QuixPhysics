@@ -9,18 +9,19 @@ namespace QuixPhysics
         public void Send(JObject message);
     }
 
-    public class Command : ICommand
+    public abstract class Command : ICommand
     {
         internal Simulator simulator;
+        public ConnectionState connectionState;
 
         public Command(Simulator _simulator)
         {
             simulator = _simulator;
         }
-        public virtual void OnRead(JObject message,Room room)
-        {
-            throw new System.NotImplementedException();
+        public void SetConnectionState(ConnectionState state){
+            this.connectionState = state;
         }
+        public abstract void OnRead(JObject message,Room room);
 
         public virtual void Send(JObject message)
         {

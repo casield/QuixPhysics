@@ -8,9 +8,14 @@ using Newtonsoft.Json.Linq;
 
 namespace QuixPhysics
 {
+    public struct CommandToBeRead
+    {
+        public string command;
+        public ConnectionState connectionState;
+    }
     public class CommandReader
     {
-        private ArrayList commandsList = new ArrayList();
+        private List<CommandToBeRead> commandsList = new List<CommandToBeRead>();
 
         private Dictionary<string, Command> commandDictionary = new Dictionary<string, Command>();
         private Simulator simulator;
@@ -18,7 +23,6 @@ namespace QuixPhysics
         public CommandReader(Simulator _simulator)
         {
             simulator = _simulator;
-
             commandDictionary.Add("create", new CreateCommand(simulator));
             commandDictionary.Add("join", new JoinCommand(simulator));
             commandDictionary.Add("generateMap", new GenerateMapCommand(simulator));
@@ -34,9 +38,9 @@ namespace QuixPhysics
             commandDictionary.Add("OVar", new OVarCommand(simulator));
             commandDictionary.Add("close", new CloseCommand(simulator));
         }
-        internal void AddCommandToBeRead(string v)
+        internal void AddCommandToBeRead(string v, ConnectionState state)
         {
-            commandsList.Add(v);
+            commandsList.Add(new CommandToBeRead() { command = v, connectionState = state });
         }
 
         internal Room GetRoom(string roomId)
@@ -48,12 +52,6 @@ namespace QuixPhysics
             {
                 room = simulator.roomManager.rooms[roomId];
             }
-            else
-            {
-                var newroom = new Room(simulator, new RoomInfo { maxPlayers = 100, position = new Vector3(), roomId = roomId });
-                simulator.roomManager.AddRoom(newroom);
-                room = newroom;
-            }
             return room;
         }
 
@@ -61,22 +59,26 @@ namespace QuixPhysics
         {
             try
             {
-                ArrayList newC = commandsList;
+
                 for (int a = 0; a < commandsList.Count; a++)
                 {
                     var item = commandsList[a];
                     JsonSerializerSettings setting = new JsonSerializerSettings();
                     setting.CheckAdditionalContent = false;
-                    if (item != null)
+                    if (item.command != null && item.connectionState != null)
                     {
-                        Newtonsoft.Json.Linq.JObject message = JsonConvert.DeserializeObject<JObject>((string)item, setting);
+                        Newtonsoft.Json.Linq.JObject message = JsonConvert.DeserializeObject<JObject>((string)item.command, setting);
                         string type = (string)message["type"];
                         if (commandDictionary.ContainsKey(type))
                         {
                             JObject data = (JObject)message["data"];
                             var room = GetRoom(((string)data["roomId"]));
-
-                            commandDictionary[type].OnRead(data,room);
+                            if (room == null)
+                            {
+                                room = simulator.roomManager.NewRoom(item.connectionState, (string)data["roomId"]);
+                            }
+                            Command command =commandDictionary[type];
+                            command.OnRead(data, room);
                         }
                         else
                         {
@@ -84,14 +86,13 @@ namespace QuixPhysics
                         }
 
                     }
-
                 }
 
                 commandsList.Clear();
             }
             catch (InvalidOperationException e)
             {
-                QuixConsole.Log("Collection was modifieded", e);
+                QuixConsole.Log("Collection was modified", e);
             }
             catch (JsonReaderException e)
             {

@@ -13,6 +13,7 @@ namespace QuixPhysics
         public override void OnRead(JObject message, Room room)
         {
             var clientId = message["clientId"].ToString();
+            
             room.gamemode.OnJoin(CreateUser(clientId, room));
 
         }
