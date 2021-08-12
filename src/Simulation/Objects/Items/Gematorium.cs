@@ -30,7 +30,7 @@ namespace QuixPhysics
 
         public Gematorium()
         {
-
+           // QuixConsole.Log("Create only 1");
         }
         public override void Load(Handle bodyHandle, ConnectionState connectionState, Simulator simulator, ObjectState state, Guid guid, Room room)
         {
@@ -38,6 +38,25 @@ namespace QuixPhysics
 
             base.Load(bodyHandle, connectionState, simulator, state, guid, room);
 
+            CreateGems();
+
+            AddWorker(new PhyInterval(1, simulator)).Tick += Update;
+           // AddWorker(new PhyInterval(1000,simulator)).Completed+=ThrowGem;
+        }
+
+        private void ThrowGem()
+        {
+            if(random.Next(0,10)>5){
+                QuixConsole.Log("Created Gem");
+               var gem = new Gem();
+               gem.Instantiate(room);
+               gem.SetPosition(GetPosition()+new Vector3(0,200,0));
+               
+            }
+        }
+
+        private void CreateGems()
+        {
             for (int a = 0; a < initialGems; a++)
             {
                 var pos = new Vector3(random.Next(-maxDistanceGems, maxDistanceGems), random.Next(-maxDistanceGems, maxDistanceGems), random.Next(-maxDistanceGems, maxDistanceGems));
@@ -59,8 +78,6 @@ namespace QuixPhysics
                 phygem.OnDelete += OnGemDeleted;
 
             }
-
-            AddWorker(new PhyInterval(1, simulator)).Tick += Update;
         }
 
         private void OnGemDeleted(PhyObject obj)
@@ -92,7 +109,9 @@ namespace QuixPhysics
                     gem.rotationY += 0.001f;
                     gem.gem.needUpdate = true;
                 }
-            }else{
+            }
+            else
+            {
                 QuixConsole.Log("Simulator disposed");
             }
 

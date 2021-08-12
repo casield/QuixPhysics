@@ -23,7 +23,7 @@ namespace QuixPhysics
         {
             var pos = arena.GetStartPoint(user);
             pos.Y = floor.GetTop(Gematorium.SIZE);
-            pos.X += 300;
+            pos.X -= 300;
             var gembox = Gematorium.Build(pos, Quaternion.Identity, user);
             var gematorium = room.Create(gembox);
 

@@ -2,7 +2,7 @@ namespace QuixPhysics
 {
     public interface IItem {
         
-        void OnDrop(Simulator simulator, Room room);
+        void OnDrop( Room room);
         void OnCollect(User user);
 
     }
@@ -17,11 +17,11 @@ namespace QuixPhysics
             throw new System.NotImplementedException();
         }
 
-        public virtual void OnDrop(Simulator simulator, Room room)
+        public virtual void OnDrop(Room room)
         {
-            Instantiate(simulator, room);
+            Instantiate( room);
             room.gamemode.OnItemDropped(this);
         }
-        public abstract void Instantiate(Simulator simulator, Room room);
+        public abstract void Instantiate(Room room);
     }
 }

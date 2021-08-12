@@ -56,8 +56,10 @@ namespace QuixPhysics
 
         public void Dispose()
         {
+            QuixConsole.Log("Room disposed");
             factory.Dispose();
             connectionState.Dispose();
+            simulator.roomManager.RoomLeave(this);
         }
     }
 }

@@ -66,7 +66,7 @@ namespace QuixPhysics
             this.bodyHandle = bodyHandle;
             this.state = state;
             this.simulator = simulator;
-            
+
             this.guid = guid;
             this.room = room;
 
@@ -117,33 +117,41 @@ namespace QuixPhysics
 
             if (state.mass == 0)
             {
-               
+
                 staticDescription.Pose.Position = position;
-                simulator.Simulation.Statics.ApplyDescription(bodyHandle.staticHandle,staticDescription);
-            }else{
+                simulator.Simulation.Statics.ApplyDescription(bodyHandle.staticHandle, staticDescription);
+            }
+            else
+            {
                 bodyReference.Pose.Position = position;
             }
         }
-        public Vector3 GetPosition(){
-            if(state.mass==0){
+        public Vector3 GetPosition()
+        {
+            if (state.mass == 0)
+            {
                 return staticReference.Pose.Position;
-            }else{
+            }
+            else
+            {
                 return bodyReference.Pose.Position;
             }
         }
 
         public BodyReference GetBodyReference()
         {
-            if(state.mass == 0){
-                throw new Exception(state.type+" is not dynamic");
+            if (state.mass == 0)
+            {
+                throw new Exception(state.type + " is not dynamic");
             }
             return simulator.Simulation.Bodies.GetBodyReference(bodyHandle.bodyHandle);
         }
 
         public StaticReference GetStaticReference()
         {
-          if(state.mass != 0){
-                throw new Exception(state.type+" is not static");
+            if (state.mass != 0)
+            {
+                throw new Exception(state.type + " is not static");
             }
             return simulator.Simulation.Statics.GetStaticReference(bodyHandle.staticHandle);
         }
@@ -155,8 +163,10 @@ namespace QuixPhysics
 
             GetBodyReference().Velocity.Linear = Vector3.Zero;
         }
-        public void Awake(){
-            if(state.mass!=0){
+        public void Awake()
+        {
+            if (state.mass != 0)
+            {
                 simulator.Simulation.Awakener.AwakenBody(bodyHandle.bodyHandle);
             }
         }
@@ -266,8 +276,12 @@ namespace QuixPhysics
 
             JObject j = new JObject();
             j["uID"] = state.uID;
+            if (state.instantiate)
+            {
+                simulator.SendMessage("delete", j, connectionState.workSocket);
+            }
 
-            simulator.SendMessage("delete", j, connectionState.workSocket);
+
 
             foreach (var item in workers)
             {

@@ -12,14 +12,16 @@ namespace QuixPhysics
         public override void Load(Handle bodyHandle, ConnectionState connectionState, Simulator simulator, ObjectState state, Guid guid, Room room)
         {
             base.Load(bodyHandle, connectionState, simulator, state, guid, room);
-            room.factory.OnContactListeners.Add(guid,this);
+            room.factory.OnContactListeners.Add(guid, this);
         }
         public override void OnContact(PhyObject obj)
         {
-            QuixConsole.Log("Contacted",obj.state.type);
-            if(obj is GolfBall2 || obj is Player2){
+
+            if (obj is GolfBall2 || obj is Player2)
+            {
+                QuixConsole.Log("Contacted", obj.state.type);
                 var user = room.users[obj.state.owner];
-                user.gems.Update(((int)user.gems.value)+1);
+                user.gems.Update(((int)user.gems.value) + 1);
                 Destroy();
             }
         }
@@ -36,9 +38,9 @@ namespace QuixPhysics
 
         }
 
-        public override void Instantiate(Simulator simulator, Room room)
+        public override void Instantiate(Room room)
         {
-           // simulator.Create(GematoriumGem.Build())
+            throw new NotImplementedException();
         }
     }
 }

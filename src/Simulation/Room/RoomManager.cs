@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Numerics;
 
@@ -15,6 +16,7 @@ namespace QuixPhysics{
         }
         public Room NewRoom(ConnectionState state,string roomId){
             Room room = new Room(simulator,new RoomInfo(){maxPlayers=10,position=new Vector3(),roomId=roomId},state);
+            
             AddRoom(room);
 
             return room;
@@ -22,6 +24,11 @@ namespace QuixPhysics{
 
         public void Update(){
 
+        }
+
+        internal void RoomLeave(Room room)
+        {
+            rooms.Remove(room.props.roomId);
         }
     }
 }

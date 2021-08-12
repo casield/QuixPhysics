@@ -29,7 +29,7 @@ namespace QuixPhysics
             this.Simulation = simulator.Simulation;
         }
 
-        public PhyObject Create(ObjectState state, Room room)
+        public PhyObject Create(ObjectState state, Room room, PhyObject instantiated = null)
         {
             PhyObject phy = null;
             if (state.uID == null || objects.ContainsKey(state.uID))
@@ -40,17 +40,17 @@ namespace QuixPhysics
             {
                 if (state.isMesh)
                 {
-                    phy = CreateMesh((BoxState)state, room);
+                    phy = CreateMesh((BoxState)state, room, instantiated);
                 }
                 else
                 {
-                    phy = CreateBox((BoxState)state, room);
+                    phy = CreateBox((BoxState)state, room, instantiated);
                 }
 
             }
             if (state is SphereState)
             {
-                phy = CreateSphere((SphereState)state, room);
+                phy = CreateSphere((SphereState)state, room, instantiated);
             }
 
 
@@ -65,7 +65,11 @@ namespace QuixPhysics
             return phy;
 
         }
-        private PhyObject CreateVanilla(ObjectState state, CollidableDescription collidableDescription, BodyInertia bodyInertia, Room room)
+        public void Instantiate(PhyObject phyObject, ObjectState state)
+        {
+
+        }
+        private PhyObject CreateVanilla(ObjectState state, CollidableDescription collidableDescription, BodyInertia bodyInertia, Room room, PhyObject instantiated)
         {
             PhyObject phy;
             Guid guid = Guid.NewGuid();
@@ -91,8 +95,18 @@ namespace QuixPhysics
                 var bodyHandle = Simulation.Bodies.Add(boxDescription);
 
                 SimpleMaterial allocatedMat = simulator.collidableMaterials.Allocate(bodyHandle) = material;
+                if (instantiated == null)
+                {
+                    phy = GetPhyClass(state.type);
+                }
+                else
+                {
+                    phy = instantiated;
+                }
+                var handle = new Handle { bodyHandle = bodyHandle };
 
-                phy = SetUpPhyObject(new Handle { bodyHandle = bodyHandle }, state, guid, room);
+                phy.Load(handle, room.connectionState, simulator, state, guid, room);
+
 
                 objectsHandlers.Add(bodyHandle, phy);
                 allObjects.Add(guid, phy);
@@ -102,12 +116,22 @@ namespace QuixPhysics
             {
 
                 StaticDescription description = new StaticDescription(state.position, state.quaternion, collidableDescription);
-                StaticHandle handle = Simulation.Statics.Add(description);
+                StaticHandle statichandle = Simulation.Statics.Add(description);
 
-                simulator.collidableMaterials.Allocate(handle) = material;
-                phy = SetUpPhyObject(new Handle { staticHandle = handle }, state, guid, room);
+                simulator.collidableMaterials.Allocate(statichandle) = material;
+                if (instantiated == null)
+                {
+                    phy = GetPhyClass(state.type);
+                }
+                else
+                {
+                    phy = instantiated;
+                }
+                var handle = new Handle { staticHandle = statichandle };
 
-                staticObjectsHandlers.Add(handle, phy);
+                phy.Load(handle, room.connectionState, simulator, state, guid, room);
+
+                staticObjectsHandlers.Add(statichandle, phy);
                 allObjects.Add(guid, phy);
 
             }
@@ -115,7 +139,7 @@ namespace QuixPhysics
 
             return phy;
         }
-        private PhyObject CreateBox(BoxState state, Room room)
+        private PhyObject CreateBox(BoxState state, Room room, PhyObject instantiated)
         {
             var box = new Box(state.halfSize.X, state.halfSize.Y, state.halfSize.Z);
 
@@ -125,12 +149,12 @@ namespace QuixPhysics
             box.ComputeInertia(state.mass, out bodyInertia);
 
 
-            var phy = CreateVanilla(state, collidableDescription, bodyInertia, room);
+            var phy = CreateVanilla(state, collidableDescription, bodyInertia, room, instantiated);
             return phy;
 
         }
 
-        private PhyObject CreateSphere(SphereState state, Room room)
+        private PhyObject CreateSphere(SphereState state, Room room, PhyObject instantiated)
         {
 
             var sphere = new Sphere(state.radius);
@@ -139,11 +163,11 @@ namespace QuixPhysics
 
             sphere.ComputeInertia(state.mass, out bodyInertia);
 
-            var phy = CreateVanilla(state, collidableDescription, bodyInertia, room);
+            var phy = CreateVanilla(state, collidableDescription, bodyInertia, room, instantiated);
             return phy;
         }
 
-        private PhyObject CreateMesh(BoxState state, Room room)
+        private PhyObject CreateMesh(BoxState state, Room room, PhyObject instantiated)
         {
             LoadModel(simulator.server.GetMesh(state.mesh), out var mesh, state.halfSize);
 
@@ -156,7 +180,7 @@ namespace QuixPhysics
 
             mesh.ComputeClosedInertia(state.mass, out var bodyInertia);
 
-            var phy = CreateVanilla(state, collidableDescription, bodyInertia, room);
+            var phy = CreateVanilla(state, collidableDescription, bodyInertia, room, instantiated);
             phy.shapeIndex = shapeIndex;
             objects.Add(state.uID, phy);
 
@@ -192,16 +216,6 @@ namespace QuixPhysics
             {
                 phy = new PhyObject();
             }
-            return phy;
-        }
-
-        private PhyObject SetUpPhyObject(Handle bodyHandle, ObjectState state, Guid guid, Room room)
-        {
-
-            PhyObject phy = GetPhyClass(state.type);
-
-            phy.Load(bodyHandle, room.connectionState, simulator, state, guid, room);
-
             return phy;
         }
 
@@ -254,12 +268,12 @@ namespace QuixPhysics
                 simulator.SendMessage("update", JsonConvert.SerializeObject(slice), room.connectionState.workSocket);
             }
         }
-         internal void createObjects()
+        internal void createObjects()
         {
             int width = 10;
             int max = 3000;
             var random = new Random();
-            for (int a = 0; a < 40; a++)
+            for (int a = 0; a < 0; a++)
             {
                 var box = new SphereState();
                 box.uID = PhyObject.createUID();
@@ -274,15 +288,17 @@ namespace QuixPhysics
                 box.position = new Vector3(random.Next(-max, max), 2500, random.Next(-max, max));
                 box.radius = 10;
                 box.mesh = "Board/Bomb";
-                box.instantiate = true;
+                box.instantiate = false;
                 box.quaternion = Quaternion.Identity;
-               // var b = Create(box,room);
+                 var b = Create(box,room);
             }
-            //timesPressedCreateBoxes++;
-            // Console.WriteLine("Statics size " + Simulation.Statics.Count);*/
         }
         internal void Dispose()
         {
+            foreach (var item in objects)
+            {
+                item.Value.Destroy();
+            }
             objects.Clear();
             objectsHandlers.Clear();
             staticObjectsHandlers.Clear();

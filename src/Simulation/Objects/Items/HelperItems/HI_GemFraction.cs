@@ -12,7 +12,7 @@ namespace QuixPhysics{
         {
         }
 
-        public override void Instantiate(Simulator simulator, Room room)
+        public override void Instantiate( Room room)
         {
             throw new System.NotImplementedException();
         }

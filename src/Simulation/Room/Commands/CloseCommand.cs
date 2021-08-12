@@ -9,7 +9,9 @@ namespace QuixPhysics
         }
         public override void OnRead(JObject message, Room room)
         {
-          simulator.Close();
+          
+          room.Dispose();
+          //simulator.Close();
 
         }
     }
