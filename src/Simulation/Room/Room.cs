@@ -28,6 +28,7 @@ namespace QuixPhysics{
 
         public void SetGameMode(Gamemode gamemode){
             this.gamemode = gamemode;
+            this.gamemode.Init();
         }
         public void AddUser(User user){
             users.Add(user.sessionId,user);

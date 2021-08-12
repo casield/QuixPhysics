@@ -35,5 +35,10 @@ namespace QuixPhysics
             player.lookObject.ChangeWatching(this);
 
         }
+
+        public override void Instantiate(Simulator simulator, Room room)
+        {
+           // simulator.Create(GematoriumGem.Build())
+        }
     }
 }

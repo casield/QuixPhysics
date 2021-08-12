@@ -1,4 +1,5 @@
 using System;
+using System.Diagnostics;
 using System.Text;
 
 namespace QuixPhysics
@@ -8,46 +9,59 @@ namespace QuixPhysics
     {
         private static bool isActive = true;
         private static Random _random = new Random();
+        private static bool showReference = false;
         public static void Log(params object[] array)
         {
-            if(isActive){
-
-            
-   
-            for (int a = 0; a < array.Length; a++)
+            if (isActive)
             {
-                if (a > 0)
+
+                if (showReference)
                 {
-                    System.Console.Write(" ");
-                    System.Console.ForegroundColor = GetConsoleColor(a);
+                    StackTrace stackTrace = new StackTrace();
+                    System.Console.ForegroundColor = ConsoleColor.Red;
+                    Console.Write("[" + stackTrace.GetFrame(1).GetMethod().Name + "] ");
+                }
+                System.Console.ForegroundColor = ConsoleColor.White;
+                for (int a = 0; a < array.Length; a++)
+                {
+
+
+                    if (a > 0)
+                    {
+                        System.Console.ForegroundColor = GetConsoleColor(a);
+                        System.Console.Write(" ");
+
+
+                    }
+                    System.Console.Write(array[a].ToString());
 
                 }
-                System.Console.Write(array[a]);
-                
-            }
-            System.Console.WriteLine("");
-            System.Console.ResetColor();
+                System.Console.WriteLine("");
+                System.Console.ResetColor();
             }
         }
         public static void WriteLine(object obj)
         {
-            if(isActive){
+            if (isActive)
+            {
                 System.Console.WriteLine(obj);
             }
-            
+
         }
         private static ConsoleColor GetRandomConsoleColor()
         {
             var consoleColors = Enum.GetValues(typeof(ConsoleColor));
             return GetConsoleColor(_random.Next(consoleColors.Length));
         }
-        private static ConsoleColor GetConsoleColor(int index){
-              var consoleColors = Enum.GetValues(typeof(ConsoleColor));
-              if(index >= consoleColors.Length){
-                  index = 0;
-              }
+        private static ConsoleColor GetConsoleColor(int index)
+        {
+            var consoleColors = Enum.GetValues(typeof(ConsoleColor));
+            if (index >= consoleColors.Length)
+            {
+                index = 0;
+            }
             var color = (ConsoleColor)consoleColors.GetValue(index);
-            return color.ToString().Contains("Black")?ConsoleColor.DarkRed:color;
+            return color.ToString().Contains("Black") ? ConsoleColor.DarkRed : color;
         }
 
     }

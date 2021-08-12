@@ -10,6 +10,8 @@ namespace QuixPhysics
 
         bool started { get; set; }
 
+        void Init();
+
         void OnJoin(User user);
         void Start();
         void Finish();
@@ -27,6 +29,7 @@ namespace QuixPhysics
         public User winner { get; set; }
         public bool started { get; set; }
         public int gameTime { get; set; }
+        public event ItemDroppedEvent itemDroppedListeners;
 
         public Gamemode(Simulator simulator, Room room)
         {
@@ -75,6 +78,11 @@ namespace QuixPhysics
                 QuixConsole.Log("GetStartPoint");
                 return new Vector3(0, 1000, 0);
             }
+        }
+
+        public abstract void Init();
+        public virtual void OnItemDropped(Item dropped){
+            itemDroppedListeners?.Invoke(dropped);
         }
     }
 }

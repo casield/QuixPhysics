@@ -13,17 +13,19 @@ namespace QuixPhysics
         public float arriveDistance = 200;
         public Vector3 targetExtend = new Vector3(100);
 
-        public int MinPathSizeToChange = 3;
+        public int MinPathSizeToChange = 1;
         public int PathPointReloadTime = 1000;
     }
     public delegate void TrailAction();
     public class Trail
     {
         private Simulator simulator;
-        private Path path;
+        public Path path;
         private PhyObject obj;
 
         private Vector3 target;
+        private NavPoint startPoint;
+        private NavPoint endPoint;
         private bool active = false;
 
         private Vector3 nextPoint;
@@ -33,13 +35,12 @@ namespace QuixPhysics
         public bool hasFinished = false;
 
         public event TrailAction OnLastPoint;
-        public event TrailAction OnPathStuck;
         private PhyWorker worker;
-        private int tickReload = 0;
 
-        private Vector3 lastPosition;
 
         private PhyWaiter pointWaiter;
+
+        private List<NavPolyId> visited = new List<NavPolyId>();
         public Trail(Simulator simulator, PhyObject obj, NavMeshQuery query)
         {
             this.simulator = simulator;
@@ -71,18 +72,18 @@ namespace QuixPhysics
             return active;
         }
 
-        public bool IsOnPointPosition(int pathPosition, Vector3 position, Vector3 extends)
+        public bool IsOnPoly(NavPolyId polyId, Vector3 position, Vector3 extends)
         {
 
             List<NavPolyId> polys = new List<NavPolyId>(1);
 
             var found = query.QueryPolygons(ref position, ref extends, polys);
-            return polys.Contains(path[pathPosition]);
+            return polys.Contains(polyId);
         }
 
         public bool IsOnLastPosition(Vector3 position, Vector3 extends)
         {
-            return IsOnPointPosition(path.Count - 1, position, extends);
+            return IsOnPoly(path[path.Count-1], position, extends);
         }
 
         private void Update()
@@ -94,7 +95,7 @@ namespace QuixPhysics
                 {
 
 
-                    if (IsOnPointPosition(pathPosition, obj.GetPosition(), GetExtend()))
+                    if (IsOnPoly(path[pathPosition], obj.GetPosition(), GetExtend()))
                     {
                         //Arrived
                         GoNextPoint();
@@ -111,29 +112,60 @@ namespace QuixPhysics
 
         private void GoNextPoint()
         {
-            pathPosition++;
+            
             pointWaiter.Reset();
-            SetNextPoint();
+           var couldset =  SetPoint(pathPosition+1);
+           if(couldset){
+               pathPosition++;
+           }
 
         }
-        private void SetNextPoint()
+        
+        private bool SetPoint(int newpoint)
         {
-            if (pathPosition < path.Count)
+            if (newpoint < path.Count)
             {
-                Vector3 closest = new Vector3();
-                query.ClosestPointOnPoly(path[pathPosition], obj.GetPosition(), ref closest);
-                nextPoint = closest;
-                QuixConsole.Log("Next point", nextPoint," ( "+pathPosition+" ) Path size:",path.Count);
+              Vector3 closest = new Vector3();
+                query.ClosestPointOnPoly(path[newpoint], obj.GetPosition(), ref closest);
+                
+               // query.
+               var position = obj.GetPosition();
+
+                 Vector3 correctedPoint = new Vector3();
+                 NavPoint navStart = new NavPoint(path[newpoint],obj.GetPosition());
+                 var couldmove = query.MoveAlongSurface(ref navStart,ref closest,out correctedPoint,visited);
+                if(couldmove){
+                    Vector3 result = new Vector3();
+                    float h = 0;
+                    query.GetPolyHeight(path[0], result, ref h);
+                    nextPoint = correctedPoint;
+                    nextPoint.Y = h;
+                }else{
+                    ResetPath();
+                }
+                
+                QuixConsole.Log("Next point", nextPoint," ( "+pathPosition+" ) Path size:",path.Count, "Visited size:",visited.Count);
+                QuixConsole.Log("Could move: ",couldmove);
+                return couldmove;
 
             }
             else
             {
                 LastPoint();
+                return true;
             }
 
         }
+        private void ResetPath(){
+            if(!IsOnPoly(endPoint.Polygon,target,props.targetExtend)){
+               SetTarget(endPoint.Position); 
+            }
+            
+            QuixConsole.Log("Resetting path");
+        }
         private void LastPoint()
         {
+            nextPoint = endPoint.Position;
             QuixConsole.Log("Last Point");
             OnLastPoint?.Invoke();
             hasFinished = true;
@@ -147,7 +179,7 @@ namespace QuixPhysics
             if (obj.state is SphereState)
             {
                 SphereState st = (SphereState)obj.state;
-                return new Vector3(st.radius * 4);
+                return new Vector3(st.radius * 2);
             }
             else
             {
@@ -177,8 +209,8 @@ namespace QuixPhysics
 
                     
 
-                    NavPoint startPoint = query.FindNearestPoly(obj.GetPosition(), GetExtend());
-                    NavPoint endPoint = query.FindNearestPoly(target, props.targetExtend);
+                    startPoint = query.FindNearestPoly(obj.GetPosition(), GetExtend());
+                    endPoint = query.FindNearestPoly(target, props.targetExtend);
 
                     Path newPath = new Path();
                     bool couldFind = query.FindPath(ref startPoint, ref endPoint, new NavQueryFilter(), newPath);
@@ -194,8 +226,11 @@ namespace QuixPhysics
                     else
                     {
                         //hasFinished=true;
-                        return false;
+                        QuixConsole.Log("Path not big enogh");
+                        
                     }
+                }else{
+                    QuixConsole.Log("Polys not found", polyArounObj.Count, polyAroundTarget.Count);
                 }
             }
             else
@@ -209,6 +244,7 @@ namespace QuixPhysics
         }
         private void Reset()
         {
+            visited.Clear();
             pathPosition = 0;
             hasFinished = false;
         }

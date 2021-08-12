@@ -41,7 +41,7 @@ namespace QuixPhysics
 
 
             arena = (Arena)room.gamemode;
-            vehicle = new Vehicle(this, new VehicleProps() { maxSpeed = new Vector3(.5f, .2f, .5f) });
+            vehicle = new Vehicle(this, new VehicleProps() { maxSpeed = new Vector3(10f, 10f, 10f) });
             vehicle.isActive = true;
 
             navMeshQuery = new NavMeshQuery(arena.tiledNavMesh, 2048);
@@ -51,7 +51,6 @@ namespace QuixPhysics
 
             trail = new Trail(simulator, this, navMeshQuery);
             trail.OnLastPoint += OnLastPoint;
-            trail.OnPathStuck += OnStuck;
             firstPosition = state.position;
 
             trail.Start();
@@ -69,28 +68,23 @@ namespace QuixPhysics
 
         private void OnLastPoint()
         {
-            trail.Restart();
-            trail.Start();
-
-            if (IsTargetVisible())
-            {
-                LookTarget(target);
-            }
-            else
-            {
-                LookRandomPoint();
-            }
+            
         }
         private void OnStuck()
         {
             /*  trail.Start();
               LookRandomPoint();*/
-            QuixConsole.Log("Stucked");
-            OnLastPoint();
+            QuixConsole.Log("Stucked", trail.IsActive());
+           // OnLastPoint();
+
+            LookTarget(target);
 
         }
         public void LookRandomPoint()
         {
+            if(!trail.IsActive()){
+                trail.Start();
+            }
             var closepo = navMeshQuery.FindNearestPoly(GetPosition(), trail.GetExtend());
             navMeshQuery.FindRandomConnectedPoint(ref closepo, out NavPoint random);
             QuixConsole.Log("On Last point", random);
@@ -103,40 +97,41 @@ namespace QuixPhysics
         {
             if (trail.IsActive())
             {
-                if (trail.hasFinished)
-                {
-                    vehicle.Arrive(arrivePosition);
-                    if (Distance(arrivePosition) < 100)
-                    {
-                        Stop();
-                        trail.Stop();
+                if(trail.hasFinished){
+                    if(Distance(target.GetPosition())<100){
+                        Wait10SecondsToReactivate();
                     }
-
                 }
-                else
-                {
-                    vehicle.SeekFlee(trail.GetPoint(), true);
-                }
-                if (IsFalling())
-                {
-                    OnFall();
-                }
-
+                vehicle.SeekFlee(trail.GetPoint(), true);
             }
             else
             {
-                if (Distance(target.GetPosition()) < 1000)
-                {
-                    trail.Start();
-                    LookTarget(target);
-                }
+                /* if (Distance(target.GetPosition()) < 6000)
+                 {
+                     trail.Start();
+                     LookTarget(target);
+                 }*/
             }
 
             CheckPositionForStuck();
+            if (IsFalling())
+            {
+                OnFall();
+            }
 
 
 
             vehicle.Update();
+            bodyReference.Velocity.Linear *= .9f;
+        }
+        private void Wait10SecondsToReactivate()
+        {
+            trail.Stop();
+            AddWorker(new PhyTimeOut(10000,simulator,true)).Completed+=()=>{
+                trail.Restart();
+                trail.Start();
+                LookTarget(target);
+            };
         }
 
         private void OnFall()

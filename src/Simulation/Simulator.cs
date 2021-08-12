@@ -19,7 +19,7 @@ namespace QuixPhysics
 
     public class Simulator : IDisposable
     {
-        private BufferPool bufferPool;
+        internal BufferPool bufferPool;
 
         public SimpleThreadDispatcher ThreadDispatcher { get; }
         public Simulation Simulation { get; }
@@ -92,22 +92,7 @@ namespace QuixPhysics
 
         }
 
-        
-
-        private void CreateNewt()
-        {
-            BoxState state = new BoxState();
-            state.position = new Vector3(0, 140, 160);
-            state.halfSize = new Vector3(10, 10, 10);
-            state.quaternion = Quaternion.Identity;
-            state.mass = 0;
-            state.uID = PhyObject.createUID();
-            state.type = "QuixBox";
-            state.instantiate = true;
-            state.mesh = "Tiles/test";
-
-            // CreateMesh(state);
-        }
+    
         internal void createObjects(Room room)
         {
             int width = 10;
@@ -130,7 +115,7 @@ namespace QuixPhysics
                 box.mesh = "Board/Bomb";
                 box.instantiate = true;
                 box.quaternion = Quaternion.Identity;
-                var b = Create(box,room);
+               // var b = Create(box,room);
             }
             timesPressedCreateBoxes++;
             // Console.WriteLine("Statics size " + Simulation.Statics.Count);
@@ -190,12 +175,11 @@ namespace QuixPhysics
                 {
                     try
                     {
-                        //var handle = set.IndexToHandle[bodyIndex];
-                        // if(objects.ContainsValue())
+
                         var handle = set.IndexToHandle[bodyIndex];
                         if (objectsHandlers[handle].state.instantiate)
                         {
-                            //bodies.Add(objectsHandlers[handle].getJSON());
+                        
                             bodies2[bodyIndex] = objectsHandlers[handle].getJSON();
                             bodiesAdded += 1;
                         }
@@ -243,7 +227,7 @@ namespace QuixPhysics
         }
 
 
-        public PhyObject Create(ObjectState state,Room room)
+         public PhyObject Create(ObjectState state,Room room)
         {
             PhyObject phy = null;
             if (state.uID == null || objects.ContainsKey(state.uID))
@@ -394,9 +378,11 @@ namespace QuixPhysics
         private PhyObject GetPhyClass(string name)
         {
             System.Type t = System.Type.GetType("QuixPhysics." + name + ", QuixPhysics");
+            
             PhyObject phy = null;
             if (t != null)
             {
+                
                 phy = (PhyObject)Activator.CreateInstance(t);
             }
             else

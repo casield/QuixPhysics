@@ -39,5 +39,10 @@ namespace QuixPhysics
         {
             user.CreatePlayer(GetStartPoint(user));
         }
+
+        public override void Init()
+        {
+            throw new System.NotImplementedException();
+        }
     }
 }

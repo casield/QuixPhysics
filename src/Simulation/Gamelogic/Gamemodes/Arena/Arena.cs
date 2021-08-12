@@ -26,11 +26,15 @@ namespace QuixPhysics
         public TiledNavMesh tiledNavMesh;
         private string navMeshName;
         private AIManager aIManager;
+        public event PhyAction OnNavMeshReadyListeners;
 
         public Arena(Simulator simulator, Room room) : base(simulator, room)
         {
             this.room = room;
             this.simulator = simulator;
+        }
+        public override void Init()
+        {
             userLoader = new UserLoader(simulator, this);
             aIManager = new AIManager(simulator, this);
             GenerateMap();
@@ -114,13 +118,13 @@ namespace QuixPhysics
 
             //Resizes the mesh and the navmesh
             float resizer = 1;
-            float mulre = (100/resizer);
+            float mulre = (100 / resizer);
 
-    			settings.CellSize = 0.3f*mulre;
-				settings.CellHeight = 0.2f*mulre;
-				settings.MaxClimb = 0.9f*mulre;
-				settings.AgentHeight = 2.0f*mulre;
-				settings.AgentRadius = 0.6f*mulre;
+            settings.CellSize = 0.3f * mulre;
+            settings.CellHeight = 0.2f * mulre;
+            settings.MaxClimb = 0.9f * mulre;
+            settings.AgentHeight = 2.0f * mulre;
+            settings.AgentRadius = 0.6f * mulre;
 
             //Creates the mesh .obj
             qinavMesh.CreateMesh(navObjects, navMeshName, resizer);
@@ -132,6 +136,8 @@ namespace QuixPhysics
             qinavMesh.SaveNavMeshToFile(navMeshName);
             //Read it from .snb
             tiledNavMesh = qinavMesh.GetTiledNavMesh(navMeshName);
+
+            OnNavMeshReadyListeners?.Invoke();
 
         }
         internal void OnHoleWin(User winner)
@@ -177,8 +183,6 @@ namespace QuixPhysics
 
             QuixConsole.Log("Winner!", winner.sessionId);
         }
-
-
 
     }
 }
