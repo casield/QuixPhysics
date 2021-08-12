@@ -45,7 +45,7 @@ namespace QuixPhysics
                 pos.Y += ((BoxState)state).halfSize.Y;
                 var gem = GematoriumGem.Build(pos, Quaternion.Identity, 0);
 
-                GematoriumGem phygem = (GematoriumGem)simulator.Create(gem, room);
+                GematoriumGem phygem = (GematoriumGem)room.Create(gem);
                 StaticDescription description;
 
                 float velocity = ((float)(random.Next(-10, 10)) / 3000);

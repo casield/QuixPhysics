@@ -80,7 +80,7 @@ namespace QuixPhysics
             simulator.collidableMaterials[bodyHandle.bodyHandle].SpringSettings = new SpringSettings(1f, .5f);
 
             bodyReference = simulator.Simulation.Bodies.GetBodyReference(bodyHandle.bodyHandle);
-            simulator.OnContactListeners.Add(this.guid, this);
+            room.factory.OnContactListeners.Add(this.guid, this);
 
 
             SetPositionToStartPoint();
@@ -105,14 +105,14 @@ namespace QuixPhysics
         }
         private void CreateLookObject()
         {
-            lookObject = (LookObject)simulator.Create(new BoxState()
+            lookObject = (LookObject)room.Create(new BoxState()
             {
                 instantiate = true,
                 mass = 0,
 
                 type = "LookObject",
                 owner = state.uID
-            }, room);
+            });
             lookObject.SetPlayer(this);
         }
         private void CreateBall()
@@ -127,7 +127,7 @@ namespace QuixPhysics
              ball.owner = state.owner;
              ball.mesh = "Objects/Balls/Vanilla/Vanilla";
 
-             golfball = (GolfBall2)simulator.Create(ball, room);
+             golfball = (GolfBall2)room.Create(ball);
              golfball.SetPlayer(this);
         }
         public bool IsSnapped()

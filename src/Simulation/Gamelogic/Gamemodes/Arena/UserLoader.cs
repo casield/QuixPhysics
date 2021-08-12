@@ -25,7 +25,7 @@ namespace QuixPhysics
             pos.Y = floor.GetTop(Gematorium.SIZE);
             pos.X += 300;
             var gembox = Gematorium.Build(pos, Quaternion.Identity, user);
-            var gematorium = simulator.Create(gembox, arena.room);
+            var gematorium = room.Create(gembox);
 
             QuixConsole.Log("Gematorium",gematorium.state.position);
             return (Gematorium)gematorium;

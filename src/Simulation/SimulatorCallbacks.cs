@@ -148,16 +148,21 @@ namespace QuixPhysics
             var a = CollidableMaterials[pair.A];
             var b = CollidableMaterials[pair.B];
 
-
-            if (simulator.OnContactListeners.ContainsKey(a.guid))
+            foreach (var room in simulator.roomManager.rooms)
             {
-                simulator.OnContactListeners[a.guid].OnContact(simulator.allObjects[b.guid]);
-            }
-            if (simulator.OnContactListeners.ContainsKey(b.guid))
-            {
+                if (room.Value.factory.OnContactListeners.ContainsKey(a.guid))
+                {
+                    room.Value.factory.OnContactListeners[a.guid].OnContact(room.Value.factory.allObjects[b.guid]);
+                }
+                if (room.Value.factory.OnContactListeners.ContainsKey(b.guid))
+                {
 
-                simulator.OnContactListeners[b.guid].OnContact(simulator.allObjects[a.guid]);
+                    room.Value.factory.OnContactListeners[b.guid].OnContact(room.Value.factory.allObjects[a.guid]);
+                }
+
             }
+
+
 
             pairMaterial.FrictionCoefficient = a.FrictionCoefficient * b.FrictionCoefficient;
             pairMaterial.MaximumRecoveryVelocity = MathF.Max(a.MaximumRecoveryVelocity, b.MaximumRecoveryVelocity);

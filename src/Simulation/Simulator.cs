@@ -26,25 +26,25 @@ namespace QuixPhysics
         public int TIME_TO_SEND_TICK = 50;
 
         public GameLoop gameLoop = null;
-        public Dictionary<BodyHandle, PhyObject> objectsHandlers = new Dictionary<BodyHandle, PhyObject>();
-        public Dictionary<StaticHandle, PhyObject> staticObjectsHandlers = new Dictionary<StaticHandle, PhyObject>();
+      //  public Dictionary<BodyHandle, PhyObject> objectsHandlers = new Dictionary<BodyHandle, PhyObject>();
+      //  public Dictionary<StaticHandle, PhyObject> staticObjectsHandlers = new Dictionary<StaticHandle, PhyObject>();
 
 
-        public Dictionary<string, PhyObject> objects = new Dictionary<string, PhyObject>();
+       // public Dictionary<string, PhyObject> objects = new Dictionary<string, PhyObject>();
         public CollidableProperty<SimpleMaterial> collidableMaterials;
         public ConnectionState connectionState;
         internal Server server;
-        internal int boxToCreate = 10;
-        internal int timesPressedCreateBoxes = 0;
+     //   internal int boxToCreate = 10;
+    //    internal int timesPressedCreateBoxes = 0;
         internal List<PhyWorker> workers = new List<PhyWorker>();
         internal List<PhyWorker> workersToAdd = new List<PhyWorker>();
         public CommandReader commandReader;
         internal Thread thread;
 
         public QuixNarrowPhaseCallbacks narrowPhaseCallbacks;
-        public Dictionary<Guid, PhyObject> allObjects = new Dictionary<Guid, PhyObject>();
+      //  public Dictionary<Guid, PhyObject> allObjects = new Dictionary<Guid, PhyObject>();
 
-        public Dictionary<Guid, PhyObject> OnContactListeners = new Dictionary<Guid, PhyObject>();
+       // public Dictionary<Guid, PhyObject> OnContactListeners = new Dictionary<Guid, PhyObject>();
     
 
         public bool Disposed = false;
@@ -95,7 +95,7 @@ namespace QuixPhysics
     
         internal void createObjects(Room room)
         {
-            int width = 10;
+           /* int width = 10;
             int max = 3000;
             var random = new Random();
             for (int a = 0; a < boxToCreate; a++)
@@ -118,7 +118,7 @@ namespace QuixPhysics
                // var b = Create(box,room);
             }
             timesPressedCreateBoxes++;
-            // Console.WriteLine("Statics size " + Simulation.Statics.Count);
+            // Console.WriteLine("Statics size " + Simulation.Statics.Count);*/
         }
         private void handleWorkers()
         {
@@ -165,7 +165,11 @@ namespace QuixPhysics
 
         }
         public void SendUpdate(){
-             var set = Simulation.Bodies.Sets[0];
+            foreach (var room in roomManager.rooms)
+            {
+                room.Value.factory.SendUpdate();
+            }
+           /*  var set = Simulation.Bodies.Sets[0];
                 string[] bodies2 = new string[allObjects.Count];
                 int bodiesAdded = 0;
 
@@ -210,7 +214,7 @@ namespace QuixPhysics
                 {
                     var slice = bodies2[0..bodiesAdded];
                     SendMessage("update", JsonConvert.SerializeObject(slice), connectionState.workSocket);
-                }
+                }*/
         }
         public void SendMessage(string type, Newtonsoft.Json.Linq.JObject message, Socket socket)
         {
@@ -227,7 +231,7 @@ namespace QuixPhysics
         }
 
 
-         public PhyObject Create(ObjectState state,Room room)
+       /* public PhyObject Create(ObjectState state,Room room)
         {
             PhyObject phy = null;
             if (state.uID == null || objects.ContainsKey(state.uID))
@@ -400,30 +404,8 @@ namespace QuixPhysics
             phy.Load(bodyHandle, connectionState, this, state,guid,room);
            
             return phy;
-        }
+        }*/
 
-        public PhyObject handleToPhyObject(BodyHandle handle)
-        {
-            PhyObject obj = objectsHandlers[handle];
-            return obj;
-        }
-        public PhyObject handleToPhyObject(StaticHandle handle)
-        {
-            PhyObject obj = staticObjectsHandlers[handle];
-
-            return obj;
-        }
-        public PhyObject collidableToPhyObject(CollidableReference reference)
-        {
-            if (reference.Mobility == CollidableMobility.Static)
-            {
-                return handleToPhyObject(reference.StaticHandle);
-            }
-            else
-            {
-                return handleToPhyObject(reference.BodyHandle);
-            }
-        }
         public void Close()
         {
             QuixConsole.WriteLine("Closing Simulator");
@@ -433,9 +415,12 @@ namespace QuixPhysics
 
             collidableMaterials.Dispose();
 
-            objects.Clear();
-            objectsHandlers.Clear();
-            staticObjectsHandlers.Clear();
+           
+
+            foreach (var room in roomManager.rooms)
+            {
+                room.Value.Dispose();
+            }
 
             //Simulation.Bodies.Dispose();
             // Simulation.Statics.Dispose();

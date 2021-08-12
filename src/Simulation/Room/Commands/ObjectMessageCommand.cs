@@ -15,10 +15,10 @@ namespace QuixPhysics
            string clientId = message["clientId"].ToString();
            string roomId = message["roomId"].ToString();
            
-           PhyObject p = simulator.objects[uID];
+           PhyObject p = room.factory.objects[uID];
            QuixConsole.Log("OnRead",p.state.type);
 
-           simulator.objects[uID].OnObjectMessage(mess,clientId,roomId);
+           room.factory.objects[uID].OnObjectMessage(mess,clientId,roomId);
         }
     }
 }

@@ -255,14 +255,14 @@ namespace QuixPhysics
         {
             if (state.mass == 0)
             {
-                simulator.staticObjectsHandlers.Remove(bodyHandle.staticHandle);
+                room.factory.staticObjectsHandlers.Remove(bodyHandle.staticHandle);
                 simulator.Simulation.Statics.Remove(bodyHandle.staticHandle);
             }
             else
             {
                 simulator.Simulation.Bodies.Remove(bodyHandle.bodyHandle);
             }
-            simulator.objects.Remove(state.uID);
+            room.factory.objects.Remove(state.uID);
 
             JObject j = new JObject();
             j["uID"] = state.uID;

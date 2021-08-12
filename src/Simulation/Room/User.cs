@@ -40,7 +40,7 @@ namespace QuixPhysics
             box.position = position;
 
 
-            var player = (Player2)simulator.Create(box, room);
+            var player = (Player2)room.Create(box);
             this.player = player;
             player.user = this;
             StartGemCount();

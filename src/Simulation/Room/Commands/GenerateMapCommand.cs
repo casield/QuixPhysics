@@ -36,7 +36,7 @@ namespace QuixPhysics
                     obj.Remove("_id");
                     var stri = JsonConvert.DeserializeObject<BoxState>(obj.ToJson());
                     stri.quaternion = JsonConvert.DeserializeObject<Quaternion>(obj["quat"].ToJson());
-                    var phy = this.simulator.Create(stri,room);
+                    var phy = room.Create(stri);
                      objects.Add(phy);
                 }
                 if (obj.Contains("radius"))
@@ -46,7 +46,7 @@ namespace QuixPhysics
                     obj.Remove("_id");
                     var stri = JsonConvert.DeserializeObject<SphereState>(obj.ToJson());
                     stri.quaternion = JsonConvert.DeserializeObject<Quaternion>(obj["quat"].ToJson());
-                    var phy = this.simulator.Create(stri,room);
+                    var phy = room.Create(stri);
                      objects.Add(phy);
                 }
             }

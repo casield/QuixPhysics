@@ -5,6 +5,8 @@ using System;
 using System.Collections.Generic;
 using System.Numerics;
 using ContentLoader;
+using Newtonsoft.Json;
+
 namespace QuixPhysics
 {
     public class PhyObjectFactory
@@ -14,11 +16,12 @@ namespace QuixPhysics
         Room room;
         public Dictionary<string, PhyObject> objects = new Dictionary<string, PhyObject>();
         Simulation Simulation;
-        public CollidableProperty<SimpleMaterial> collidableMaterials;
         public Dictionary<BodyHandle, PhyObject> objectsHandlers = new Dictionary<BodyHandle, PhyObject>();
         public Dictionary<StaticHandle, PhyObject> staticObjectsHandlers = new Dictionary<StaticHandle, PhyObject>();
-        
+
         public Dictionary<Guid, PhyObject> allObjects = new Dictionary<Guid, PhyObject>();
+
+        public Dictionary<Guid, PhyObject> OnContactListeners = new Dictionary<Guid, PhyObject>();
         public PhyObjectFactory(Room room)
         {
             this.room = room;
@@ -87,7 +90,7 @@ namespace QuixPhysics
                 boxDescription.Pose = new RigidPose(state.position, state.quaternion);
                 var bodyHandle = Simulation.Bodies.Add(boxDescription);
 
-                SimpleMaterial allocatedMat = collidableMaterials.Allocate(bodyHandle) = material;
+                SimpleMaterial allocatedMat = simulator.collidableMaterials.Allocate(bodyHandle) = material;
 
                 phy = SetUpPhyObject(new Handle { bodyHandle = bodyHandle }, state, guid, room);
 
@@ -101,7 +104,7 @@ namespace QuixPhysics
                 StaticDescription description = new StaticDescription(state.position, state.quaternion, collidableDescription);
                 StaticHandle handle = Simulation.Statics.Add(description);
 
-                collidableMaterials.Allocate(handle) = material;
+                simulator.collidableMaterials.Allocate(handle) = material;
                 phy = SetUpPhyObject(new Handle { staticHandle = handle }, state, guid, room);
 
                 staticObjectsHandlers.Add(handle, phy);
@@ -201,5 +204,62 @@ namespace QuixPhysics
 
             return phy;
         }
+
+        public void SendUpdate()
+        {
+            var set = Simulation.Bodies.Sets[0];
+            string[] bodies2 = new string[allObjects.Count];
+            int bodiesAdded = 0;
+
+
+
+            for (var bodyIndex = 0; bodyIndex < set.Count; ++bodyIndex)
+            {
+                try
+                {
+
+                    var handle = set.IndexToHandle[bodyIndex];
+                    if (objectsHandlers[handle].state.instantiate)
+                    {
+
+                        bodies2[bodyIndex] = objectsHandlers[handle].getJSON();
+                        bodiesAdded += 1;
+                    }
+
+
+                }
+                catch (KeyNotFoundException e)
+                {
+                    QuixConsole.Log("Key not found", e);
+                }
+
+            }
+
+
+            foreach (var item in staticObjectsHandlers)
+            {
+                if (item.Value.needUpdate)
+                {
+                    //bodies.Add(item.Value.getJSON());
+                    bodies2[bodiesAdded] = item.Value.getJSON();
+                    //QuixConsole.Log("Updating",item.Value.state.type,item.Value.state.position);
+                    item.Value.needUpdate = false;
+                    bodiesAdded += 1;
+                }
+            }
+
+            if (bodiesAdded > 0)
+            {
+                var slice = bodies2[0..bodiesAdded];
+                simulator.SendMessage("update", JsonConvert.SerializeObject(slice), simulator.connectionState.workSocket);
+            }
+        }
+        internal void Dispose()
+        {
+            objects.Clear();
+            objectsHandlers.Clear();
+            staticObjectsHandlers.Clear();
+        }
+
     }
 }

@@ -12,7 +12,7 @@ namespace QuixPhysics
         public override void Load(Handle bodyHandle, ConnectionState connectionState, Simulator simulator, ObjectState state, Guid guid, Room room)
         {
             base.Load(bodyHandle, connectionState, simulator, state, guid, room);
-            simulator.OnContactListeners.Add(guid,this);
+            room.factory.OnContactListeners.Add(guid,this);
         }
         public override void OnContact(PhyObject obj)
         {
