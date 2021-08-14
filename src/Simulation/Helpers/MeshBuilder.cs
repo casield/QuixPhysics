@@ -8,7 +8,7 @@ namespace ContentBuilder
 {
     public static class MeshBuilder
     {
-        class MaterialStubLoader : IMaterialStreamProvider
+        public class MaterialStubLoader : IMaterialStreamProvider
         {
             public Stream Open(string materialFilePath)
             {

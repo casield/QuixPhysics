@@ -6,12 +6,15 @@ using System.Numerics;
 using System.Text;
 using System.Threading.Tasks;
 using Aspose.ThreeD;
+using Aspose.ThreeD.Entities;
 using BepuPhysics.Collidables;
 using BepuUtilities;
+using ObjLoader.Loader.Loaders;
 using QuixTest;
 using SharpNav;
 using SharpNav.IO.Json;
 using SharpNav.Pathfinding;
+using static ContentBuilder.MeshBuilder;
 
 namespace QuixPhysics
 {
@@ -96,86 +99,119 @@ namespace QuixPhysics
                         {
                             //Mesh shape = simulator.Simulation.Shapes.GetShape<Mesh>(pobj.shapeIndex.Index);
                             string nameObj = "Content/" + state.mesh + ".obj";
-                            Scene loaderScene = new Scene();
-                            QuixConsole.Log("Is mesh!");
+                            /* Scene loaderScene = new Scene();
+                             QuixConsole.Log("Is mesh!");
 
 
-                            loaderScene.Open(nameObj);
+                             loaderScene.Open(nameObj);
 
 
-                            QuixConsole.Log("Entity", loaderScene.RootNode.ChildNodes.Count);
-                             var node = scene.RootNode.CreateChildNode(loaderScene.RootNode.ChildNodes[0].Entity);
+                             QuixConsole.Log("Entity", loaderScene.RootNode.ChildNodes.Count);
+                              var node = scene.RootNode.CreateChildNode(loaderScene.RootNode.ChildNodes[0].Entity);*/
 
+                            var PhyMesh = simulator.server.GetMesh(state.mesh);
 
-                             SetNode(state.position, state.halfSize, state.quaternion, ref node, resizer);
-
-
+                            using (FileStream fs = File.OpenRead(nameObj))
+                            {
+                               /* var result = new ObjLoaderFactory().Create(new MaterialStubLoader()).Load(fs);
+                                Aspose.ThreeD.Entities.Mesh mesh = new Aspose.ThreeD.Entities.Mesh();
+                                List<int> vertexIndex = new List<int>();
+                                
+                                foreach (var group in result.Groups)
+                                {
+                                    foreach (var face in group.Faces)
+                                    {
+                                        
+                                        for (int a = 0; a < face.Count; a++)
+                                        {
+                                            var facee = face[a];
+                                            
+                                            for (int b = 0; b < face.Count; b++)
+                                            {
+                                                var bb = face[b];
+                                                vertexIndex.Add(bb.VertexIndex);
+                                            }
+                                        }
+                                    }
+                                }
+                            }*/
                         }
-                        else
-                        {
-                            var entity = new Aspose.ThreeD.Entities.Box();
-                            var node = scene.RootNode.CreateChildNode(entity);
-                            QuaternionEx.GetAxisAngleFromQuaternion(state.quaternion, out Vector3 axis, out float angle);
 
 
-                            var noventa = Quaternion.CreateFromAxisAngle(new Vector3(axis.X, axis.Y, axis.Z), angle);
 
-                            SetNode(state.position, state.halfSize, noventa, ref node, resizer);
+                        
+                        // mesh.CreatePolygon()
 
-                        }
+
+                        //  SetNode(state.position, state.halfSize, state.quaternion, ref node, resizer);
 
 
                     }
+                    else
+                    {
+                        var entity = new Aspose.ThreeD.Entities.Box();
+                        var node = scene.RootNode.CreateChildNode(entity);
+                        QuaternionEx.GetAxisAngleFromQuaternion(state.quaternion, out Vector3 axis, out float angle);
+
+
+                        var noventa = Quaternion.CreateFromAxisAngle(new Vector3(axis.X, axis.Y, axis.Z), angle);
+
+                        SetNode(state.position, state.halfSize, noventa, ref node, resizer);
+
+                    }
+
+
                 }
-                scene.RootNode.Transform.Scale *= new Aspose.ThreeD.Utilities.Vector3(1, 1, 1);
-
-                using (FileStream fs = File.Create(FILES_DIR + name + ".obj"))
-                {
-                    scene.Save(fs, FileFormat.WavefrontOBJ);
-                    fs.Dispose();
-                }
-
-
-
             }
+            scene.RootNode.Transform.Scale *= new Aspose.ThreeD.Utilities.Vector3(1, 1, 1);
+
+            using (FileStream fs = File.Create(FILES_DIR + name + ".obj"))
+            {
+                scene.Save(fs, FileFormat.WavefrontOBJ);
+                fs.Dispose();
+            }
+
+
+
+        }
             return name;
         }
-        private void SetNode(Vector3 position, Vector3 size, Quaternion quaternion, ref Node node, float resizer)
-        {
+    private void SetNode(Vector3 position, Vector3 size, Quaternion quaternion, ref Node node, float resizer)
+    {
 
 
-            node.Transform.Translation = new Aspose.ThreeD.Utilities.Vector3((position.X / resizer), position.Y / resizer, (position.Z / resizer));
+        node.Transform.Translation = new Aspose.ThreeD.Utilities.Vector3((position.X / resizer), position.Y / resizer, (position.Z / resizer));
 
 
-            node.Transform.Rotation = new Aspose.ThreeD.Utilities.Quaternion(quaternion.W, quaternion.X, quaternion.Y, quaternion.Z);
-            node.Transform.Scale = new Aspose.ThreeD.Utilities.Vector3((size.X) / resizer, size.Y / resizer, size.Z / resizer);
-        }
-
-        public static bool PointInPoly(Vector3 pt, NavPolyId polyId, TiledNavMesh navMesh)
-        {
-            NavTile curTile;
-            NavPoly curPoly;
-            navMesh.TryGetTileAndPolyByRef(polyId, out curTile, out curPoly);
-
-            int nverts = curPoly.VertCount;
-            Vector3[] verts = curTile.Verts;
-
-            bool c = false;
-
-            for (int i = 0, j = nverts - 1; i < nverts; j = i++)
-            {
-                Vector3 vi = verts[i];
-                Vector3 vj = verts[j];
-                if (((vi.Z > pt.Z) != (vj.Z > pt.Z)) &&
-                    (pt.X < (vj.X - vi.X) * (pt.Z - vi.Z) / (vj.Z - vi.Z) + vi.X))
-                {
-                    c = !c;
-                }
-            }
-
-            return c;
-        }
-
-
+        node.Transform.Rotation = new Aspose.ThreeD.Utilities.Quaternion(quaternion.W, quaternion.X, quaternion.Y, quaternion.Z);
+        node.Transform.Scale = new Aspose.ThreeD.Utilities.Vector3((size.X) / resizer, size.Y / resizer, size.Z / resizer);
     }
+
+    public static bool PointInPoly(Vector3 pt, NavPolyId polyId, TiledNavMesh navMesh)
+    {
+        NavTile curTile;
+        NavPoly curPoly;
+        navMesh.TryGetTileAndPolyByRef(polyId, out curTile, out curPoly);
+
+        int nverts = curPoly.VertCount;
+        Vector3[] verts = curTile.Verts;
+
+        bool c = false;
+
+        for (int i = 0, j = nverts - 1; i < nverts; j = i++)
+        {
+            Vector3 vi = verts[i];
+            Vector3 vj = verts[j];
+            if (((vi.Z > pt.Z) != (vj.Z > pt.Z)) &&
+                (pt.X < (vj.X - vi.X) * (pt.Z - vi.Z) / (vj.Z - vi.Z) + vi.X))
+            {
+                c = !c;
+            }
+        }
+
+        return c;
+    }
+
+
+}
 }
