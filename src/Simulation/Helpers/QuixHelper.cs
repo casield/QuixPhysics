@@ -33,7 +33,12 @@ namespace QuixPhysics
 
 
                     }
-                    System.Console.Write(array[a].ToString());
+                    if(array[a]==null){
+                         System.Console.Write("null");
+                    }else{
+                         System.Console.Write(array[a].ToString());
+                    }
+                   
 
                 }
                 System.Console.WriteLine("");

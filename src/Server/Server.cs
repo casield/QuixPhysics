@@ -59,11 +59,9 @@ namespace QuixPhysics
             LoadMesh("Stadiums/CrocoLoco/piedra2");
             LoadMesh("Stadiums/CrocoLoco/stand_croco");
             LoadMesh("Stadiums/CrocoLoco/start_position");
-            LoadMesh("Stadiums/arena/Hoyo");
-            LoadMesh("Stadiums/arena/Cosa");
-            LoadMesh("Stadiums/arena/Montana1");
             LoadMesh("Stadiums/Test/Cube1");
             LoadMesh("Stadiums/Test/Cube2");
+            LoadMesh("Stadiums/Isla/Montana1");
             LoadMesh("newt");
             LoadMesh("15Cube");
             QuixConsole.Log("Reload meshes");

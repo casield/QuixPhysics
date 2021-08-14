@@ -17,9 +17,11 @@ namespace QuixPhysics
         public override void OnContact(PhyObject obj)
         {
 
-            if (obj is GolfBall2 || obj is Player2)
+            if (obj is GolfBall2)
             {
-                QuixConsole.Log("Contacted", obj.state.type);
+                Gem gem  = new Gem();
+                gem.Drop(room,GetPosition());
+               
                 var user = room.users[obj.state.owner];
                 user.gems.Update(((int)user.gems.value) + 1);
                 Destroy();
@@ -32,13 +34,13 @@ namespace QuixPhysics
 
         internal override void OnObjectMessage(string data, string clientId, string roomId)
         {
-            base.OnObjectMessage(data, clientId, roomId);
+           // base.OnObjectMessage(data, clientId, roomId);
             var player = room.users[clientId].player;
             player.lookObject.ChangeWatching(this);
 
         }
 
-        public override void Instantiate(Room room)
+        public override void Instantiate(Room room,Vector3 position)
         {
             throw new NotImplementedException();
         }

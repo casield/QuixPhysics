@@ -11,7 +11,7 @@ namespace QuixPhysics
     public class TrailProps
     {
         public float arriveDistance = 200;
-        public Vector3 targetExtend = new Vector3(100);
+        public Vector3 targetExtend = new Vector3(500);
 
         public int MinPathSizeToChange = 1;
         public int PathPointReloadTime = 1000;
@@ -194,6 +194,11 @@ namespace QuixPhysics
             return polys;
 
         }
+        
+        public static bool CheckPathValidity(Path path,NavPoint lastPoint){
+            
+            return path[path.Count-1]==lastPoint.Polygon;
+        }
 
 
         public bool SetTarget(Vector3 target)
@@ -220,7 +225,7 @@ namespace QuixPhysics
                         path = newPath;
                         Reset();
                         GoNextPoint();
-                        return true;
+                        return CheckPathValidity(path,endPoint);
 
                     }
                     else

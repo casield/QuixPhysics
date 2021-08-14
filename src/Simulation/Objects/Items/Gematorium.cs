@@ -17,7 +17,7 @@ namespace QuixPhysics
         public float velocity;
 
     }
-    public class Gematorium : PhyObject
+    public class Gematorium : Item
     {
 
         public List<FlyinGem> gems = new List<FlyinGem>();
@@ -41,16 +41,20 @@ namespace QuixPhysics
             CreateGems();
 
             AddWorker(new PhyInterval(1, simulator)).Tick += Update;
-           // AddWorker(new PhyInterval(1000,simulator)).Completed+=ThrowGem;
+            AddWorker(new PhyInterval(10000,simulator)).Completed+=ThrowGem;
+            ThrowGem();
         }
 
         private void ThrowGem()
         {
+            int vel = 100;
             if(random.Next(0,10)>5){
-                QuixConsole.Log("Created Gem");
+               // QuixConsole.Log("Created Gem");
                var gem = new Gem();
-               gem.Instantiate(room);
-               gem.SetPosition(GetPosition()+new Vector3(0,200,0));
+               gem.Drop(room,GetPosition()+new Vector3(0,100,0));
+
+               var XZ = random.Next(-vel,vel);
+               gem.bodyReference.Velocity.Linear = new Vector3(XZ,random.Next(vel/3,vel),XZ);
                
             }
         }
@@ -70,7 +74,7 @@ namespace QuixPhysics
                 float velocity = ((float)(random.Next(-10, 10)) / 3000);
                 velocity = velocity != 0 ? velocity : -0.001f;
                 // QuixConsole.Log("Velocity",velocity);
-                simulator.Simulation.Statics.GetDescription(phygem.bodyHandle.staticHandle, out description);
+                simulator.Simulation.Statics.GetDescription(phygem.handle.staticHandle, out description);
                 FlyinGem flyinGem = new FlyinGem() { direction = 1, gem = phygem, description = description, position = pos, velocity = velocity };
 
 
@@ -104,7 +108,7 @@ namespace QuixPhysics
                     newPos.Y += y * distance / 3;
                     gem.description.Pose.Position = newPos;
 
-                    simulator.Simulation.Statics.ApplyDescription(gem.gem.bodyHandle.staticHandle, gem.description);
+                    simulator.Simulation.Statics.ApplyDescription(gem.gem.handle.staticHandle, gem.description);
                     gem.rotation += gem.velocity;
                     gem.rotationY += 0.001f;
                     gem.gem.needUpdate = true;
@@ -135,5 +139,9 @@ namespace QuixPhysics
             return state;
         }
 
+        public override void Instantiate(Room room,Vector3 position)
+        {
+            //))
+        }
     }
 }

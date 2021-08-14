@@ -81,6 +81,7 @@ namespace QuixPhysics
                 collidable = true,
                 guid = guid
             };
+            
             if (state.quaternion == new Quaternion())
             {
                 state.quaternion = Quaternion.Identity;
@@ -195,6 +196,8 @@ namespace QuixPhysics
             {
                 triangles[i] = new Triangle(meshContent.Triangles[i].A, meshContent.Triangles[i].B, meshContent.Triangles[i].C);
             }
+
+            QuixConsole.Log("Scale",scale);
 
             // scale.Y *=-1;
             mesh = new Mesh(triangles, scale, simulator.bufferPool);

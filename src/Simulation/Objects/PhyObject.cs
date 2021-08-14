@@ -33,7 +33,7 @@ namespace QuixPhysics
     public class PhyObject
     {
         public ObjectState state;
-        public Handle bodyHandle;
+        public Handle handle;
         internal Simulator simulator;
         internal bool updateRotation = true;
         internal ConnectionState connectionState;
@@ -60,22 +60,46 @@ namespace QuixPhysics
         {
 
         }
+        /// <summary>
+        /// This method is called when the object is instantiated on the factory and has a Handle.
+        /// </summary>
+        /// <param name="bodyHandle"></param>
+        /// <param name="connectionState"></param>
+        /// <param name="simulator"></param>
+        /// <param name="state"></param>
+        /// <param name="guid"></param>
+        /// <param name="room"></param>
         public virtual void Load(Handle bodyHandle, ConnectionState connectionState, Simulator simulator, ObjectState state, Guid guid, Room room)
         {
-            this.connectionState = connectionState;
-            this.bodyHandle = bodyHandle;
-            this.state = state;
-            this.simulator = simulator;
+            Constructor(connectionState, simulator, room);
 
+            this.handle = bodyHandle;
+            this.state = state;
             this.guid = guid;
-            this.room = room;
 
             SetReference();
             SetDescription();
 
-
-
             SendCreateMessage();
+        }
+
+        /// <summary>
+        /// This method intitiates the PhyObject. It should be called when an instance of the phyobject is active and the factory instantiates it.
+        /// </summary>
+        /// <param name="connectionState"></param>
+        /// <param name="simulator"></param>
+        /// <param name="state"></param>
+        /// <param name="guid"></param>
+        /// <param name="room"></param>
+        public void Constructor(ConnectionState connectionState, Simulator simulator, Room room)
+        {
+            this.connectionState = connectionState;
+
+
+            this.simulator = simulator;
+
+
+            this.room = room;
         }
 
         private void SetDescription()
@@ -83,13 +107,13 @@ namespace QuixPhysics
             if (state.mass == 0)
             {
                 StaticDescription description;
-                simulator.Simulation.Statics.GetDescription(bodyHandle.staticHandle, out description);
+                simulator.Simulation.Statics.GetDescription(handle.staticHandle, out description);
                 staticDescription = description;
             }
             else
             {
                 BodyDescription description;
-                simulator.Simulation.Bodies.GetDescription(bodyHandle.bodyHandle, out description);
+                simulator.Simulation.Bodies.GetDescription(handle.bodyHandle, out description);
                 bodyDescription = description;
             }
         }
@@ -119,7 +143,7 @@ namespace QuixPhysics
             {
 
                 staticDescription.Pose.Position = position;
-                simulator.Simulation.Statics.ApplyDescription(bodyHandle.staticHandle, staticDescription);
+                simulator.Simulation.Statics.ApplyDescription(handle.staticHandle, staticDescription);
             }
             else
             {
@@ -144,7 +168,7 @@ namespace QuixPhysics
             {
                 throw new Exception(state.type + " is not dynamic");
             }
-            return simulator.Simulation.Bodies.GetBodyReference(bodyHandle.bodyHandle);
+            return simulator.Simulation.Bodies.GetBodyReference(handle.bodyHandle);
         }
 
         public StaticReference GetStaticReference()
@@ -153,7 +177,7 @@ namespace QuixPhysics
             {
                 throw new Exception(state.type + " is not static");
             }
-            return simulator.Simulation.Statics.GetStaticReference(bodyHandle.staticHandle);
+            return simulator.Simulation.Statics.GetStaticReference(handle.staticHandle);
         }
 
 
@@ -167,7 +191,7 @@ namespace QuixPhysics
         {
             if (state.mass != 0)
             {
-                simulator.Simulation.Awakener.AwakenBody(bodyHandle.bodyHandle);
+                simulator.Simulation.Awakener.AwakenBody(handle.bodyHandle);
             }
         }
 
@@ -214,7 +238,7 @@ namespace QuixPhysics
             if (state.mass != 0)
             {
                 BodyDescription description;
-                simulator.Simulation.Bodies.GetDescription(bodyHandle.bodyHandle, out description);
+                simulator.Simulation.Bodies.GetDescription(handle.bodyHandle, out description);
 
                 state.position = description.Pose.Position;
                 if (updateRotation)
@@ -229,7 +253,7 @@ namespace QuixPhysics
             if (state.mass == 0)
             {
                 StaticDescription description;
-                simulator.Simulation.Statics.GetDescription(bodyHandle.staticHandle, out description);
+                simulator.Simulation.Statics.GetDescription(handle.staticHandle, out description);
 
                 state.position = description.Pose.Position;
                 if (updateRotation)
@@ -243,6 +267,7 @@ namespace QuixPhysics
             {
                 QuixConsole.Log("Error", state.type);
             }
+            
 
             return state.getJson();
         }
@@ -265,12 +290,12 @@ namespace QuixPhysics
         {
             if (state.mass == 0)
             {
-                room.factory.staticObjectsHandlers.Remove(bodyHandle.staticHandle);
-                simulator.Simulation.Statics.Remove(bodyHandle.staticHandle);
+                room.factory.staticObjectsHandlers.Remove(handle.staticHandle);
+                simulator.Simulation.Statics.Remove(handle.staticHandle);
             }
             else
             {
-                simulator.Simulation.Bodies.Remove(bodyHandle.bodyHandle);
+                simulator.Simulation.Bodies.Remove(handle.bodyHandle);
             }
             room.factory.objects.Remove(state.uID);
 

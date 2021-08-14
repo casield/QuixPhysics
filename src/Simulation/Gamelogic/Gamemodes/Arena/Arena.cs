@@ -27,10 +27,12 @@ namespace QuixPhysics
         private string navMeshName;
         private AIManager aIManager;
         public event PhyAction OnNavMeshReadyListeners;
+        public NavMeshQuery navMeshQuery;
 
         public Arena(Simulator simulator, Room room) : base(simulator, room)
         {
             this.room = room;
+            this.room.gamemode = this;
             this.simulator = simulator;
         }
         public override void Init()
@@ -92,6 +94,7 @@ namespace QuixPhysics
             var objs = command.GenerateMap("isla", room);
             navObjects.AddRange(objs);
 
+
             userLoader.OnMapsLoaded();
             aIManager.OnMapsLoaded();
             room.factory.createObjects();
@@ -107,7 +110,7 @@ namespace QuixPhysics
             aIManager.OnStart();
 
 
-            QuixConsole.Log("NavMesh", navMeshName);
+            QuixConsole.Log("NavMesh ready", navMeshName);
         }
 
         private void GenerateNavMesh()
@@ -136,6 +139,8 @@ namespace QuixPhysics
             qinavMesh.SaveNavMeshToFile(navMeshName);
             //Read it from .snb
             tiledNavMesh = qinavMesh.GetTiledNavMesh(navMeshName);
+
+            navMeshQuery = new NavMeshQuery(navMesh, 1048);
 
             OnNavMeshReadyListeners?.Invoke();
 

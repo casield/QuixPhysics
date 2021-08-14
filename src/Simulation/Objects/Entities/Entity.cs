@@ -22,27 +22,55 @@ namespace QuixPhysics
         void OnTrailActive();
 
     }
+    public class EntityStats
+    {
+        public float force;
+
+        public HelperItem[] items = new HelperItem[3];
+        /// <summary>
+        /// This variable changes when the owner gives him attention.
+        /// Value is between -10 - 10
+        /// </summary>
+        public float ownerLove = 10 / 8;
+
+        /// <summary>
+        /// Experience is gained when the helper succesfully used an item. Experience is divided by 2 when dies.
+        /// </summary>
+        public float experience = 1;
+        public float life = 10;
+
+        /// <summary>
+        /// How far the entity can look
+        /// </summary>
+        public float vision = 200;
+        public void SetItem(HelperItem item, int index)
+        {
+            items[index] = item;
+        }
+    }
 
     public abstract class Entity : PhyObject, EntityLifeLoop
     {
         QuixNavMesh navMesh;
         Arena arena;
         internal Vehicle vehicle;
-        private NavMeshQuery navMeshQuery;
         internal Trail trail;
-        private PhyObject target;
+        public PhyObject target;
 
         public Vector3 extend { get; set; }
         private PhyWaiter stuckWaiter;
         private Vector3 lastPosition;
+        public EntityStats stats;
 
+        public Entity()
+        {
+            stats = new EntityStats();
+        }
 
         public override void Load(Handle bodyHandle, ConnectionState connectionState, Simulator simulator, ObjectState state, Guid guid, Room room)
         {
             base.Load(bodyHandle, connectionState, simulator, state, guid, room);
             arena = (Arena)room.gamemode;
-
-
         }
 
         public virtual void Init()
@@ -51,9 +79,9 @@ namespace QuixPhysics
             vehicle = new Vehicle(this, new VehicleProps() { maxSpeed = new Vector3(.1f, .1f, .1f) });
             vehicle.isActive = true;
 
-            navMeshQuery = new NavMeshQuery(arena.tiledNavMesh, 2048);
+            arena.navMeshQuery = new NavMeshQuery(arena.tiledNavMesh, 2048);
 
-            trail = new Trail(simulator, this, navMeshQuery);
+            trail = new Trail(simulator, this, arena.navMeshQuery);
             trail.OnLastPoint += OnLastPoint;
             stuckWaiter = new PhyWaiter(4000);
 
@@ -107,6 +135,7 @@ namespace QuixPhysics
             AfterUpdate();
         }
 
+        #region Entity Actions
         private bool IsFalling()
         {
             return GetPosition().Y < -50;
@@ -136,6 +165,8 @@ namespace QuixPhysics
             LastPolygon(np);
 
         }
+
+        #endregion
 
         #region Abstract & virtual classes
         /// <summary>

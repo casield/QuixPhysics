@@ -7,8 +7,6 @@ namespace QuixPhysics
     public class LookObject : PhyObject
     {
         private Player2 player2;
-        public StaticReference staticReference;
-
         public PhyObject watching;
 
         private float yAdded = 0;
@@ -58,14 +56,12 @@ namespace QuixPhysics
         {
             ChangeWatching(player2);
         }
-
-        private void SetPosition(Vector3 position)
+        private new void SetPosition(Vector3 position)
         {
             staticReference.Pose.Position = position;
             staticReference.Pose.Position.Y = staticReference.Pose.Position.Y + yAdded + YAlways;
             needUpdate = true;
         }
-
         public void AddY(float y)
         {
             yAdded += y;

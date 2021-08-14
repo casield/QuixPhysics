@@ -4,10 +4,12 @@ namespace QuixPhysics{
     {
         Helper helper;
         public bool finished = false;
+
         public HelperItem(Helper helper){
             this.helper = helper;
         }
         public abstract void Activate();
+        public abstract void Desactivate();
         public abstract void Update();
 
         public abstract bool OnLastPolygon();
