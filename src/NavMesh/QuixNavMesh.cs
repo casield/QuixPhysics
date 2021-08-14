@@ -143,7 +143,7 @@ namespace QuixPhysics
                         // mesh.CreatePolygon()
 
 
-                        //  SetNode(state.position, state.halfSize, state.quaternion, ref node, resizer);
+                          SetNode(state.position, state.halfSize, state.quaternion, ref node, resizer);
 
 
                     }
