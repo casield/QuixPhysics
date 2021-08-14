@@ -99,7 +99,7 @@ namespace QuixPhysics
                         {
                             //Mesh shape = simulator.Simulation.Shapes.GetShape<Mesh>(pobj.shapeIndex.Index);
                             string nameObj = "Content/" + state.mesh + ".obj";
-                            /* Scene loaderScene = new Scene();
+                             Scene loaderScene = new Scene();
                              QuixConsole.Log("Is mesh!");
 
 
@@ -107,7 +107,7 @@ namespace QuixPhysics
 
 
                              QuixConsole.Log("Entity", loaderScene.RootNode.ChildNodes.Count);
-                              var node = scene.RootNode.CreateChildNode(loaderScene.RootNode.ChildNodes[0].Entity);*/
+                              var node = scene.RootNode.CreateChildNode(loaderScene.RootNode.ChildNodes[0].Entity);
 
                             var PhyMesh = simulator.server.GetMesh(state.mesh);
 
