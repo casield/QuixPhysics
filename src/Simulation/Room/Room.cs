@@ -28,6 +28,7 @@ namespace QuixPhysics
 
         public Room(Simulator simulator, RoomInfo info, ConnectionState connectionState)
         {
+            simulator.server.ReloadMeshes();
             this.props = info;
             this.simulator = simulator;
             factory = new PhyObjectFactory(this);
@@ -35,6 +36,7 @@ namespace QuixPhysics
             this.connectionState = connectionState;
             //simulator.createObjects(this);
             SetGameMode(new Arena(simulator, this));
+
 
 
         }

@@ -62,6 +62,7 @@ namespace QuixPhysics
             LoadMesh("Stadiums/Test/Cube1");
             LoadMesh("Stadiums/Test/Cube2");
             LoadMesh("Stadiums/Isla/Montana1");
+            LoadMesh("Stadiums/Isla/Montana2");
             LoadMesh("newt");
             LoadMesh("15Cube");
             QuixConsole.Log("Reload meshes");

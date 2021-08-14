@@ -82,11 +82,7 @@ namespace QuixPhysics
         }
         public string CreateMesh(List<PhyObject> objects, string name, float resizer)
         {
-
-
             int repeat = 1;
-
-
             for (int i = 0; i < repeat; i++)
             {
                 Scene scene = new Scene();
@@ -96,52 +92,44 @@ namespace QuixPhysics
                     {
                         BoxState state = (BoxState)pobj.state;
 
-                        var entity = new Aspose.ThreeD.Entities.Box();
-                        var node = scene.RootNode.CreateChildNode(entity);
-
                         if (state.isMesh)
                         {
-                            /* Mesh shape = simulator.Simulation.Shapes.GetShape<Mesh>(pobj.shapeIndex.Index);
-                             Vector3 max;
-                             Vector3 min;
+                            //Mesh shape = simulator.Simulation.Shapes.GetShape<Mesh>(pobj.shapeIndex.Index);
+                            string nameObj = "Content/" + state.mesh + ".obj";
+                            Scene loaderScene = new Scene();
+                            QuixConsole.Log("Is mesh!");
 
-                             shape.ComputeBounds(state.quaternion, out min, out max);
 
-                             Vector3 size = Vector3.Subtract(max, min);
+                            loaderScene.Open(nameObj);
 
-                             QuixConsole.Log("Mesh " + state.type, min, max);
-                             QuixConsole.Log("Mesh size", size);
-                             node.Transform.Scale = new Aspose.ThreeD.Utilities.Vector3(size.X / resizer, size.Y / resizer, size.Z / resizer);
-                             node.Transform.Translation = new Aspose.ThreeD.Utilities.Vector3(-(state.position.X / resizer),( state.position.Y / resizer), -(state.position.Z / resizer));
-                             //node.Transform.*/
+
+                            QuixConsole.Log("Entity", loaderScene.RootNode.ChildNodes.Count);
+                             var node = scene.RootNode.CreateChildNode(loaderScene.RootNode.ChildNodes[0].Entity);
+
+
+                             SetNode(state.position, state.halfSize, state.quaternion, ref node, resizer);
+
+
                         }
                         else
                         {
-
-                            var size = state.halfSize;
-
-
-                            Vector3 position = state.position;
-
-
-
-                            node.Transform.Translation = new Aspose.ThreeD.Utilities.Vector3((position.X / resizer), position.Y / resizer, (position.Z / resizer));
-                            node.Transform.Scale = new Aspose.ThreeD.Utilities.Vector3((size.X) / resizer, size.Y / resizer, size.Z / resizer);
-
-
+                            var entity = new Aspose.ThreeD.Entities.Box();
+                            var node = scene.RootNode.CreateChildNode(entity);
                             QuaternionEx.GetAxisAngleFromQuaternion(state.quaternion, out Vector3 axis, out float angle);
 
-                             var noventa = Quaternion.CreateFromAxisAngle(new Vector3(-axis.X, -axis.Y, -axis.Z), -angle);
 
-                            node.Transform.Rotation = new Aspose.ThreeD.Utilities.Quaternion(noventa.W,noventa.X,noventa.Y,noventa.Z);
+                            var noventa = Quaternion.CreateFromAxisAngle(new Vector3(axis.X, axis.Y, axis.Z), angle);
+
+                            SetNode(state.position, state.halfSize, noventa, ref node, resizer);
 
                         }
 
 
                     }
                 }
+                scene.RootNode.Transform.Scale *= new Aspose.ThreeD.Utilities.Vector3(1, 1, 1);
 
-                using (FileStream fs = File.Create(FILES_DIR + name +".obj"))
+                using (FileStream fs = File.Create(FILES_DIR + name + ".obj"))
                 {
                     scene.Save(fs, FileFormat.WavefrontOBJ);
                     fs.Dispose();
@@ -152,31 +140,41 @@ namespace QuixPhysics
             }
             return name;
         }
+        private void SetNode(Vector3 position, Vector3 size, Quaternion quaternion, ref Node node, float resizer)
+        {
 
-        public static bool PointInPoly(Vector3 pt,NavPolyId polyId,TiledNavMesh navMesh)
-		{
+
+            node.Transform.Translation = new Aspose.ThreeD.Utilities.Vector3((position.X / resizer), position.Y / resizer, (position.Z / resizer));
+
+
+            node.Transform.Rotation = new Aspose.ThreeD.Utilities.Quaternion(quaternion.W, quaternion.X, quaternion.Y, quaternion.Z);
+            node.Transform.Scale = new Aspose.ThreeD.Utilities.Vector3((size.X) / resizer, size.Y / resizer, size.Z / resizer);
+        }
+
+        public static bool PointInPoly(Vector3 pt, NavPolyId polyId, TiledNavMesh navMesh)
+        {
             NavTile curTile;
             NavPoly curPoly;
-            navMesh.TryGetTileAndPolyByRef(polyId,out curTile,out curPoly);
+            navMesh.TryGetTileAndPolyByRef(polyId, out curTile, out curPoly);
 
             int nverts = curPoly.VertCount;
             Vector3[] verts = curTile.Verts;
-            
-			bool c = false;
 
-			for (int i = 0, j = nverts - 1; i < nverts; j = i++)
-			{
-				Vector3 vi = verts[i];
-				Vector3 vj = verts[j];
-				if (((vi.Z > pt.Z) != (vj.Z > pt.Z)) &&
-					(pt.X < (vj.X - vi.X) * (pt.Z - vi.Z) / (vj.Z - vi.Z) + vi.X))
-				{
-					c = !c;
-				}
-			}
+            bool c = false;
 
-			return c;
-		}
+            for (int i = 0, j = nverts - 1; i < nverts; j = i++)
+            {
+                Vector3 vi = verts[i];
+                Vector3 vj = verts[j];
+                if (((vi.Z > pt.Z) != (vj.Z > pt.Z)) &&
+                    (pt.X < (vj.X - vi.X) * (pt.Z - vi.Z) / (vj.Z - vi.Z) + vi.X))
+                {
+                    c = !c;
+                }
+            }
+
+            return c;
+        }
 
 
     }

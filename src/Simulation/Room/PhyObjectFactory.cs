@@ -86,6 +86,7 @@ namespace QuixPhysics
             {
                 state.quaternion = Quaternion.Identity;
             }
+           
             if (state.mass != 0)
             {
                 BodyDescription boxDescription = BodyDescription.CreateDynamic(state.position, bodyInertia,
@@ -196,10 +197,7 @@ namespace QuixPhysics
             {
                 triangles[i] = new Triangle(meshContent.Triangles[i].A, meshContent.Triangles[i].B, meshContent.Triangles[i].C);
             }
-
             QuixConsole.Log("Scale",scale);
-
-            // scale.Y *=-1;
             mesh = new Mesh(triangles, scale, simulator.bufferPool);
 
 
