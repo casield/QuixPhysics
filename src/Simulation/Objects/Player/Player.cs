@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Numerics;
 using System.Threading.Tasks;
 using BepuPhysics;
@@ -51,7 +52,8 @@ namespace QuixPhysics
         private float maxDistanceWithBall = 20;
         private bool canShoot;
 
-        private IGauntlet gauntlet;
+        private IGauntlet activeGauntlet;
+        private Dictionary<string, IGauntlet> gauntlets = new Dictionary<string, IGauntlet>();
         internal User user;
 
         public bool cameraLocked = false;
@@ -85,7 +87,7 @@ namespace QuixPhysics
 
             SetPositionToStartPoint();
             CreateBall();
-            CreateGauntlet();
+            CreateGauntlets();
             CreateLookObject();
 
 
@@ -97,11 +99,30 @@ namespace QuixPhysics
         }
 
 
-        private void CreateGauntlet()
+        private void CreateGauntlets()
         {
-            this.gauntlet = new AtractGauntlet();
-            this.gauntlet.AddPlayer(this);
-            this.gauntlet.Init();
+            AddGauntletToAvailable(new AtractGauntlet());
+            AddGauntletToAvailable(new ItemGauntlet());
+
+            ChangeGauntlet("item");
+        }
+        private void AddGauntletToAvailable(IGauntlet gauntlet)
+        {
+
+            gauntlet.AddPlayer(this);
+            gauntlet.Init();
+            QuixConsole.Log("Gauntlet name", gauntlet.name);
+            gauntlets.Add(gauntlet.name, gauntlet);
+        }
+        public void ChangeGauntlet(string type)
+        {
+            if(activeGauntlet!=null){
+                activeGauntlet.OnChange();
+            }
+            
+            activeGauntlet = gauntlets[type];
+            activeGauntlet.OnActivate();
+
         }
         private void CreateLookObject()
         {
@@ -117,18 +138,18 @@ namespace QuixPhysics
         }
         private void CreateBall()
         {
-             SphereState ball = new SphereState();
-             ball.radius = 3;
-             ball.position = state.position;
-             ball.quaternion = Quaternion.Identity;
-             ball.type = "GolfBall2";
-             ball.mass = 1;
-             ball.instantiate = true;
-             ball.owner = state.owner;
-             ball.mesh = "Objects/Balls/Vanilla/Vanilla";
+            SphereState ball = new SphereState();
+            ball.radius = 3;
+            ball.position = state.position;
+            ball.quaternion = Quaternion.Identity;
+            ball.type = "GolfBall2";
+            ball.mass = 1;
+            ball.instantiate = true;
+            ball.owner = state.owner;
+            ball.mesh = "Objects/Balls/Vanilla/Vanilla";
 
-             golfball = (GolfBall2)room.Create(ball);
-             golfball.SetPlayer(this);
+            golfball = (GolfBall2)room.Create(ball);
+            golfball.SetPlayer(this);
         }
         public bool IsSnapped()
         {
@@ -154,7 +175,11 @@ namespace QuixPhysics
                 TickRotation();
 
                 Agent.Tick();
-                lookObject.Update();
+                if (lookObject != null)
+                {
+                    lookObject.Update();
+                }
+
             }
 
         }
@@ -302,8 +327,8 @@ namespace QuixPhysics
             golfball.bodyReference.Pose.Position = newPos;
         }
         public void SetPositionToStartPoint()
-        {  
-                bodyReference.Pose.Position = room.gamemode.GetStartPoint(this.user);
+        {
+            bodyReference.Pose.Position = room.gamemode.GetStartPoint(this.user);
         }
 
         public Vector2 GetXYRotation()
@@ -410,18 +435,25 @@ namespace QuixPhysics
         }
         public void UseGauntlet(bool activate)
         {
-            gauntlet.Activate(activate);
+            if (activeGauntlet != null)
+            {
+                activeGauntlet.Activate(activate);
+            }
         }
         public void Swipe(double degree, Vector3 direction)
         {
-            gauntlet.Swipe(degree, direction);
+            if (activeGauntlet != null)
+            {
+                activeGauntlet.Swipe(degree, direction);
+            }
+
         }
 
         public override void Destroy()
         {
             base.Destroy();
             worker.Destroy();
-            
+
         }
     }
 

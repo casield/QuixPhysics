@@ -151,7 +151,7 @@ namespace QuixPhysics
 
         public override bool OnLastPolygon()
         {
-            helper.vehicle.Arrive(helper.target.GetPosition());
+            helper.vehicle.Arrive(helper.target.GetPosition()+helper.extend);
             if (helper.Distance(helper.target.GetPosition()) < 20)
             {
                 return true;

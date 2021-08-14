@@ -5,66 +5,72 @@ using BepuUtilities;
 
 namespace QuixPhysics
 {
-    public class AtractGauntlet : IGauntlet
+    public class AtractGauntlet : Gauntlet
     {
-        Player2 Player;
         BodyReference golfBallRef;
         Vehicle vehicle;
         private PhyTimeOut shootInterval;
-        private bool canUse = false;
 
         private bool hasCharge = false;
 
         public bool infinite = true;
 
-        public void Init()
+        public AtractGauntlet()
         {
-            if (Player.golfball != null)
+            name = "atract";
+        }
+
+        public override void Init()
+        {
+            if (player.golfball != null)
             {
-                var timer = new PhyInterval(1, Player.simulator);
-                timer.Completed += OnTick;
-                golfBallRef = Player.golfball.GetBodyReference();
-                vehicle = new Vehicle(Player.golfball, new VehicleProps());
+
+                golfBallRef = player.golfball.GetBodyReference();
+                vehicle = new Vehicle(player.golfball, new VehicleProps());
                 vehicle.isActive = false;
-                Player.simulator.Simulation.Awakener.AwakenBody(golfBallRef.Handle);
-                Player.ShootListeners += OnShoot;
+                player.simulator.Simulation.Awakener.AwakenBody(golfBallRef.Handle);
+                player.ShootListeners += OnShoot;
             }
 
         }
-        public void Activate(bool active)
+        
+        public override void Activate(bool active)
         {
+
             if (hasCharge)
             {
 
 
                 CreateInterval();
-                canUse = true;
+                isActive = true;
                 hasCharge = false;
 
 
             }
-            if (canUse)
+            if (isActive)
             {
                 vehicle.isActive = active;
                 if (active)
                 {
-                    Player.simulator.Simulation.Awakener.AwakenBody(golfBallRef.Handle);
+                    player.simulator.Simulation.Awakener.AwakenBody(golfBallRef.Handle);
                 }
-                
-                if(!infinite){
-                     Player.cameraLocked = true;
+
+                if (!infinite)
+                {
+                    player.cameraLocked = true;
                 }
-               
+
             }
 
 
         }
-        public void Swipe(double degree, Vector3 dir)
+        public override void Swipe(double degree, Vector3 dir)
         {
-            if (canUse)
+            if (isActive)
             {
+                
                 hasCharge = false;
-                Player.simulator.Simulation.Awakener.AwakenBody(golfBallRef.Handle);
+                player.simulator.Simulation.Awakener.AwakenBody(golfBallRef.Handle);
                 float force = 40;
                 QuixConsole.Log("Swipé log", degree);
 
@@ -83,10 +89,10 @@ namespace QuixPhysics
 
         private void OnShoot(ShootMessage message)
         {
-            canUse = true;
+            isActive = true;
             hasCharge = true;
-            if (!(Player.lookObject.watching is Player2))
-            { Player.cameraLocked = true; }
+            if (!(player.lookObject.watching is Player2))
+            { player.cameraLocked = true; }
             CreateInterval();
 
 
@@ -96,7 +102,7 @@ namespace QuixPhysics
         {
             if (shootInterval == null)
             {
-                shootInterval = new PhyTimeOut(2000, Player.simulator, true);
+                shootInterval = new PhyTimeOut(2000, player.simulator, true);
                 shootInterval.Completed += OnShooTimeCompleted;
             }
             else
@@ -113,27 +119,27 @@ namespace QuixPhysics
         {
             if (!infinite)
             {
-                canUse = false;
+                isActive = false;
                 vehicle.isActive = false;
 
             }
             shootInterval = null;
-            Player.cameraLocked = false;
+            player.cameraLocked = false;
         }
 
         private bool isInit()
         {
-            return Player != null && vehicle != null;
+            return player != null && vehicle != null;
         }
 
-        private void OnTick()
+        public override void Update()
         {
-            if (Player != null && Player.bodyReference.Exists)
+            if (player != null && player.bodyReference.Exists)
             {
 
-                vehicle.Arrive(Player.lookObject.staticReference.Pose.Position);
+                vehicle.Arrive(player.lookObject.staticReference.Pose.Position);
                 vehicle.Update();
-                if (Player.IsSnapped())
+                if (player.IsSnapped())
                 {
 
                     vehicle.isActive = false;
@@ -141,9 +147,14 @@ namespace QuixPhysics
             }
         }
 
-        public void AddPlayer(Player2 player)
+        public override void OnActivate()
         {
-            this.Player = player;
+            AddUpdateWorker();
+        }
+
+        public override void OnChange()
+        {
+            RemoveUpdateWorker();
         }
     }
 }

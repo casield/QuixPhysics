@@ -61,7 +61,7 @@ namespace QuixPhysics
 
         }
         /// <summary>
-        /// This method is called when the object is instantiated on the factory and has a Handle.
+        /// This method is called when the object is instantiated on the factory.
         /// </summary>
         /// <param name="bodyHandle"></param>
         /// <param name="connectionState"></param>
@@ -144,6 +144,7 @@ namespace QuixPhysics
 
                 staticDescription.Pose.Position = position;
                 simulator.Simulation.Statics.ApplyDescription(handle.staticHandle, staticDescription);
+                needUpdate = true;
             }
             else
             {

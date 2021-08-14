@@ -92,6 +92,15 @@ namespace QuixPhysics
             GenerateMapCommand command = new GenerateMapCommand(simulator);
 
             var objs = command.GenerateMap("isla", room);
+            foreach (var item in objs)
+            {
+                if(item.state.mesh != null){
+                     if(item.state.mesh.Contains("Montana1")){
+                    QuixConsole.Log("Montana1",item.state.quaternion);
+                }
+                }
+               
+            }
             navObjects.AddRange(objs);
 
 
@@ -125,7 +134,7 @@ namespace QuixPhysics
 
             settings.CellSize = 0.3f * mulre;
             settings.CellHeight = 0.2f * mulre;
-            settings.MaxClimb = 0.9f * mulre;
+            settings.MaxClimb = 0.1f * mulre;
             settings.AgentHeight = 2.0f * mulre;
             settings.AgentRadius = 0.6f * mulre;
 

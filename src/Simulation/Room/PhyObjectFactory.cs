@@ -60,7 +60,7 @@ namespace QuixPhysics
             }
             else
             {
-                QuixConsole.WriteLine("Objects already had that key");
+                QuixConsole.Log("Objects already had that key",state.uID);
             }
             return phy;
 
@@ -197,7 +197,6 @@ namespace QuixPhysics
             {
                 triangles[i] = new Triangle(meshContent.Triangles[i].A, meshContent.Triangles[i].B, meshContent.Triangles[i].C);
             }
-            QuixConsole.Log("Scale",scale);
             mesh = new Mesh(triangles, scale, simulator.bufferPool);
 
 

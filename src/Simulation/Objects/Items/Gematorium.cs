@@ -27,10 +27,12 @@ namespace QuixPhysics
         private Random random = new Random();
         private int maxDistanceGems = 70;
         public static float SIZE = 160;
+        private User user;
 
-        public Gematorium()
+        public Gematorium(User user)
         {
            // QuixConsole.Log("Create only 1");
+           this.user=user;
         }
         public override void Load(Handle bodyHandle, ConnectionState connectionState, Simulator simulator, ObjectState state, Guid guid, Room room)
         {
@@ -141,7 +143,7 @@ namespace QuixPhysics
 
         public override void Instantiate(Room room,Vector3 position)
         {
-            //))
+            room.factory.Create(Build(position,Quaternion.Identity,user),room,this);
         }
     }
 }

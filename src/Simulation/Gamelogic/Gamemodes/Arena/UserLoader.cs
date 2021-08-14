@@ -13,22 +13,7 @@ namespace QuixPhysics
         {
             //Create Gematorium
 
-            //arena.navObjects.Add(CreateGematorium(user));
-            CreateGematorium(user);
-
             //Load saved Items
-        }
-
-        private Gematorium CreateGematorium(User user)
-        {
-            var pos = arena.GetStartPoint(user);
-            pos.Y = floor.GetTop(Gematorium.SIZE);
-            pos.X -= 300;
-            var gembox = Gematorium.Build(pos, Quaternion.Identity, user);
-            var gematorium = room.Create(gembox);
-
-            QuixConsole.Log("Gematorium",gematorium.state.position);
-            return (Gematorium)gematorium;
         }
 
     }

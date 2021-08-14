@@ -1,35 +1,5 @@
 # Blender MTL File: 'EscenarioArena.blend'
-# Material Count: 8
-
-newmtl Material.001
-Ns 225.000000
-Ka 1.000000 1.000000 1.000000
-Kd 0.800000 0.640458 0.075381
-Ks 0.500000 0.500000 0.500000
-Ke 0.000000 0.000000 0.000000
-Ni 1.450000
-d 1.000000
-illum 2
-
-newmtl Material.025
-Ns 225.000000
-Ka 1.000000 1.000000 1.000000
-Kd 0.800000 0.446166 0.060101
-Ks 0.500000 0.500000 0.500000
-Ke 0.000000 0.000000 0.000000
-Ni 1.450000
-d 1.000000
-illum 2
-
-newmtl Material.027
-Ns 225.000000
-Ka 1.000000 1.000000 1.000000
-Kd 0.029354 0.458572 0.800000
-Ks 0.500000 0.500000 0.500000
-Ke 0.000000 0.000000 0.000000
-Ni 1.450000
-d 1.000000
-illum 2
+# Material Count: 1
 
 newmtl Material.040
 Ns 225.000000
@@ -39,44 +9,4 @@ Ks 0.500000 0.500000 0.500000
 Ke 0.000000 0.000000 0.000000
 Ni 1.450000
 d 1.000000
-illum 2
-
-newmtl Material_Palmera
-Ns 225.000000
-Ka 1.000000 1.000000 1.000000
-Kd 0.800000 0.800000 0.800000
-Ks 0.000000 0.000000 0.000000
-Ke 0.000000 0.000000 0.000000
-Ni 1.450000
-d 1.000000
-illum 1
-map_Kd C:\\Users\\Casiel\\Desktop\\ciberchico420\\Games\\Quixum2\\Quixum\\Assets\\Resources\\Stadiums\\Arena\\Palm_None_AlbedoTransparency.png
-
-newmtl Material_Palmera.001
-Ns 225.000000
-Ka 1.000000 1.000000 1.000000
-Kd 0.800000 0.800000 0.800000
-Ks 0.000000 0.000000 0.000000
-Ke 0.000000 0.000000 0.000000
-Ni 1.450000
-d 1.000000
-illum 1
-
-newmtl Material_sol.001
-Ns 225.000000
-Ka 1.000000 1.000000 1.000000
-Kd 0.800000 0.800000 0.800000
-Ks 0.500000 0.500000 0.500000
-Ke 0.000000 0.000000 0.000000
-Ni 1.450000
-d 1.000000
-illum 2
-map_Kd C:\\Users\\Casiel\\Desktop\\ciberchico420\\Games\\Quixum2\\Quixum\\Assets\\Resources\\Players\\Sol\\LOWPOLY sol with uv_None_AlbedoTransparency.png
-
-newmtl None
-Ns 500
-Ka 0.8 0.8 0.8
-Kd 0.8 0.8 0.8
-Ks 0.8 0.8 0.8
-d 1
 illum 2

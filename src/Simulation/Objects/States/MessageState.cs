@@ -45,4 +45,11 @@ namespace QuixPhysics
         public string clientId { get; set; }
         public bool active;
     }
+
+        public struct ChangeGauntletMessage : Message
+    {
+        public string roomId { get; set; }
+        public string clientId { get; set; }
+        public string type;
+    }
 }

@@ -76,7 +76,7 @@ namespace QuixPhysics
         public virtual void Init()
         {
 
-            vehicle = new Vehicle(this, new VehicleProps() { maxSpeed = new Vector3(.1f, .1f, .1f) });
+            vehicle = new Vehicle(this, new VehicleProps() { maxSpeed = new Vector3(.3f, 20f, .3f) });
             vehicle.isActive = true;
 
             arena.navMeshQuery = new NavMeshQuery(arena.tiledNavMesh, 2048);
@@ -97,6 +97,8 @@ namespace QuixPhysics
                 this.target = target;
                 QuixConsole.Log("Look target");
 
+            }else{
+                trail.Stop();
             }
             return setTarget;
         }
