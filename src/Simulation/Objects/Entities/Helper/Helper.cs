@@ -12,14 +12,27 @@ namespace QuixPhysics
         private Random random = new Random();
 
         private EntityLifeLoop currentLoop;
+        private User owner;
+
 
         public override void Init()
         {
            
             base.Init();
+            SetOwner();
             SetItems();
             SelectItem();
 
+            SetPosition(trail.GetRandomPoint(GetPosition()).Position);
+
+        }
+
+        private void SetOwner()
+        {
+            if(state.owner != null){
+                owner = room.users[state.owner];
+            }
+            
         }
 
         private void SetItems()
@@ -67,6 +80,11 @@ namespace QuixPhysics
             {
                 currentLoop.OnTrailActive();
             }
+        }
+        public override void OnFall()
+        {
+            base.OnFall();
+            
         }
 
         #region Helper Actions

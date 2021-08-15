@@ -21,6 +21,7 @@ namespace QuixPhysics
     {
         public float acceleration;
     }
+
     public class Player2 : PhyObject
     {
         XYMessage moveMessage;

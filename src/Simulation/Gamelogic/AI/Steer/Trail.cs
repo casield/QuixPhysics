@@ -85,6 +85,14 @@ namespace QuixPhysics
         {
             return IsOnPoly(path[path.Count-1], position, extends);
         }
+        public NavPoint GetRandomPoint(Vector3 position){
+           var nearest =  query.FindNearestPoly(position,new Vector3(100,100,100));
+            query.FindRandomConnectedPoint(ref nearest,out NavPoint randomPoint);
+            float height = 0;
+            query.GetPolyHeight(nearest.Polygon,position,ref height);
+            randomPoint.Position.Y +=height;
+            return randomPoint;
+        }
 
         private void Update()
         {
@@ -225,7 +233,7 @@ namespace QuixPhysics
                         path = newPath;
                         Reset();
                         GoNextPoint();
-                        return CheckPathValidity(path,endPoint);
+                        return true;//CheckPathValidity(path,endPoint);
 
                     }
                     else

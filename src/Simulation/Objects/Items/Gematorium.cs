@@ -50,7 +50,7 @@ namespace QuixPhysics
         private void ThrowGem()
         {
             int vel = 100;
-            if(random.Next(0,10)>5){
+            if(random.Next(0,10)>0){
                // QuixConsole.Log("Created Gem");
                var gem = new Gem();
                gem.Drop(room,GetPosition()+new Vector3(0,100,0));
@@ -132,7 +132,7 @@ namespace QuixPhysics
                 quaternion = rotation,
                 halfSize = new Vector3(size, size, size),
                 instantiate = true,
-                mass = 0,
+                mass = 150,
                 mesh = "Objects/Items/Gematorium",
                 owner = owner.sessionId,
                 type = "Gematorium"

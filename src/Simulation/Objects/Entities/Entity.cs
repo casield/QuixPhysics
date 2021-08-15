@@ -98,6 +98,7 @@ namespace QuixPhysics
                 QuixConsole.Log("Look target");
 
             }else{
+                
                 trail.Stop();
             }
             return setTarget;

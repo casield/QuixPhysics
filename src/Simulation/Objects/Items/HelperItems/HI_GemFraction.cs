@@ -144,7 +144,8 @@ namespace QuixPhysics
                 if (gems.Count > 0)
                 {
                     int witch = random.Next(0,gems.Count-1);
-                    helper.FollowTarget(gems[witch]);
+                    var follow=helper.FollowTarget(gems[witch]);
+                    QuixConsole.Log("Could follow",follow);
                 }
             }
         }

@@ -22,12 +22,12 @@ namespace QuixPhysics
 
             arena = (Arena)room.gamemode;
 
-            CreateMountains();
+           // CreateMountains();
         }
 
         public void CreateMountains()
         {
-            var montainsToCreate = 30;
+            var montainsToCreate = 20;
             for (int i = 0; i < montainsToCreate; i++)
             {
                var mont = RandomMontainInArea(state.position,10000);
@@ -44,7 +44,7 @@ namespace QuixPhysics
          // var randomQuat = new Quaternion(0.707107f,0,0,-0.707107f);
 
             var minSize = 30;
-            var maxSize = 200;
+            var maxSize = 300;
             var randSize = new Vector3(random.Next(minSize,maxSize),random.Next(minSize,maxSize),random.Next(minSize,maxSize));
 
             var p = room.Create(new BoxState()
@@ -52,7 +52,7 @@ namespace QuixPhysics
                 position = randpos,
                 instantiate = true,
                 type="QuixBox",
-                mesh = "Stadiums/Isla/Montana1",
+                mesh = "Stadiums/Isla/Montana"+random.Next(1,2),
                 isMesh = true,
                 quaternion = Quaternion.Normalize(randomQuat),
                 mass = 0,

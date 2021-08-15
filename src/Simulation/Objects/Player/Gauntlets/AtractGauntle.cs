@@ -37,7 +37,7 @@ namespace QuixPhysics
         public override void Activate(bool active)
         {
 
-            if (hasCharge)
+            if (hasCharge || infinite)
             {
 
 
