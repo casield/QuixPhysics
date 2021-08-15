@@ -25,6 +25,7 @@ namespace QuixPhysics
         public float mass { get; set; }
         public bool instantiate { get; set; }
         public string owner { get; set; }
+        public PhyBoundBox boundBox {get;set;}
 
         internal string getJson()
         {
@@ -32,6 +33,10 @@ namespace QuixPhysics
         }
 
 
+    }
+    public class PhyBoundBox{
+        public Vector3 center;
+        public Vector3 extents;
     }
     public class BoxState : ObjectState
     {

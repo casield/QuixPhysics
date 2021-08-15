@@ -35,6 +35,9 @@ namespace QuixPhysics
         public ObjectState state;
         public Handle handle;
         internal Simulator simulator;
+        /// <summary>
+        /// This variable is used to know if the simulation quaternion should be adden when sending JSON to the server
+        /// </summary>
         internal bool updateRotation = true;
         internal ConnectionState connectionState;
         public SimpleMaterial material;
@@ -58,6 +61,13 @@ namespace QuixPhysics
 
         public PhyObject()
         {
+
+        }
+        /// <summary>
+        /// This method is called before the creation of the body in the simulation. It should be used to change the state before initialization.
+        /// </summary>
+        /// <param name="state"></param>
+        public virtual void BeforeLoad(ObjectState state){
 
         }
         /// <summary>
@@ -207,7 +217,7 @@ namespace QuixPhysics
 
         }
 
-        public virtual void SetMeshRotation()
+        public virtual void ChangeStateBeforeSend()
         {
             if (state.isMesh)
             {
@@ -232,9 +242,32 @@ namespace QuixPhysics
 
         }
 
+        public Quaternion GetQuaternion()
+        {
+            if (state.mass != 0)
+            {
+                return bodyReference.Pose.Orientation;
+            }
+            else
+            {
+                return staticReference.Pose.Orientation;
+            }
+        }
+
+
+
 
         public virtual string getJSON()
         {
+
+            state.position = GetPosition();
+            if (updateRotation)
+            {
+                state.quaternion = GetQuaternion();
+            }
+            ChangeStateBeforeSend();
+
+            /*
 
             if (state.mass != 0)
             {
@@ -245,7 +278,6 @@ namespace QuixPhysics
                 if (updateRotation)
                 {
                     state.quaternion = description.Pose.Orientation;
-
                 }
                 SetMeshRotation();
 
@@ -262,16 +294,12 @@ namespace QuixPhysics
                     state.quaternion = description.Pose.Orientation;
                 }
                 SetMeshRotation();
-            }
+            }*/
 
-            if (state.quaternion.W == 0)
-            {
-                QuixConsole.Log("Error", state.type);
-            }
-            
 
             return state.getJson();
         }
+
 
 
 

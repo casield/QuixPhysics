@@ -31,11 +31,24 @@ namespace QuixPhysics
 
         public PhyObject Create(ObjectState state, Room room, PhyObject instantiated = null)
         {
-            PhyObject phy = null;
+
+            PhyObject phy;
+            if (instantiated == null)
+            {
+                phy = GetPhyClass(state.type);
+            }
+            else
+            {
+                phy = instantiated;
+            }
+            instantiated = phy;
             if (state.uID == null || objects.ContainsKey(state.uID))
             {
                 state.uID = PhyObject.createUID();
             }
+
+            phy.BeforeLoad(state);
+            
             if (state is BoxState)
             {
                 if (state.isMesh)
@@ -60,7 +73,7 @@ namespace QuixPhysics
             }
             else
             {
-                QuixConsole.Log("Objects already had that key",state.uID);
+                QuixConsole.Log("Objects already had that key", state.uID);
             }
             return phy;
 
@@ -71,7 +84,7 @@ namespace QuixPhysics
         }
         private PhyObject CreateVanilla(ObjectState state, CollidableDescription collidableDescription, BodyInertia bodyInertia, Room room, PhyObject instantiated)
         {
-            PhyObject phy;
+            PhyObject phy = instantiated;
             Guid guid = Guid.NewGuid();
             var material = new SimpleMaterial
             {
@@ -81,14 +94,16 @@ namespace QuixPhysics
                 collidable = true,
                 guid = guid
             };
-            
+
             if (state.quaternion == new Quaternion())
             {
                 state.quaternion = Quaternion.Identity;
             }
-           
+
             if (state.mass != 0)
             {
+
+
                 BodyDescription boxDescription = BodyDescription.CreateDynamic(state.position, bodyInertia,
                      collidableDescription,
                      new BodyActivityDescription(0.01f));
@@ -97,14 +112,7 @@ namespace QuixPhysics
                 var bodyHandle = Simulation.Bodies.Add(boxDescription);
 
                 SimpleMaterial allocatedMat = simulator.collidableMaterials.Allocate(bodyHandle) = material;
-                if (instantiated == null)
-                {
-                    phy = GetPhyClass(state.type);
-                }
-                else
-                {
-                    phy = instantiated;
-                }
+
                 var handle = new Handle { bodyHandle = bodyHandle };
 
                 phy.Load(handle, room.connectionState, simulator, state, guid, room);
@@ -121,14 +129,6 @@ namespace QuixPhysics
                 StaticHandle statichandle = Simulation.Statics.Add(description);
 
                 simulator.collidableMaterials.Allocate(statichandle) = material;
-                if (instantiated == null)
-                {
-                    phy = GetPhyClass(state.type);
-                }
-                else
-                {
-                    phy = instantiated;
-                }
                 var handle = new Handle { staticHandle = statichandle };
 
                 phy.Load(handle, room.connectionState, simulator, state, guid, room);
@@ -143,6 +143,7 @@ namespace QuixPhysics
         }
         private PhyObject CreateBox(BoxState state, Room room, PhyObject instantiated)
         {
+
             var box = new Box(state.halfSize.X, state.halfSize.Y, state.halfSize.Z);
 
             CollidableDescription collidableDescription = new CollidableDescription(Simulation.Shapes.Add(box), 0.1f);
@@ -290,7 +291,7 @@ namespace QuixPhysics
                 box.mesh = "Board/Bomb";
                 box.instantiate = false;
                 box.quaternion = Quaternion.Identity;
-                 var b = Create(box,room);
+                var b = Create(box, room);
             }
         }
         internal void Dispose()
