@@ -2,10 +2,13 @@ using System.Numerics;
 
 namespace QuixPhysics
 {
+    /// <summary>
+    /// BoundBox modifies the exisiting state to look like the boundBox state property. 
+    /// <br/>NOTE: IF OBJECT IS DYNAMC BOUNDBOX STATE PROPERTY CENTER SHOULD ALWAYS BE 0,0,0
+    /// </summary>
     public class BoundBox : PhyObject
     {
 
-        //NOTE> IF OBJECT IS DYNAMC CENTER SHOULD ALWAYS BE 0,0,0;
         private Vector3 oldHalfSize;
         private void SetBoundBox(ObjectState state)
         {
