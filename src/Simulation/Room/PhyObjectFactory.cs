@@ -51,7 +51,7 @@ namespace QuixPhysics
             
             if (state is BoxState)
             {
-                if (state.isMesh)
+                if (phy is MeshBox )
                 {
                     phy = CreateMesh((BoxState)state, room, instantiated);
                 }

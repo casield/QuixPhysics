@@ -10,9 +10,17 @@ namespace QuixPhysics
         public PhyObject watching;
 
         private float yAdded = 0;
-        private bool released = true;
+        private static float YAlways = 50;
 
-        private float YAlways = 50;
+        private bool released = true;
+        /// <summary>
+        /// How much up can LookObject go.
+        /// </summary>
+        private float maxYAdded = 60;
+        /// <summary>
+        /// How much low can LookObject go.
+        /// </summary>
+        private float minYAdded = -25;
 
         public override void Load(Handle bodyHandle, ConnectionState connectionState, Simulator simulator, ObjectState state, Guid guid, Room room)
         {
@@ -56,15 +64,16 @@ namespace QuixPhysics
         {
             ChangeWatching(player2);
         }
-        private new void SetPosition(Vector3 position)
+        public void SetLookPosition(Vector3 position)
         {
-            staticReference.Pose.Position = position;
-            staticReference.Pose.Position.Y = staticReference.Pose.Position.Y + yAdded + YAlways;
-            needUpdate = true;
+            // var newpos = GetPosition();
+            position.Y += yAdded + YAlways;
+            SetPosition(position);
         }
         public void AddY(float y)
         {
             yAdded += y;
+            yAdded = Math.Clamp(yAdded, minYAdded, maxYAdded);
         }
 
         public void Lock()
@@ -78,14 +87,15 @@ namespace QuixPhysics
 
         internal void Update()
         {
-            if (watching.state.mass != 0)
+            /*if (watching.state.mass != 0)
             {
-                SetPosition(watching.GetBodyReference().Pose.Position);
+                SetLookPosition(watching.GetBodyReference().Pose.Position);
             }
             else
             {
-                SetPosition(watching.GetStaticReference().Pose.Position);
-            }
+                SetLookPosition(watching.GetStaticReference().Pose.Position);
+            }*/
+            SetLookPosition(watching.GetPosition());
             if (released)
             {
                 if (yAdded != 0)

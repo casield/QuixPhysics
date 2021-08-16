@@ -67,7 +67,8 @@ namespace QuixPhysics
         /// This method is called before the creation of the body in the simulation. It should be used to change the state before initialization.
         /// </summary>
         /// <param name="state"></param>
-        public virtual void BeforeLoad(ObjectState state){
+        public virtual void BeforeLoad(ObjectState state)
+        {
 
         }
         /// <summary>
@@ -82,13 +83,14 @@ namespace QuixPhysics
         public virtual void Load(Handle bodyHandle, ConnectionState connectionState, Simulator simulator, ObjectState state, Guid guid, Room room)
         {
             Constructor(connectionState, simulator, room);
-
+            needUpdate = true;
             this.handle = bodyHandle;
             this.state = state;
             this.guid = guid;
 
             SetReference();
             SetDescription();
+            
 
             SendCreateMessage();
         }
@@ -212,21 +214,15 @@ namespace QuixPhysics
         {
             if (state.instantiate)
             {
-                simulator.SendMessage("create", getJSON(), connectionState.workSocket);
+                simulator.SendMessage("create", state.getJson(), connectionState.workSocket);
             }
 
         }
-
+        /// <summary>
+        /// This method should be used to change the state before sending it to the Golf-Server
+        /// </summary>
         public virtual void ChangeStateBeforeSend()
         {
-            if (state.isMesh)
-            {
-
-                var newq = Quaternion.CreateFromYawPitchRoll(-1.57f, 0, 0);
-
-                //state.quaternion = newq*state.quaternion;
-            }
-            needUpdate = true;
 
         }
         internal void SendObjectMessage(string data)

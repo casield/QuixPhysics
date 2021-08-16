@@ -247,7 +247,7 @@ namespace QuixPhysics
 
 
                     }
-                    if (rotateMessage.y > .05)
+                    if (MathF.Abs(rotateMessage.y) > .05)
                     {
                         lookObject.AddY(rotateMessage.y);
                         lookObject.Lock();

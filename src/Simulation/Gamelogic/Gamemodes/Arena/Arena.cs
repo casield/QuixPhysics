@@ -22,7 +22,7 @@ namespace QuixPhysics
         private List<User> turnWinners = new List<User>();
 
         public List<PhyObject> navObjects = new List<PhyObject>();
-        private NavMesh navMesh;
+        private NavMeshBuilder navMesh;
         public TiledNavMesh tiledNavMesh;
         private string navMeshName;
         private AIManager aIManager;
@@ -94,12 +94,14 @@ namespace QuixPhysics
             var objs = command.GenerateMap("isla", room);
             foreach (var item in objs)
             {
-                if(item.state.mesh != null){
-                     if(item.state.mesh.Contains("Montana1")){
-                    QuixConsole.Log("Montana1",item.state.quaternion);
+                if (item.state.mesh != null)
+                {
+                    if (item.state.mesh.Contains("Montana1"))
+                    {
+                        QuixConsole.Log("Montana1", item.state.quaternion);
+                    }
                 }
-                }
-               
+
             }
             navObjects.AddRange(objs);
 
@@ -143,13 +145,13 @@ namespace QuixPhysics
             //Then it generates de NavMesh
             navMesh = qinavMesh.GenerateNavMesh(navMeshName, settings);
 
-
-            //Save it to a file .snb
-            qinavMesh.SaveNavMeshToFile(navMeshName);
             //Read it from .snb
-            tiledNavMesh = qinavMesh.GetTiledNavMesh(navMeshName);
+            tiledNavMesh =  new TiledNavMesh(navMesh);
 
-            navMeshQuery = new NavMeshQuery(navMesh, 1048);
+            navMeshQuery = new NavMeshQuery(tiledNavMesh, 1048);
+
+                        //Save it to a file .snb
+            qinavMesh.SaveNavMeshToFile(navMeshName,tiledNavMesh);
 
             OnNavMeshReadyListeners?.Invoke();
 

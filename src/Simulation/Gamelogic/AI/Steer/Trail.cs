@@ -143,11 +143,11 @@ namespace QuixPhysics
                  NavPoint navStart = new NavPoint(path[newpoint],obj.GetPosition());
                  var couldmove = query.MoveAlongSurface(ref navStart,ref closest,out correctedPoint,visited);
                 if(couldmove){
-                    Vector3 result = obj.GetPosition();
-                    float h = nextPoint.Y;
-                    query.GetPolyHeight(path[newpoint], result, ref h);
+                    //Vector3 result = obj.GetPosition();
+                    //float h = nextPoint.Y;
+                    //query.GetPolyHeight(path[newpoint], result, ref h);
                     nextPoint = correctedPoint;
-                   // nextPoint.Y += h;
+                    //nextPoint.Y = h;
                 }else{
                     ResetPath();
                 }
