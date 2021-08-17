@@ -105,7 +105,7 @@ namespace QuixPhysics
             AddGauntletToAvailable(new AtractGauntlet());
             AddGauntletToAvailable(new ItemGauntlet());
 
-            ChangeGauntlet("item");
+            ChangeGauntlet("atract");
         }
         private void AddGauntletToAvailable(IGauntlet gauntlet)
         {
@@ -117,10 +117,11 @@ namespace QuixPhysics
         }
         public void ChangeGauntlet(string type)
         {
-            if(activeGauntlet!=null){
+            if (activeGauntlet != null)
+            {
                 activeGauntlet.OnChange();
             }
-            
+
             activeGauntlet = gauntlets[type];
             activeGauntlet.OnActivate();
 
@@ -131,7 +132,7 @@ namespace QuixPhysics
             {
                 instantiate = true,
                 mass = 0,
-
+                //halfSize=new Vector3(10,10,10),
                 type = "LookObject",
                 owner = state.uID
             });
@@ -247,11 +248,8 @@ namespace QuixPhysics
 
 
                     }
-                    if (MathF.Abs(rotateMessage.y) > .05)
-                    {
-                        lookObject.AddY(rotateMessage.y);
-                        lookObject.Lock();
-                    }
+
+                    lookObject.AddY(rotateMessage.y);
 
                     if (rotateMessage.y == 0)
                     {

@@ -136,8 +136,11 @@ namespace QuixPhysics
         {
             if (player != null && player.bodyReference.Exists)
             {
-
-                vehicle.Arrive(player.lookObject.staticReference.Pose.Position);
+                PhyObject whoToLook = player.lookObject.watching;
+                if(whoToLook is Player2){
+                    whoToLook = player;
+                }
+                vehicle.Arrive(whoToLook.GetPosition());
                 vehicle.Update();
                 if (player.IsSnapped())
                 {

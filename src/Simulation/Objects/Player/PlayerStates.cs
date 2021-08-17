@@ -2,6 +2,7 @@ using System;
 using System.Numerics;
 using BepuUtilities;
 
+
 namespace QuixPhysics
 {
 
@@ -16,7 +17,7 @@ namespace QuixPhysics
         public void OnActivate()
         {
             // throw new NotImplementedException();
-            PhyTimeOut timeOut = new PhyTimeOut(10, player.simulator,true);
+            PhyTimeOut timeOut = new PhyTimeOut(10, player.simulator, true);
             timeOut.Completed += SendMessage;
             Snap();
 
@@ -29,11 +30,11 @@ namespace QuixPhysics
 
         private void Snap()
         {
-           // player.collidable = false; 
-           player.SetPositionToBall();
+            // player.collidable = false; 
+            player.SetPositionToBall();
             player.Stop();
             player.golfball.Stop();
-           
+
         }
 
         public void OnDesactivate()
@@ -67,7 +68,7 @@ namespace QuixPhysics
 
         private void SendMessage()
         {
-           // player.collidable = true;
+            // player.collidable = true;
             player.SendObjectMessage("Snap_false");
             // Console.WriteLine("Sending");
         }
@@ -83,7 +84,7 @@ namespace QuixPhysics
             // throw new NotImplementedException();
             SendMessage();
 
-            
+
         }
 
         public void Tick()
@@ -107,12 +108,12 @@ namespace QuixPhysics
         }
         public void OnActivate()
         {
-            
+
             Jump();
         }
         private void Jump()
         {
-           
+
             phy.bodyReference.Awake = true;
             phy.bodyReference.Velocity.Linear.Y += 50;
         }
@@ -137,17 +138,13 @@ namespace QuixPhysics
     {
         internal ShootMessage message;
         private Player2 player;
-        private PhyTimeOut setCollidedTimeout;
+        private PhyTimeOut CollidedTimeout;
+        public float maxForce = 8;
 
         public ShootState(Player2 player2)
         {
             this.player = player2;
 
-        }
-
-        private void SetPlayerCollided()
-        {
-          //  player.collidable = true;
         }
 
         public void OnActivate()
@@ -158,20 +155,10 @@ namespace QuixPhysics
 
         public void Shoot()
         {
-   
-            var radian = (player.rotationController);
-            var x = (float)Math.Cos(radian);
-            var y = (float)Math.Sin(radian);
-            double ximp = -(x * player.playerStats.force) * message.force;
-            double zimp = -(y * player.playerStats.force) * message.force;
-            double yimp = (player.playerStats.force * .6f) * message.force;
-
-            QuixConsole.Log("Force",message.force);
-
-
-            Vector3 imp = new Vector3((float)ximp,(float)yimp,(float)zimp);
-            player.golfball.GetBodyReference().ApplyLinearImpulse(imp);
-            SetPlayerCollided();
+            message.force = Math.Clamp(message.force,0f,maxForce);
+            Vector3 directionToLookObj = Vector3.Normalize(player.golfball.GetPosition() - player.lookObject.GetPosition()) * new Vector3(-1);
+            var impulse = (directionToLookObj * (player.playerStats.force)) *message.force;
+            player.golfball.GetBodyReference().ApplyLinearImpulse(impulse);
             player.SetNotSnapped();
         }
 

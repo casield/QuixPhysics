@@ -55,17 +55,14 @@ namespace QuixPhysics
 
         private void LoadMeshes(){
      
-           LoadMesh("Stadiums/CrocoLoco/piedra1");
-            LoadMesh("Stadiums/CrocoLoco/piedra2");
-            LoadMesh("Stadiums/CrocoLoco/stand_croco");
-            LoadMesh("Stadiums/CrocoLoco/start_position");
-            LoadMesh("Stadiums/Test/Cube1");
-            LoadMesh("Stadiums/Test/Cube2");
+           
+          
             LoadMesh("Stadiums/Isla/Montana1");
             LoadMesh("Stadiums/Isla/Montana2");
             LoadMesh("Stadiums/Isla/Ramp");
-            LoadMesh("newt");
-            LoadMesh("15Cube");
+            LoadMesh("Stadiums/Isla/Hole_Top");
+            LoadMesh("Stadiums/Isla/Hole_Bottom");
+
             QuixConsole.Log("Reload meshes");
 
         }
