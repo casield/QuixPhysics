@@ -19,10 +19,14 @@ namespace QuixPhysics
         /// <summary>
         /// How much up can LookObject go.
         /// </summary>
-        private float maxYAdded = 180;
-        /// <summary>
-        /// How much low can LookObject go.
-        /// </summary>
+        private float maxYAdded = 380;
+
+        float distance = 300;
+        public override void BeforeLoad(ObjectState state)
+        {
+            base.BeforeLoad(state);
+            ((BoxState)state).halfSize = new Vector3(10, 10, 10);
+        }
 
         public override void Load(Handle bodyHandle, ConnectionState connectionState, Simulator simulator, ObjectState state, Guid guid, Room room)
         {
@@ -30,7 +34,7 @@ namespace QuixPhysics
             base.Load(bodyHandle, connectionState, simulator, state, guid, room);
             simulator.collidableMaterials[bodyHandle.staticHandle].collidable = false;
 
-            staticReference = GetStaticReference();
+            //  staticReference = GetStaticReference();
         }
 
         public void SetPlayer(Player2 player2)
@@ -76,18 +80,16 @@ namespace QuixPhysics
             if (watching is Player2)
             {
                 var newpos = GetAroundPosition();
-                SetPosition(newpos);
+                SetPosition(Vector3.Lerp(newpos, GetPosition(), .9f));
             }
             else
             {
-                SetPosition(position);
+                SetPosition(Vector3.Lerp(position, GetPosition(), .9f));
             }
 
         }
         public Vector3 GetAroundPosition()
         {
-
-            float distance = 150;
             float sep = 0;
             var newPos = player.GetPosition();
             var x = -(float)Math.Cos(player.rotationController + sep);
@@ -99,17 +101,17 @@ namespace QuixPhysics
             if (yMessage != 0)
             {
                 acceleration += velocity * yMessage;
-                
+
                 //  acceleration = 
             }
             else
             {
-                
+
                 acceleration *= .9f;
             }
-            yAdded+=acceleration;
-            
-            yAdded = Math.Clamp(yAdded, -(maxYAdded), maxYAdded*.5f);
+            yAdded += acceleration;
+
+            yAdded = Math.Clamp(yAdded, -(maxYAdded), maxYAdded * .5f);
             newPos.Y -= yAdded;
 
 
@@ -117,7 +119,7 @@ namespace QuixPhysics
         }
         public void AddY(float y)
         {
-                yMessage = y;
+            yMessage = y;
         }
 
         public void Lock()

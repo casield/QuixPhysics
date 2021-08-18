@@ -41,18 +41,26 @@ namespace QuixPhysics
         private PhyWaiter pointWaiter;
 
         private List<NavPolyId> visited = new List<NavPolyId>();
+        private NavQueryFilter navQueryFilter;
+
         public Trail(Simulator simulator, PhyObject obj, NavMeshQuery query)
         {
+
             this.simulator = simulator;
             path = new Path();
             this.obj = obj;
             this.query = query;
             this.query = query;
+            navQueryFilter = new NavQueryFilter();
             pointWaiter = new PhyWaiter(props.PathPointReloadTime);
         }
         public void Start()
         {
             active = true;
+            if (worker != null)
+            {
+                worker.Destroy();
+            }
             worker = obj.AddWorker(new PhyInterval(1, simulator));
             worker.Tick += Update;
             //GoNextPoint();
@@ -74,7 +82,7 @@ namespace QuixPhysics
 
         public bool IsOnPoly(NavPolyId polyId, Vector3 position, Vector3 extends)
         {
-
+            
             List<NavPolyId> polys = new List<NavPolyId>(1);
 
             var found = query.QueryPolygons(ref position, ref extends, polys);
@@ -83,14 +91,15 @@ namespace QuixPhysics
 
         public bool IsOnLastPosition(Vector3 position, Vector3 extends)
         {
-            return IsOnPoly(path[path.Count-1], position, extends);
+            return IsOnPoly(path[path.Count - 1], position, extends);
         }
-        public NavPoint GetRandomPoint(Vector3 position){
-           var nearest =  query.FindNearestPoly(position,new Vector3(100,100,100));
-            query.FindRandomConnectedPoint(ref nearest,out NavPoint randomPoint);
+        public NavPoint GetRandomPoint(Vector3 position)
+        {
+            var nearest = query.FindNearestPoly(position, new Vector3(100, 100, 100));
+            query.FindRandomConnectedPoint(ref nearest, out NavPoint randomPoint);
             float height = 0;
-            query.GetPolyHeight(nearest.Polygon,position,ref height);
-            randomPoint.Position.Y +=height;
+            query.GetPolyHeight(nearest.Polygon, position, ref height);
+            randomPoint.Position.Y += height;
             return randomPoint;
         }
 
@@ -120,40 +129,39 @@ namespace QuixPhysics
 
         private void GoNextPoint()
         {
-            
+
             pointWaiter.Reset();
-           var couldset =  SetPoint(pathPosition+1);
-           if(couldset){
-               pathPosition++;
-           }
+            var couldset = SetPoint(pathPosition + 1);
+            if (couldset)
+            {
+                pathPosition++;
+            }
 
         }
-        
+
         private bool SetPoint(int newpoint)
         {
             if (newpoint < path.Count)
             {
-              Vector3 closest = new Vector3();
+                Vector3 closest = new Vector3();
                 query.ClosestPointOnPoly(path[newpoint], obj.GetPosition(), ref closest);
-                
-               // query.
-               var position = obj.GetPosition();
 
-                 Vector3 correctedPoint = new Vector3();
-                 NavPoint navStart = new NavPoint(path[newpoint],obj.GetPosition());
-                 var couldmove = query.MoveAlongSurface(ref navStart,ref closest,out correctedPoint,visited);
-                if(couldmove){
-                    //Vector3 result = obj.GetPosition();
-                    //float h = nextPoint.Y;
-                    //query.GetPolyHeight(path[newpoint], result, ref h);
+                // query.
+                var position = obj.GetPosition();
+
+                Vector3 correctedPoint = new Vector3();
+                NavPoint navStart = new NavPoint(path[newpoint], obj.GetPosition());
+                var couldmove = query.MoveAlongSurface(ref navStart, ref closest, out correctedPoint, visited);
+                if (couldmove)
+                {
                     nextPoint = correctedPoint;
-                    //nextPoint.Y = h;
-                }else{
+                }
+                else
+                {
                     ResetPath();
                 }
-                
-                QuixConsole.Log("Next point", nextPoint," ( "+pathPosition+" ) Path size:",path.Count, "Visited size:",visited.Count);
-                QuixConsole.Log("Could move: ",couldmove);
+
+               // QuixConsole.Log("Next point", nextPoint, " ( " + pathPosition + " ) Path size:", path.Count, "Visited size:", visited.Count);
                 return couldmove;
 
             }
@@ -164,17 +172,19 @@ namespace QuixPhysics
             }
 
         }
-        private void ResetPath(){
-            if(!IsOnPoly(endPoint.Polygon,target,props.targetExtend)){
-               SetTarget(endPoint.Position); 
+        private void ResetPath()
+        {
+            if (!IsOnPoly(endPoint.Polygon, target, props.targetExtend))
+            {
+                SetTarget(endPoint.Position);
             }
-            
+
             QuixConsole.Log("Resetting path");
         }
         private void LastPoint()
         {
             nextPoint = endPoint.Position;
-            QuixConsole.Log("Last Point");
+           //QuixConsole.Log("Last Point");
             OnLastPoint?.Invoke();
             hasFinished = true;
         }
@@ -202,10 +212,11 @@ namespace QuixPhysics
             return polys;
 
         }
-        
-        public static bool CheckPathValidity(Path path,NavPoint lastPoint){
-            
-            return path[path.Count-1]==lastPoint.Polygon;
+
+        public static bool CheckPathValidity(Path path, NavPoint lastPoint)
+        {
+
+            return path[path.Count - 1] == lastPoint.Polygon;
         }
 
 
@@ -220,31 +231,26 @@ namespace QuixPhysics
                 {
                     this.target = target;
 
-                    
+
 
                     startPoint = query.FindNearestPoly(obj.GetPosition(), GetExtend());
                     endPoint = query.FindNearestPoly(target, props.targetExtend);
-                    if(path == null){
-                         path = new Path();
-                    }
-                   
-                    bool couldFind = query.FindPath(ref startPoint, ref endPoint, new NavQueryFilter(), path);
-                    if (path.Count > props.MinPathSizeToChange)
+                    if (path == null)
                     {
-                        QuixConsole.Log("New Path", target,path.Count);
-                        //this.path = path;
-                        Reset();
-                        GoNextPoint();
-                        return true;//CheckPathValidity(path,endPoint);
+                        path = new Path();
+                    }
 
-                    }
-                    else
-                    {
-                        //hasFinished=true;
-                        QuixConsole.Log("Path not big enogh");
-                        
-                    }
-                }else{
+                    bool couldFind = query.FindPath(ref startPoint, ref endPoint, navQueryFilter, path);
+
+ 
+                    Reset();
+                    GoNextPoint();
+                    return true;
+
+
+                }
+                else
+                {
                     QuixConsole.Log("Polys not found", polyArounObj.Count, polyAroundTarget.Count);
                     return false;
                 }
@@ -253,9 +259,6 @@ namespace QuixPhysics
             {
                 throw new Exception("Trail is not Active");
             }
-
-
-            return false;
 
         }
         private void Reset()

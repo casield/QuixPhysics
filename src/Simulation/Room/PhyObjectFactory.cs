@@ -94,6 +94,9 @@ namespace QuixPhysics
                 collidable = true,
                 guid = guid
             };
+            if(state.quaternion == new Quaternion(0,0,0,0)){
+                state.quaternion = Quaternion.Identity;
+            }
 
             if (state.quaternion == new Quaternion())
             {

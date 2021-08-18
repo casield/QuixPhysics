@@ -90,6 +90,7 @@ namespace QuixPhysics
             CreateBall();
             CreateGauntlets();
             CreateLookObject();
+            CreateTestObject();
 
 
             jumpState = new JumpState(this);
@@ -99,6 +100,12 @@ namespace QuixPhysics
 
         }
 
+        private void CreateTestObject()
+        {
+           var t=new TestsObject();
+           t.player = this;
+           t.Instantiate(room,GetPosition()+new Vector3(50,50,50));
+        }
 
         private void CreateGauntlets()
         {

@@ -58,7 +58,6 @@ namespace QuixPhysics
         public PhyObject target;
 
         public Vector3 extend { get; set; }
-        private PhyWaiter stuckWaiter;
         private Vector3 lastPosition;
         public EntityStats stats;
 
@@ -76,33 +75,51 @@ namespace QuixPhysics
         public virtual void Init()
         {
 
-            vehicle = new Vehicle(this, new VehicleProps() { maxSpeed = new Vector3(.3f,.3f, .3f) });
+            vehicle = new Vehicle(this, new VehicleProps() { maxSpeed = new Vector3(.3f, .3f, .3f) });
             vehicle.isActive = true;
+            if (NavQueryExists())
+            {
+                trail = new Trail(simulator, this, arena.navMeshQuery);
+                trail.OnLastPoint += OnLastPoint;
+                AddWorker(new PhyInterval(1, simulator)).Tick += Update;
+            }
 
-            arena.navMeshQuery = new NavMeshQuery(arena.tiledNavMesh, 2048);
 
-            trail = new Trail(simulator, this, arena.navMeshQuery);
-            trail.OnLastPoint += OnLastPoint;
-            stuckWaiter = new PhyWaiter(4000);
 
-            AddWorker(new PhyInterval(1, simulator)).Tick += Update;
+            
         }
 
         public bool FollowTarget(PhyObject target)
         {
-            trail.Start();
-            var setTarget = trail.SetTarget(target.GetPosition());
-            if (setTarget)
+            if (NavQueryExists())
             {
-                this.target = target;
-                QuixConsole.Log("Look target");
+                trail.Start();
+                var setTarget = trail.SetTarget(target.GetPosition());
+                if (setTarget)
+                {
+                    this.target = target;
+                    QuixConsole.Log("Look target");
 
-            }else{
-                
-                trail.Stop();
+                }
+                else
+                {
+
+                    trail.Stop();
+                }
+                return setTarget;
             }
-            return setTarget;
+            else
+            {
+                return false;
+            }
+
         }
+
+        protected bool NavQueryExists()
+        {
+            return arena.navMeshQuery != null;
+        }
+
         public float Distance(Vector3 target)
         {
             return Vector3.Distance(GetPosition(), target);
@@ -110,32 +127,36 @@ namespace QuixPhysics
 
         private void Update()
         {
-            if (trail.IsActive())
+            if (NavQueryExists())
             {
-                OnTrailActive();
-                if (trail.hasFinished)
+                if (trail.IsActive())
                 {
-                    if (OnLastPolygon())
+                    OnTrailActive();
+                    if (trail.hasFinished)
                     {
-                        trail.Stop();
+                        if (OnLastPolygon())
+                        {
+                            trail.Stop();
+                        }
                     }
+                    vehicle.Arrive(trail.GetPoint());
+                    CheckPositionForStuck();
                 }
-                vehicle.Arrive(trail.GetPoint());
-                CheckPositionForStuck();
-            }
 
-            else
-            {
-                OnTrailInactive();
-            }
+                else
+                {
+                    OnTrailInactive();
+                }
 
 
-            if (IsFalling())
-            {
-                OnFall();
+                if (IsFalling())
+                {
+                    OnFall();
+                }
+                vehicle.Update();
+                AfterUpdate();
             }
-            vehicle.Update();
-            AfterUpdate();
+
         }
 
         #region Entity Actions
@@ -149,13 +170,13 @@ namespace QuixPhysics
             var distance = Distance(lastPosition);
             if (distance < 5)
             {
-                if (stuckWaiter.Tick())
+               /* if (stuckWaiter.Tick())
                 {
                     //Too many time in one point
                     OnStuck();
                     stuckWaiter.Reset();
 
-                }
+                }*/
             }
             else
             {

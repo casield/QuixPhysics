@@ -117,7 +117,7 @@ namespace QuixPhysics
             CreatePlayers();
 
 
-            GenerateNavMesh();
+           // GenerateNavMesh();
             aIManager.OnStart();
 
 

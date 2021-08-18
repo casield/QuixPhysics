@@ -95,11 +95,11 @@ namespace QuixPhysics
 
     class JumpState : AgentState
     {
-        private Player2 phy;
+        private Player2 player;
 
         public JumpState(Player2 phy)
         {
-            this.phy = phy;
+            this.player = phy;
             phy.ContactListeners += OnContact;
         }
         private void OnContact(PhyObject obj)
@@ -114,8 +114,10 @@ namespace QuixPhysics
         private void Jump()
         {
 
-            phy.bodyReference.Awake = true;
-            phy.bodyReference.Velocity.Linear.Y += 50;
+            player.bodyReference.Awake = true;
+            
+            player.bodyReference.Velocity.Linear.Y+=50;
+            //player.lookObject.SetPosition(player.lookObject.GetPosition()+new Vector3(0,1000,0));
         }
 
         public void OnDesactivate()
