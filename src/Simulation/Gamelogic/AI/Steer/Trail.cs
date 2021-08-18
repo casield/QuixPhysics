@@ -224,13 +224,15 @@ namespace QuixPhysics
 
                     startPoint = query.FindNearestPoly(obj.GetPosition(), GetExtend());
                     endPoint = query.FindNearestPoly(target, props.targetExtend);
-
-                    Path newPath = new Path();
-                    bool couldFind = query.FindPath(ref startPoint, ref endPoint, new NavQueryFilter(), newPath);
-                    if (newPath.Count > props.MinPathSizeToChange)
+                    if(path == null){
+                         path = new Path();
+                    }
+                   
+                    bool couldFind = query.FindPath(ref startPoint, ref endPoint, new NavQueryFilter(), path);
+                    if (path.Count > props.MinPathSizeToChange)
                     {
-                        QuixConsole.Log("New Path", target,newPath.Count);
-                        path = newPath;
+                        QuixConsole.Log("New Path", target,path.Count);
+                        //this.path = path;
                         Reset();
                         GoNextPoint();
                         return true;//CheckPathValidity(path,endPoint);

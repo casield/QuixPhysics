@@ -109,7 +109,7 @@ namespace QuixPhysics
             }
             yAdded+=acceleration;
             
-            yAdded = Math.Clamp(yAdded, -maxYAdded, maxYAdded);
+            yAdded = Math.Clamp(yAdded, -(maxYAdded), maxYAdded*.5f);
             newPos.Y -= yAdded;
 
 

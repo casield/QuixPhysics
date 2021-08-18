@@ -62,6 +62,8 @@ namespace QuixPhysics
             LoadMesh("Stadiums/Isla/Ramp");
             LoadMesh("Stadiums/Isla/Hole_Top");
             LoadMesh("Stadiums/Isla/Hole_Bottom");
+            LoadMesh("Stadiums/Isla/MountainsGroup");
+            LoadMesh("Stadiums/Isla/Isla");
 
             QuixConsole.Log("Reload meshes");
 

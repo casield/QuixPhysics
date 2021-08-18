@@ -46,7 +46,7 @@ namespace QuixPhysics
         {
             //TODO Better seleccion of items;
             activeItem = stats.items[0];
-            ChangeLoop(activeItem);
+            ChangeLoop(new HelperAction(this));
             
             activeItem.Activate();
 
