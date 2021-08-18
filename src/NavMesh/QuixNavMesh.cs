@@ -262,11 +262,11 @@ namespace QuixPhysics
                 scene.RootNode.Transform.Scale *= new Aspose.ThreeD.Utilities.Vector3(1, 1, 1);
                 PolygonModifier.Triangulate(scene);
 
-                using (FileStream fs = File.Create("C:/Users/Casiel/Desktop/ciberchico420/C#/SharpNav/Source/SharpNav.Examples/nav_test.obj"))
+               /* using (FileStream fs = File.Create("C:/Users/Casiel/Desktop/ciberchico420/C#/SharpNav/Source/SharpNav.Examples/nav_test.obj"))
                 {
                     scene.Save(fs, FileFormat.WavefrontOBJ);
                     fs.Dispose();
-                }
+                }*/
 
                 using (FileStream fs = File.Create(FILES_DIR + name + ".obj"))
                 {
