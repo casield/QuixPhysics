@@ -104,7 +104,7 @@ namespace QuixPhysics
         {
            var t=new TestsObject();
            t.player = this;
-           t.Instantiate(room,GetPosition()+new Vector3(50,50,50));
+          // t.Instantiate(room,GetPosition()+new Vector3(50,50,50));
         }
 
         private void CreateGauntlets()

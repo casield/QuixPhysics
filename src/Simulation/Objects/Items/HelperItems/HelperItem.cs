@@ -8,9 +8,13 @@ namespace QuixPhysics{
         public HelperItem(Helper helper){
             this.helper = helper;
         }
+        /// <summary>
+        /// This method returns true if the item should be activated.
+        /// </summary>
+        /// <returns></returns>
+        public abstract bool ShouldActivate();
         public abstract void Activate();
         public abstract void Desactivate();
-        public abstract void Update();
 
         public abstract bool OnLastPolygon();
 

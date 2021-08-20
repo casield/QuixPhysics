@@ -3,6 +3,7 @@ using System.IO;
 using System.Numerics;
 using Aspose.ThreeD;
 using SharpNav;
+using SharpNav.Pathfinding;
 
 namespace QuixPhysics
 {
@@ -25,7 +26,7 @@ namespace QuixPhysics
         private NavMeshBuilder navMesh;
         public TiledNavMesh tiledNavMesh;
         private string navMeshName;
-        private AIManager aIManager;
+        public AIManager aIManager;
         public event PhyAction OnNavMeshReadyListeners;
         public NavMeshQuery navMeshQuery;
 
@@ -45,8 +46,6 @@ namespace QuixPhysics
         {
             users.Add(user);
 
-
-            userLoader.LoadItems(user);
             if (users.Count == props.MIN_USERS)
             {
                 Start();
@@ -110,6 +109,16 @@ namespace QuixPhysics
             aIManager.OnMapsLoaded();
             room.factory.createObjects();
         }
+        public NavPoint GetRandomPoint(Vector3 position,Vector3 extend)
+        {
+            var query = navMeshQuery;
+            var nearest = query.FindNearestPoly(position, extend);
+            query.FindRandomConnectedPoint(ref nearest, out NavPoint randomPoint);
+            float height = 0;
+            query.GetPolyHeight(nearest.Polygon, position, ref height);
+            randomPoint.Position.Y += height;
+            return randomPoint;
+        }
 
         public override void Start()
         {
@@ -117,8 +126,9 @@ namespace QuixPhysics
             CreatePlayers();
 
 
-           // GenerateNavMesh();
+            GenerateNavMesh();
             aIManager.OnStart();
+            userLoader.OnStart();
 
 
             QuixConsole.Log("NavMesh ready", navMeshName);
@@ -146,12 +156,12 @@ namespace QuixPhysics
             navMesh = qinavMesh.GenerateNavMesh(navMeshName, settings);
 
             //Read it from .snb
-            tiledNavMesh =  new TiledNavMesh(navMesh);
+            tiledNavMesh = new TiledNavMesh(navMesh);
 
             navMeshQuery = new NavMeshQuery(tiledNavMesh, 1048);
 
-                        //Save it to a file .snb
-            qinavMesh.SaveNavMeshToFile(navMeshName,tiledNavMesh);
+            //Save it to a file .snb
+            qinavMesh.SaveNavMeshToFile(navMeshName, tiledNavMesh);
 
             OnNavMeshReadyListeners?.Invoke();
 

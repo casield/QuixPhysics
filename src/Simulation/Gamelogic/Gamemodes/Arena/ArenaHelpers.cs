@@ -4,10 +4,13 @@ namespace QuixPhysics
 {
     public interface IArenaHelper
     {
+        /// <summary>
+        /// This method should be called when all users are ready to play.
+        /// </summary>
         void OnStart();
         void OnMapsLoaded();
     }
-    public class ArenaHelper : IArenaHelper
+    public abstract class ArenaHelper : IArenaHelper
     {
         public Floor floor;
         internal Simulator simulator;
@@ -27,9 +30,6 @@ namespace QuixPhysics
             Debug.Assert(floor == null);
         }
 
-        public virtual void OnStart()
-        {
-            throw new System.NotImplementedException();
-        }
+        public abstract void OnStart();
     }
 }

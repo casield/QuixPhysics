@@ -19,7 +19,6 @@ namespace QuixPhysics
 
         public override void Activate()
         {
-
             room.gamemode.itemDroppedListeners += OnItemDropped;
         }
         /// <summary>
@@ -39,7 +38,7 @@ namespace QuixPhysics
             room.gamemode.itemDroppedListeners -= OnItemDropped;
         }
 
-        public override void Instantiate(Room room,Vector3 position)
+        public override void Instantiate(Room room, Vector3 position)
         {
             throw new System.NotImplementedException();
         }
@@ -97,6 +96,22 @@ namespace QuixPhysics
             return valuatedGems;
         }
         /// <summary>
+        /// Gets the visible gems.
+        /// </summary>
+        /// <returns></returns>
+        private List<Gem> GetVisibleGems()
+        {
+            List<Gem> closeGems = new List<Gem>();
+            gemsDropped.ForEach(gem =>
+            {
+                if (helper.Distance(gem.GetPosition()) <= helper.stats.vision)
+                {
+                    closeGems.Add(gem);
+                }
+            });
+            return closeGems;
+        }
+        /// <summary>
         /// Gets the value of a gem
         /// </summary>
         /// <value>Value of Gem</value>
@@ -143,16 +158,16 @@ namespace QuixPhysics
                 var gems = FindMostValuablesGems();
                 if (gems.Count > 0)
                 {
-                    int witch = random.Next(0,gems.Count-1);
-                    var follow=helper.FollowTarget(gems[witch]);
-                    QuixConsole.Log("Could follow",follow);
+                    int witch = random.Next(0, gems.Count - 1);
+                    var follow = helper.FollowTarget(gems[witch]);
+                    QuixConsole.Log("Could follow", follow);
                 }
             }
         }
 
         public override bool OnLastPolygon()
         {
-            helper.vehicle.Arrive(helper.target.GetPosition()+helper.extend);
+            helper.vehicle.Arrive(helper.target.GetPosition() + helper.extend);
             if (helper.Distance(helper.target.GetPosition()) < 20)
             {
                 return true;
@@ -165,10 +180,13 @@ namespace QuixPhysics
             helper.vehicle.Arrive(helper.trail.GetPoint());
         }
 
-        public override void Update()
+
+
+        public override bool ShouldActivate()
         {
-            //Look for gems around if cant see any wonder around looking for more
-            //After 3 tries end use
+            var gems = GetVisibleGems();
+            return gems.Count>0;
         }
+
     }
 }

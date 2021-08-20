@@ -93,14 +93,9 @@ namespace QuixPhysics
         {
             return IsOnPoly(path[path.Count - 1], position, extends);
         }
-        public NavPoint GetRandomPoint(Vector3 position)
+        public NavPoint GetRandomPoint(Vector3 position,Vector3 extent)
         {
-            var nearest = query.FindNearestPoly(position, new Vector3(100, 100, 100));
-            query.FindRandomConnectedPoint(ref nearest, out NavPoint randomPoint);
-            float height = 0;
-            query.GetPolyHeight(nearest.Polygon, position, ref height);
-            randomPoint.Position.Y += height;
-            return randomPoint;
+            return ((Arena)obj.room.gamemode).GetRandomPoint(position,extent);
         }
 
         private void Update()

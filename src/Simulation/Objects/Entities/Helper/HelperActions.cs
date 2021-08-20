@@ -1,3 +1,5 @@
+using System.Numerics;
+
 namespace QuixPhysics
 {
 
@@ -18,7 +20,7 @@ namespace QuixPhysics
         private void GoRandomPoint()
         {
             helper.trail.Start();
-            var randNav = helper.trail.GetRandomPoint(helper.GetPosition());
+            var randNav = helper.trail.GetRandomPoint(helper.GetPosition(),new Vector3(500, 500, 500));
             helper.trail.SetTarget(randNav.Position);
         }
 
@@ -32,6 +34,8 @@ namespace QuixPhysics
             if (helper.trail.PolysAround(helper.GetPosition(), new System.Numerics.Vector3(50, 50, 50)).Count > 0)
             {
                 GoRandomPoint();
+            }else{
+                QuixConsole.Log("No");
             }
 
         }

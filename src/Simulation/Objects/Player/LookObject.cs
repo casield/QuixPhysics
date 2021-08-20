@@ -25,7 +25,7 @@ namespace QuixPhysics
         public override void BeforeLoad(ObjectState state)
         {
             base.BeforeLoad(state);
-            ((BoxState)state).halfSize = new Vector3(10, 10, 10);
+         //   ((BoxState)state).halfSize = new Vector3(10, 10, 10);
         }
 
         public override void Load(Handle bodyHandle, ConnectionState connectionState, Simulator simulator, ObjectState state, Guid guid, Room room)
