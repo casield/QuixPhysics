@@ -287,7 +287,7 @@ namespace QuixPhysics
             }
             var gems = GetVisibleGems();
             if(gems !=null){
-                 QuixConsole.Log("Visible gems", gems.Count,helper.state.owner);
+                 //QuixConsole.Log("Visible gems", gems.Count,helper.state.owner);
             return gems.Count > 0;
             }else{
                 return false;

@@ -61,7 +61,7 @@ namespace QuixPhysics
 
         public void Update()
         {
-            if (isActive)
+            if (isActive&& obj.bodyReference.Exists)
             {
                 obj.Awake();
                 props.acceleration = Vector3.Clamp(props.acceleration, -props.maxSpeed, props.maxSpeed);// Limit(acceleration,maxSpeed);

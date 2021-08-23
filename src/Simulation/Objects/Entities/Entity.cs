@@ -53,7 +53,7 @@ namespace QuixPhysics
         /// <summary>
         /// How far the entity can look
         /// </summary>
-        public float vision = 8000;
+        public float vision = 1000;
         public void SetItem(HelperItem item, int index)
         {
             items[index] = item;

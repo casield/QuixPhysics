@@ -43,13 +43,12 @@ namespace QuixPhysics
             CreateInitialGems();
 
             AddWorker(new PhyInterval(1, simulator)).Tick += Update;
-            AddWorker(new PhyInterval(1000, simulator)).Completed += ThrowGem;
+            AddWorker(new PhyInterval(10000, simulator)).Completed += ThrowGem;
 
         }
 
         private void ThrowGem()
         {
-            int vel = 100;
             if (gems.Count > 0)
             {
                 if (random.Next(0, 10) >= 0)

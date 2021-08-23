@@ -13,6 +13,7 @@ namespace QuixPhysics
 
         private EntityLifeLoop currentLoop;
         public User owner;
+        private Vector3 lastVelocity = new Vector3();
 
 
         public override void Init()
@@ -23,11 +24,25 @@ namespace QuixPhysics
             SetItems();
             var randompoint = ((Arena)room.gamemode).GetRandomPoint(owner.player.GetPosition(),new Vector3(500,500,500)).Position;
             QuixConsole.Log("Random point",randompoint);
-            vehicle.props.maxSpeed = new Vector3(.1f,1,.1f);
+            vehicle.props.maxSpeed = new Vector3(.1f,.1f,.1f);
+            
 
             SetPosition(randompoint);
          // SetPosition(owner.player.GetPosition());
 
+        }
+        public override void ChangeStateBeforeSend()
+        {
+            base.ChangeStateBeforeSend();
+            var velocityDirection =Vector3.Normalize(Vector3.Lerp(bodyReference.Velocity.Linear,lastVelocity,0.9f));
+            var x = MathF.Cos(velocityDirection.X);
+            var z = MathF.Sin(velocityDirection.Z);
+            var angle = MathF.Atan2(z,x);
+            state.quaternion =Quaternion.CreateFromAxisAngle(new Vector3(0,1,0),angle);
+
+            lastVelocity = bodyReference.Velocity.Linear;
+
+            //Vector3.Dot(player.transform.forward,playerVelocity);
         }
 
         private void SetOwner()
@@ -113,6 +128,9 @@ namespace QuixPhysics
             if (currentLoop != null)
             {
                 currentLoop.OnTrailActive();
+            }
+            if(currentLoop is HelperAction){
+                SelectItem();
             }
         }
         public override void OnFall()
