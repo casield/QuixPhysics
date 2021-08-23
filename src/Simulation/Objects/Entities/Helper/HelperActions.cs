@@ -35,9 +35,16 @@ namespace QuixPhysics
             {
                 GoRandomPoint();
             }else{
-                QuixConsole.Log("No");
+               // QuixConsole.Log("No");
             }
 
+        }
+
+        public void OnStuck()
+        {
+            //throw new System.NotImplementedException();
+            QuixConsole.Log("Stcuk in HelperAction");
+            GoRandomPoint();
         }
     }
 

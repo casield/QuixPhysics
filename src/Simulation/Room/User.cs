@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Numerics;
 using OVars;
 
@@ -14,6 +15,7 @@ namespace QuixPhysics
 
         public OVar gems;
         public Room room;
+        public List<PhyObject> objects = new List<PhyObject>();
 
         public User(string id, Room room)
         {
@@ -48,7 +50,7 @@ namespace QuixPhysics
         }
         private void StartGemCount()
         {
-            PhyInterval interval = new PhyInterval(10000, simulator);
+            PhyInterval interval = new PhyInterval(180000, simulator);
             interval.Completed += TickGem;
 
         }

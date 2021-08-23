@@ -13,7 +13,7 @@ namespace QuixPhysics
         private float yAdded = 0;
 
         private float acceleration = 0;
-        private float velocity = .02f;
+        private float velocity = .01f;
 
         private bool released = true;
         /// <summary>

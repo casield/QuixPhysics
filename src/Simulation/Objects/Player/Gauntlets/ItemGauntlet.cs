@@ -20,7 +20,7 @@ namespace QuixPhysics
         public Vector3 GetShifterPosition()
         {
 
-            float distance = 150;
+            /*float distance = 150;
             float sep = -.2f;
             var newPos = player.GetPosition();
             var x = -(float)Math.Cos(player.rotationController+sep);
@@ -28,15 +28,15 @@ namespace QuixPhysics
 
             newPos.X += (x * distance);
             newPos.Z += y * distance;
-            newPos.Y +=distance/3;
+            newPos.Y +=distance/3;*/
 
-            return newPos;
+            return player.lookObject.GetPosition();
         }
         public override void Activate(bool active)
         {
             
             if(active){
-                QuixConsole.Log("Oh ya xD");
+                
                 Gematorium gematorium = new Gematorium(player.user);
                 gematorium.Drop(player.room,shifter.GetPosition()+new Vector3(0,50,0));
             }

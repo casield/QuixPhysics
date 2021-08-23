@@ -20,6 +20,7 @@ namespace QuixPhysics
         /// Update method when Trail is active
         /// </summary>
         void OnTrailActive();
+        void OnStuck();
 
     }
     public class EntityStats
@@ -27,6 +28,10 @@ namespace QuixPhysics
         public float force;
 
         public HelperItem[] items = new HelperItem[3];
+        /// <summary>
+        /// The amount of gems that this entity is carrying
+        /// </summary>
+        public int gems = 0;
         /// <summary>
         /// This variable changes when the owner gives him attention.
         /// Value is between -10 - 10
@@ -38,15 +43,38 @@ namespace QuixPhysics
         /// </summary>
         public float experience = 1;
         public float life = 10;
+        public Entity entity;
+
+        public EntityStats(Entity entity)
+        {
+            this.entity = entity;
+        }
 
         /// <summary>
         /// How far the entity can look
         /// </summary>
-        public float vision = 200;
+        public float vision = 8000;
         public void SetItem(HelperItem item, int index)
         {
             items[index] = item;
         }
+
+        /// <summary>
+        /// Damage this entity, it returns true if the entity dies.
+        /// </summary>
+        /// <param name="damage"></param>
+        /// <returns>True if entity dies</returns>
+        public bool DamageEntity(float damage)
+        {
+            life -= damage;
+            if (life <= 0)
+            {
+                entity.OnDead();
+                return true;
+            }
+            return false;
+        }
+
     }
 
     public abstract class Entity : PhyObject, EntityLifeLoop
@@ -60,16 +88,18 @@ namespace QuixPhysics
         public Vector3 extend { get; set; }
         private Vector3 lastPosition;
         public EntityStats stats;
+        private PhyWaiter stuckWaiter;
 
         public Entity()
         {
-            stats = new EntityStats();
+            stats = new EntityStats(this);
         }
 
         public override void Load(Handle bodyHandle, ConnectionState connectionState, Simulator simulator, ObjectState state, Guid guid, Room room)
         {
             base.Load(bodyHandle, connectionState, simulator, state, guid, room);
             arena = (Arena)room.gamemode;
+            stuckWaiter = new PhyWaiter(4000);
         }
 
         public virtual void Init()
@@ -86,12 +116,12 @@ namespace QuixPhysics
 
 
 
-            
+
         }
 
         public bool FollowTarget(PhyObject target)
         {
-            if (NavQueryExists())
+            if (NavQueryExists() && target!=null)
             {
                 trail.Start();
                 var setTarget = trail.SetTarget(target.GetPosition());
@@ -124,8 +154,10 @@ namespace QuixPhysics
         {
             return Vector3.Distance(GetPosition(), target);
         }
-
-        private void Update()
+        /// <summary>
+        /// Main loop of the entity, it looks if the navquery exists and then makes all the operations for the Trail.
+        /// </summary>
+        internal virtual void Update()
         {
             if (NavQueryExists())
             {
@@ -140,7 +172,7 @@ namespace QuixPhysics
                         }
                     }
                     vehicle.Arrive(trail.GetPoint());
-                    CheckPositionForStuck();
+                    
                 }
 
                 else
@@ -153,30 +185,30 @@ namespace QuixPhysics
                 {
                     OnFall();
                 }
+                CheckPositionForStuck();
                 vehicle.Update();
                 AfterUpdate();
             }
 
         }
 
-        #region Entity Actions
+        #region Entity Operators
         private bool IsFalling()
         {
             return GetPosition().Y < -50;
         }
-
         private void CheckPositionForStuck()
         {
             var distance = Distance(lastPosition);
             if (distance < 5)
             {
-               /* if (stuckWaiter.Tick())
-                {
-                    //Too many time in one point
-                    OnStuck();
-                    stuckWaiter.Reset();
+                 if (stuckWaiter.Tick())
+                 {
+                     //Too many time in one point
+                     OnStuck();
+                     stuckWaiter.Reset();
 
-                }*/
+                 }
             }
             else
             {
@@ -202,6 +234,18 @@ namespace QuixPhysics
 
         }
         /// <summary>
+        /// When the entity dies it drops all the gems that it's carryng.
+        /// </summary>
+        public virtual void OnDead()
+        {
+            for (int i = 0; i < stats.gems; i++)
+            {
+                var gem=new Gem();
+                gem.Drop(room,GetPosition());
+            }
+            Destroy();
+        }
+        /// <summary>
         /// Method to manage fall event
         /// </summary>
         public virtual void OnFall()
@@ -220,6 +264,7 @@ namespace QuixPhysics
         public abstract bool OnLastPolygon();
         public abstract void OnTrailInactive();
         public abstract void OnTrailActive();
+
         /// <summary>
         /// This method is called when all the computation in Update is done
         /// </summary>

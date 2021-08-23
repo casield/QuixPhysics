@@ -289,32 +289,5 @@ namespace QuixPhysics
             node.Transform.Rotation = new Aspose.ThreeD.Utilities.Quaternion(quaternion.W, quaternion.X, quaternion.Y, quaternion.Z);
             node.Transform.Scale = new Aspose.ThreeD.Utilities.Vector3((size.X) / resizer, size.Y / resizer, size.Z / resizer);
         }
-
-        public static bool PointInPoly(Vector3 pt, NavPolyId polyId, TiledNavMesh navMesh)
-        {
-            NavTile curTile;
-            NavPoly curPoly;
-            navMesh.TryGetTileAndPolyByRef(polyId, out curTile, out curPoly);
-
-            int nverts = curPoly.VertCount;
-            Vector3[] verts = curTile.Verts;
-
-            bool c = false;
-
-            for (int i = 0, j = nverts - 1; i < nverts; j = i++)
-            {
-                Vector3 vi = verts[i];
-                Vector3 vj = verts[j];
-                if (((vi.Z > pt.Z) != (vj.Z > pt.Z)) &&
-                    (pt.X < (vj.X - vi.X) * (pt.Z - vi.Z) / (vj.Z - vi.Z) + vi.X))
-                {
-                    c = !c;
-                }
-            }
-
-            return c;
-        }
-
-
     }
 }

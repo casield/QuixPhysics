@@ -12,14 +12,22 @@ namespace QuixPhysics
         List<Gem> gemsDropped = new List<Gem>();
         Helper helper;
         Random random = new Random();
+        private int maxGemsToCarry = 3;
         public HI_GemFraction(Helper helper) : base(helper)
         {
             this.helper = helper;
+
+        }
+        public override void Constructor(ConnectionState connectionState, Simulator simulator, Room room)
+        {
+            base.Constructor(connectionState, simulator, room);
+            room.gamemode.itemDroppedListeners += OnItemDropped;
         }
 
         public override void Activate()
         {
-            room.gamemode.itemDroppedListeners += OnItemDropped;
+            //room.gamemode.itemDroppedListeners += OnItemDropped;
+            LookGem();
         }
         /// <summary>
         /// Add the dropped gems
@@ -30,12 +38,20 @@ namespace QuixPhysics
             if (item is Gem)
             {
                 gemsDropped.Add((Gem)item);
+                ((Gem)item).OnDelete+=OnGemDeleted;
             }
+        }
+
+        private void OnGemDeleted(PhyObject obj)
+        {
+            gemsDropped.Remove((Gem)obj);
         }
 
         public override void Desactivate()
         {
-            room.gamemode.itemDroppedListeners -= OnItemDropped;
+            base.Desactivate();
+            helper.bodyReference.Velocity.Linear *= .5f;
+            // room.gamemode.itemDroppedListeners -= OnItemDropped;
         }
 
         public override void Instantiate(Room room, Vector3 position)
@@ -54,21 +70,25 @@ namespace QuixPhysics
             List<Gem> sortGems = new List<Gem>(gemsDropped);
             sortGems.Sort((gem1, gem2) =>
              {
-                 var distance1 = Vector3.Distance(gem1.GetPosition(), helper.GetPosition());
-                 var distance2 = Vector3.Distance(gem2.GetPosition(), helper.GetPosition());
-                 if (distance1 > helper.stats.vision)
+                 if (gem1.bodyReference.Exists && gem2.bodyReference.Exists)
                  {
-                     return -2;
+                     var distance1 = Vector3.Distance(gem1.GetPosition(), helper.GetPosition());
+                     var distance2 = Vector3.Distance(gem2.GetPosition(), helper.GetPosition());
+                     if (distance1 > helper.stats.vision)
+                     {
+                         return -2;
+                     }
+
+                     if (distance1 < distance2)
+                     {
+                         return 1;
+                     }
+                     if (distance1 > distance2)
+                     {
+                         return -1;
+                     }
                  }
 
-                 if (distance1 < distance2)
-                 {
-                     return 1;
-                 }
-                 if (distance1 > distance2)
-                 {
-                     return -1;
-                 }
                  return 0;
              });
 
@@ -81,7 +101,7 @@ namespace QuixPhysics
                 float valGem1 = ValueOfGem(gem1, valuatedGems.Count);
                 float valGem2 = ValueOfGem(gem2, valuatedGems.Count);
 
-                if (valGem1 > valGem2)
+                if (valGem1 >= valGem2)
                 {
                     return 1;
                 }
@@ -104,6 +124,10 @@ namespace QuixPhysics
             List<Gem> closeGems = new List<Gem>();
             gemsDropped.ForEach(gem =>
             {
+                if (gem.Destroyed || !gem.bodyReference.Exists)
+                {
+                    return;
+                }
                 if (helper.Distance(gem.GetPosition()) <= helper.stats.vision)
                 {
                     closeGems.Add(gem);
@@ -145,9 +169,32 @@ namespace QuixPhysics
         }
         #endregion
 
+        private void OnFullGems()
+        {
+            Gematorium gematorium = (Gematorium)helper.owner.objects.Find(e => e.state.type == "Gematorium");
+            helper.FollowTarget(gematorium);
+            
+        }
+        private void PickUpGem(Gem gem)
+        {
+
+            QuixConsole.Log("Gem picked up",helper.state.owner,helper.stats.gems);
+
+            gemsDropped.Remove(gem);
+            helper.stats.gems += 1;
+            gem.Destroy();
+            if (helper.stats.gems >= maxGemsToCarry)
+            {
+                OnFullGems();
+            }
+        }
         private bool IsLookingGem()
         {
             return helper.target is Gem;
+        }
+        private bool IsLookingGematorium()
+        {
+            return helper.target is Gematorium;
         }
 
         public override void OnTrailInactive()
@@ -155,38 +202,104 @@ namespace QuixPhysics
 
             if (!IsLookingGem())
             {
-                var gems = FindMostValuablesGems();
-                if (gems.Count > 0)
+                if (!LookGem())
                 {
-                    int witch = random.Next(0, gems.Count - 1);
-                    var follow = helper.FollowTarget(gems[witch]);
-                    QuixConsole.Log("Could follow", follow);
+                    Desactivate();
                 }
             }
+        }
+        /// <summary>
+        /// Look for the mos valuable gem. Return false if the body does not exists or FollowTarget returned null.
+        /// </summary>
+        /// <returns></returns>
+        private bool LookGem()
+        {
+            var gems = FindMostValuablesGems();
+            if (gems.Count > 0)
+            {
+                int witch = random.Next(0, gems.Count - 1);
+                if (gems[witch].bodyReference.Exists)
+                {
+                    var follow = helper.FollowTarget(gems[witch]);
+
+                    return follow;
+                }
+                else
+                {
+                    return false;
+                }
+
+            }
+            return false;
         }
 
         public override bool OnLastPolygon()
         {
-            helper.vehicle.Arrive(helper.target.GetPosition() + helper.extend);
-            if (helper.Distance(helper.target.GetPosition()) < 20)
+            if (IsLookingGem())
             {
-                return true;
+                helper.vehicle.Arrive(helper.target.GetPosition());
+                if (helper.Distance(helper.target.GetPosition()) < 250)
+                {
+                    if (!helper.target.Destroyed)
+                    {
+                        PickUpGem((Gem)helper.target);
+
+                    }
+                    // Desactivate();
+                    // return true;
+                }
+                if (helper.target.Destroyed)
+                {
+                    Desactivate();
+                    return true;
+                }
+
+            }
+            if (IsLookingGematorium())
+            {
+                helper.vehicle.Arrive(helper.target.GetPosition());
+                if (helper.Distance(helper.target.GetPosition()) < 250)
+                {
+                    Gematorium gematorium = (Gematorium)helper.target;
+                    gematorium.AddGems(helper.stats.gems);
+                    helper.stats.gems =0;
+                    Desactivate();
+                    return true;
+                }
             }
             return false;
         }
 
         public override void OnTrailActive()
         {
+            //QuixConsole.Log("Trail active");
             helper.vehicle.Arrive(helper.trail.GetPoint());
+
+
         }
 
 
 
         public override bool ShouldActivate()
         {
+            if(helper.stats.gems>=maxGemsToCarry){
+                return true;
+            }
             var gems = GetVisibleGems();
-            return gems.Count>0;
+            if(gems !=null){
+                 QuixConsole.Log("Visible gems", gems.Count,helper.state.owner);
+            return gems.Count > 0;
+            }else{
+                return false;
+            }
+
+           
         }
 
+        public override void OnStuck()
+        {
+            QuixConsole.Log("Stucked on GemFraction",helper.state.owner);
+            LookGem();
+        }
     }
 }

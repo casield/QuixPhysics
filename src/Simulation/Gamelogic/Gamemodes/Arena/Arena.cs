@@ -14,7 +14,7 @@ namespace QuixPhysics
     }
     public class Arena : Gamemode
     {
-        public ArenaProps props = new ArenaProps() { MIN_USERS = 1, TURNS_TO_WIN = 3 };
+        public ArenaProps props = new ArenaProps() { MIN_USERS = 2, TURNS_TO_WIN = 3 };
         public List<User> users = new List<User>();
 
 
@@ -61,8 +61,11 @@ namespace QuixPhysics
 
                 var index = users.IndexOf(user);
 
-                if (index <= -1 || room.map.startPositions.Count - 1 > index)
+                QuixConsole.Log("Start position",room.map.startPositions.Count,index,user);
+
+                if (index <= -1 || index>room.map.startPositions.Count)
                 {
+                    QuixConsole.Log("users was -1");
                     index = 0;
 
                 }
@@ -148,14 +151,15 @@ namespace QuixPhysics
             settings.CellHeight = 0.2f * mulre;
             settings.MaxClimb = 0.1f * mulre;
             settings.AgentHeight = 2.0f * mulre;
-            settings.AgentRadius = 0.6f * mulre;
+           settings.AgentRadius = 0.6f * mulre;
+      
 
             //Creates the mesh .obj
             qinavMesh.CreateMesh(navObjects, navMeshName, resizer);
             //Then it generates de NavMesh
             navMesh = qinavMesh.GenerateNavMesh(navMeshName, settings);
 
-            //Read it from .snb
+            //Creates the tilednavmesh
             tiledNavMesh = new TiledNavMesh(navMesh);
 
             navMeshQuery = new NavMeshQuery(tiledNavMesh, 1048);

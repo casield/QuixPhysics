@@ -31,8 +31,8 @@ namespace QuixPhysics
 
         public Gematorium(User user)
         {
-           // QuixConsole.Log("Create only 1");
-           this.user=user;
+            // QuixConsole.Log("Create only 1");
+            this.user = user;
         }
         public override void Load(Handle bodyHandle, ConnectionState connectionState, Simulator simulator, ObjectState state, Guid guid, Room room)
         {
@@ -40,32 +40,62 @@ namespace QuixPhysics
 
             base.Load(bodyHandle, connectionState, simulator, state, guid, room);
 
-            CreateGems();
+            CreateInitialGems();
 
             AddWorker(new PhyInterval(1, simulator)).Tick += Update;
-            AddWorker(new PhyInterval(10000,simulator)).Completed+=ThrowGem;
-            ThrowGem();
+            AddWorker(new PhyInterval(1000, simulator)).Completed += ThrowGem;
+
         }
 
         private void ThrowGem()
         {
             int vel = 100;
-            if(random.Next(0,10)>0){
-               // QuixConsole.Log("Created Gem");
-               var gem = new Gem();
-               gem.Drop(room,GetPosition()+new Vector3(0,100,0));
-
-               var XZ = random.Next(-vel,vel);
-               gem.bodyReference.Velocity.Linear = new Vector3(XZ,random.Next(vel/3,vel),XZ);
-               
+            if (gems.Count > 0)
+            {
+                if (random.Next(0, 10) >= 0)
+                {
+                    var index = random.Next(0, gems.Count - 1);
+                    var gem = gems[index];
+                    gem.gem.Destroy();
+                }
             }
+
         }
 
-        private void CreateGems()
+        private void CreateInitialGems()
         {
-            for (int a = 0; a < initialGems; a++)
+            AddGems(initialGems);
+        }
+
+        private void OnGemDeleted(PhyObject obj)
+        {
+            var gem = gems.Find((FlyinGem g) => { return g.gem == obj; });
+            var gemi = new Gem();
+            gemi.Drop(room, gem.position);
+
+            gems.Remove(gem);
+        }
+
+        private void Update()
+        {
+            if (!simulator.Disposed)
             {
-                var pos = new Vector3(random.Next(-maxDistanceGems, maxDistanceGems), random.Next(-maxDistanceGems, maxDistanceGems), random.Next(-maxDistanceGems, maxDistanceGems));
+                foreach (var gem in gems)
+                {
+                    UpdateGem(gem);
+                }
+            }
+            else
+            {
+                QuixConsole.Log("Simulator disposed");
+            }
+
+        }
+        public void AddGems(int count)
+        {
+            for (int a = 0; a < count; a++)
+            {
+                var pos = new Vector3(C.RandomFloat(-maxDistanceGems, maxDistanceGems), C.RandomFloat(-maxDistanceGems, maxDistanceGems), C.RandomFloat(-maxDistanceGems, maxDistanceGems));
                 pos = Vector3.Add(state.position, pos);
                 pos.Y += ((BoxState)state).halfSize.Y;
                 var gem = GematoriumGem.Build(pos, Quaternion.Identity, 0);
@@ -73,9 +103,8 @@ namespace QuixPhysics
                 GematoriumGem phygem = (GematoriumGem)room.Create(gem);
                 StaticDescription description;
 
-                float velocity = ((float)(random.Next(-10, 10)) / 3000);
-                velocity = velocity != 0 ? velocity : -0.001f;
-                // QuixConsole.Log("Velocity",velocity);
+                float velocity = C.RandomFloat(-.01f, .01f) * 2;
+
                 simulator.Simulation.Statics.GetDescription(phygem.handle.staticHandle, out description);
                 FlyinGem flyinGem = new FlyinGem() { direction = 1, gem = phygem, description = description, position = pos, velocity = velocity };
 
@@ -86,41 +115,24 @@ namespace QuixPhysics
             }
         }
 
-        private void OnGemDeleted(PhyObject obj)
+        private void UpdateGem(FlyinGem gem)
         {
-            var gem = gems.Find((FlyinGem g) => { return g.gem == obj; });
-            gems.Remove(gem);
-        }
 
-        private void Update()
-        {
-            if (!simulator.Disposed)
-            {
-                foreach (var gem in gems)
-                {
+            float distance = maxDistanceGems;
+            var newPos = gem.position;
+            var x = -(float)Math.Cos(gem.rotation);
+            var z = -(float)Math.Sin(gem.rotation);
+            var y = (float)Math.Cos(gem.rotationY);
 
-                    float distance = maxDistanceGems;
-                    var newPos = gem.position;
-                    var x = -(float)Math.Cos(gem.rotation);
-                    var z = -(float)Math.Sin(gem.rotation);
-                    var y = (float)Math.Cos(gem.rotationY);
+            newPos.X += x * distance;
+            newPos.Z += z * distance;
+            newPos.Y += y * distance / 3;
+            gem.description.Pose.Position = newPos;
 
-                    newPos.X += x * distance;
-                    newPos.Z += z * distance;
-                    newPos.Y += y * distance / 3;
-                    gem.description.Pose.Position = newPos;
-
-                    simulator.Simulation.Statics.ApplyDescription(gem.gem.handle.staticHandle, gem.description);
-                    gem.rotation += gem.velocity;
-                    gem.rotationY += 0.001f;
-                    gem.gem.needUpdate = true;
-                }
-            }
-            else
-            {
-                QuixConsole.Log("Simulator disposed");
-            }
-
+            simulator.Simulation.Statics.ApplyDescription(gem.gem.handle.staticHandle, gem.description);
+            gem.rotation += gem.velocity;
+            gem.rotationY += 0.001f;
+            gem.gem.needUpdate = true;
         }
 
         public static BoxState Build(Vector3 position, Quaternion rotation, User owner)
@@ -141,9 +153,9 @@ namespace QuixPhysics
             return state;
         }
 
-        public override void Instantiate(Room room,Vector3 position)
+        public override void Instantiate(Room room, Vector3 position)
         {
-            room.factory.Create(Build(position,Quaternion.Identity,user),room,this);
+            room.factory.Create(Build(position, Quaternion.Identity, user), room, this);
         }
     }
 }

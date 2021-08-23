@@ -12,7 +12,7 @@ namespace QuixPhysics
         private Random random = new Random();
 
         private EntityLifeLoop currentLoop;
-        private User owner;
+        public User owner;
 
 
         public override void Init()
@@ -21,9 +21,12 @@ namespace QuixPhysics
             base.Init();
             SetOwner();
             SetItems();
+            var randompoint = ((Arena)room.gamemode).GetRandomPoint(owner.player.GetPosition(),new Vector3(500,500,500)).Position;
+            QuixConsole.Log("Random point",randompoint);
+            vehicle.props.maxSpeed = new Vector3(.1f,1,.1f);
 
-          //  SetPosition(trail.GetRandomPoint(owner.player.GetPosition()).Position);
-          SetPosition(owner.player.GetPosition());
+            SetPosition(randompoint);
+         // SetPosition(owner.player.GetPosition());
 
         }
 
@@ -61,6 +64,7 @@ namespace QuixPhysics
                     activeItem = item;
                     ChangeLoop(activeItem);
                     activeItem.Activate();
+                    
                     return true;
                 }
                 }
@@ -84,6 +88,7 @@ namespace QuixPhysics
                 var r = currentLoop.OnLastPolygon();
                 if(r){
                     ChangeLoop(null);
+                    
                 }
                 return r;
             }
@@ -96,6 +101,7 @@ namespace QuixPhysics
             {
                 currentLoop.OnTrailInactive();
             }else{
+                QuixConsole.Log("Loop is null",state.owner);
                 if(!SelectItem()){
                     ChangeLoop(new HelperAction(this));
                 }
@@ -111,15 +117,15 @@ namespace QuixPhysics
         }
         public override void OnFall()
         {
-            base.OnFall();
+            stats.DamageEntity(stats.life);
 
         }
-
-        #region Helper Actions
-        public void WonderAround()
+        public override void OnStuck()
         {
-
+            base.OnStuck();
+            if(currentLoop != null){
+                currentLoop.OnStuck();
+            }
         }
-        #endregion
     }
 }

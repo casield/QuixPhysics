@@ -10,7 +10,6 @@ namespace QuixPhysics
 
     public class TrailProps
     {
-        public float arriveDistance = 200;
         public Vector3 targetExtend = new Vector3(500);
 
         public int MinPathSizeToChange = 1;
@@ -141,8 +140,6 @@ namespace QuixPhysics
                 Vector3 closest = new Vector3();
                 query.ClosestPointOnPoly(path[newpoint], obj.GetPosition(), ref closest);
 
-                // query.
-                var position = obj.GetPosition();
 
                 Vector3 correctedPoint = new Vector3();
                 NavPoint navStart = new NavPoint(path[newpoint], obj.GetPosition());

@@ -57,6 +57,7 @@ namespace QuixPhysics
 
         public StaticDescription staticDescription;
         public BodyDescription bodyDescription;
+        public bool Destroyed = false;
 
 
         public PhyObject()
@@ -103,7 +104,7 @@ namespace QuixPhysics
         /// <param name="state"></param>
         /// <param name="guid"></param>
         /// <param name="room"></param>
-        public void Constructor(ConnectionState connectionState, Simulator simulator, Room room)
+        public virtual void Constructor(ConnectionState connectionState, Simulator simulator, Room room)
         {
             this.connectionState = connectionState;
 
@@ -167,13 +168,22 @@ namespace QuixPhysics
         {
             if (state.mass == 0)
             {
-                return staticReference.Pose.Position;
+                if(staticReference.Exists){
+                     return staticReference.Pose.Position;
+                }
+                
+               
             }
             else
             {
-                return bodyReference.Pose.Position;
+                if(bodyReference.Exists){
+                    return bodyReference.Pose.Position;
+                }
+                
             }
+            return Vector3.Zero;
         }
+
 
         public BodyReference GetBodyReference()
         {
@@ -320,6 +330,7 @@ namespace QuixPhysics
             }
             else
             {
+                room.factory.objectsHandlers.Remove(handle.bodyHandle);
                 simulator.Simulation.Bodies.Remove(handle.bodyHandle);
             }
             room.factory.objects.Remove(state.uID);
@@ -338,6 +349,7 @@ namespace QuixPhysics
                 item.Destroy();
             }
             OnDelete?.Invoke(this);
+            Destroyed = true;
 
         }
 

@@ -36,6 +36,9 @@ namespace QuixPhysics
             if (instantiated == null)
             {
                 phy = GetPhyClass(state.type);
+                if(phy is Player2 && state.owner =="Bot"){
+                    phy = new PlayerBot();
+                }
             }
             else
             {
@@ -48,10 +51,10 @@ namespace QuixPhysics
             }
 
             phy.BeforeLoad(state);
-            
+
             if (state is BoxState)
             {
-                if (phy is MeshBox )
+                if (phy is MeshBox)
                 {
                     phy = CreateMesh((BoxState)state, room, instantiated);
                 }
@@ -75,6 +78,14 @@ namespace QuixPhysics
             {
                 QuixConsole.Log("Objects already had that key", state.uID);
             }
+
+            if (state.owner != null)
+            {
+                if (room.users.ContainsKey(state.owner))
+                {
+                    room.users[state.owner].objects.Add(phy);
+                }
+            }
             return phy;
 
         }
@@ -94,7 +105,8 @@ namespace QuixPhysics
                 collidable = true,
                 guid = guid
             };
-            if(state.quaternion == new Quaternion(0,0,0,0)){
+            if (state.quaternion == new Quaternion(0, 0, 0, 0))
+            {
                 state.quaternion = Quaternion.Identity;
             }
 
@@ -220,6 +232,7 @@ namespace QuixPhysics
             {
                 phy = new PhyObject();
             }
+            
             return phy;
         }
 

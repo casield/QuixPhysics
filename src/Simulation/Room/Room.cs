@@ -36,9 +36,6 @@ namespace QuixPhysics
             this.connectionState = connectionState;
             //simulator.createObjects(this);
             SetGameMode(new Arena(simulator, this));
-
-
-
         }
 
         public void SetGameMode(Gamemode gamemode)

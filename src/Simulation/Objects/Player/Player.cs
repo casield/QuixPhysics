@@ -32,7 +32,7 @@ namespace QuixPhysics
         public float rotationController = 0;
 
 
-        public PlayerStats playerStats = new PlayerStats { force = 30, friction = .99f, speed = .15f, maxSpeed = 1f };
+        public PlayerStats playerStats = new PlayerStats { force = 60, friction = .99f, speed = .15f, maxSpeed = 1f };
         public OverBoardStats overStats = new OverBoardStats { acceleration = .06f };
 
         private float moveAcceleration = 0;
@@ -85,8 +85,6 @@ namespace QuixPhysics
             bodyReference = simulator.Simulation.Bodies.GetBodyReference(bodyHandle.bodyHandle);
             room.factory.OnContactListeners.Add(this.guid, this);
 
-
-            SetPositionToStartPoint();
             CreateBall();
             CreateGauntlets();
             CreateLookObject();
@@ -97,6 +95,8 @@ namespace QuixPhysics
             snappedState = new SnappedState(this);
             notSnappedState = new Not_SnappedState(this);
             shotState = new ShootState(this);
+
+            QuixConsole.Log("Loading Player");
 
         }
 
@@ -112,14 +112,13 @@ namespace QuixPhysics
             AddGauntletToAvailable(new AtractGauntlet());
             AddGauntletToAvailable(new ItemGauntlet());
 
-            ChangeGauntlet("atract");
+            ChangeGauntlet("item");
         }
         private void AddGauntletToAvailable(IGauntlet gauntlet)
         {
 
             gauntlet.AddPlayer(this);
             gauntlet.Init();
-            QuixConsole.Log("Gauntlet name", gauntlet.name);
             gauntlets.Add(gauntlet.name, gauntlet);
         }
         public void ChangeGauntlet(string type)
@@ -141,12 +140,13 @@ namespace QuixPhysics
                 mass = 0,
                 //halfSize=new Vector3(10,10,10),
                 type = "LookObject",
-                owner = state.uID
+                owner = state.owner
             });
             lookObject.SetPlayer(this);
         }
         private void CreateBall()
         {
+            QuixConsole.Log("Create ball "+state.owner);
             SphereState ball = new SphereState();
             ball.radius = 3;
             ball.position = state.position;

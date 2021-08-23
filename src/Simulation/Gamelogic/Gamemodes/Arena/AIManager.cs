@@ -5,27 +5,34 @@ using System.Numerics;
 
 namespace QuixPhysics
 {
-    public class AIManager : ArenaHelper
+    public class AIManager : ArenaAddon
     {
 
         public List<Entity> entities = new List<Entity>();
-        public AIManager(Simulator simulator, Arena arena) : base(simulator, arena)
-        {
-        }
+        private Bot bot;
 
-        public override void OnStart()
+        public AIManager(Simulator simulator, Arena arena) : base(simulator, arena)
         {
             
         }
 
-        public override void OnMapsLoaded()
+        public override void OnStart()
         {
-            base.OnMapsLoaded();
-            entities.ForEach(entities=>{
-                entities.Init();
-            });
-
+            this.bot.OnStart();
         }
 
+        public override void OnMapsLoaded()
+        {
+            CreateBot();
+            base.OnMapsLoaded();
+            
+
+        }
+        
+
+        private void CreateBot()
+        {
+           this.bot = new Bot(room);
+        }
     }
 }
