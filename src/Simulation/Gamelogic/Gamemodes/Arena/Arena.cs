@@ -3,6 +3,7 @@ using System.IO;
 using System.Numerics;
 using Aspose.ThreeD;
 using SharpNav;
+using SharpNav.IO;
 using SharpNav.Pathfinding;
 
 namespace QuixPhysics
@@ -14,7 +15,7 @@ namespace QuixPhysics
     }
     public class Arena : Gamemode
     {
-        public ArenaProps props = new ArenaProps() { MIN_USERS = 2, TURNS_TO_WIN = 3 };
+        public ArenaProps props = new ArenaProps() { MIN_USERS = 1, TURNS_TO_WIN = 3 };
         public List<User> users = new List<User>();
 
 
@@ -61,9 +62,9 @@ namespace QuixPhysics
 
                 var index = users.IndexOf(user);
 
-                QuixConsole.Log("Start position",room.map.startPositions.Count,index,user);
+                QuixConsole.Log("Start position", room.map.startPositions.Count, index, user);
 
-                if (index <= -1 || index>room.map.startPositions.Count)
+                if (index <= -1 || index > room.map.startPositions.Count)
                 {
                     QuixConsole.Log("users was -1");
                     index = 0;
@@ -112,15 +113,20 @@ namespace QuixPhysics
             aIManager.OnMapsLoaded();
             room.factory.createObjects();
         }
-        public NavPoint GetRandomPoint(Vector3 position,Vector3 extend)
+        public NavPoint GetRandomPoint(Vector3 position, Vector3 extend)
         {
             var query = navMeshQuery;
-            var nearest = query.FindNearestPoly(position, extend);
-            query.FindRandomConnectedPoint(ref nearest, out NavPoint randomPoint);
-            float height = 0;
-            query.GetPolyHeight(nearest.Polygon, position, ref height);
-            randomPoint.Position.Y += height;
-            return randomPoint;
+            if (navMeshQuery != null)
+            {
+                var nearest = query.FindNearestPoly(position, extend);
+                query.FindRandomConnectedPoint(ref nearest, out NavPoint randomPoint);
+                float height = 0;
+                query.GetPolyHeight(nearest.Polygon, position, ref height);
+                randomPoint.Position.Y += height;
+                return randomPoint;
+            }
+            return new NavPoint();
+
         }
 
         public override void Start()
@@ -129,7 +135,7 @@ namespace QuixPhysics
             CreatePlayers();
 
 
-            GenerateNavMesh();
+             GenerateNavMesh();
             aIManager.OnStart();
             userLoader.OnStart();
 
@@ -147,12 +153,12 @@ namespace QuixPhysics
             float resizer = 1;
             float mulre = (100 / resizer);
 
-            settings.CellSize = 0.3f * mulre;
+            settings.CellSize = 2f * mulre;
             settings.CellHeight = 0.2f * mulre;
             settings.MaxClimb = 0.1f * mulre;
             settings.AgentHeight = 2.0f * mulre;
-           settings.AgentRadius = 0.6f * mulre;
-      
+            settings.AgentRadius = 0.6f * mulre;
+
 
             //Creates the mesh .obj
             qinavMesh.CreateMesh(navObjects, navMeshName, resizer);
@@ -160,12 +166,12 @@ namespace QuixPhysics
             navMesh = qinavMesh.GenerateNavMesh(navMeshName, settings);
 
             //Creates the tilednavmesh
-            tiledNavMesh = new TiledNavMesh(navMesh);
+            tiledNavMesh = qinavMesh.GetTiledNavMesh(navMeshName);//new TiledNavMesh(navMesh);
 
             navMeshQuery = new NavMeshQuery(tiledNavMesh, 1048);
 
             //Save it to a file .snb
-            qinavMesh.SaveNavMeshToFile(navMeshName, tiledNavMesh);
+          //  qinavMesh.SaveNavMeshToFile(navMeshName, tiledNavMesh);
 
             OnNavMeshReadyListeners?.Invoke();
 

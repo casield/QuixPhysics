@@ -1,10 +1,25 @@
 using System;
+using System.Collections.Generic;
 using System.Numerics;
 using SharpNav;
 using SharpNav.Pathfinding;
 
 namespace QuixPhysics
 {
+    /// <summary>
+    /// This class represents the information that this Entity can Know. It's fullfilled while this entity walks around using the vehicle.
+    /// </summary>
+    public class EntityKnowledge
+    {
+        public List<Entity> entities = new List<Entity>(10);
+        public List<Player2> players = new List<Player2>();
+        private Entity entity;
+
+        public EntityKnowledge(Entity entity)
+        {
+            this.entity = entity;
+        }
+    }
     public interface EntityLifeLoop
     {
         /// <summary>
@@ -88,11 +103,12 @@ namespace QuixPhysics
         public Vector3 extend { get; set; }
         private Vector3 lastPosition;
         public EntityStats stats;
+        public EntityKnowledge knowledge;
         private PhyWaiter stuckWaiter;
 
         public Entity()
         {
-            stats = new EntityStats(this);
+            CreateProps();
         }
 
         public override void Load(Handle bodyHandle, ConnectionState connectionState, Simulator simulator, ObjectState state, Guid guid, Room room)
@@ -100,6 +116,11 @@ namespace QuixPhysics
             base.Load(bodyHandle, connectionState, simulator, state, guid, room);
             arena = (Arena)room.gamemode;
             stuckWaiter = new PhyWaiter(4000);
+        }
+        public virtual void CreateProps()
+        {
+            stats = new EntityStats(this);
+            knowledge = new EntityKnowledge(this);
         }
 
         public virtual void Init()
@@ -113,15 +134,11 @@ namespace QuixPhysics
                 trail.OnLastPoint += OnLastPoint;
                 AddWorker(new PhyInterval(1, simulator)).Tick += Update;
             }
-
-
-
-
         }
 
         public bool FollowTarget(PhyObject target)
         {
-            if (NavQueryExists() && target!=null)
+            if (NavQueryExists() && target != null)
             {
                 trail.Start();
                 var setTarget = trail.SetTarget(target.GetPosition());
@@ -172,7 +189,7 @@ namespace QuixPhysics
                         }
                     }
                     vehicle.Arrive(trail.GetPoint());
-                    
+
                 }
 
                 else
@@ -185,6 +202,7 @@ namespace QuixPhysics
                 {
                     OnFall();
                 }
+                FullfilKnowledge();
                 CheckPositionForStuck();
                 vehicle.Update();
                 AfterUpdate();
@@ -192,23 +210,36 @@ namespace QuixPhysics
 
         }
 
+
         #region Entity Operators
         private bool IsFalling()
         {
             return GetPosition().Y < -50;
+        }
+        /// <summary>
+        /// Fullfill kwnoledge.
+        /// </summary>
+        internal virtual void FullfilKnowledge()
+        {
+            if (bodyReference.Exists)
+            {
+                var pos = GetPosition();
+               // raycast.bb(in pos, bodyReference.Velocity.Linear);
+            }
+
         }
         private void CheckPositionForStuck()
         {
             var distance = Distance(lastPosition);
             if (distance < 5)
             {
-                 if (stuckWaiter.Tick())
-                 {
-                     //Too many time in one point
-                     OnStuck();
-                     stuckWaiter.Reset();
+                if (stuckWaiter.Tick())
+                {
+                    //Too many time in one point
+                    OnStuck();
+                    stuckWaiter.Reset();
 
-                 }
+                }
             }
             else
             {
@@ -240,8 +271,8 @@ namespace QuixPhysics
         {
             for (int i = 0; i < stats.gems; i++)
             {
-                var gem=new Gem();
-                gem.Drop(room,GetPosition());
+                var gem = new Gem();
+                gem.Drop(room, GetPosition());
             }
             Destroy();
         }

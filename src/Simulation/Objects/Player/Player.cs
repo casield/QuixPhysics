@@ -65,6 +65,7 @@ namespace QuixPhysics
         private float rotationSpeed = 2.6f;
         public LookObject lookObject;
         private PhyInterval worker;
+        private Raycast raycast;
 
         public Player2()
         {
@@ -102,9 +103,21 @@ namespace QuixPhysics
 
         private void CreateTestObject()
         {
-           var t=new TestsObject();
-           t.player = this;
-          // t.Instantiate(room,GetPosition()+new Vector3(50,50,50));
+            var t = new TestsObject();
+            t.player = this;
+
+            raycast = new Raycast(simulator,room);
+            raycast.SetRayShape(new CircleRayShape(4,30,raycast));
+            raycast.ObjectHitListeners+=OnRayCastHit;
+            // t.Instantiate(room,GetPosition()+new Vector3(50,50,50));
+        }
+
+        private void OnRayCastHit(PhyObject obj)
+        {
+        
+               //  QuixConsole.Log("Hit",obj.state.type,obj.state.uID);
+        
+        
         }
 
         private void CreateGauntlets()
@@ -146,7 +159,7 @@ namespace QuixPhysics
         }
         private void CreateBall()
         {
-            QuixConsole.Log("Create ball "+state.owner);
+            QuixConsole.Log("Create ball " + state.owner);
             SphereState ball = new SphereState();
             ball.radius = 3;
             ball.position = state.position;
@@ -188,8 +201,14 @@ namespace QuixPhysics
                 {
                     lookObject.Update();
                 }
+                var xyrot = GetXYRotation();
+               // QuixConsole.Log("Rotation player",rotationController);
+               var ret = new Vector3(xyrot.X,0,xyrot.Y);
+                raycast.Update(lookObject.GetPosition(),ret,this.state.quaternion);
 
             }
+
+            
 
         }
         public void TickMove()
@@ -304,7 +323,6 @@ namespace QuixPhysics
                 if (this.Agent.ActualState() != snappedState)
                 {
                     var distance = Vector3.Distance(bodyReference.Pose.Position, golfball.GetBodyReference().Pose.Position);
-                    //Console.WriteLine(distance);
                     if (distance < this.maxDistanceWithBall)
                     {
                         this.canShoot = true;
@@ -341,7 +359,7 @@ namespace QuixPhysics
         {
             var x = (float)Math.Cos(this.rotationController);
             var y = (float)Math.Sin(this.rotationController);
-            return new Vector2(x, y);
+            return -new Vector2(x, y);
         }
 
         public void OnFall()

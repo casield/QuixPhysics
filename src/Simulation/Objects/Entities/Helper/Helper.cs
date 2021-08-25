@@ -4,6 +4,14 @@ using SharpNav.Pathfinding;
 
 namespace QuixPhysics
 {
+    public class HalperKnowledge : EntityKnowledge
+    {
+        
+        public HalperKnowledge(Entity entity) : base(entity)
+        {
+        }
+
+    }
 
     public class Helper : Entity
     {
