@@ -43,7 +43,7 @@ namespace QuixPhysics
         public void OnStuck()
         {
             //throw new System.NotImplementedException();
-            QuixConsole.Log("Stcuk in HelperAction");
+            QuixConsole.Log("Stuck in HelperAction");
             GoRandomPoint();
         }
     }

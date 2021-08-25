@@ -9,7 +9,7 @@ namespace QuixPhysics
         public Bot(Room room)
         {
             arena = (Arena)room.gamemode;
-           // room.simulator.SendMessage("createbot","",room.connectionState.workSocket);
+            room.simulator.SendMessage("createbot","",room.connectionState.workSocket);
         }
 
         public void OnStart(){

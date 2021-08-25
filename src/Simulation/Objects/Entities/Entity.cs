@@ -115,7 +115,7 @@ namespace QuixPhysics
         {
             base.Load(bodyHandle, connectionState, simulator, state, guid, room);
             arena = (Arena)room.gamemode;
-            stuckWaiter = new PhyWaiter(4000);
+            stuckWaiter = new PhyWaiter(10000);
         }
         public virtual void CreateProps()
         {
@@ -231,7 +231,7 @@ namespace QuixPhysics
         private void CheckPositionForStuck()
         {
             var distance = Distance(lastPosition);
-            if (distance < 5)
+            if (distance < 1)
             {
                 if (stuckWaiter.Tick())
                 {

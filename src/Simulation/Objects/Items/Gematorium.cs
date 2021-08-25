@@ -43,7 +43,7 @@ namespace QuixPhysics
             CreateInitialGems();
 
             AddWorker(new PhyInterval(1, simulator)).Tick += Update;
-            AddWorker(new PhyInterval(10000, simulator)).Completed += ThrowGem;
+            AddWorker(new PhyInterval(36000, simulator)).Completed += ThrowGem;
 
         }
 

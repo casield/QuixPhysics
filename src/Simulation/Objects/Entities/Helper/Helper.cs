@@ -36,7 +36,7 @@ namespace QuixPhysics
             
 
             SetPosition(randompoint);
-         // SetPosition(owner.player.GetPosition());
+            stats.vision = 30000;
 
         }
         public override void ChangeStateBeforeSend()

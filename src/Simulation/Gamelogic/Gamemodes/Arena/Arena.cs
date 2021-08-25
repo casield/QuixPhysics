@@ -166,7 +166,7 @@ namespace QuixPhysics
             navMesh = qinavMesh.GenerateNavMesh(navMeshName, settings);
 
             //Creates the tilednavmesh
-            tiledNavMesh = qinavMesh.GetTiledNavMesh(navMeshName);//new TiledNavMesh(navMesh);
+            tiledNavMesh = new TiledNavMesh(navMesh);
 
             navMeshQuery = new NavMeshQuery(tiledNavMesh, 1048);
 
