@@ -6,18 +6,103 @@ using SharpNav.Pathfinding;
 
 namespace QuixPhysics
 {
+    public struct KnowledgeInfo
+    {
+        public Vector3 found_position;
+        public DateTime found_time;
+        public PhyObject found_object;
+        public static bool operator ==(KnowledgeInfo c1, KnowledgeInfo c2)
+        {
+            return c1.found_object==c2.found_object;
+        }
+         public static bool operator !=(KnowledgeInfo c1, KnowledgeInfo c2)
+        {
+            return c1.found_object!=c2.found_object;
+        }
+
+        public override bool Equals(object obj)
+        {
+            return (KnowledgeInfo)obj == this;
+        }
+    }
     /// <summary>
     /// This class represents the information that this Entity can Know. It's fullfilled while this entity walks around using the vehicle.
     /// </summary>
     public class EntityKnowledge
     {
-        public List<Entity> entities = new List<Entity>(10);
-        public List<Player2> players = new List<Player2>();
+        /* public List<Entity> entities = new List<Entity>(10);
+         public List<Player2> players = new List<Player2>();*/
+
+        public List<Type> interestingTypes = new List<Type>();
+        public List<KnowledgeInfo> knowledgeList = new List<KnowledgeInfo>();
         private Entity entity;
 
         public EntityKnowledge(Entity entity)
         {
             this.entity = entity;
+            interestingTypes.Add(typeof(Player2));
+            interestingTypes.Add(typeof(Entity));
+        }
+        /// <summary>
+        /// Check if the object is on the interesting types. If true it calls OnFoundInterestingObj.
+        /// </summary>
+        /// <param name="obj"></param>
+        public void CheckObject(PhyObject obj)
+        {
+
+            for (int i = 0; i < interestingTypes.Count; i++)
+            {
+                Type ty = interestingTypes[i];
+                if (obj.GetType().Name == ty.Name)
+                {
+                    OnFoundInterestingObject(obj, ty);
+                }
+            }
+        }
+        /// <summary>
+        /// Deletes the found object.
+        /// </summary>
+        /// <param name="obj"></param>
+        public void DeleteFoundObject(PhyObject obj)
+        {
+            var kw = knowledgeList.Find(e => e.found_object == obj);
+            knowledgeList.Remove(kw);
+        }
+        /// <summary>
+        /// Adds the kwnoledge info to the list and creates a listener to object deletion.
+        /// </summary>
+        /// <param name="obj"></param>
+        /// <param name="type"></param>
+        public void OnFoundInterestingObject(PhyObject obj, Type type)
+        {
+            obj.OnDelete += DeleteFoundObject;
+            KnowledgeInfo info = new KnowledgeInfo() { found_object = obj, found_position = obj.GetPosition(), found_time = DateTime.Now };
+            if (knowledgeList.Contains(info))
+            {
+                var index = knowledgeList.IndexOf(info);
+                knowledgeList[index] = info;
+                OnKnowledgeUpdate(info);
+            }
+            else
+            {
+                knowledgeList.Add(info);
+                OnKnowledgeAdd(info);
+            }
+
+        }
+        /// <summary>
+        /// This method is called when an existing kwnoledge is found.
+        /// </summary>
+        /// <param name="info">The updated knowledge</param>
+        public virtual void OnKnowledgeUpdate(KnowledgeInfo info){
+
+        }
+        /// <summary>
+        /// This method is called when a new knowledge is achived.
+        /// </summary>
+        /// <param name="info"></param>
+        public virtual void OnKnowledgeAdd(KnowledgeInfo info){
+
         }
     }
     public interface EntityLifeLoop
@@ -105,10 +190,11 @@ namespace QuixPhysics
         public EntityStats stats;
         public EntityKnowledge knowledge;
         private PhyWaiter stuckWaiter;
+        private Raycast raycast;
 
         public Entity()
         {
-            CreateProps();
+            SetProps();
         }
 
         public override void Load(Handle bodyHandle, ConnectionState connectionState, Simulator simulator, ObjectState state, Guid guid, Room room)
@@ -116,11 +202,21 @@ namespace QuixPhysics
             base.Load(bodyHandle, connectionState, simulator, state, guid, room);
             arena = (Arena)room.gamemode;
             stuckWaiter = new PhyWaiter(10000);
+            CreateRayCast();
         }
-        public virtual void CreateProps()
+        /// <summary>
+        /// Creates the stats and the entity kwnloedg. Should be overrided to change any of this.
+        /// </summary>
+        public virtual void SetProps()
         {
             stats = new EntityStats(this);
             knowledge = new EntityKnowledge(this);
+        }
+        public virtual void CreateRayCast()
+        {
+            raycast = new Raycast(simulator, room);
+            raycast.SetRayShape(new CircleRayShape(30, 150, raycast));
+            raycast.ObjectHitListeners += OnRayCastHit;
         }
 
         public virtual void Init()
@@ -202,7 +298,7 @@ namespace QuixPhysics
                 {
                     OnFall();
                 }
-                FullfilKnowledge();
+                UpdateRaycast();
                 CheckPositionForStuck();
                 vehicle.Update();
                 AfterUpdate();
@@ -217,14 +313,14 @@ namespace QuixPhysics
             return GetPosition().Y < -50;
         }
         /// <summary>
-        /// Fullfill kwnoledge.
+        /// Updates the raycast
         /// </summary>
-        internal virtual void FullfilKnowledge()
+        internal virtual void UpdateRaycast()
         {
-            if (bodyReference.Exists)
+            if (bodyReference.Exists && raycast != null)
             {
                 var pos = GetPosition();
-               // raycast.bb(in pos, bodyReference.Velocity.Linear);
+                raycast.Update(GetPosition(), GetForward(), state.quaternion);
             }
 
         }
@@ -251,6 +347,13 @@ namespace QuixPhysics
             NavPoint np = new NavPoint(trail.path[trail.path.Count - 1], GetPosition());
             LastPolygon(np);
 
+        }
+
+        internal Vector3 GetForward()
+        {
+            var v = Vector3.Normalize(GetVelocity());
+            v.Y = 0;
+            return v;
         }
 
         #endregion
@@ -283,6 +386,11 @@ namespace QuixPhysics
         {
 
         }
+        /// <summary>
+        /// When any of the raycast get hitted. The child of this class should fullfil the knowledge overriding this method.
+        /// </summary>
+        /// <param name="obj"></param>
+        internal abstract void OnRayCastHit(PhyObject obj);
 
         /// <summary>
         /// This method is called when the object is in the same position for several updates while Trail is active
