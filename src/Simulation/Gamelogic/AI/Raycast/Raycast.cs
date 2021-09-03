@@ -69,6 +69,7 @@ namespace QuixPhysics
         {
             base.Load(bodyHandle, connectionState, simulator, state, guid, room);
             // broder = room.Create(new SphereState() { position = state.position, instantiate = true, radius = ((SphereState)state).radius });
+            simulator.collidableMaterials[bodyHandle.staticHandle].collidable = false;
         }
     }
     public class Raycast
@@ -80,7 +81,7 @@ namespace QuixPhysics
         public event ObjectHit ObjectHitListeners;
 
         private IRayShape rayShape;
-        private bool debugRayShape = false;
+        private bool debugRayShape = true;
         private List<RayCastObject> debugObjects = new List<RayCastObject>();
         float debugTime = 0;
         public float distance = 1000;
@@ -110,7 +111,8 @@ namespace QuixPhysics
             {
                 if (debugRayShape)
                 {
-                    debugObjects.Add((RayCastObject)room.Create(new SphereState() { type = "RayCastObject", mass = 0, instantiate = true, radius = 10 }));
+                    var obj = (RayCastObject)room.Create(new SphereState() { type = "RayCastObject", mass = 0, instantiate = true, radius = 10 });
+                    debugObjects.Add(obj);
                 }
                 hits.Add(new RayHit() { T = 200000 });
             }
@@ -121,10 +123,14 @@ namespace QuixPhysics
         {
             if (hit.Hit)
             {
-                var phy = room.factory.staticObjectsHandlers[hit.Collidable.StaticHandle];
+                PhyObject phy;
                 if (hit.Collidable.Mobility == CollidableMobility.Dynamic)
                 {
                     phy = room.factory.objectsHandlers[hit.Collidable.BodyHandle];
+                }
+                else
+                {
+                    phy = room.factory.staticObjectsHandlers[hit.Collidable.StaticHandle];
                 }
                 if (phy != null && !(phy is RayCastObject))
                 {
@@ -146,12 +152,18 @@ namespace QuixPhysics
                 simulator.Simulation.RayCast<HitHandler>(m_origin, m_dir, float.MaxValue, ref hitHandler, i);
                 if (debugRayShape)
                 {
-                    if (debugTime > 500)
+                    if (debugTime > distance)
                     {
                         debugTime = 0;
                     }
-                    debugObjects[i].SetPosition((m_origin));
-                    debugTime += 0.01f;
+
+                    debugTime += 0.1f;
+                    //QuixConsole.Log("mdir", m_dir);
+                    if (!(float.IsNaN(m_dir.X) && float.IsNaN(m_dir.Z)))
+                    {
+                        debugObjects[i].SetPosition(m_origin + (m_dir));
+                    }
+
                 }
 
             }
@@ -183,7 +195,7 @@ namespace QuixPhysics
         private float circleDistance = 30;
         private Raycast rayCast;
 
-        public CircleRayShape(int _rayHits, float circleDistance,Raycast raycast)
+        public CircleRayShape(int _rayHits, float circleDistance, Raycast raycast)
         {
             rayHits = _rayHits;
             this.circleDistance = circleDistance;
@@ -199,7 +211,7 @@ namespace QuixPhysics
                 return;
             }*/
             var angle = (MathF.PI * 2 / rayHits) * index;
-            var transform = Matrix3x3.CreateFromQuaternion(rotation * new Quaternion(0, 0, 0.707f, 0.707f));//Matrix3x3.CreateFromAxisAngle(new Vector3(.5f, 0, .5f), angleR);
+            var transform = Matrix3x3.CreateFromQuaternion(rotation * new Quaternion(0, 0, 0.707f, 0.707f));
 
             var x = MathF.Cos(angle);
             var y = MathF.Sin(angle);

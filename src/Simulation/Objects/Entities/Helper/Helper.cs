@@ -1,16 +1,33 @@
 using System;
+using System.Collections.Generic;
 using System.Numerics;
 using SharpNav.Pathfinding;
 
 namespace QuixPhysics
 {
-    public class HalperKnowledge : EntityKnowledge
+    public class HelperKnowledge : EntityKnowledge
     {
-        
-        public HalperKnowledge(Entity entity) : base(entity)
+        public List<Gem> gems = new List<Gem>();
+        public HelperKnowledge(Entity entity) : base(entity)
         {
+            interestingTypes.Add(typeof(Gem));
         }
 
+        public override void OnKnowledgeAdd(KnowledgeInfo info)
+        {
+            var obj = info.found_object;
+            if (obj is Gem)
+            {
+                gems.Add((Gem)obj);
+                obj.OnDelete += DeleteGem;
+                QuixConsole.Log("Found gem!");
+            }
+        }
+
+        private void DeleteGem(PhyObject obj)
+        {
+            gems.Remove((Gem)obj);
+        }
     }
 
     public class Helper : Entity
@@ -30,27 +47,38 @@ namespace QuixPhysics
             base.Init();
             SetOwner();
             SetItems();
-            var randompoint = ((Arena)room.gamemode).GetRandomPoint(owner.player.GetPosition(),new Vector3(500,500,500)).Position;
-            QuixConsole.Log("Random point",randompoint);
-            vehicle.props.maxSpeed = new Vector3(.1f,.1f,.1f);
-            
+            var randompoint = ((Arena)room.gamemode).GetRandomPoint(owner.player.GetPosition(), new Vector3(500, 500, 500)).Position;
+            QuixConsole.Log("Random point", randompoint);
+            vehicle.props.maxSpeed = new Vector3(.1f, .1f, .1f);
+
 
             SetPosition(randompoint);
             stats.vision = 30000;
 
         }
+        public override void SetProps()
+        {
+            base.SetProps();
+            knowledge = new HelperKnowledge(this);
+        }
+        internal override void OnRayCastHit(PhyObject obj)
+        {
+            knowledge.CheckObject(obj);
+        }
         public override void ChangeStateBeforeSend()
         {
             base.ChangeStateBeforeSend();
-            var velocityDirection =Vector3.Normalize(Vector3.Lerp(bodyReference.Velocity.Linear,lastVelocity,0.9f));
+            var velocityDirection = GetForward();
             var x = MathF.Cos(velocityDirection.X);
             var z = MathF.Sin(velocityDirection.Z);
-            var angle = MathF.Atan2(z,x);
-            state.quaternion =Quaternion.CreateFromAxisAngle(new Vector3(0,1,0),angle);
+            var angle = MathF.Atan2(z, x);
+
+            var nextPoint = trail.GetPoint();
+            var angleToNextPoint = MathF.Atan2(MathF.Sin(nextPoint.Z), MathF.Cos(nextPoint.X));
+            state.quaternion = Quaternion.CreateFromAxisAngle(new Vector3(0, 1, 0), angleToNextPoint - angle) * new Quaternion(0, 0.707f, 0, 0.707f);
+
 
             lastVelocity = bodyReference.Velocity.Linear;
-
-            //Vector3.Dot(player.transform.forward,playerVelocity);
         }
 
         private void SetOwner()
@@ -82,16 +110,18 @@ namespace QuixPhysics
             for (int i = 0; i < stats.items.Length; i++)
             {
                 var item = stats.items[i];
-                if(item!=null){
-                     if(item.ShouldActivate()){
-                    activeItem = item;
-                    ChangeLoop(activeItem);
-                    activeItem.Activate();
-                    
-                    return true;
+                if (item != null)
+                {
+                    if (item.ShouldActivate())
+                    {
+                        activeItem = item;
+                        ChangeLoop(activeItem);
+                        activeItem.Activate();
+
+                        return true;
+                    }
                 }
-                }
-               
+
 
             }
             return false;
@@ -109,9 +139,10 @@ namespace QuixPhysics
             if (currentLoop != null)
             {
                 var r = currentLoop.OnLastPolygon();
-                if(r){
+                if (r)
+                {
                     ChangeLoop(null);
-                    
+
                 }
                 return r;
             }
@@ -123,9 +154,12 @@ namespace QuixPhysics
             if (currentLoop != null)
             {
                 currentLoop.OnTrailInactive();
-            }else{
-                QuixConsole.Log("Loop is null",state.owner);
-                if(!SelectItem()){
+            }
+            else
+            {
+                QuixConsole.Log("Loop is null", state.owner);
+                if (!SelectItem())
+                {
                     ChangeLoop(new HelperAction(this));
                 }
             }
@@ -137,7 +171,8 @@ namespace QuixPhysics
             {
                 currentLoop.OnTrailActive();
             }
-            if(currentLoop is HelperAction){
+            if (currentLoop is HelperAction)
+            {
                 SelectItem();
             }
         }
@@ -149,7 +184,8 @@ namespace QuixPhysics
         public override void OnStuck()
         {
             base.OnStuck();
-            if(currentLoop != null){
+            if (currentLoop != null)
+            {
                 currentLoop.OnStuck();
             }
         }

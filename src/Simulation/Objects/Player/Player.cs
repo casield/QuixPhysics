@@ -106,18 +106,18 @@ namespace QuixPhysics
             var t = new TestsObject();
             t.player = this;
 
-            raycast = new Raycast(simulator,room);
-            raycast.SetRayShape(new CircleRayShape(4,30,raycast));
-            raycast.ObjectHitListeners+=OnRayCastHit;
+            raycast = new Raycast(simulator, room);
+            raycast.SetRayShape(new CircleRayShape(4, 30, raycast));
+            raycast.ObjectHitListeners += OnRayCastHit;
             // t.Instantiate(room,GetPosition()+new Vector3(50,50,50));
         }
 
         private void OnRayCastHit(PhyObject obj)
         {
-        
-               //  QuixConsole.Log("Hit",obj.state.type,obj.state.uID);
-        
-        
+
+            //  QuixConsole.Log("Hit",obj.state.type,obj.state.uID);
+
+
         }
 
         private void CreateGauntlets()
@@ -202,13 +202,13 @@ namespace QuixPhysics
                     lookObject.Update();
                 }
                 var xyrot = GetXYRotation();
-               // QuixConsole.Log("Rotation player",rotationController);
-               var ret = new Vector3(xyrot.X,0,xyrot.Y);
-                raycast.Update(lookObject.GetPosition(),ret,this.state.quaternion);
+                // QuixConsole.Log("Rotation player",rotationController);
+                var ret = new Vector3(xyrot.X, 0, xyrot.Y);
+                raycast.Update(lookObject.GetPosition(), ret, this.state.quaternion);
 
             }
 
-            
+
 
         }
         public void TickMove()

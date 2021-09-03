@@ -91,7 +91,7 @@ namespace QuixPhysics
 
             SetReference();
             SetDescription();
-            
+
 
             SendCreateMessage();
         }
@@ -168,18 +168,32 @@ namespace QuixPhysics
         {
             if (state.mass == 0)
             {
-                if(staticReference.Exists){
-                     return staticReference.Pose.Position;
+                if (staticReference.Exists)
+                {
+                    return staticReference.Pose.Position;
                 }
-                
-               
+
+
             }
             else
             {
-                if(bodyReference.Exists){
+                if (bodyReference.Exists)
+                {
                     return bodyReference.Pose.Position;
                 }
-                
+
+            }
+            return Vector3.Zero;
+        }
+        public Vector3 GetVelocity()
+        {
+
+            if (state.mass != 0)
+            {
+                if (bodyReference.Exists)
+                {
+                    return bodyReference.Velocity.Linear;
+                }
             }
             return Vector3.Zero;
         }

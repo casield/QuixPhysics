@@ -9,7 +9,7 @@ namespace QuixPhysics
     /// </summary>
     public class HI_GemFraction : HelperItem
     {
-        List<Gem> gemsDropped = new List<Gem>();
+       // List<Gem> gemsDropped = new List<Gem>();
         Helper helper;
         Random random = new Random();
         private int maxGemsToCarry = 3;
@@ -35,16 +35,11 @@ namespace QuixPhysics
         /// <param name="item"></param>
         private void OnItemDropped(Item item)
         {
-            if (item is Gem)
+           /* if (item is Gem)
             {
                 gemsDropped.Add((Gem)item);
                 ((Gem)item).OnDelete+=OnGemDeleted;
-            }
-        }
-
-        private void OnGemDeleted(PhyObject obj)
-        {
-            gemsDropped.Remove((Gem)obj);
+            }*/
         }
 
         public override void Desactivate()
@@ -67,7 +62,7 @@ namespace QuixPhysics
         /// <returns>The most valuable Gem for the helper, if no gem was found it returns null</returns>
         private List<Gem> FindMostValuablesGems()
         {
-            List<Gem> sortGems = new List<Gem>(gemsDropped);
+            List<Gem> sortGems = new List<Gem>(((HelperKnowledge)helper.knowledge).gems);
             sortGems.Sort((gem1, gem2) =>
              {
                  if (gem1.bodyReference.Exists && gem2.bodyReference.Exists)
@@ -122,7 +117,7 @@ namespace QuixPhysics
         private List<Gem> GetVisibleGems()
         {
             List<Gem> closeGems = new List<Gem>();
-            gemsDropped.ForEach(gem =>
+            ((HelperKnowledge)helper.knowledge).gems.ForEach(gem =>
             {
                 if (gem.Destroyed || !gem.bodyReference.Exists)
                 {
@@ -179,8 +174,6 @@ namespace QuixPhysics
         {
 
             QuixConsole.Log("Gem picked up",helper.state.owner,helper.stats.gems);
-
-            gemsDropped.Remove(gem);
             helper.stats.gems += 1;
             gem.Destroy();
             if (helper.stats.gems >= maxGemsToCarry)
