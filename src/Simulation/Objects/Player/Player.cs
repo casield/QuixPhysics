@@ -6,10 +6,14 @@ using BepuPhysics;
 using BepuPhysics.Constraints;
 using BepuUtilities;
 using Newtonsoft.Json;
+using QuixPhysics.Player;
 
 namespace QuixPhysics
 {
     public delegate void OnContact(BodyHandle contact);
+    /// <summary>
+    /// Defines the stast of this Player
+    /// </summary>
     public struct PlayerStats
     {
         public float force;
@@ -24,8 +28,7 @@ namespace QuixPhysics
 
     public class Player2 : PhyObject
     {
-        XYMessage moveMessage;
-        XYMessage forceMoveMessage;
+        //internal XYMessage forceMoveMessage;
 
         private XYMessage rotateMessage;
 
@@ -34,20 +37,12 @@ namespace QuixPhysics
 
         public PlayerStats playerStats = new PlayerStats { force = 60, friction = .99f, speed = .15f, maxSpeed = 1f };
         public OverBoardStats overStats = new OverBoardStats { acceleration = .06f };
-
-        private float moveAcceleration = 0;
+        public ActionsManager actionsManager;
         public Agent Agent;
 
-        private JumpState jumpState;
-        private SnappedState snappedState;
-        private Not_SnappedState notSnappedState;
-        private ShootState shotState;
 
         internal delegate void OnContactAction(PhyObject obj);
         internal event OnContactAction ContactListeners;
-
-        internal delegate void OnShootAction(ShootMessage message);
-        internal event OnShootAction ShootListeners;
 
         public GolfBall2 golfball;
         private float maxDistanceWithBall = 20;
@@ -59,13 +54,7 @@ namespace QuixPhysics
 
         public bool cameraLocked = false;
 
-        private float rotationAcceleration = 0f;
-        private float maxAcc = .5f;
-
-        private float rotationSpeed = 2.6f;
         public LookObject lookObject;
-        private PhyInterval worker;
-        private Raycast raycast;
 
         public Player2()
         {
@@ -76,8 +65,7 @@ namespace QuixPhysics
         public override void Load(Handle bodyHandle, ConnectionState connectionState, Simulator simulator, ObjectState state, Guid guid, Room room)
         {
             base.Load(bodyHandle, connectionState, simulator, state, guid, room);
-            worker = new PhyInterval(1, simulator);
-            worker.Completed += Tick;
+            AddWorker(new PhyInterval(1,simulator)).Completed+=Tick;
 
 
             simulator.collidableMaterials[bodyHandle.bodyHandle].collidable = true;
@@ -86,38 +74,30 @@ namespace QuixPhysics
             bodyReference = simulator.Simulation.Bodies.GetBodyReference(bodyHandle.bodyHandle);
             room.factory.OnContactListeners.Add(this.guid, this);
 
+            StartActionsManager();
+
             CreateBall();
             CreateGauntlets();
             CreateLookObject();
             CreateTestObject();
 
+            QuixConsole.Log("Player loaded - ");
 
-            jumpState = new JumpState(this);
-            snappedState = new SnappedState(this);
-            notSnappedState = new Not_SnappedState(this);
-            shotState = new ShootState(this);
-
-            QuixConsole.Log("Loading Player");
-
+        }
+        /// <summary>
+        /// Create the actions manager class and initialize the actions that will run by default.
+        /// </summary>
+        private void StartActionsManager()
+        {
+            actionsManager = new ActionsManager(this);
+            actionsManager.Fall();
         }
 
         private void CreateTestObject()
         {
             var t = new TestsObject();
             t.player = this;
-
-            raycast = new Raycast(simulator, room);
-            raycast.SetRayShape(new CircleRayShape(4, 30, raycast));
-            raycast.ObjectHitListeners += OnRayCastHit;
-            // t.Instantiate(room,GetPosition()+new Vector3(50,50,50));
-        }
-
-        private void OnRayCastHit(PhyObject obj)
-        {
-
-            //  QuixConsole.Log("Hit",obj.state.type,obj.state.uID);
-
-
+          
         }
 
         private void CreateGauntlets()
@@ -173,14 +153,7 @@ namespace QuixPhysics
             golfball = (GolfBall2)room.Create(ball);
             golfball.SetPlayer(this);
         }
-        public bool IsSnapped()
-        {
-            return Agent.ActualState() == snappedState;
-        }
-        public void SetNotSnapped()
-        {
-            this.Agent.ChangeState(notSnappedState);
-        }
+
 
         public override void OnContact(PhyObject obj)
         {
@@ -191,152 +164,16 @@ namespace QuixPhysics
         {
             if (bodyReference.Exists)
             {
-                CheckIfFall();
-                TickSnapped();
-                TickMove();
-                TickRotation();
+                actionsManager.Update();
 
                 Agent.Tick();
                 if (lookObject != null)
                 {
                     lookObject.Update();
                 }
-                var xyrot = GetXYRotation();
-                // QuixConsole.Log("Rotation player",rotationController);
-                var ret = new Vector3(xyrot.X, 0, xyrot.Y);
-                raycast.Update(lookObject.GetPosition(), ret, this.state.quaternion);
-
-            }
-
-
-
-        }
-        public void TickMove()
-        {
-            if (moveMessage.clientId != null /*&& !IsSnapped()*/)
-            {
-                // Console.WriteLine(bb.Velocity.Linear.Y);
-                if ((moveMessage.x != 0 || moveMessage.y != 0))
-                {
-                    var radPad = Math.Atan2(this.moveMessage.x, -(this.moveMessage.y));
-                    var radian = (this.rotationController);
-                    var x = (float)Math.Cos(radian + radPad);
-                    var y = (float)Math.Sin(radian + radPad);
-                    Vector3 vel = new Vector3(x, 0, y);
-
-                    float force = Vector2.Distance(new Vector2(), new Vector2(forceMoveMessage.x, forceMoveMessage.y)) / 100;
-
-                    vel.X *= (float)playerStats.speed * force;
-                    vel.Z *= (float)playerStats.speed * force;
-
-
-                    moveAcceleration += overStats.acceleration;
-
-                    moveAcceleration = (float)Math.Clamp(moveAcceleration, 0, playerStats.maxSpeed);
-
-
-
-                    bodyReference.Velocity.Linear.X += ((vel.X) * moveAcceleration);
-                    bodyReference.Velocity.Linear.Z += ((vel.Z) * moveAcceleration);
-
-                    bodyReference.Awake = true;
-
-                }
-                else
-                {
-                    moveAcceleration = 0;
-                    bodyReference.Velocity.Linear.X *= playerStats.friction;
-                    bodyReference.Velocity.Linear.Z *= playerStats.friction;
-                }
-
-
-
-            }
-
-
-        }
-
-
-        private void TickRotation()
-        {
-            if (!cameraLocked)
-            {
-                if (rotateMessage.clientId != null)
-                {
-                    bodyReference.Awake = true;
-
-                    if (Math.Abs(rotateMessage.x) > 0)
-                    {
-                        bodyReference.Awake = true;
-                        rotationAcceleration += rotationSpeed * rotateMessage.x;
-                        rotationAcceleration = Math.Clamp(rotationAcceleration, -maxAcc, maxAcc);
-                        rotationAcceleration /= 100;
-
-
-                    }
-
-                    lookObject.AddY(rotateMessage.y);
-
-                    if (rotateMessage.y == 0)
-                    {
-                        lookObject.Release();
-                    }
-
-                    if (rotateMessage.x == 0)
-                    {
-                        rotationAcceleration *= .9f;
-                    }
-                    if (lookObject.watching is Player2)
-                    {
-                        rotationController += rotationAcceleration;
-                    }
-                    else
-                    {
-
-
-                        var prod = AngleBetweenVector2(lookObject.GetStaticReference().Pose.Position, bodyReference.Pose.Position);
-                        rotationController = prod;
-                    }
-
-
-
-                    state.quaternion = QuaternionEx.CreateFromYawPitchRoll(-(rotationController), 0, 0);
-
-
-                }
             }
         }
 
-        float AngleBetweenVector2(Vector3 vec1, Vector3 vec2)
-        {
-            var deltx = vec1.X - vec2.X;
-            var delty = vec1.Z - vec2.Z;
-
-
-            var rot = MathF.Atan2(-delty, -deltx);
-            return rot;
-        }
-        private void TickSnapped()
-        {
-            if (golfball != null)
-            {
-                if (this.Agent.ActualState() != snappedState)
-                {
-                    var distance = Vector3.Distance(bodyReference.Pose.Position, golfball.GetBodyReference().Pose.Position);
-                    if (distance < this.maxDistanceWithBall)
-                    {
-                        this.canShoot = true;
-                        this.Agent.ChangeState(snappedState);
-                    }
-                    else
-                    {
-                        this.canShoot = false;
-                    }
-                }
-            }
-
-
-        }
         public void SetPositionToBall()
         {
             simulator.Simulation.Awakener.AwakenBody(golfball.bodyReference.Handle);
@@ -362,101 +199,6 @@ namespace QuixPhysics
             return -new Vector2(x, y);
         }
 
-        public void OnFall()
-        {
-            if (this.user != null)
-            {
-                this.user.gems.Update(((int)this.user.gems.value) / 2);
-            }
-
-        }
-
-        private void CheckIfFall()
-        {
-
-            if (this.bodyReference.Pose.Position.Y < -50)
-            {
-                this.SetPositionToStartPoint();
-                OnFall();
-            }
-
-            if (golfball != null)
-            {
-                if (this.golfball.bodyReference.Pose.Position.Y < -50)
-                {
-                    this.golfball.bodyReference.Pose.Position = bodyReference.Pose.Position;
-                    OnFall();
-                }
-            }
-
-
-
-        }
-
-
-        public void Move(XYMessage message)
-        {
-
-            //QuixConsole.Log("fake", fx, fy);
-            moveMessage = message;
-            forceMoveMessage.x = MathF.Abs(message.x);
-            forceMoveMessage.y = MathF.Abs(message.y);
-
-
-            if (message.x != 0 && message.y != 0)
-            {
-                var number_of_chunks = 16;
-                var size_of_chunk = (360 / number_of_chunks);
-
-                var angle = (float)Math.Atan2(moveMessage.x, moveMessage.y);
-                var fx = (float)MathF.Cos(angle);
-                var fy = (float)MathF.Sin(angle);
-                message.x = fx * moveMessage.x;
-                message.y = fy * moveMessage.y;
-            }
-
-
-            // moveMessage.y = moveMessage.y >
-
-            if (Agent.ActualState() != notSnappedState)
-            {
-                Agent.ChangeState(notSnappedState);
-                Agent.Lock(20);
-            }
-
-        }
-        public void Rotate(XYMessage message)
-        {
-            rotateMessage = message;
-        }
-        public void Jump(XYMessage message)
-        {
-
-            if (!Agent.IsLocked())
-            {
-
-                Agent.ChangeState(jumpState);
-                Agent.Lock(130);
-            }
-
-        }
-        public void Shoot(ShootMessage message)
-        {
-            if (Agent.ActualState() == snappedState)
-            {
-                shotState.message = message;
-                Agent.ChangeState(shotState);
-                Agent.Lock(130);
-                ShootListeners?.Invoke(message);
-
-            }
-            else
-            {
-
-            }
-
-
-        }
         public void UseGauntlet(bool activate)
         {
             if (activeGauntlet != null)
@@ -470,13 +212,6 @@ namespace QuixPhysics
             {
                 activeGauntlet.Swipe(degree, direction);
             }
-
-        }
-
-        public override void Destroy()
-        {
-            base.Destroy();
-            worker.Destroy();
 
         }
     }

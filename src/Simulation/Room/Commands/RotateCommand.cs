@@ -15,7 +15,7 @@ namespace QuixPhysics
             //objects[]
             Player2 onb2 = (Player2)room.users[j2.clientId].player;
             // Simulation.Awakener.AwakenBody(ob.bodyHandle);
-            onb2.Rotate(j2);
+            onb2.actionsManager.Rotate(j2);
         }
     }
 }

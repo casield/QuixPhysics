@@ -13,7 +13,7 @@ namespace QuixPhysics
             XYMessage j = message.ToObject<XYMessage>();
             Player2 onb = (Player2)room.users[j.clientId].player;
             // Simulation.Awakener.AwakenBody(ob.bodyHandle);
-            onb.Move(j);
+            onb.actionsManager.Move(j);
         }
     }
 }

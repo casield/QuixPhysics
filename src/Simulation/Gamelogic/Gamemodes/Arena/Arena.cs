@@ -153,7 +153,7 @@ namespace QuixPhysics
             float resizer = 1;
             float mulre = (100 / resizer);
 
-            settings.CellSize = 2f * mulre;
+            settings.CellSize = 1f * mulre;
             settings.CellHeight = 0.2f * mulre;
             settings.MaxClimb = 0.1f * mulre;
             settings.AgentHeight = 2.0f * mulre;
@@ -171,7 +171,7 @@ namespace QuixPhysics
             navMeshQuery = new NavMeshQuery(tiledNavMesh, 1048);
 
             //Save it to a file .snb
-          //  qinavMesh.SaveNavMeshToFile(navMeshName, tiledNavMesh);
+           qinavMesh.SaveNavMeshToFile(navMeshName, tiledNavMesh);
 
             OnNavMeshReadyListeners?.Invoke();
 

@@ -215,7 +215,7 @@ namespace QuixPhysics
         public virtual void CreateRayCast()
         {
             raycast = new Raycast(simulator, room);
-            raycast.SetRayShape(new CircleRayShape(30, 150, raycast));
+            raycast.SetRayShape(new SpiralRayShape(25, 10, raycast));
             raycast.ObjectHitListeners += OnRayCastHit;
         }
 
@@ -320,7 +320,7 @@ namespace QuixPhysics
             if (bodyReference.Exists && raycast != null)
             {
                 var pos = GetPosition();
-                raycast.Update(GetPosition(), GetForward(), state.quaternion);
+                raycast.Update(GetPosition()+new Vector3(0,25,0), GetForward(), state.quaternion);
             }
 
         }

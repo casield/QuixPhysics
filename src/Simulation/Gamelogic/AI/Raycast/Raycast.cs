@@ -50,12 +50,6 @@ namespace QuixPhysics
                 hit.T = t;
                 hit.Collidable = collidable;
                 hit.Hit = true;
-
-                if (savedCollidable.Packed != collidable.Packed)
-                {
-
-
-                }
                 raycast.OnHit(hit);
 
             }
@@ -81,7 +75,7 @@ namespace QuixPhysics
         public event ObjectHit ObjectHitListeners;
 
         private IRayShape rayShape;
-        private bool debugRayShape = true;
+        private bool debugRayShape = false;
         private List<RayCastObject> debugObjects = new List<RayCastObject>();
         float debugTime = 0;
         public float distance = 1000;
@@ -149,7 +143,7 @@ namespace QuixPhysics
                 Vector3 m_dir;
 
                 rayShape.SetRay(i, out m_origin, out m_dir);
-                simulator.Simulation.RayCast<HitHandler>(m_origin, m_dir, float.MaxValue, ref hitHandler, i);
+                //simulator.Simulation.RayCast<HitHandler>(m_origin, m_dir, float.MaxValue, ref hitHandler, i);
                 if (debugRayShape)
                 {
                     if (debugTime > distance)
@@ -192,7 +186,7 @@ namespace QuixPhysics
         public Vector3 direction { get; set; }
         public Quaternion rotation { get; set; }
 
-        private float circleDistance = 30;
+        private float circleDistance;
         private Raycast rayCast;
 
         public CircleRayShape(int _rayHits, float circleDistance, Raycast raycast)
@@ -204,12 +198,6 @@ namespace QuixPhysics
 
         public void SetRay(int index, out Vector3 origin, out Vector3 direction)
         {
-            /*if (true)
-            {
-                origin = this.origin;
-                direction = Vector3.Normalize(this.direction);
-                return;
-            }*/
             var angle = (MathF.PI * 2 / rayHits) * index;
             var transform = Matrix3x3.CreateFromQuaternion(rotation * new Quaternion(0, 0, 0.707f, 0.707f));
 
@@ -219,8 +207,43 @@ namespace QuixPhysics
 
             Matrix3x3.Transform(newOr, transform, out Vector3 outOrigin);
 
-            origin = this.origin + (Vector3.Normalize(outOrigin) * circleDistance);
-            direction = Vector3.Normalize(this.direction) * rayCast.distance;
+            origin = this.origin + (Vector3.Normalize(outOrigin) * (circleDistance));
+            direction = Vector3.Normalize(this.direction) * (rayCast.distance);
+        }
+
+    }
+
+    public class SpiralRayShape : IRayShape
+    {
+        public int rayHits { get; set; }
+        public Vector3 origin { get; set; }
+        public Vector3 direction { get; set; }
+        public Quaternion rotation { get; set; }
+
+        private float circleDistance;
+        private Raycast rayCast;
+
+        public SpiralRayShape(int _rayHits, float circleDistance, Raycast raycast)
+        {
+            rayHits = _rayHits;
+            this.circleDistance = circleDistance;
+            this.rayCast = raycast;
+        }
+
+        public void SetRay(int index, out Vector3 origin, out Vector3 direction)
+        {
+            var spiralDistance = circleDistance*MathF.Sqrt(index);
+            var angle = index;
+            var transform = Matrix3x3.CreateFromQuaternion(rotation * new Quaternion(0, 0, 0.707f, 0.707f));
+
+            var x = MathF.Cos(angle);
+            var y = MathF.Sin(angle);
+            var newOr = new Vector3(x, 0, y);
+
+            Matrix3x3.Transform(newOr, transform, out Vector3 outOrigin);
+
+            origin = this.origin + (Vector3.Normalize(outOrigin) * (spiralDistance));
+            direction = Vector3.Normalize(this.direction) * (rayCast.distance);
         }
     }
 }

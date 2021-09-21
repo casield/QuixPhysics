@@ -8,6 +8,7 @@ namespace QuixPhysics
     {
 
         private Player2 player;
+        public bool isSnapped;
 
         public GolfBall2()
         {

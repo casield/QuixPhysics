@@ -29,7 +29,7 @@ namespace QuixPhysics
                 vehicle = new Vehicle(player.golfball, new VehicleProps());
                 vehicle.isActive = false;
                 player.simulator.Simulation.Awakener.AwakenBody(golfBallRef.Handle);
-                player.ShootListeners += OnShoot;
+                player.actionsManager.shootAction.ShootListeners += OnShoot;
             }
 
         }
@@ -142,7 +142,7 @@ namespace QuixPhysics
                 }
                 vehicle.Arrive(whoToLook.GetPosition());
                 vehicle.Update();
-                if (player.IsSnapped())
+                if (player.golfball.isSnapped)
                 {
 
                     vehicle.isActive = false;

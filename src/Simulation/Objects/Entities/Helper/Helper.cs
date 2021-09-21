@@ -39,7 +39,7 @@ namespace QuixPhysics
         private EntityLifeLoop currentLoop;
         public User owner;
         private Vector3 lastVelocity = new Vector3();
-
+        private HelperAction helperAction;
 
         public override void Init()
         {
@@ -50,6 +50,7 @@ namespace QuixPhysics
             var randompoint = ((Arena)room.gamemode).GetRandomPoint(owner.player.GetPosition(), new Vector3(500, 500, 500)).Position;
             QuixConsole.Log("Random point", randompoint);
             vehicle.props.maxSpeed = new Vector3(.1f, .1f, .1f);
+            helperAction=new HelperAction(this);
 
 
             SetPosition(randompoint);
@@ -157,10 +158,9 @@ namespace QuixPhysics
             }
             else
             {
-                QuixConsole.Log("Loop is null", state.owner);
                 if (!SelectItem())
                 {
-                    ChangeLoop(new HelperAction(this));
+                    ChangeLoop(helperAction);
                 }
             }
         }
