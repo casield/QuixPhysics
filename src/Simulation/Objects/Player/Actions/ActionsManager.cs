@@ -17,7 +17,8 @@ namespace QuixPhysics.Player
         public RotationAction rotationAction;
         public ShootAction shootAction;
         public RaycastAction raycastAction;
-        private FallAction fallAction;
+        public FallAction fallAction;
+        public  GrabBallAction grabBallAction;
 
         public ActionsManager(Player2 player)
         {
@@ -37,6 +38,7 @@ namespace QuixPhysics.Player
             shootAction = new ShootAction(player);
             raycastAction = new RaycastAction(player);
             fallAction = new FallAction(player);
+            grabBallAction = new GrabBallAction(player);
 
         }
         /// <summary>
@@ -97,6 +99,9 @@ namespace QuixPhysics.Player
         internal void Fall()
         {
            ActivateAction(fallAction);
+        }
+        internal void GrabBall(){
+            ActivateAction(grabBallAction);
         }
         #endregion
     }

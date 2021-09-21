@@ -22,7 +22,7 @@ namespace QuixPhysics.Player
 
         public void Shoot(ShootMessage message)
         {
-            if (player.golfball.isSnapped)
+            if (player.actionsManager.grabBallAction.IsGrabbing)
             {
                 player.golfball.Awake();
                 message.force = Math.Clamp(message.force, 0f, maxForce);

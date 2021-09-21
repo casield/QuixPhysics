@@ -8,18 +8,18 @@ namespace QuixPhysics
     {
 
         private Player2 player;
-        public bool isSnapped;
+
 
         public GolfBall2()
         {
 
         }
-        public override void Load(Handle bodyHandle, ConnectionState connectionState, Simulator simulator, ObjectState state,Guid guid,Room room)
+        public override void Load(Handle bodyHandle, ConnectionState connectionState, Simulator simulator, ObjectState state, Guid guid, Room room)
         {
-            base.Load(bodyHandle, connectionState, simulator, state,guid,room);
+            base.Load(bodyHandle, connectionState, simulator, state, guid, room);
 
             simulator.collidableMaterials[bodyHandle.bodyHandle].collidable = true;
-           // simulator.collidableMaterials[bodyHandle.bodyHandle].SpringSettings = new SpringSettings(5f, .000001f);
+            // simulator.collidableMaterials[bodyHandle.bodyHandle].SpringSettings = new SpringSettings(5f, .000001f);
 
 
             bodyReference = GetBodyReference();
@@ -29,9 +29,10 @@ namespace QuixPhysics
             base.OnObjectMessage(data, clientId, roomId);
             QuixConsole.Log("Mensaje para bola");
             player.lookObject.ChangeWatching(this);
-            
+
         }
-        public void SetPlayer(Player2 player2){
+        public void SetPlayer(Player2 player2)
+        {
             this.player = player2;
         }
     }

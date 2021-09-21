@@ -119,6 +119,10 @@ namespace QuixPhysics
 
 
     }
+    
+    /// <summary>
+    /// Waits an amount of time. Then it return true on the Tick method.
+    /// </summary>
     public class PhyWaiter {
         private int tick =0;
         private int time = 1;

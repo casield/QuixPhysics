@@ -142,7 +142,7 @@ namespace QuixPhysics
                 }
                 vehicle.Arrive(whoToLook.GetPosition());
                 vehicle.Update();
-                if (player.golfball.isSnapped)
+                if (player.actionsManager.grabBallAction.IsGrabbing)
                 {
 
                     vehicle.isActive = false;

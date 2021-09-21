@@ -20,6 +20,8 @@ namespace QuixPhysics
         public float friction;
         public float speed;
         public float maxSpeed;
+        public float maxDistanceWithBall;
+        public float height;
     }
     public struct OverBoardStats
     {
@@ -28,14 +30,18 @@ namespace QuixPhysics
 
     public class Player2 : PhyObject
     {
-        //internal XYMessage forceMoveMessage;
-
-        private XYMessage rotateMessage;
-
         public float rotationController = 0;
 
 
-        public PlayerStats playerStats = new PlayerStats { force = 60, friction = .99f, speed = .15f, maxSpeed = 1f };
+        public PlayerStats playerStats = new PlayerStats
+        {
+            force = 60,
+            friction = .99f,
+            speed = .15f,
+            maxSpeed = 1f,
+            maxDistanceWithBall = 20,
+            height = 30
+        };
         public OverBoardStats overStats = new OverBoardStats { acceleration = .06f };
         public ActionsManager actionsManager;
         public Agent Agent;
@@ -45,8 +51,6 @@ namespace QuixPhysics
         internal event OnContactAction ContactListeners;
 
         public GolfBall2 golfball;
-        private float maxDistanceWithBall = 20;
-        private bool canShoot;
 
         private IGauntlet activeGauntlet;
         private Dictionary<string, IGauntlet> gauntlets = new Dictionary<string, IGauntlet>();
@@ -65,7 +69,7 @@ namespace QuixPhysics
         public override void Load(Handle bodyHandle, ConnectionState connectionState, Simulator simulator, ObjectState state, Guid guid, Room room)
         {
             base.Load(bodyHandle, connectionState, simulator, state, guid, room);
-            AddWorker(new PhyInterval(1,simulator)).Completed+=Tick;
+            AddWorker(new PhyInterval(1, simulator)).Completed += Tick;
 
 
             simulator.collidableMaterials[bodyHandle.bodyHandle].collidable = true;
@@ -79,7 +83,6 @@ namespace QuixPhysics
             CreateBall();
             CreateGauntlets();
             CreateLookObject();
-            CreateTestObject();
 
             QuixConsole.Log("Player loaded - ");
 
@@ -91,13 +94,7 @@ namespace QuixPhysics
         {
             actionsManager = new ActionsManager(this);
             actionsManager.Fall();
-        }
-
-        private void CreateTestObject()
-        {
-            var t = new TestsObject();
-            t.player = this;
-          
+            actionsManager.GrabBall();
         }
 
         private void CreateGauntlets()
@@ -172,20 +169,6 @@ namespace QuixPhysics
                     lookObject.Update();
                 }
             }
-        }
-
-        public void SetPositionToBall()
-        {
-            simulator.Simulation.Awakener.AwakenBody(golfball.bodyReference.Handle);
-            float distance = maxDistanceWithBall - .5f;
-            var newPos = bodyReference.Pose.Position;
-            var x = -(float)Math.Cos(rotationController);
-            var y = -(float)Math.Sin(rotationController);
-
-            newPos.X += x * distance;
-            newPos.Z += y * distance;
-
-            golfball.bodyReference.Pose.Position = newPos;
         }
         public void SetPositionToStartPoint()
         {

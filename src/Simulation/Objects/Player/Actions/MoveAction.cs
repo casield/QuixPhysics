@@ -50,23 +50,17 @@ namespace QuixPhysics.Player
                     var y = (float)Math.Sin(radian + radPad);
                     Vector3 vel = new Vector3(x, 0, y);
 
-                    float force = 1;//Vector2.Distance(new Vector2(), new Vector2(forceMoveMessage.x, forceMoveMessage.y)) / 100;
-
-                    vel.X *= (float)player.playerStats.speed * force;
-                    vel.Z *= (float)player.playerStats.speed * force;
+                    vel.X *= (float)player.playerStats.speed;
+                    vel.Z *= (float)player.playerStats.speed;
 
                     moveAcceleration += player.overStats.acceleration;
 
                     moveAcceleration = (float)Math.Clamp(moveAcceleration, 0, player.playerStats.maxSpeed);
 
-
-
                     player.bodyReference.Velocity.Linear.X += ((vel.X) * moveAcceleration);
                     player.bodyReference.Velocity.Linear.Z += ((vel.Z) * moveAcceleration);
 
                     player.bodyReference.Awake = true;
-
-                    
 
                 }
                 else
