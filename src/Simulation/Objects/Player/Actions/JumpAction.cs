@@ -7,7 +7,7 @@ namespace QuixPhysics.Player
     {
         private PhyWaiter jumpWaiter;
         private PhyWaiter jumpsLimitWaiter;
-        private static int maxJumps = 3;
+        private static int maxJumps = 30;
         private int jumps = maxJumps;
         private bool canJump = true;
         private PhyObject lastContacted;
