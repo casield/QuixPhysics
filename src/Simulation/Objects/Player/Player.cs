@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Numerics;
 using System.Threading.Tasks;
 using BepuPhysics;
+using BepuPhysics.CollisionDetection;
 using BepuPhysics.Constraints;
 using BepuUtilities;
 using Newtonsoft.Json;
@@ -44,11 +45,10 @@ namespace QuixPhysics
         };
         public OverBoardStats overStats = new OverBoardStats { acceleration = .06f };
         public ActionsManager actionsManager;
-        public Agent Agent;
 
 
-        internal delegate void OnContactAction(PhyObject obj);
-        internal event OnContactAction ContactListeners;
+        internal delegate void OnContactAction(PhyObject obj,Vector3 normal);
+        internal event OnContactAction ContactListeners ;
 
         public GolfBall2 golfball;
 
@@ -63,7 +63,6 @@ namespace QuixPhysics
         public Player2()
         {
             this.updateRotation = false;
-            Agent = new Agent(this);
 
         }
         public override void Load(Handle bodyHandle, ConnectionState connectionState, Simulator simulator, ObjectState state, Guid guid, Room room)
@@ -72,8 +71,8 @@ namespace QuixPhysics
             AddWorker(new PhyInterval(1, simulator)).Completed += Tick;
 
 
-            simulator.collidableMaterials[bodyHandle.bodyHandle].collidable = true;
-            simulator.collidableMaterials[bodyHandle.bodyHandle].SpringSettings = new SpringSettings(1f, .5f);
+            //simulator.collidableMaterials[bodyHandle.bodyHandle].collidable = true;
+            //simulator.collidableMaterials[bodyHandle.bodyHandle].SpringSettings = new SpringSettings(10f, 1f);
 
             bodyReference = simulator.Simulation.Bodies.GetBodyReference(bodyHandle.bodyHandle);
             room.factory.OnContactListeners.Add(this.guid, this);
@@ -95,6 +94,7 @@ namespace QuixPhysics
             actionsManager = new ActionsManager(this);
             actionsManager.Fall();
             actionsManager.GrabBall();
+            //actionsManager.RayCast();
         }
 
         private void CreateGauntlets()
@@ -102,7 +102,7 @@ namespace QuixPhysics
             AddGauntletToAvailable(new AtractGauntlet());
             AddGauntletToAvailable(new ItemGauntlet());
 
-            ChangeGauntlet("item");
+            ChangeGauntlet("atract");
         }
         private void AddGauntletToAvailable(IGauntlet gauntlet)
         {
@@ -152,10 +152,11 @@ namespace QuixPhysics
         }
 
 
-        public override void OnContact(PhyObject obj)
+        public override void OnContact<TManifold>(PhyObject obj, TManifold manifold)
         {
-            //base.OnContact(obj);
-            ContactListeners?.Invoke(obj);
+            Vector3 normal = manifold.GetNormal(ref manifold,0);
+            
+            ContactListeners?.Invoke(obj,normal);
         }
         public void Tick()
         {
@@ -163,7 +164,6 @@ namespace QuixPhysics
             {
                 actionsManager.Update();
 
-                Agent.Tick();
                 if (lookObject != null)
                 {
                     lookObject.Update();

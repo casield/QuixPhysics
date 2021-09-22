@@ -41,6 +41,7 @@ namespace QuixPhysics
 
             maximumT = t;
             var hit = Hits[ray.Id];
+            
             if (t < hit.T)
             {
                 var savedCollidable = hit.Collidable;
@@ -71,11 +72,11 @@ namespace QuixPhysics
         private Simulator simulator;
         public HitHandler hitHandler;
         private Room room;
-        public delegate void ObjectHit(PhyObject obj);
+        public delegate void ObjectHit(PhyObject obj, Vector3 normal);
         public event ObjectHit ObjectHitListeners;
 
         private IRayShape rayShape;
-        private bool debugRayShape = false;
+        public bool debugRayShape = false;
         private List<RayCastObject> debugObjects = new List<RayCastObject>();
         float debugTime = 0;
         public float distance = 1000;
@@ -115,6 +116,7 @@ namespace QuixPhysics
         }
         public void OnHit(RayHit hit)
         {
+
             if (hit.Hit)
             {
                 PhyObject phy;
@@ -128,7 +130,8 @@ namespace QuixPhysics
                 }
                 if (phy != null && !(phy is RayCastObject))
                 {
-                    ObjectHitListeners?.Invoke(phy);
+                    
+                    ObjectHitListeners?.Invoke(phy,hit.Normal);
                 }
             }
 
@@ -143,7 +146,7 @@ namespace QuixPhysics
                 Vector3 m_dir;
 
                 rayShape.SetRay(i, out m_origin, out m_dir);
-                //simulator.Simulation.RayCast<HitHandler>(m_origin, m_dir, float.MaxValue, ref hitHandler, i);
+                simulator.Simulation.RayCast<HitHandler>(m_origin, m_dir, float.MaxValue, ref hitHandler, i);
                 if (debugRayShape)
                 {
                     if (debugTime > distance)
@@ -177,6 +180,12 @@ namespace QuixPhysics
             this.direction = direction;
             this.rotation = rotation;
         }
+        /// <summary>
+        /// Set the raycast
+        /// </summary>
+        /// <param name="index"></param>
+        /// <param name="origin"></param>
+        /// <param name="direction"></param>
         void SetRay(int index, out Vector3 origin, out Vector3 direction);
     }
     class CircleRayShape : IRayShape
@@ -244,6 +253,27 @@ namespace QuixPhysics
 
             origin = this.origin + (Vector3.Normalize(outOrigin) * (spiralDistance));
             direction = Vector3.Normalize(this.direction) * (rayCast.distance);
+        }
+    }
+    class OneRayShape : IRayShape
+    {
+        public int rayHits { get; set; }
+
+        private Raycast raycast;
+
+        public Vector3 origin { get; set; }
+        public Vector3 direction { get; set; }
+        public Quaternion rotation { get; set ; }
+
+        public OneRayShape(Raycast raycast){
+            rayHits = 1;
+            this.raycast = raycast;
+        }
+
+        public void SetRay(int index, out Vector3 origin, out Vector3 direction)
+        {
+           origin = this.origin;
+           direction = Vector3.Normalize(this.direction)*raycast.distance;
         }
     }
 }

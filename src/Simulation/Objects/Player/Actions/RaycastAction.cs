@@ -13,14 +13,14 @@ namespace QuixPhysics.Player
             raycast.ObjectHitListeners += OnRayCastHit;
         }
 
-        private void OnRayCastHit(PhyObject obj)
+        private void OnRayCastHit(PhyObject obj,Vector3 normal)
         {
           
         }
 
         public override void OnActivate()
         {
-            throw new System.NotImplementedException();
+        
         }
 
         public override void OnUpdate()

@@ -147,18 +147,21 @@ namespace QuixPhysics
 
             var a = CollidableMaterials[pair.A];
             var b = CollidableMaterials[pair.B];
+            
+            
 
             foreach (var room in simulator.roomManager.rooms)
             {
                 if (room.Value.factory.OnContactListeners.ContainsKey(a.guid))
                 {
-                    room.Value.factory.OnContactListeners[a.guid].OnContact(room.Value.factory.allObjects[b.guid]);
+                    room.Value.factory.OnContactListeners[a.guid].OnContact(room.Value.factory.allObjects[b.guid],manifold);
                 }
                 if (room.Value.factory.OnContactListeners.ContainsKey(b.guid))
                 {
-
-                    room.Value.factory.OnContactListeners[b.guid].OnContact(room.Value.factory.allObjects[a.guid]);
+                    room.Value.factory.OnContactListeners[b.guid].OnContact(room.Value.factory.allObjects[a.guid],manifold);
                 }
+
+                
 
             }
 

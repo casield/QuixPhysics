@@ -62,7 +62,7 @@ namespace QuixPhysics
             base.SetProps();
             knowledge = new HelperKnowledge(this);
         }
-        internal override void OnRayCastHit(PhyObject obj)
+        internal override void OnRayCastHit(PhyObject obj,Vector3 normal)
         {
             knowledge.CheckObject(obj);
         }
@@ -74,9 +74,7 @@ namespace QuixPhysics
             var z = MathF.Sin(velocityDirection.Z);
             var angle = MathF.Atan2(z, x);
 
-            var nextPoint = trail.GetPoint();
-            var angleToNextPoint = MathF.Atan2(MathF.Sin(nextPoint.Z), MathF.Cos(nextPoint.X));
-            state.quaternion = Quaternion.CreateFromAxisAngle(new Vector3(0, 1, 0), angleToNextPoint - angle) * new Quaternion(0, 0.707f, 0, 0.707f);
+            state.quaternion = Quaternion.CreateFromAxisAngle(new Vector3(0, 1, 0), angle) ;
 
 
             lastVelocity = bodyReference.Velocity.Linear;
@@ -97,9 +95,12 @@ namespace QuixPhysics
 
         private void SetItems()
         {
-            var gemfrac = new HI_GemFraction(this);
-            gemfrac.Constructor(room.connectionState, room.simulator, room);
-            stats.SetItem(gemfrac, 0);
+            AddItemToStats(new HI_GemFraction(this));
+            AddItemToStats(new HI_GolfHat(this));
+        }
+        private void AddItemToStats(HelperItem item){
+            item.Constructor(room.connectionState, room.simulator, room);
+            stats.SetItem(item, 0);
         }
         /// <summary>
         /// This method is called every time in the update, checks if any item should be activated. Then sets the first one to the activeItem.

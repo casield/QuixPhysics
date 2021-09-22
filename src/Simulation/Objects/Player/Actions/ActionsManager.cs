@@ -103,6 +103,11 @@ namespace QuixPhysics.Player
         internal void GrabBall(){
             ActivateAction(grabBallAction);
         }
+
+        internal void RayCast()
+        {
+            ActivateAction(raycastAction);
+        }
         #endregion
     }
 }

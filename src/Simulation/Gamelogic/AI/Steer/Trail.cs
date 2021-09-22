@@ -82,10 +82,14 @@ namespace QuixPhysics
         public bool IsOnPoly(NavPolyId polyId, Vector3 position, Vector3 extends)
         {
             
-            List<NavPolyId> polys = new List<NavPolyId>(1);
+            List<NavPolyId> polys = new List<NavPolyId>();
 
             var found = query.QueryPolygons(ref position, ref extends, polys);
             return polys.Contains(polyId);
+        }
+
+        public NavPoint GetLastPoint(){
+            return endPoint;
         }
 
         public bool IsOnLastPosition(Vector3 position, Vector3 extends)
@@ -210,7 +214,11 @@ namespace QuixPhysics
 
             return path[path.Count - 1] == lastPoint.Polygon;
         }
-
+        /// <summary>
+        /// Set the trail target
+        /// </summary>
+        /// <param name="target"></param>
+        /// <returns></returns>
 
         public bool SetTarget(Vector3 target)
         {

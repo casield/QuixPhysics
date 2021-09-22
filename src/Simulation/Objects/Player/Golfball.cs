@@ -19,7 +19,7 @@ namespace QuixPhysics
             base.Load(bodyHandle, connectionState, simulator, state, guid, room);
 
             simulator.collidableMaterials[bodyHandle.bodyHandle].collidable = true;
-            // simulator.collidableMaterials[bodyHandle.bodyHandle].SpringSettings = new SpringSettings(5f, .000001f);
+             simulator.collidableMaterials[bodyHandle.bodyHandle].SpringSettings = new SpringSettings(10000f, 1000f);
 
 
             bodyReference = GetBodyReference();

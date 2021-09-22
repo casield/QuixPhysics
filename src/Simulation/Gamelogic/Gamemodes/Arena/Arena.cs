@@ -94,7 +94,7 @@ namespace QuixPhysics
         {
             GenerateMapCommand command = new GenerateMapCommand(simulator);
 
-            var objs = command.GenerateMap("isla", room);
+            var objs = command.GenerateMap("bounce", room);
             foreach (var item in objs)
             {
                 if (item.state.mesh != null)
@@ -153,11 +153,11 @@ namespace QuixPhysics
             float resizer = 1;
             float mulre = (100 / resizer);
 
-            settings.CellSize = 1f * mulre;
-            settings.CellHeight = 0.2f * mulre;
+            settings.CellSize = .1f * mulre;
+            settings.CellHeight = .2f * mulre;
             settings.MaxClimb = 0.1f * mulre;
-            settings.AgentHeight = 2.0f * mulre;
-            settings.AgentRadius = 0.6f * mulre;
+            settings.AgentHeight = 4f * mulre;
+            settings.AgentRadius = .8f * mulre;
 
 
             //Creates the mesh .obj

@@ -14,7 +14,7 @@ namespace QuixPhysics
             base.Load(bodyHandle, connectionState, simulator, state, guid, room);
             room.factory.OnContactListeners.Add(guid, this);
         }
-        public override void OnContact(PhyObject obj)
+        public override void OnContact<TManifold>(PhyObject obj, TManifold manifold)
         {
 
             if (obj is GolfBall2)

@@ -6,6 +6,8 @@ namespace QuixPhysics.Player
     public class GrabBallAction : PlayerAction
     {
         public bool IsGrabbing = false;
+        public  delegate void GrabAction();
+        public event GrabAction GrabListeners;
         public GrabBallAction(Player2 player) : base(player)
         {
         }
@@ -17,6 +19,7 @@ namespace QuixPhysics.Player
 
         private void OnShoot(ShootMessage message)
         {
+            QuixConsole.Log("Is grabbing false");
             IsGrabbing = false;
         }
 
@@ -41,6 +44,7 @@ namespace QuixPhysics.Player
             player.golfball.SetPosition(newPos);
 
             player.golfball.Stop();
+            IsGrabbing=true;
         }
 
         public override void OnUpdate()
@@ -50,6 +54,7 @@ namespace QuixPhysics.Player
                 if (Vector3.Distance(player.GetPosition(), player.golfball.GetPosition()) <= player.playerStats.maxDistanceWithBall)
                 {
                     IsGrabbing = true;
+                     GrabListeners?.Invoke();
                 }
             }
             else

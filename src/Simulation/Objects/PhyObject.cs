@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.Numerics;
 using BepuPhysics;
 using BepuPhysics.Collidables;
+using BepuPhysics.CollisionDetection;
 using BepuUtilities;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
@@ -286,37 +287,6 @@ namespace QuixPhysics
                 state.quaternion = GetQuaternion();
             }
             ChangeStateBeforeSend();
-
-            /*
-
-            if (state.mass != 0)
-            {
-                BodyDescription description;
-                simulator.Simulation.Bodies.GetDescription(handle.bodyHandle, out description);
-
-                state.position = description.Pose.Position;
-                if (updateRotation)
-                {
-                    state.quaternion = description.Pose.Orientation;
-                }
-                SetMeshRotation();
-
-            }
-
-            if (state.mass == 0)
-            {
-                StaticDescription description;
-                simulator.Simulation.Statics.GetDescription(handle.staticHandle, out description);
-
-                state.position = description.Pose.Position;
-                if (updateRotation)
-                {
-                    state.quaternion = description.Pose.Orientation;
-                }
-                SetMeshRotation();
-            }*/
-
-
             return state.getJson();
         }
 
@@ -330,7 +300,7 @@ namespace QuixPhysics
         }
 
 
-        public virtual void OnContact(PhyObject obj)
+        public virtual void OnContact<TManifold>(PhyObject obj, TManifold manifold) where TManifold : struct, IContactManifold<TManifold>
         {
             throw new NotImplementedException("Type :" + obj.state.type);
         }

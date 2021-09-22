@@ -26,13 +26,10 @@ namespace QuixPhysics
         }
     }
     /// <summary>
-    /// This class represents the information that this Entity can Know. It's fullfilled while this entity walks around using the vehicle.
+    /// This class represents the information that this Entity can Know. It's fullfilled while this entity walks around using the vehicle and the raycast.
     /// </summary>
     public class EntityKnowledge
     {
-        /* public List<Entity> entities = new List<Entity>(10);
-         public List<Player2> players = new List<Player2>();*/
-
         public List<Type> interestingTypes = new List<Type>();
         public List<KnowledgeInfo> knowledgeList = new List<KnowledgeInfo>();
         private Entity entity;
@@ -42,6 +39,14 @@ namespace QuixPhysics
             this.entity = entity;
             interestingTypes.Add(typeof(Player2));
             interestingTypes.Add(typeof(Entity));
+        }
+        /// <summary>
+        /// Checks if this entity knows a certain object.
+        /// </summary>
+        /// <param name="obj"></param>
+        /// <returns></returns>
+        public KnowledgeInfo KnownsThisObject(PhyObject obj){
+            return knowledgeList.Find(en=>en.found_object==obj);
         }
         /// <summary>
         /// Check if the object is on the interesting types. If true it calls OnFoundInterestingObj.
@@ -215,7 +220,9 @@ namespace QuixPhysics
         public virtual void CreateRayCast()
         {
             raycast = new Raycast(simulator, room);
-            raycast.SetRayShape(new SpiralRayShape(25, 10, raycast));
+            raycast.distance = 1000;
+            raycast.debugRayShape = true;
+            raycast.SetRayShape(new SpiralRayShape(25, 20, raycast));
             raycast.ObjectHitListeners += OnRayCastHit;
         }
 
@@ -231,7 +238,11 @@ namespace QuixPhysics
                 AddWorker(new PhyInterval(1, simulator)).Tick += Update;
             }
         }
-
+        /// <summary>
+        /// Follows an target. It starts the trail.
+        /// </summary>
+        /// <param name="target"></param>
+        /// <returns></returns>
         public bool FollowTarget(PhyObject target)
         {
             if (NavQueryExists() && target != null)
@@ -390,7 +401,7 @@ namespace QuixPhysics
         /// When any of the raycast get hitted. The child of this class should fullfil the knowledge overriding this method.
         /// </summary>
         /// <param name="obj"></param>
-        internal abstract void OnRayCastHit(PhyObject obj);
+        internal abstract void OnRayCastHit(PhyObject obj, Vector3 normal);
 
         /// <summary>
         /// This method is called when the object is in the same position for several updates while Trail is active
