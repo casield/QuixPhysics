@@ -31,7 +31,7 @@ namespace QuixPhysics
         }
         private void ThrowBallToPlayer()
         {
-            float distance = Vector3.Distance(golfBall.GetPosition(),player.GetPosition())/5;
+            float distance = Vector3.Distance(golfBall.GetPosition(),player.GetPosition())/8;
             Vector3 impulse = Vector3.Normalize( player.GetPosition()-golfBall.GetPosition());
             impulse.Y += .1f;
             golfBall.bodyReference.ApplyLinearImpulse((impulse) * distance);

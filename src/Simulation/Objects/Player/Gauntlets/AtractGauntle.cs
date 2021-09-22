@@ -13,7 +13,7 @@ namespace QuixPhysics
 
         private bool hasCharge = false;
 
-        public bool infinite = true;
+        public bool infinite = false;
 
         public AtractGauntlet()
         {
@@ -26,7 +26,7 @@ namespace QuixPhysics
             {
 
                 golfBallRef = player.golfball.GetBodyReference();
-                vehicle = new Vehicle(player.golfball, new VehicleProps());
+                vehicle = new Vehicle(player.golfball, new VehicleProps(){maxSpeed=new Vector3(.4f,.7f,.4f)});
                 vehicle.isActive = false;
                 player.simulator.Simulation.Awakener.AwakenBody(golfBallRef.Handle);
                 player.actionsManager.shootAction.ShootListeners += OnShoot;

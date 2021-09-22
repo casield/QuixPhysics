@@ -32,14 +32,12 @@ namespace QuixPhysics.Player
         private void OnContact(PhyObject obj, Vector3 normal)
         {
 
-            if (jumps <= 0 && lastContacted != obj)
+            if (lastContacted != obj)
             {
-                canJump = true;
-                jumps = 1;
                 lastContacted = obj;
-
-
             }
+            canJump = true;
+            jumps = maxJumps;
             lastNormal = normal;
         }
 
@@ -58,7 +56,7 @@ namespace QuixPhysics.Player
             }
 
             player.bodyReference.Velocity.Linear += direction * player.playerStats.force;
-            
+
             canJump = false;
             jumps--;
             ResetNormal();

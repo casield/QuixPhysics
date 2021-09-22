@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Numerics;
+using BepuPhysics.Constraints;
 using SharpNav;
 using SharpNav.Pathfinding;
 
@@ -13,11 +14,11 @@ namespace QuixPhysics
         public PhyObject found_object;
         public static bool operator ==(KnowledgeInfo c1, KnowledgeInfo c2)
         {
-            return c1.found_object==c2.found_object;
+            return c1.found_object == c2.found_object;
         }
-         public static bool operator !=(KnowledgeInfo c1, KnowledgeInfo c2)
+        public static bool operator !=(KnowledgeInfo c1, KnowledgeInfo c2)
         {
-            return c1.found_object!=c2.found_object;
+            return c1.found_object != c2.found_object;
         }
 
         public override bool Equals(object obj)
@@ -45,8 +46,9 @@ namespace QuixPhysics
         /// </summary>
         /// <param name="obj"></param>
         /// <returns></returns>
-        public KnowledgeInfo KnownsThisObject(PhyObject obj){
-            return knowledgeList.Find(en=>en.found_object==obj);
+        public KnowledgeInfo KnownsThisObject(PhyObject obj)
+        {
+            return knowledgeList.Find(en => en.found_object == obj);
         }
         /// <summary>
         /// Check if the object is on the interesting types. If true it calls OnFoundInterestingObj.
@@ -99,14 +101,16 @@ namespace QuixPhysics
         /// This method is called when an existing kwnoledge is found.
         /// </summary>
         /// <param name="info">The updated knowledge</param>
-        public virtual void OnKnowledgeUpdate(KnowledgeInfo info){
+        public virtual void OnKnowledgeUpdate(KnowledgeInfo info)
+        {
 
         }
         /// <summary>
         /// This method is called when a new knowledge is achived.
         /// </summary>
         /// <param name="info"></param>
-        public virtual void OnKnowledgeAdd(KnowledgeInfo info){
+        public virtual void OnKnowledgeAdd(KnowledgeInfo info)
+        {
 
         }
     }
@@ -208,6 +212,8 @@ namespace QuixPhysics
             arena = (Arena)room.gamemode;
             stuckWaiter = new PhyWaiter(10000);
             CreateRayCast();
+            simulator.collidableMaterials[bodyHandle.bodyHandle].collidable = true;
+            simulator.collidableMaterials[bodyHandle.bodyHandle].SpringSettings = new SpringSettings(1000f, 100f);
         }
         /// <summary>
         /// Creates the stats and the entity kwnloedg. Should be overrided to change any of this.
@@ -331,7 +337,7 @@ namespace QuixPhysics
             if (bodyReference.Exists && raycast != null)
             {
                 var pos = GetPosition();
-                raycast.Update(GetPosition()+new Vector3(0,25,0), GetForward(), state.quaternion);
+                raycast.Update(GetPosition() + new Vector3(0, 25, 0), GetForward(), state.quaternion);
             }
 
         }

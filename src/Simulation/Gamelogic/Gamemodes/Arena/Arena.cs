@@ -13,6 +13,9 @@ namespace QuixPhysics
         public float MIN_USERS;
         public float TURNS_TO_WIN;
     }
+    /// <summary>
+    /// Arena is a gamemode where the players fight each other to get more gems.
+    /// </summary>
     public class Arena : Gamemode
     {
         public ArenaProps props = new ArenaProps() { MIN_USERS = 1, TURNS_TO_WIN = 3 };
@@ -94,7 +97,7 @@ namespace QuixPhysics
         {
             GenerateMapCommand command = new GenerateMapCommand(simulator);
 
-            var objs = command.GenerateMap("bounce", room);
+            var objs = command.GenerateMap("isla", room);
             foreach (var item in objs)
             {
                 if (item.state.mesh != null)
@@ -153,11 +156,11 @@ namespace QuixPhysics
             float resizer = 1;
             float mulre = (100 / resizer);
 
-            settings.CellSize = .1f * mulre;
+            settings.CellSize = 1f * mulre;
             settings.CellHeight = .2f * mulre;
             settings.MaxClimb = 0.1f * mulre;
-            settings.AgentHeight = 4f * mulre;
-            settings.AgentRadius = .8f * mulre;
+            settings.AgentHeight = .8f * mulre;
+            settings.AgentRadius = .1f * mulre;
 
 
             //Creates the mesh .obj

@@ -50,7 +50,7 @@ namespace QuixPhysics
             var randompoint = ((Arena)room.gamemode).GetRandomPoint(owner.player.GetPosition(), new Vector3(500, 500, 500)).Position;
             QuixConsole.Log("Random point", randompoint);
             vehicle.props.maxSpeed = new Vector3(.1f, .1f, .1f);
-            helperAction=new HelperAction(this);
+            helperAction = new HelperAction(this);
 
 
             SetPosition(randompoint);
@@ -61,8 +61,10 @@ namespace QuixPhysics
         {
             base.SetProps();
             knowledge = new HelperKnowledge(this);
+
+
         }
-        internal override void OnRayCastHit(PhyObject obj,Vector3 normal)
+        internal override void OnRayCastHit(PhyObject obj, Vector3 normal)
         {
             knowledge.CheckObject(obj);
         }
@@ -74,7 +76,7 @@ namespace QuixPhysics
             var z = MathF.Sin(velocityDirection.Z);
             var angle = MathF.Atan2(z, x);
 
-            state.quaternion = Quaternion.CreateFromAxisAngle(new Vector3(0, 1, 0), angle) ;
+            state.quaternion = Quaternion.CreateFromAxisAngle(new Vector3(0, 1, 0), angle);
 
 
             lastVelocity = bodyReference.Velocity.Linear;
@@ -85,6 +87,7 @@ namespace QuixPhysics
             if (state.owner != null)
             {
                 owner = room.users[state.owner];
+                knowledge.CheckObject(owner.player);
             }
             else
             {
@@ -98,7 +101,8 @@ namespace QuixPhysics
             AddItemToStats(new HI_GemFraction(this));
             AddItemToStats(new HI_GolfHat(this));
         }
-        private void AddItemToStats(HelperItem item){
+        private void AddItemToStats(HelperItem item)
+        {
             item.Constructor(room.connectionState, room.simulator, room);
             stats.SetItem(item, 0);
         }
