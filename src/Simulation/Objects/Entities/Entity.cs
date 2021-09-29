@@ -245,7 +245,7 @@ namespace QuixPhysics
             }
         }
         /// <summary>
-        /// Follows an target. It starts the trail.
+        /// Follows a target. Starts the trail.
         /// </summary>
         /// <param name="target"></param>
         /// <returns></returns>
@@ -259,7 +259,6 @@ namespace QuixPhysics
                 {
                     this.target = target;
                     QuixConsole.Log("Look target");
-
                 }
                 else
                 {
@@ -285,7 +284,7 @@ namespace QuixPhysics
             return Vector3.Distance(GetPosition(), target);
         }
         /// <summary>
-        /// Main loop of the entity, it looks if the navquery exists and then makes all the operations for the Trail.
+        /// Main loop of the entity, it searchs if the navquery exists and then makes all the operations for the Trail.
         /// </summary>
         internal virtual void Update()
         {

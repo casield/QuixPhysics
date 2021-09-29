@@ -35,10 +35,11 @@ namespace QuixPhysics.Player
             if (lastContacted != obj)
             {
                 lastContacted = obj;
+                canJump = true;
+                jumps = maxJumps;
+                lastNormal = normal;
             }
-            canJump = true;
-            jumps = maxJumps;
-            lastNormal = normal;
+
         }
 
         internal void ResetNormal()

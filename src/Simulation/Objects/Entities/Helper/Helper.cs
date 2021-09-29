@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Numerics;
+using BepuUtilities;
 using SharpNav.Pathfinding;
 
 namespace QuixPhysics
@@ -38,7 +39,6 @@ namespace QuixPhysics
 
         private EntityLifeLoop currentLoop;
         public User owner;
-        private Vector3 lastVelocity = new Vector3();
         private HelperAction helperAction;
 
         public override void Init()
@@ -47,9 +47,10 @@ namespace QuixPhysics
             base.Init();
             SetOwner();
             SetItems();
-            var randompoint = ((Arena)room.gamemode).GetRandomPoint(owner.player.GetPosition(), new Vector3(500, 500, 500)).Position;
+            var randompoint = ((Arena)room.gamemode).GetRandomPoint(owner.player.GetPosition(), new Vector3(50, 50, 50)).Position;
             QuixConsole.Log("Random point", randompoint);
             vehicle.props.maxSpeed = new Vector3(.1f, .1f, .1f);
+           // vehicle.isActive = false;
             helperAction = new HelperAction(this);
 
 
@@ -68,18 +69,13 @@ namespace QuixPhysics
         {
             knowledge.CheckObject(obj);
         }
+
         public override void ChangeStateBeforeSend()
         {
             base.ChangeStateBeforeSend();
-            var velocityDirection = GetForward();
-            var x = MathF.Cos(velocityDirection.X);
-            var z = MathF.Sin(velocityDirection.Z);
-            var angle = MathF.Atan2(z, x);
-
-            state.quaternion = Quaternion.CreateFromAxisAngle(new Vector3(0, 1, 0), angle);
-
-
-            lastVelocity = bodyReference.Velocity.Linear;
+              var velocityDirection = GetForward();
+              var angle = (float)Math.Atan2(velocityDirection.Z, velocityDirection.X);
+              state.quaternion = Quaternion.CreateFromAxisAngle(new Vector3(0,1,0),-angle);;
         }
 
         private void SetOwner()
