@@ -31,11 +31,11 @@ namespace QuixPhysics
         }
         private void ThrowBallToPlayer()
         {
-            float distance = Vector3.Distance(golfBall.GetPosition(),player.GetPosition())/8;
-            Vector3 impulse = Vector3.Normalize( player.GetPosition()-golfBall.GetPosition());
+            float distance = Vector3.Distance(golfBall.GetPosition(), player.GetPosition()) / 8;
+            Vector3 impulse = Vector3.Normalize(player.GetPosition() - golfBall.GetPosition());
             impulse.Y += .1f;
             golfBall.bodyReference.ApplyLinearImpulse((impulse) * distance);
-            QuixConsole.Log("Throw ball",distance);
+            QuixConsole.Log("Throw ball", distance);
             canThrow = false;
             Desactivate();
         }
@@ -102,10 +102,12 @@ namespace QuixPhysics
                 Desactivate();
             }
 
-            if (Vector3.Distance(helper.trail.GetLastPoint().Position, golfBall.GetPosition()) > 100)
+            if (!helper.trail.IsOnPoly(helper.trail.GetLastPoint().Polygon, golfBall.GetPosition(), helper.extend))
             {
+                QuixConsole.Log("Follow again");
                 FollowGolfBall();
             }
+
             helper.vehicle.Arrive(helper.trail.GetPoint());
         }
 

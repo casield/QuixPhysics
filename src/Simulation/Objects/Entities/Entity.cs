@@ -258,7 +258,6 @@ namespace QuixPhysics
                 if (setTarget)
                 {
                     this.target = target;
-                    QuixConsole.Log("Look target");
                 }
                 else
                 {

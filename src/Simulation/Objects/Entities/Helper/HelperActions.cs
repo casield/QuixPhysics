@@ -10,18 +10,41 @@ namespace QuixPhysics
         {
             this.helper = helper;
         }
+
         public bool OnLastPolygon()
         {
-            GoRandomPoint();
+            // GoRandomPoint(); 
+            /*QuixConsole.Log("On last polygn");
+            if (LastPointIsClose())
+            {
+                return true;
+            }
+            helper.vehicle.Arrive(helper.trail.GetPoint());*/
+
+
 
             return true;
         }
 
+        private bool LastPointIsClose()
+        {
+            return (helper.trail.IsOnLastPosition(helper.GetPosition(), helper.extend));
+        }
+
         private void GoRandomPoint()
         {
-            helper.trail.Start();
-            var randNav = helper.trail.GetRandomPoint(helper.GetPosition(),new Vector3(500, 500, 500));
-            helper.trail.SetTarget(randNav.Position);
+            var extend = new Vector3(100);
+            if (helper.trail.PolysAround(helper.GetPosition(), extend).Count > 0)
+            {
+                helper.trail.Start();
+                var randNav = helper.trail.GetRandomPoint(helper.GetPosition(),extend);
+               var canSet = helper.trail.SetTarget(randNav.Position);
+               if(!canSet){
+                   helper.trail.Stop();
+               }
+                QuixConsole.Log("Go to random point", randNav.Position,canSet);
+            }
+
         }
 
         public void OnTrailActive()
@@ -31,12 +54,14 @@ namespace QuixPhysics
 
         public void OnTrailInactive()
         {
-            if (helper.trail.PolysAround(helper.GetPosition(), new System.Numerics.Vector3(50, 50, 50)).Count > 0)
-            {
-                GoRandomPoint();
-            }else{
-               // QuixConsole.Log("No");
-            }
+            /*if (helper.trail.PolysAround(helper.GetPosition(), new System.Numerics.Vector3(500)).Count > 0)
+            {*/
+
+            QuixConsole.Log("Trail inactive");
+            GoRandomPoint();
+
+
+            // }
 
         }
 
@@ -44,7 +69,7 @@ namespace QuixPhysics
         {
             //throw new System.NotImplementedException();
             QuixConsole.Log("Stuck in HelperAction");
-            GoRandomPoint();
+            // GoRandomPoint();
         }
     }
 

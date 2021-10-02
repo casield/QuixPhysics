@@ -13,7 +13,7 @@ namespace QuixPhysics
 
         private bool hasCharge = false;
 
-        public bool infinite = false;
+        public bool infinite = true;
 
         public AtractGauntlet()
         {
@@ -136,10 +136,7 @@ namespace QuixPhysics
         {
             if (player != null && player.bodyReference.Exists)
             {
-                PhyObject whoToLook = player.lookObject.watching;
-                if(whoToLook is Player2){
-                    whoToLook = player;
-                }
+                PhyObject whoToLook = player;
                 vehicle.Arrive(whoToLook.GetPosition());
                 vehicle.Update();
                 if (player.actionsManager.grabBallAction.IsGrabbing)

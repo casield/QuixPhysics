@@ -97,18 +97,7 @@ namespace QuixPhysics
         {
             GenerateMapCommand command = new GenerateMapCommand(simulator);
 
-            var objs = command.GenerateMap("isla", room);
-            foreach (var item in objs)
-            {
-                if (item.state.mesh != null)
-                {
-                    if (item.state.mesh.Contains("Montana1"))
-                    {
-                        QuixConsole.Log("Montana1", item.state.quaternion);
-                    }
-                }
-
-            }
+            var objs = command.GenerateMap("hexagons", room);                    
             navObjects.AddRange(objs);
 
 
@@ -123,9 +112,6 @@ namespace QuixPhysics
             {
                 var nearest = query.FindNearestPoly(position, extend);
                 query.FindRandomConnectedPoint(ref nearest, out NavPoint randomPoint);
-                float height = 0;
-                query.GetPolyHeight(nearest.Polygon, position, ref height);
-                randomPoint.Position.Y += height;
                 return randomPoint;
             }
             return new NavPoint();
@@ -156,11 +142,12 @@ namespace QuixPhysics
             float resizer = 1;
             float mulre = (100 / resizer);
 
-            settings.CellSize = 1f * mulre;
+            settings.CellSize = .3f * mulre;
             settings.CellHeight = .2f * mulre;
-            settings.MaxClimb = 0.1f * mulre;
-            settings.AgentHeight = .8f * mulre;
-            settings.AgentRadius = .1f * mulre;
+            settings.MaxClimb = .1f*mulre;
+            
+            settings.AgentHeight = .01f;
+            settings.AgentRadius = .2f * mulre;
 
 
             //Creates the mesh .obj

@@ -10,7 +10,7 @@ namespace QuixPhysics
 
     public class TrailProps
     {
-        public Vector3 targetExtend = new Vector3(500);
+        public Vector3 targetExtend = new Vector3(100);
 
         public int MinPathSizeToChange = 1;
         public int PathPointReloadTime = 1000;
@@ -22,7 +22,7 @@ namespace QuixPhysics
         public Path path;
         private PhyObject obj;
 
-        private Vector3 target;
+        public Vector3 target;
         private NavPoint startPoint;
         private NavPoint endPoint;
         private bool active = false;
@@ -41,6 +41,9 @@ namespace QuixPhysics
 
         private List<NavPolyId> visited = new List<NavPolyId>();
         private NavQueryFilter navQueryFilter;
+
+        public delegate void PointChangeAction(Vector3 point);
+        public event PointChangeAction OnPointChangeListener;
 
         public Trail(Simulator simulator, PhyObject obj, NavMeshQuery query)
         {
@@ -81,24 +84,29 @@ namespace QuixPhysics
 
         public bool IsOnPoly(NavPolyId polyId, Vector3 position, Vector3 extends)
         {
-            
+
             List<NavPolyId> polys = new List<NavPolyId>();
 
             var found = query.QueryPolygons(ref position, ref extends, polys);
             return polys.Contains(polyId);
         }
 
-        public NavPoint GetLastPoint(){
+        public NavPoint GetLastPoint()
+        {
             return endPoint;
         }
 
         public bool IsOnLastPosition(Vector3 position, Vector3 extends)
         {
+            if (path.Count == 0)
+            {
+                return false;
+            }
             return IsOnPoly(path[path.Count - 1], position, extends);
         }
-        public NavPoint GetRandomPoint(Vector3 position,Vector3 extent)
+        public NavPoint GetRandomPoint(Vector3 position, Vector3 extent)
         {
-            return ((Arena)obj.room.gamemode).GetRandomPoint(position,extent);
+            return ((Arena)obj.room.gamemode).GetRandomPoint(position, extent);
         }
 
         private void Update()
@@ -136,28 +144,33 @@ namespace QuixPhysics
             }
 
         }
-
+        /// <summary>
+        /// Sets the new point in the trail. This method looks for the next point in the path and then it moves it along the surface.
+        /// It calls LastPoint() when the trail enters the las NavPoint in the path.
+        /// </summary>
+        /// <param name="newpoint"></param>
+        /// <returns></returns>
         private bool SetPoint(int newpoint)
         {
             if (newpoint < path.Count)
             {
+                
                 Vector3 closest = new Vector3();
                 query.ClosestPointOnPoly(path[newpoint], obj.GetPosition(), ref closest);
-
-
                 Vector3 correctedPoint = new Vector3();
                 NavPoint navStart = new NavPoint(path[newpoint], obj.GetPosition());
                 var couldmove = query.MoveAlongSurface(ref navStart, ref closest, out correctedPoint, visited);
                 if (couldmove)
                 {
                     nextPoint = correctedPoint;
+                    OnPointChangeListener?.Invoke(nextPoint);
                 }
                 else
                 {
                     ResetPath();
                 }
 
-               // QuixConsole.Log("Next point", nextPoint, " ( " + pathPosition + " ) Path size:", path.Count, "Visited size:", visited.Count);
+                // QuixConsole.Log("Next point", nextPoint, " ( " + pathPosition + " ) Path size:", path.Count, "Visited size:", visited.Count);
                 return couldmove;
 
             }
@@ -180,7 +193,7 @@ namespace QuixPhysics
         private void LastPoint()
         {
             nextPoint = endPoint.Position;
-           //QuixConsole.Log("Last Point");
+            //QuixConsole.Log("Last Point");
             OnLastPoint?.Invoke();
             hasFinished = true;
         }
@@ -211,7 +224,6 @@ namespace QuixPhysics
 
         public static bool CheckPathValidity(Path path, NavPoint lastPoint)
         {
-
             return path[path.Count - 1] == lastPoint.Polygon;
         }
         /// <summary>
@@ -242,7 +254,7 @@ namespace QuixPhysics
 
                     bool couldFind = query.FindPath(ref startPoint, ref endPoint, navQueryFilter, path);
 
- 
+
                     Reset();
                     GoNextPoint();
                     return true;

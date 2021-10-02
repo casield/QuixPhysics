@@ -1,10 +1,10 @@
-# Blender MTL File: 'Quixtam.blend'
+# Blender MTL File: 'Hexagonos.blend'
 # Material Count: 1
 
-newmtl Material
-Ns 323.999994
+newmtl Hexagonos
+Ns 225.000000
 Ka 1.000000 1.000000 1.000000
-Kd 0.562848 0.800000 0.094800
+Kd 0.800000 0.167174 0.196302
 Ks 0.500000 0.500000 0.500000
 Ke 0.000000 0.000000 0.000000
 Ni 1.450000

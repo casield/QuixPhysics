@@ -2,10 +2,15 @@ using System;
 using System.Collections.Generic;
 using System.Numerics;
 using BepuUtilities;
+using Newtonsoft.Json;
 using SharpNav.Pathfinding;
 
 namespace QuixPhysics
 {
+    public class HelperMessage
+    {
+        public List<Vector3> positions;
+    }
     public class HelperKnowledge : EntityKnowledge
     {
         public List<Gem> gems = new List<Gem>();
@@ -47,17 +52,30 @@ namespace QuixPhysics
             base.Init();
             SetOwner();
             SetItems();
-            var randompoint = ((Arena)room.gamemode).GetRandomPoint(owner.player.GetPosition(), new Vector3(50, 50, 50)).Position;
+            var randompoint = ((Arena)room.gamemode).GetRandomPoint(owner.player.GetPosition(), new Vector3(500, 500, 500)).Position;
             QuixConsole.Log("Random point", randompoint);
-            vehicle.props.maxSpeed = new Vector3(.1f, .1f, .1f);
-           // vehicle.isActive = false;
+            vehicle.props.maxSpeed = new Vector3(.1f, .001f, .1f);
+            // vehicle.isActive = false;
             helperAction = new HelperAction(this);
 
 
             SetPosition(randompoint);
             stats.vision = 30000;
 
+            trail.OnPointChangeListener += OnPointChange;
+
         }
+
+        private void OnPointChange(Vector3 point)
+        {
+            Stop();
+            List<Vector3> list = new List<Vector3>();
+            list.Add(point);
+            list.Add(trail.target);
+            var send = JsonConvert.SerializeObject(new HelperMessage(){positions=list});
+            SendObjectMessage(send);
+        }
+
         public override void SetProps()
         {
             base.SetProps();
@@ -73,9 +91,9 @@ namespace QuixPhysics
         public override void ChangeStateBeforeSend()
         {
             base.ChangeStateBeforeSend();
-              var velocityDirection = GetForward();
-              var angle = (float)Math.Atan2(velocityDirection.Z, velocityDirection.X);
-              state.quaternion = Quaternion.CreateFromAxisAngle(new Vector3(0,1,0),-angle);;
+            var velocityDirection = GetForward();
+            var angle = (float)Math.Atan2(velocityDirection.Z, velocityDirection.X);
+            state.quaternion = Quaternion.CreateFromAxisAngle(new Vector3(0, 1, 0), -angle); ;
         }
 
         private void SetOwner()
@@ -144,7 +162,6 @@ namespace QuixPhysics
                 if (r)
                 {
                     ChangeLoop(null);
-
                 }
                 return r;
             }
@@ -179,7 +196,9 @@ namespace QuixPhysics
         }
         public override void OnFall()
         {
-            stats.DamageEntity(stats.life);
+            //stats.DamageEntity(stats.life);
+            var randompoint = ((Arena)room.gamemode).GetRandomPoint(owner.player.GetPosition(), new Vector3(500, 500, 500)).Position;
+            SetPosition(randompoint);
 
         }
         public override void OnStuck()
@@ -187,6 +206,7 @@ namespace QuixPhysics
             base.OnStuck();
             if (currentLoop != null)
             {
+                bodyReference.ApplyLinearImpulse(-GetVelocity()*3);
                 currentLoop.OnStuck();
             }
         }

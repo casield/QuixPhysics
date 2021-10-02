@@ -7,6 +7,7 @@ namespace QuixPhysics
     {
 
         private Quaternion oldQuat;
+        private bool updatedHalfSize = false;
 
 
         public override void BeforeLoad(ObjectState state)
@@ -22,7 +23,11 @@ namespace QuixPhysics
         public override void ChangeStateBeforeSend()
         {
             state.quaternion =GetQuaternion()*new Quaternion(00.707f,0,0,-0.707f);
-            ((BoxState)state).halfSize *= new Vector3(-2,2,2);
+            if(!updatedHalfSize){
+               ((BoxState)state).halfSize *= new Vector3(-2,2,2); 
+               updatedHalfSize = true;
+            }
+            
 
         }
     }
