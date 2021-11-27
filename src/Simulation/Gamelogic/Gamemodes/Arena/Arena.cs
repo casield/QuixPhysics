@@ -22,7 +22,9 @@ namespace QuixPhysics
         public List<User> users = new List<User>();
 
 
-        private UserLoader userLoader;
+        private UserLoader userLoader;        
+        public AIManager aIManager;
+        public HextilesAddon hextilesAddon;
 
         private List<User> turnWinners = new List<User>();
 
@@ -30,7 +32,7 @@ namespace QuixPhysics
         private NavMeshBuilder navMesh;
         public TiledNavMesh tiledNavMesh;
         private string navMeshName;
-        public AIManager aIManager;
+
         public event PhyAction OnNavMeshReadyListeners;
         public NavMeshQuery navMeshQuery;
 
@@ -44,6 +46,7 @@ namespace QuixPhysics
         {
             userLoader = new UserLoader(simulator, this);
             aIManager = new AIManager(simulator, this);
+            hextilesAddon = new HextilesAddon(simulator,this);
             GenerateMap();
         }
         public override void OnJoin(User user)
@@ -60,7 +63,7 @@ namespace QuixPhysics
         public override Vector3 GetStartPoint(User user)
         {
             var point = new Vector3();
-            if (room.map != null)
+           /* if (room.map != null)
             {
 
                 var index = users.IndexOf(user);
@@ -79,7 +82,12 @@ namespace QuixPhysics
                 var z = float.Parse(room.map.startPositions[index].AsBsonDocument["z"].ToString());
                 point = new Vector3(x, y, z);
 
+            }*/
+            if(hextilesAddon !=null){
+                 point = hextilesAddon.GetRandomHextile()+new Vector3(0,Hexagon._SIZE,0);
+                 QuixConsole.Log("Point",point);
             }
+           
             return point;
 
         }
@@ -95,14 +103,15 @@ namespace QuixPhysics
 
         private void GenerateMap()
         {
-            GenerateMapCommand command = new GenerateMapCommand(simulator);
+           // GenerateMapCommand command = new GenerateMapCommand(simulator);
 
-            var objs = command.GenerateMap("hexagons", room);                    
-            navObjects.AddRange(objs);
+           // var objs = command.GenerateMap("hexagons", room);                    
+           // navObjects.AddRange(objs);
 
 
             userLoader.OnMapsLoaded();
             aIManager.OnMapsLoaded();
+            hextilesAddon.OnMapsLoaded();
             room.factory.createObjects();
         }
         public NavPoint GetRandomPoint(Vector3 position, Vector3 extend)
@@ -127,6 +136,7 @@ namespace QuixPhysics
              GenerateNavMesh();
             aIManager.OnStart();
             userLoader.OnStart();
+            hextilesAddon.OnStart();
 
 
             QuixConsole.Log("NavMesh ready", navMeshName);

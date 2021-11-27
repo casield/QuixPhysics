@@ -67,6 +67,7 @@ namespace QuixPhysics
             LoadMesh("Stadiums/Isla/Quixtam");
 
             LoadMesh("Stadiums/Hexagons/Hexagon");
+            LoadMesh("Stadiums/Hexagons/Hextile");
             LoadMesh("Stadiums/Hexagons/Mountains");
 
             QuixConsole.Log("Reload meshes");
