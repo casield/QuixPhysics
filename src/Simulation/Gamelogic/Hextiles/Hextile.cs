@@ -33,6 +33,15 @@ namespace QuixPhysics.Hextiles
             return index;
         }
 
+        public Vector3 XYToCube(Vector2 XY)
+        {
+            var q = XY.X;
+            var r = XY.Y;
+            var s = -q - r;
+
+            return new Vector3(XY.Y, XY.Y, s);
+        }
+
         /// <summary>
         /// Gets worlds position
         /// </summary>
@@ -43,19 +52,34 @@ namespace QuixPhysics.Hextiles
             float size = _hexgrid.hexagonSize / 2;
             float width = MathF.Sqrt(3) * size;
             float odd = IsOdd(index) ? size : 0;
-            float h = (size * 2);
+            float h = -(size * 2);
 
-            return new Vector3((pos.X * (-width)), 0, (pos.Y * h) + odd);
+            return new Vector3((pos.X * (width)), 0, (pos.Y * h) + odd);
         }
         public Vector2 GetSide(int position)
         {
             var pos = getXY();
-            var isOdd = IsOdd(index);
+            var isOdd = IsOdd(pos.Y);
 
-            var oddSides = new Vector2[]{new Vector2(-1, 0),new Vector2(-1, -1), new Vector2(0, 1),new Vector2(1, 0),new Vector2(1, -1),new Vector2(0,-1)};
-            var evenSides = new Vector2[]{new Vector2(-1, -1),new Vector2(-1, 0), new Vector2(0, 1),new Vector2(1, 0),new Vector2(1, -1),new Vector2(0,-1)};
-            Vector2 side =isOdd?oddSides[position]: evenSides[position];
-           
+            var evenSides = new Vector2[] {
+           new Vector2(1, 0),
+            new Vector2(1, -1),
+            new Vector2(0, -1), 
+            new Vector2(-1, -1),
+            new Vector2(-1, 0),
+            new Vector2(0, 1), };
+
+             var oddSides = new Vector2[] {
+           new Vector2(1, 1),
+            new Vector2(1, 0),
+            new Vector2(0, -1), 
+            new Vector2(-1, 0),
+            new Vector2(-1, 1),
+            new Vector2(0, 1), };
+
+            var parity = (int)pos.X & 1;
+            Vector2 side = parity==0?oddSides[position]:evenSides[position];
+
 
             return side;
         }
