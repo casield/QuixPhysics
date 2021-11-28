@@ -3,8 +3,12 @@ using System.Numerics;
 
 namespace QuixPhysics
 {
+    /// <summary>
+    /// 
+    /// </summary>
     public class UserLoader : ArenaAddon
     {
+
         public UserLoader(Simulator simulator, Arena arena) : base(simulator, arena)
         {
         }
@@ -13,7 +17,7 @@ namespace QuixPhysics
         {
             //Create Helper
 
-            for (int i = 0; i < 0; i++)
+            for (int i = 0; i < 1; i++)
             {
                 Entity entity = (Entity)room.factory.Create(new SphereState()
                 {

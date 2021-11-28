@@ -22,7 +22,7 @@ namespace QuixPhysics
         public List<User> users = new List<User>();
 
 
-        private UserLoader userLoader;        
+        private UserLoader userLoader;
         public AIManager aIManager;
         public HextilesAddon hextilesAddon;
 
@@ -44,9 +44,10 @@ namespace QuixPhysics
         }
         public override void Init()
         {
+            hextilesAddon = new HextilesAddon(simulator, this);
             userLoader = new UserLoader(simulator, this);
             aIManager = new AIManager(simulator, this);
-            hextilesAddon = new HextilesAddon(simulator,this);
+
             GenerateMap();
         }
         public override void OnJoin(User user)
@@ -63,7 +64,20 @@ namespace QuixPhysics
         public override Vector3 GetStartPoint(User user)
         {
             var point = new Vector3();
-           /* if (room.map != null)
+            //GetStartPointOnMap
+            if (hextilesAddon != null)
+            {
+                point = hextilesAddon.GetRandomHextile().GetPosition();
+                QuixConsole.Log("Point", point);
+            }
+
+            return point;
+
+        }
+
+        private Vector3 GetStartPointOnMap(User user)
+        {
+            if (room.map != null)
             {
 
                 var index = users.IndexOf(user);
@@ -80,16 +94,10 @@ namespace QuixPhysics
                 var x = float.Parse(room.map.startPositions[index].AsBsonDocument["x"].ToString());
                 var y = float.Parse(room.map.startPositions[index].AsBsonDocument["y"].ToString());
                 var z = float.Parse(room.map.startPositions[index].AsBsonDocument["z"].ToString());
-                point = new Vector3(x, y, z);
+                return new Vector3(x, y, z);
 
-            }*/
-            if(hextilesAddon !=null){
-                 point = hextilesAddon.GetRandomHextile();
-                 QuixConsole.Log("Point",point);
             }
-           
-            return point;
-
+            return Vector3.Zero;
         }
         private void CreatePlayers()
         {
@@ -103,10 +111,10 @@ namespace QuixPhysics
 
         private void GenerateMap()
         {
-           // GenerateMapCommand command = new GenerateMapCommand(simulator);
+            // GenerateMapCommand command = new GenerateMapCommand(simulator);
 
-           // var objs = command.GenerateMap("hexagons", room);                    
-           // navObjects.AddRange(objs);
+            // var objs = command.GenerateMap("hexagons", room);                    
+            // navObjects.AddRange(objs);
 
 
             userLoader.OnMapsLoaded();
@@ -133,7 +141,7 @@ namespace QuixPhysics
             CreatePlayers();
 
 
-             GenerateNavMesh();
+            GenerateNavMesh();
             aIManager.OnStart();
             userLoader.OnStart();
             hextilesAddon.OnStart();
@@ -154,8 +162,8 @@ namespace QuixPhysics
 
             settings.CellSize = .3f * mulre;
             settings.CellHeight = .2f * mulre;
-            settings.MaxClimb = .1f*mulre;
-            
+            settings.MaxClimb = .1f * mulre;
+
             settings.AgentHeight = .01f;
             settings.AgentRadius = .2f * mulre;
 
@@ -171,7 +179,7 @@ namespace QuixPhysics
             navMeshQuery = new NavMeshQuery(tiledNavMesh, 1048);
 
             //Save it to a file .snb
-           qinavMesh.SaveNavMeshToFile(navMeshName, tiledNavMesh);
+            qinavMesh.SaveNavMeshToFile(navMeshName, tiledNavMesh);
 
             OnNavMeshReadyListeners?.Invoke();
 

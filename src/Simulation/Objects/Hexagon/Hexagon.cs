@@ -11,15 +11,14 @@ namespace QuixPhysics
 
         public static float _SIZE = 1000;
         public Hextile hextile;
-        public static BoxState Build(Vector3 position, bool isBlue)
+        public static BoxState Build(Vector3 position)
         {
-            string color = isBlue ? "Blue" : "";
             BoxState state = new BoxState()
             {
                 halfSize = new Vector3(_SIZE),
-                mesh = "Stadiums/Hexagons/Hextile" + color,
+                mesh = "Stadiums/Hexagons/Hextile",
                 instantiate = true,
-                position = position,
+                position = position-Hextile._PADDDING,
                 type = "Hexagon"
             };
 
@@ -43,9 +42,12 @@ namespace QuixPhysics
                 var oddY = tile.IsOdd((int)gridpos.Y);
                 SendObjectMessage("(" + hextile.getXY() + ") - OddX:"+oddX+" / oddY:"+oddY);
             };
+            if(hextile.IsOdd((int)hextile.getXY().Y)){
+                ChangeColor("#FF0000");
+            }
 
         }
-
+        #region Hexagon Calculation
         /// <summary>
         /// Get HexSide of some position
         /// /// </summary>
@@ -78,7 +80,9 @@ namespace QuixPhysics
         {
             return -(Vector3.Normalize(point - GetPosition()));
         }
+        #endregion
 
+        #region Game Functions
         public PhyObject[] AddWalls(int[] sides)
         {
 
@@ -108,6 +112,12 @@ namespace QuixPhysics
             }
             return wall.ToArray();
         }
+
+        public void ChangeColor(string color){
+            SendObjectMessage("c:"+color);
+        }
+
+        #endregion
 
 
 

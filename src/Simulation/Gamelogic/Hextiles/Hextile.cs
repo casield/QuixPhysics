@@ -14,10 +14,21 @@ namespace QuixPhysics.Hextiles
 
         int index;
 
+        public static Vector3 _PADDDING = new Vector3(0, Hexagon._SIZE * 1.1f, 0);
+
+        public float randomHeight = 0;
+
         public Hextile(Hexgrid hexagon, int position)
         {
             this._hexgrid = hexagon;
             this.index = position;
+
+            Random random = new Random();
+            if (random.Next(0, 100) > 90)
+            {
+                randomHeight = random.Next(0, 400);
+            }
+
         }
 
         public bool IsOdd(int value)
@@ -54,7 +65,15 @@ namespace QuixPhysics.Hextiles
             float odd = IsOdd(index) ? size : 0;
             float h = -(size * 2);
 
-            return new Vector3((pos.X * (width)), 0, (pos.Y * h) + odd);
+            return new Vector3((pos.X * (width)), 0, (pos.Y * h) + odd) + (GetFullPadding());
+        }
+        /// <summary>
+        /// Gets this hextile full height, included randomHeight
+        /// </summary>
+        /// <returns></returns>
+        public Vector3 GetFullPadding()
+        {
+            return _PADDDING + new Vector3(0, randomHeight, 0);
         }
         public Vector2 GetSide(int position)
         {
@@ -64,21 +83,21 @@ namespace QuixPhysics.Hextiles
             var evenSides = new Vector2[] {
            new Vector2(1, 0),
             new Vector2(1, -1),
-            new Vector2(0, -1), 
+            new Vector2(0, -1),
             new Vector2(-1, -1),
             new Vector2(-1, 0),
             new Vector2(0, 1), };
 
-             var oddSides = new Vector2[] {
+            var oddSides = new Vector2[] {
            new Vector2(1, 1),
             new Vector2(1, 0),
-            new Vector2(0, -1), 
+            new Vector2(0, -1),
             new Vector2(-1, 0),
             new Vector2(-1, 1),
             new Vector2(0, 1), };
 
             var parity = (int)pos.X & 1;
-            Vector2 side = parity==0?oddSides[position]:evenSides[position];
+            Vector2 side = parity == 0 ? oddSides[position] : evenSides[position];
 
 
             return side;

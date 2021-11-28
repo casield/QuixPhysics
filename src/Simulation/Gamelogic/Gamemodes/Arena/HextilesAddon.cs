@@ -50,7 +50,7 @@ namespace QuixPhysics
                     bool isOddX = hextile.IsOdd((int)gridpos.X);
                     bool isOddY = hextile.IsOdd((int)gridpos.Y);
 
-                    Hexagon ob = (Hexagon)room.factory.Create(Hexagon.Build(pos, isOddY), room);
+                    Hexagon ob = (Hexagon)room.factory.Create(Hexagon.Build(pos), room);
                     ob.AddHextile(hextile);
                     arena.navObjects.Add(ob);
 
@@ -81,19 +81,9 @@ namespace QuixPhysics
 
         }
 
-        public Vector3 GetRandomHextile()
+        public Hextile GetRandomHextile()
         {
-            Hextile tile = null;
-            foreach (var item in hexgrid.hextiles)
-            {
-                if (item != null)
-                {
-                    tile = item;
-                    break;
-                }
-            }
-            QuixConsole.Log("Tile", tile.getXY());
-            return tile.GetPosition() + new Vector3(0, Hexagon._SIZE, 0);
+         return hexgrid.GetRandomHextile();
         }
 
         public override void OnStart()

@@ -52,7 +52,7 @@ namespace QuixPhysics
             base.Init();
             SetOwner();
             SetItems();
-            var randompoint = ((Arena)room.gamemode).GetRandomPoint(owner.player.GetPosition(), new Vector3(500, 500, 500)).Position;
+            var randompoint = room.GetGameMode<Arena>().hextilesAddon.GetRandomHextile().GetPosition();
             QuixConsole.Log("Random point", randompoint);
             vehicle.props.maxSpeed = new Vector3(.1f, .001f, .1f);
             // vehicle.isActive = false;
@@ -196,14 +196,19 @@ namespace QuixPhysics
         }
         public override void OnFall()
         {
-            //stats.DamageEntity(stats.life);
+            //
             // var randompoint = ((Arena)room.gamemode).GetRandomPoint(owner.player.GetPosition(), new Vector3(500, 500, 500)).Position;
+            if (room.GetGameMode<Arena>().hextilesAddon != null)
+            {
+               var randompoint = room.GetGameMode<Arena>().hextilesAddon.GetRandomHextile().GetPosition();
 
-            var randompoint = room.GetGameMode<Arena>().hextilesAddon.GetRandomHextile();
 
+                SetPosition(randompoint);
 
-            SetPosition(randompoint);
+            }
+            if(currentLoop ==null)return;
             currentLoop.OnFall();
+
         }
         public override void OnStuck()
         {
