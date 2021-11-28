@@ -1,5 +1,6 @@
 
 using System;
+using System.Collections.Generic;
 using System.Numerics;
 using QuixPhysics.Hextiles;
 
@@ -9,13 +10,16 @@ namespace QuixPhysics
     {
 
         public static float _SIZE = 1000;
-        public static BoxState Build(Vector3 position){
-            BoxState state = new BoxState(){
-                halfSize=new Vector3(_SIZE),
-                mesh="Stadiums/Hexagons/Hextile",
-                instantiate=true,
-                position=position,
-                type="Hexagon"
+        public Hextile hextile;
+        public static BoxState Build(Vector3 position)
+        {
+            BoxState state = new BoxState()
+            {
+                halfSize = new Vector3(_SIZE),
+                mesh = "Stadiums/Hexagons/Hextile",
+                instantiate = true,
+                position = position,
+                type = "Hexagon"
             };
 
             return state;
@@ -27,7 +31,60 @@ namespace QuixPhysics
 
         }
 
-    
 
-    } 
+        /// <summary>
+        /// Get HexSide of some position
+        /// /// </summary>
+        /// <returns></returns>
+        public Vector3 GetCornerPoint(float cornerPoint)
+        {
+            var _size = _SIZE / 2;
+            var angle_deg = 60 * cornerPoint;
+            var angle_rad = (MathF.PI / 180) * angle_deg;
+            var hexagon_pos = this.GetPosition();
+
+            return new Vector3(hexagon_pos.X + _size * MathF.Cos(angle_rad),
+            hexagon_pos.Y,
+            hexagon_pos.Z + _size * MathF.Sin(angle_rad));
+        }
+
+        public Vector3 GetSidePoint(float cornerPoint)
+        {
+            var _size = _SIZE / 2;
+            var angle_deg = 60 * cornerPoint - 30;
+            var angle_rad = (MathF.PI / 180) * angle_deg;
+            var hexagon_pos = GetPosition();
+
+            return new Vector3(hexagon_pos.X + _size * MathF.Cos(angle_rad),
+            hexagon_pos.Y,
+            hexagon_pos.Z + _size * MathF.Sin(angle_rad));
+        }
+
+        public Vector3 GetPointDirection(Vector3 point)
+        {
+            return Vector3.Normalize(point - GetPosition());
+        }
+
+        public PhyObject[] AddWalls(int[] sides)
+        {
+
+            PhyObject[] wall = new PhyObject[sides.Length];
+            int added = 0;
+            foreach (var item in sides)
+            {
+                var pos = GetSidePoint(item);
+                var dir = GetPointDirection(pos);
+                var rot = MathF.Atan2(dir.X, dir.Z);
+                var quat = Quaternion.CreateFromYawPitchRoll(rot, 0, 0);
+                var boxState = new BoxState() { halfSize = new Vector3(hextile.GetWidth()*1.15f, Hexagon._SIZE*1.5f, 20), instantiate = true, position = pos, type = "Hexwall", quaternion = quat };
+
+                wall[added] = room.factory.Create(boxState, room);
+                added++;
+            }
+            return wall;
+        }
+
+
+
+    }
 }

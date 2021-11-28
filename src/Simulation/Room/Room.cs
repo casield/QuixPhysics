@@ -12,7 +12,7 @@ namespace QuixPhysics
         public string roomId;
         public int maxPlayers;
     }
-    public class Room
+    public class Room 
     {
 
         public RoomInfo props;
@@ -42,6 +42,9 @@ namespace QuixPhysics
         {
             this.gamemode = gamemode;
             this.gamemode.Init();
+        }
+        public T GetGameMode<T>() where T : Gamemode{
+            return (T)this.gamemode;
         }
         public void AddUser(User user)
         {

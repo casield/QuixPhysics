@@ -32,5 +32,10 @@ namespace QuixPhysics{
         public abstract void OnTrailActive();
 
         public abstract void OnStuck();
+
+        public void OnFall()
+        {
+           
+        }
     }
 }

@@ -71,6 +71,11 @@ namespace QuixPhysics
             QuixConsole.Log("Stuck in HelperAction");
             // GoRandomPoint();
         }
+
+        public void OnFall()
+        {
+            GoRandomPoint();
+        }
     }
 
 }

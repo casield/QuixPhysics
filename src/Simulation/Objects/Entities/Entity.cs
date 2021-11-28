@@ -131,6 +131,8 @@ namespace QuixPhysics
         void OnTrailActive();
         void OnStuck();
 
+        void OnFall();
+
     }
     public class EntityStats
     {

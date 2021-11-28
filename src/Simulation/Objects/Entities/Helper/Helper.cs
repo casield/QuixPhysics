@@ -72,7 +72,7 @@ namespace QuixPhysics
             List<Vector3> list = new List<Vector3>();
             list.Add(point);
             list.Add(trail.target);
-            var send = JsonConvert.SerializeObject(new HelperMessage(){positions=list});
+            var send = JsonConvert.SerializeObject(new HelperMessage() { positions = list });
             SendObjectMessage(send);
         }
 
@@ -197,16 +197,20 @@ namespace QuixPhysics
         public override void OnFall()
         {
             //stats.DamageEntity(stats.life);
-            var randompoint = ((Arena)room.gamemode).GetRandomPoint(owner.player.GetPosition(), new Vector3(500, 500, 500)).Position;
-            SetPosition(randompoint);
+            // var randompoint = ((Arena)room.gamemode).GetRandomPoint(owner.player.GetPosition(), new Vector3(500, 500, 500)).Position;
 
+            var randompoint = room.GetGameMode<Arena>().hextilesAddon.GetRandomHextile();
+
+
+            SetPosition(randompoint);
+            currentLoop.OnFall();
         }
         public override void OnStuck()
         {
             base.OnStuck();
             if (currentLoop != null)
             {
-                bodyReference.ApplyLinearImpulse(-GetVelocity()*3);
+                bodyReference.ApplyLinearImpulse(-GetVelocity() * 3);
                 currentLoop.OnStuck();
             }
         }

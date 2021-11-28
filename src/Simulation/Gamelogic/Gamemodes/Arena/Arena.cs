@@ -84,7 +84,7 @@ namespace QuixPhysics
 
             }*/
             if(hextilesAddon !=null){
-                 point = hextilesAddon.GetRandomHextile()+new Vector3(0,Hexagon._SIZE,0);
+                 point = hextilesAddon.GetRandomHextile();
                  QuixConsole.Log("Point",point);
             }
            
