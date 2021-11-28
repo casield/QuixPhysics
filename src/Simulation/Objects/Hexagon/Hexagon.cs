@@ -11,12 +11,13 @@ namespace QuixPhysics
 
         public static float _SIZE = 1000;
         public Hextile hextile;
-        public static BoxState Build(Vector3 position)
+        public static BoxState Build(Vector3 position, bool isBlue)
         {
+            string color = isBlue ? "Blue" : "";
             BoxState state = new BoxState()
             {
                 halfSize = new Vector3(_SIZE),
-                mesh = "Stadiums/Hexagons/Hextile",
+                mesh = "Stadiums/Hexagons/Hextile" + color,
                 instantiate = true,
                 position = position,
                 type = "Hexagon"
@@ -30,7 +31,6 @@ namespace QuixPhysics
             base.Load(bodyHandle, connectionState, simulator, state, guid, room);
 
         }
-
 
         /// <summary>
         /// Get HexSide of some position
@@ -72,11 +72,18 @@ namespace QuixPhysics
             int added = 0;
             foreach (var item in sides)
             {
-                var pos = GetSidePoint(item);
+                var pos = GetSidePoint(item) + new Vector3(0, Hexagon._SIZE / 2, 0);
                 var dir = GetPointDirection(pos);
                 var rot = MathF.Atan2(dir.X, dir.Z);
                 var quat = Quaternion.CreateFromYawPitchRoll(rot, 0, 0);
-                var boxState = new BoxState() { halfSize = new Vector3(hextile.GetWidth()*1.15f, Hexagon._SIZE*1.5f, 20), instantiate = true, position = pos, type = "Hexwall", quaternion = quat };
+                var boxState = new BoxState()
+                {
+                    halfSize = new Vector3(hextile.GetWidth() * 1.15f, Hexagon._SIZE / 2, 20),
+                    instantiate = true,
+                    position = pos,
+                    type = "Hexwall" + item+("-x"+hextile.getXY().X+"-y"+hextile.getXY().Y),
+                    quaternion = quat
+                };
 
                 wall[added] = room.factory.Create(boxState, room);
                 added++;

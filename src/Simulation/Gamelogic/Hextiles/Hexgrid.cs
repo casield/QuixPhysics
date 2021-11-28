@@ -6,11 +6,12 @@ namespace QuixPhysics.Hextiles
     public class Hexgrid
     {
         public float hexagonSize = 100;
-        public static int _GRID_SIZE = 4;
+        public static int _GRID_SIZE = 10;
 
         public Hextile[] hextiles = new Hextile[(int)(_GRID_SIZE * _GRID_SIZE)];
 
-        public Hexgrid(float size){
+        public Hexgrid(float size)
+        {
             hexagonSize = size;
         }
 
@@ -29,12 +30,18 @@ namespace QuixPhysics.Hextiles
 
         public Hextile GetHextile(int x, int y)
         {
+            if(x <0 || y <0) return null;
+            if(x>=_GRID_SIZE || y>=_GRID_SIZE)return null;
             int index = GetIndex(x, y);
-            Hextile tile = hextiles[index];
-            if (tile != null)
+            if (index < hextiles.Length)
             {
-                return tile;
+                Hextile tile = hextiles[index];
+                if (tile != null)
+                {
+                    return tile;
+                }
             }
+
             return null;
 
         }
@@ -42,7 +49,7 @@ namespace QuixPhysics.Hextiles
         public Hextile AddHextile(int x, int y)
         {
             int index = GetIndex(x, y);
-            Hextile tile = hextiles[index] = new Hextile(this,index);
+            Hextile tile = hextiles[index] = new Hextile(this, index);
 
             return tile;
 
