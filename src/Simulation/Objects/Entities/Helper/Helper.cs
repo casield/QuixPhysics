@@ -45,6 +45,13 @@ namespace QuixPhysics
         private EntityLifeLoop currentLoop;
         public User owner;
         private HelperAction helperAction;
+        private bool canJump = true;
+
+        public override void Load(Handle bodyHandle, ConnectionState connectionState, Simulator simulator, ObjectState state, Guid guid, Room room)
+        {
+            base.Load(bodyHandle, connectionState, simulator, state, guid, room);
+            room.factory.OnContactListeners.Add(this.guid, this);
+        }
 
         public override void Init()
         {
@@ -54,7 +61,7 @@ namespace QuixPhysics
             SetItems();
             var randompoint = room.GetGameMode<Arena>().hextilesAddon.GetRandomHextile().GetPosition();
             QuixConsole.Log("Random point", randompoint);
-            vehicle.props.maxSpeed = new Vector3(.1f, .001f, .1f);
+            vehicle.props.maxSpeed = new Vector3(.1f, .01f, .1f);
             // vehicle.isActive = false;
             helperAction = new HelperAction(this);
 
@@ -64,6 +71,15 @@ namespace QuixPhysics
 
             trail.OnPointChangeListener += OnPointChange;
 
+        }
+
+        public void Jump()
+        {
+            if(!canJump)return;
+            
+            QuixConsole.Log("Jump!");
+            GetBodyReference().ApplyLinearImpulse(new Vector3(0, state.mass * 100, 0));
+            canJump=false;
         }
 
         private void OnPointChange(Vector3 point)
@@ -86,6 +102,18 @@ namespace QuixPhysics
         internal override void OnRayCastHit(PhyObject obj, Vector3 normal)
         {
             knowledge.CheckObject(obj);
+            if(obj is Hexagon){
+                Hexagon hexagon = (Hexagon)obj;
+                if(Distance(hexagon.GetPosition())>50 && hexagon.GetPosition().Y > GetPosition().Y && hexagon.hextile.randomHeight>100){
+                    Jump();
+                }
+            }
+        }
+        public override void OnContact<TManifold>(PhyObject obj, TManifold manifold)
+        {
+            if(!canJump){
+                canJump=true;
+            }
         }
 
         public override void ChangeStateBeforeSend()
@@ -185,6 +213,7 @@ namespace QuixPhysics
 
         public override void OnTrailActive()
         {
+            var point = trail.GetPoint();
             if (currentLoop != null)
             {
                 currentLoop.OnTrailActive();
@@ -200,13 +229,13 @@ namespace QuixPhysics
             // var randompoint = ((Arena)room.gamemode).GetRandomPoint(owner.player.GetPosition(), new Vector3(500, 500, 500)).Position;
             if (room.GetGameMode<Arena>().hextilesAddon != null)
             {
-               var randompoint = room.GetGameMode<Arena>().hextilesAddon.GetRandomHextile().GetPosition();
+                var randompoint = room.GetGameMode<Arena>().hextilesAddon.GetRandomHextile().GetPosition();
 
 
                 SetPosition(randompoint);
 
             }
-            if(currentLoop ==null)return;
+            if (currentLoop == null) return;
             currentLoop.OnFall();
 
         }

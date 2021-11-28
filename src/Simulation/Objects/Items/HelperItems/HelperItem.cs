@@ -33,9 +33,6 @@ namespace QuixPhysics{
 
         public abstract void OnStuck();
 
-        public void OnFall()
-        {
-           
-        }
+        public abstract void OnFall();
     }
 }

@@ -212,7 +212,7 @@ namespace QuixPhysics
         {
             base.Load(bodyHandle, connectionState, simulator, state, guid, room);
             arena = (Arena)room.gamemode;
-            stuckWaiter = new PhyWaiter(10000);
+            stuckWaiter = new PhyWaiter(1000);
             CreateRayCast();
             simulator.collidableMaterials[bodyHandle.bodyHandle].collidable = true;
             simulator.collidableMaterials[bodyHandle.bodyHandle].SpringSettings = new SpringSettings(1000f, 100f);

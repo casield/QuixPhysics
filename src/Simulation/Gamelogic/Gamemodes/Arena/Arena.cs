@@ -156,15 +156,17 @@ namespace QuixPhysics
             navMeshName = "Arena";
             var settings = NavMeshGenerationSettings.Default;
 
-            //Resizes the mesh and the navmesh
+            // Resizes the mesh and the navmesh
+            // Set resizer to 100 to export on normal size
+            // Set to 1 to normal rendering
             float resizer = 1;
             float mulre = (100 / resizer);
 
             settings.CellSize = .3f * mulre;
-            settings.CellHeight = .2f * mulre;
-            settings.MaxClimb = .1f * mulre;
+            settings.CellHeight = 1.30f * mulre;
+            settings.MaxClimb = 2f * mulre;
 
-            settings.AgentHeight = .01f;
+            settings.AgentHeight = 3f*mulre;
             settings.AgentRadius = .2f * mulre;
 
 

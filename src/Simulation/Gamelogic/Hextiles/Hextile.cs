@@ -24,7 +24,7 @@ namespace QuixPhysics.Hextiles
             this.index = position;
 
             Random random = new Random();
-            if (random.Next(0, 100) > 90)
+            if (random.Next(0, 100) > 50)
             {
                 randomHeight = random.Next(0, 400);
             }

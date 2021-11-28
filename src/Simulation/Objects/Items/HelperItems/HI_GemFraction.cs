@@ -294,5 +294,10 @@ namespace QuixPhysics
             QuixConsole.Log("Stucked on GemFraction",helper.state.owner);
             LookGem();
         }
+
+        public override void OnFall()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

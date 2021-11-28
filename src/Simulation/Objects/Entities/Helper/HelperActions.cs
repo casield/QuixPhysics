@@ -69,6 +69,7 @@ namespace QuixPhysics
         {
             //throw new System.NotImplementedException();
             QuixConsole.Log("Stuck in HelperAction");
+            helper.Jump();
             // GoRandomPoint();
         }
 

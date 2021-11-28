@@ -84,11 +84,21 @@ namespace QuixPhysics
         public override void OnStuck()
         {
             QuixConsole.Log("Stuck in GolfHat");
+            helper.Jump();
             FollowGolfBall();
         }
+
         private void FollowGolfBall()
         {
-            helper.FollowTarget(golfBall);
+            if (IsGrabbed())
+            {
+                Desactivate();
+            }
+            else
+            {
+                helper.FollowTarget(golfBall);
+            }
+
         }
         private bool IsGrabbed()
         {
@@ -97,6 +107,7 @@ namespace QuixPhysics
 
         public override void OnTrailActive()
         {
+            
             if (IsGrabbed())
             {
                 Desactivate();
@@ -108,11 +119,13 @@ namespace QuixPhysics
                 FollowGolfBall();
             }
 
+
             helper.vehicle.Arrive(helper.trail.GetPoint());
         }
 
         public override void OnTrailInactive()
         {
+
             FollowGolfBall();
         }
 
@@ -141,6 +154,11 @@ namespace QuixPhysics
             }
 
             return false;
+        }
+
+        public override void OnFall()
+        {
+            FollowGolfBall();
         }
     }
 }

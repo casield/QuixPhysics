@@ -22,6 +22,11 @@ namespace QuixPhysics{
             throw new System.NotImplementedException();
         }
 
+        public override void OnFall()
+        {
+            throw new System.NotImplementedException();
+        }
+
         public override bool OnLastPolygon()
         {
             throw new System.NotImplementedException();

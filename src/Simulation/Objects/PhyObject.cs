@@ -299,7 +299,9 @@ namespace QuixPhysics
             return Guid.NewGuid().ToString().GetHashCode().ToString(); ;
         }
 
-
+        /// <summary>
+        /// On contact is called if it's registred on Rooms.Factory OnContact listener.
+        /// </summary>
         public virtual void OnContact<TManifold>(PhyObject obj, TManifold manifold) where TManifold : struct, IContactManifold<TManifold>
         {
             throw new NotImplementedException("Type :" + obj.state.type);
