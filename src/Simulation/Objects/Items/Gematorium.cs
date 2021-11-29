@@ -46,6 +46,10 @@ namespace QuixPhysics
             AddWorker(new PhyInterval(36000, simulator)).Completed += ThrowGem;
 
         }
+        public override int GetPrice()
+        {
+            return 10;
+        }
 
         private void ThrowGem()
         {

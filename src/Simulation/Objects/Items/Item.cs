@@ -63,6 +63,13 @@ namespace QuixPhysics
             }
 
         }
+        /// <summary>
+        /// Gets the price of this item
+        /// </summary>
+        /// <returns></returns>
+        public virtual int GetPrice(){
+            return 0;
+        }
         internal virtual void OnItemMessage<T>(ItemMessage<T> message)
         {
 

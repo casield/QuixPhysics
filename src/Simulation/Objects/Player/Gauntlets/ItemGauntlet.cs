@@ -19,17 +19,6 @@ namespace QuixPhysics
         }
         public Vector3 GetShifterPosition()
         {
-
-            /*float distance = 150;
-            float sep = -.2f;
-            var newPos = player.GetPosition();
-            var x = -(float)Math.Cos(player.rotationController+sep);
-            var y = -(float)Math.Sin(player.rotationController+sep);
-
-            newPos.X += (x * distance);
-            newPos.Z += y * distance;
-            newPos.Y +=distance/3;*/
-
             return player.lookObject.GetPosition();
         }
         public override void Activate(bool active)
@@ -38,7 +27,13 @@ namespace QuixPhysics
             if(active){
                 
                 Gematorium gematorium = new Gematorium(player.user);
-                gematorium.Drop(player.room,shifter.GetPosition()+new Vector3(0,50,0));
+                var totalGems = (int)player.user.gems.value - gematorium.GetPrice();
+                if(totalGems>=0){
+                    QuixConsole.Log("Total gems",totalGems);
+                    player.user.gems.Update(totalGems);
+                     gematorium.Drop(player.room,shifter.GetPosition()+new Vector3(0,50,0));
+                }
+               
             }
 
         }

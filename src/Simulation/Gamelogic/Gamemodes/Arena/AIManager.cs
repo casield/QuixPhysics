@@ -13,7 +13,7 @@ namespace QuixPhysics
 
         public AIManager(Simulator simulator, Arena arena) : base(simulator, arena)
         {
-            
+            CreateCrocoLoca();
         }
 
         public override void OnStart()
@@ -28,7 +28,13 @@ namespace QuixPhysics
             
 
         }
-        
+
+        private CrocoLoca CreateCrocoLoca(){
+            var randhextile = room.GetGameMode<Arena>().hextilesAddon.GetRandomHextile();
+            CrocoLoca croc = (CrocoLoca)room.factory.Create(CrocoLoca.Build(randhextile.GetPosition()),room);
+
+            return croc;
+        }        
 
         private void CreateBot()
         {

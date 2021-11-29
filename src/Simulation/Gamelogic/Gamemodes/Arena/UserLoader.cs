@@ -15,9 +15,10 @@ namespace QuixPhysics
 
         public void LoadItems(User user)
         {
+            user.gems.Update(30);
             //Create Helper
 
-            for (int i = 0; i < 6; i++)
+            for (int i = 0; i < 1; i++)
             {
                 Entity entity = (Entity)room.factory.Create(new SphereState()
                 {
@@ -46,7 +47,7 @@ namespace QuixPhysics
         {
             base.OnMapsLoaded();
 
-
+            
         }
 
     }
