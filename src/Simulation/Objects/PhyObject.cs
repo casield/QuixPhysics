@@ -115,6 +115,22 @@ namespace QuixPhysics
 
             this.room = room;
         }
+        /// <summary>
+        /// Set collision detections for this object
+        /// </summary>
+        /// <param name="collidable"></param>
+        public void SetCollidable(bool collidable)
+        {
+            if (state.mass != 0)
+            {
+                simulator.collidableMaterials[handle.bodyHandle].collidable = collidable;
+            }
+            else
+            {
+                simulator.collidableMaterials[handle.staticHandle].collidable = collidable;
+            }
+
+        }
 
         private void SetDescription()
         {

@@ -31,36 +31,21 @@ namespace QuixPhysics.Hextiles
             return i;
         }
 
+        //TODO: Add onylflat param
         public Hextile GetRandomHextile(bool onlyFlat)
         {
             Random rnd = new Random();
             Hextile tile = null;
             Hextile firstOne = null;
-            foreach (var item in hextiles)
-            {
-
-                if (item != null)
-                {
-                    if (firstOne == null)
-                    {
-                        firstOne = item;
-                    }
-                    var newNum = rnd.Next(0, 10);
-                    if (newNum < 9)
-                    {
-                        if (onlyFlat && item.randomHeight == 0)
-                        {
-                            tile = item;
-                        }
-                        if (!onlyFlat)
-                        {
-                            tile = item;
-                        }
-
-                    }
-
+            while(tile==null){
+                var x = rnd.Next(0,Hexgrid._GRID_SIZE-1);
+                var y = rnd.Next(0,Hexgrid._GRID_SIZE-1);
+                var index = GetIndex(x,y);
+                if(hextiles[index]!=null){
+                    tile=hextiles[index];
                 }
             }
+        
             if (tile == null)
             {
                 return firstOne;

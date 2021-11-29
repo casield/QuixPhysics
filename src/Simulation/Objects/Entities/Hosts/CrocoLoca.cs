@@ -9,6 +9,13 @@ namespace QuixPhysics
         {
             base.Load(bodyHandle, connectionState, simulator, state, guid, room);
 
+            SendObjectMessage("text_Eat");
+            CreateQuixtam();
+        }
+
+        public void CreateQuixtam(){
+            
+            Quixtam quixtam = (Quixtam)room.factory.Create(Quixtam.Build(state.position+new Vector3(150,-300,0)),room);
         }
         
         public override void ChangeStateBeforeSend()

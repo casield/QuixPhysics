@@ -55,21 +55,9 @@ namespace QuixPhysics
 
         private void LoadMeshes(){
      
-           
-          
-            LoadMesh("Stadiums/Isla/Montana1");
-            LoadMesh("Stadiums/Isla/Montana2");
-            LoadMesh("Stadiums/Isla/Ramp");
-            LoadMesh("Stadiums/Isla/Hole_Top");
-            LoadMesh("Stadiums/Isla/Hole_Bottom");
-            LoadMesh("Stadiums/Isla/MountainsGroup");
-            LoadMesh("Stadiums/Isla/Isla");
-            LoadMesh("Stadiums/Isla/Quixtam");
+            LoadMesh("Objects/Quixtam/Quixtam");
 
-            LoadMesh("Stadiums/Hexagons/Hexagon");
-            LoadMesh("Stadiums/Hexagons/Mountains");
             LoadMesh("Stadiums/Hexagons/Hextile");
-            LoadMesh("Stadiums/Hexagons/HextileBlue");
 
             QuixConsole.Log("Reload meshes");
 

@@ -13,8 +13,9 @@ namespace QuixPhysics
         {
         }
 
-        public void LoadItems(User user)
+        public void LoadUser(User user)
         {
+            user.player.SetPositionToStartPoint();
             user.gems.Update(30);
             //Create Helper
 
@@ -40,7 +41,7 @@ namespace QuixPhysics
 
             foreach (var item in arena.room.users)
             {
-                LoadItems(item.Value);
+                LoadUser(item.Value);
             }
         }
         public override void OnMapsLoaded()

@@ -13,7 +13,7 @@
   "tileWidth": 3870.0002,
   "tileHeight": 4590.0005,
   "maxTiles": 1.0,
-  "maxPolys": 28.0,
+  "maxPolys": 27.0,
   "tiles": [
     {
       "polyId": 32,
@@ -31,7 +31,7 @@
         },
         "Max": {
           "X": 3243.9592,
-          "Y": 780.0,
+          "Y": 910.0,
           "Z": 1045.6165
         }
       },
@@ -63,7 +63,7 @@
           "PolyType": 0,
           "Links": [
             {
-              "Reference": 37,
+              "Reference": 39,
               "Edge": 2,
               "Side": 255,
               "BMin": 0,
@@ -81,7 +81,7 @@
           "Neis": [
             0,
             0,
-            6,
+            8,
             0,
             0,
             0
@@ -94,7 +94,7 @@
           "PolyType": 0,
           "Links": [
             {
-              "Reference": 45,
+              "Reference": 40,
               "Edge": 3,
               "Side": 255,
               "BMin": 0,
@@ -102,18 +102,94 @@
             }
           ],
           "Verts": [
+            13,
+            14,
             15,
+            16,
+            0,
+            0
+          ],
+          "Neis": [
+            0,
+            0,
+            0,
+            9,
+            0,
+            0
+          ],
+          "Tag": null,
+          "VertCount": 4,
+          "Area": 255
+        },
+        {
+          "PolyType": 0,
+          "Links": [
+            {
+              "Reference": 38,
+              "Edge": 4,
+              "Side": 255,
+              "BMin": 0,
+              "BMax": 0
+            },
+            {
+              "Reference": 40,
+              "Edge": 2,
+              "Side": 255,
+              "BMin": 0,
+              "BMax": 0
+            }
+          ],
+          "Verts": [
+            23,
+            24,
+            25,
+            19,
+            20,
+            22
+          ],
+          "Neis": [
+            0,
+            0,
+            9,
+            0,
+            7,
+            0
+          ],
+          "Tag": null,
+          "VertCount": 6,
+          "Area": 255
+        },
+        {
+          "PolyType": 0,
+          "Links": [
+            {
+              "Reference": 40,
+              "Edge": 3,
+              "Side": 255,
+              "BMin": 0,
+              "BMax": 0
+            },
+            {
+              "Reference": 55,
+              "Edge": 1,
+              "Side": 255,
+              "BMin": 0,
+              "BMax": 0
+            }
+          ],
+          "Verts": [
             16,
             17,
             18,
+            19,
             0,
             0
           ],
           "Neis": [
             0,
+            24,
             0,
-            0,
-            14,
+            9,
             0,
             0
           ],
@@ -125,7 +201,7 @@
           "PolyType": 0,
           "Links": [
             {
-              "Reference": 44,
+              "Reference": 40,
               "Edge": 2,
               "Side": 255,
               "BMin": 0,
@@ -133,54 +209,61 @@
             }
           ],
           "Verts": [
-            24,
             25,
             26,
-            23,
+            27,
+            0,
             0,
             0
           ],
           "Neis": [
             0,
             0,
-            13,
+            9,
             0,
             0,
             0
           ],
           "Tag": null,
-          "VertCount": 4,
+          "VertCount": 3,
           "Area": 255
         },
         {
           "PolyType": 0,
           "Links": [
             {
-              "Reference": 45,
+              "Reference": 35,
               "Edge": 2,
+              "Side": 255,
+              "BMin": 0,
+              "BMax": 0
+            },
+            {
+              "Reference": 53,
+              "Edge": 0,
               "Side": 255,
               "BMin": 0,
               "BMax": 0
             }
           ],
           "Verts": [
-            19,
             20,
             21,
-            18,
+            22,
+            0,
             0,
             0
           ],
           "Neis": [
+            22,
             0,
-            0,
-            14,
+            4,
             0,
             0,
             0
           ],
           "Tag": null,
-          "VertCount": 4,
+          "VertCount": 3,
           "Area": 255
         },
         {
@@ -205,8 +288,8 @@
             7,
             6,
             11,
-            0,
-            0,
+            27,
+            28,
             0
           ],
           "Neis": [
@@ -218,69 +301,7 @@
             0
           ],
           "Tag": null,
-          "VertCount": 3,
-          "Area": 255
-        },
-        {
-          "PolyType": 0,
-          "Links": [
-            {
-              "Reference": 41,
-              "Edge": 2,
-              "Side": 255,
-              "BMin": 0,
-              "BMax": 0
-            }
-          ],
-          "Verts": [
-            13,
-            14,
-            15,
-            0,
-            0,
-            0
-          ],
-          "Neis": [
-            0,
-            0,
-            10,
-            0,
-            0,
-            0
-          ],
-          "Tag": null,
-          "VertCount": 3,
-          "Area": 255
-        },
-        {
-          "PolyType": 0,
-          "Links": [
-            {
-              "Reference": 44,
-              "Edge": 2,
-              "Side": 255,
-              "BMin": 0,
-              "BMax": 0
-            }
-          ],
-          "Verts": [
-            21,
-            22,
-            23,
-            0,
-            0,
-            0
-          ],
-          "Neis": [
-            0,
-            0,
-            13,
-            0,
-            0,
-            0
-          ],
-          "Tag": null,
-          "VertCount": 3,
+          "VertCount": 5,
           "Area": 255
         },
         {
@@ -289,223 +310,26 @@
             {
               "Reference": 41,
               "Edge": 5,
-              "Side": 255,
-              "BMin": 0,
-              "BMax": 0
-            },
-            {
-              "Reference": 37,
-              "Edge": 2,
-              "Side": 255,
-              "BMin": 0,
-              "BMax": 0
-            }
-          ],
-          "Verts": [
-            30,
-            31,
-            7,
-            11,
-            12,
-            13
-          ],
-          "Neis": [
-            0,
-            0,
-            6,
-            0,
-            0,
-            10
-          ],
-          "Tag": null,
-          "VertCount": 6,
-          "Area": 255
-        },
-        {
-          "PolyType": 0,
-          "Links": [
-            {
-              "Reference": 44,
-              "Edge": 5,
-              "Side": 255,
-              "BMin": 0,
-              "BMax": 0
-            },
-            {
-              "Reference": 45,
-              "Edge": 4,
-              "Side": 255,
-              "BMin": 0,
-              "BMax": 0
-            },
-            {
-              "Reference": 38,
-              "Edge": 3,
-              "Side": 255,
-              "BMin": 0,
-              "BMax": 0
-            },
-            {
-              "Reference": 40,
-              "Edge": 2,
-              "Side": 255,
-              "BMin": 0,
-              "BMax": 0
-            },
-            {
-              "Reference": 43,
-              "Edge": 1,
-              "Side": 255,
-              "BMin": 0,
-              "BMax": 0
-            },
-            {
-              "Reference": 42,
-              "Edge": 0,
-              "Side": 255,
-              "BMin": 0,
-              "BMax": 0
-            }
-          ],
-          "Verts": [
-            26,
-            28,
-            30,
-            13,
-            15,
-            21
-          ],
-          "Neis": [
-            11,
-            12,
-            9,
-            7,
-            14,
-            13
-          ],
-          "Tag": null,
-          "VertCount": 6,
-          "Area": 255
-        },
-        {
-          "PolyType": 0,
-          "Links": [
-            {
-              "Reference": 41,
-              "Edge": 2,
-              "Side": 255,
-              "BMin": 0,
-              "BMax": 0
-            }
-          ],
-          "Verts": [
-            26,
-            27,
-            28,
-            0,
-            0,
-            0
-          ],
-          "Neis": [
-            0,
-            0,
-            10,
-            0,
-            0,
-            0
-          ],
-          "Tag": null,
-          "VertCount": 3,
-          "Area": 255
-        },
-        {
-          "PolyType": 0,
-          "Links": [
-            {
-              "Reference": 41,
-              "Edge": 2,
-              "Side": 255,
-              "BMin": 0,
-              "BMax": 0
-            },
-            {
-              "Reference": 48,
-              "Edge": 0,
-              "Side": 255,
-              "BMin": 0,
-              "BMax": 0
-            }
-          ],
-          "Verts": [
-            28,
-            29,
-            30,
-            0,
-            0,
-            0
-          ],
-          "Neis": [
-            17,
-            0,
-            10,
-            0,
-            0,
-            0
-          ],
-          "Tag": null,
-          "VertCount": 3,
-          "Area": 255
-        },
-        {
-          "PolyType": 0,
-          "Links": [
-            {
-              "Reference": 41,
-              "Edge": 2,
-              "Side": 255,
-              "BMin": 0,
-              "BMax": 0
-            },
-            {
-              "Reference": 35,
-              "Edge": 1,
               "Side": 255,
               "BMin": 0,
               "BMax": 0
             },
             {
               "Reference": 39,
-              "Edge": 0,
+              "Edge": 4,
               "Side": 255,
               "BMin": 0,
               "BMax": 0
-            }
-          ],
-          "Verts": [
-            21,
-            23,
-            26,
-            0,
-            0,
-            0
-          ],
-          "Neis": [
-            8,
-            4,
-            10,
-            0,
-            0,
-            0
-          ],
-          "Tag": null,
-          "VertCount": 3,
-          "Area": 255
-        },
-        {
-          "PolyType": 0,
-          "Links": [
+            },
             {
-              "Reference": 41,
+              "Reference": 37,
+              "Edge": 3,
+              "Side": 255,
+              "BMin": 0,
+              "BMax": 0
+            },
+            {
+              "Reference": 35,
               "Edge": 2,
               "Side": 255,
               "BMin": 0,
@@ -527,17 +351,48 @@
             }
           ],
           "Verts": [
-            15,
-            18,
-            21,
+            13,
+            16,
+            19,
+            25,
+            27,
+            11
+          ],
+          "Neis": [
+            3,
+            5,
+            4,
+            6,
+            8,
+            10
+          ],
+          "Tag": null,
+          "VertCount": 6,
+          "Area": 255
+        },
+        {
+          "PolyType": 0,
+          "Links": [
+            {
+              "Reference": 40,
+              "Edge": 2,
+              "Side": 255,
+              "BMin": 0,
+              "BMax": 0
+            }
+          ],
+          "Verts": [
+            11,
+            12,
+            13,
             0,
             0,
             0
           ],
           "Neis": [
-            3,
-            5,
-            10,
+            0,
+            0,
+            9,
             0,
             0,
             0
@@ -550,12 +405,12 @@
           "PolyType": 0,
           "Links": [],
           "Verts": [
+            30,
+            31,
+            32,
             33,
             34,
-            35,
-            36,
-            37,
-            32
+            29
           ],
           "Neis": [
             0,
@@ -573,12 +428,12 @@
           "PolyType": 0,
           "Links": [],
           "Verts": [
+            36,
+            37,
+            38,
             39,
             40,
-            41,
-            42,
-            43,
-            38
+            35
           ],
           "Neis": [
             0,
@@ -594,33 +449,25 @@
         },
         {
           "PolyType": 0,
-          "Links": [
-            {
-              "Reference": 43,
-              "Edge": 4,
-              "Side": 255,
-              "BMin": 0,
-              "BMax": 0
-            }
-          ],
+          "Links": [],
           "Verts": [
-            28,
+            42,
+            43,
             44,
             45,
             46,
-            29,
-            0
+            41
           ],
           "Neis": [
             0,
             0,
             0,
             0,
-            12,
+            0,
             0
           ],
           "Tag": null,
-          "VertCount": 5,
+          "VertCount": 6,
           "Area": 255
         },
         {
@@ -765,12 +612,12 @@
           "PolyType": 0,
           "Links": [],
           "Verts": [
-            87,
             88,
             83,
             84,
             85,
-            86
+            86,
+            87
           ],
           "Neis": [
             0,
@@ -788,12 +635,12 @@
           "PolyType": 0,
           "Links": [],
           "Verts": [
+            91,
+            92,
             93,
             94,
             89,
-            90,
-            91,
-            92
+            90
           ],
           "Neis": [
             0,
@@ -809,21 +656,105 @@
         },
         {
           "PolyType": 0,
-          "Links": [],
+          "Links": [
+            {
+              "Reference": 56,
+              "Edge": 4,
+              "Side": 255,
+              "BMin": 0,
+              "BMax": 0
+            },
+            {
+              "Reference": 38,
+              "Edge": 2,
+              "Side": 255,
+              "BMin": 0,
+              "BMax": 0
+            }
+          ],
           "Verts": [
             96,
             97,
-            98,
-            99,
-            100,
-            95
+            21,
+            20,
+            95,
+            0
           ],
           "Neis": [
             0,
             0,
+            7,
+            0,
+            25,
+            0
+          ],
+          "Tag": null,
+          "VertCount": 5,
+          "Area": 255
+        },
+        {
+          "PolyType": 0,
+          "Links": [
+            {
+              "Reference": 55,
+              "Edge": 2,
+              "Side": 255,
+              "BMin": 0,
+              "BMax": 0
+            }
+          ],
+          "Verts": [
+            100,
+            101,
+            102,
+            0,
+            0,
+            0
+          ],
+          "Neis": [
+            0,
+            0,
+            24,
+            0,
+            0,
+            0
+          ],
+          "Tag": null,
+          "VertCount": 3,
+          "Area": 255
+        },
+        {
+          "PolyType": 0,
+          "Links": [
+            {
+              "Reference": 54,
+              "Edge": 4,
+              "Side": 255,
+              "BMin": 0,
+              "BMax": 0
+            },
+            {
+              "Reference": 36,
+              "Edge": 0,
+              "Side": 255,
+              "BMin": 0,
+              "BMax": 0
+            }
+          ],
+          "Verts": [
+            18,
+            17,
+            98,
+            99,
+            100,
+            102
+          ],
+          "Neis": [
+            5,
             0,
             0,
             0,
+            23,
             0
           ],
           "Tag": null,
@@ -832,17 +763,25 @@
         },
         {
           "PolyType": 0,
-          "Links": [],
+          "Links": [
+            {
+              "Reference": 53,
+              "Edge": 0,
+              "Side": 255,
+              "BMin": 0,
+              "BMax": 0
+            }
+          ],
           "Verts": [
-            101,
-            102,
+            96,
+            95,
             103,
             104,
             105,
             106
           ],
           "Neis": [
-            0,
+            22,
             0,
             0,
             0,
@@ -863,6 +802,29 @@
             108,
             109,
             110
+          ],
+          "Neis": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "Tag": null,
+          "VertCount": 6,
+          "Area": 255
+        },
+        {
+          "PolyType": 0,
+          "Links": [],
+          "Verts": [
+            117,
+            118,
+            113,
+            114,
+            115,
+            116
           ],
           "Neis": [
             0,
@@ -956,62 +918,42 @@
         {
           "X": -266.041,
           "Y": 650.0,
-          "Z": -454.3838
+          "Z": -514.3838
         },
         {
-          "X": -536.041,
-          "Y": 650.0,
-          "Z": 25.61621
-        },
-        {
-          "X": -266.041,
-          "Y": 650.0,
-          "Z": 475.6162
-        },
-        {
-          "X": 303.95905,
-          "Y": 650.0,
-          "Z": 475.6162
-        },
-        {
-          "X": 603.9591,
-          "Y": 650.0,
-          "Z": 985.61646
-        },
-        {
-          "X": 1143.9591,
-          "Y": 650.0,
-          "Z": 985.61646
-        },
-        {
-          "X": 1413.9591,
-          "Y": 650.0,
-          "Z": 475.6162
-        },
-        {
-          "X": 2013.9592,
-          "Y": 650.0,
-          "Z": 475.6162
-        },
-        {
-          "X": 2283.9592,
-          "Y": 650.0,
-          "Z": -34.38379
-        },
-        {
-          "X": 2883.9592,
-          "Y": 650.0,
-          "Z": -34.38379
-        },
-        {
-          "X": 3153.9592,
+          "X": 333.95905,
           "Y": 650.0,
           "Z": -514.3838
         },
         {
+          "X": 603.9591,
+          "Y": 650.0,
+          "Z": -4.383789
+        },
+        {
+          "X": 1143.9591,
+          "Y": 650.0,
+          "Z": -4.383789
+        },
+        {
+          "X": 1413.9591,
+          "Y": 650.0,
+          "Z": -514.3838
+        },
+        {
+          "X": 2013.9592,
+          "Y": 650.0,
+          "Z": -514.3838
+        },
+        {
+          "X": 2883.9592,
+          "Y": 650.0,
+          "Z": -934.3838
+        },
+        {
           "X": 2853.9592,
           "Y": 650.0,
-          "Z": -964.3838
+          "Z": -1024.3838
         },
         {
           "X": 3123.9592,
@@ -1019,9 +961,14 @@
           "Z": -1564.3839
         },
         {
-          "X": 2853.9592,
+          "X": 2883.9592,
           "Y": 650.0,
-          "Z": -2014.3839
+          "Z": -1984.3839
+        },
+        {
+          "X": 2283.9592,
+          "Y": 650.0,
+          "Z": -1984.3839
         },
         {
           "X": 2013.9592,
@@ -1070,47 +1017,62 @@
         },
         {
           "X": 2073.9592,
-          "Y": -3E-45,
+          "Y": 260.0,
           "Z": -2554.384
         },
         {
-          "X": 2343.9592,
-          "Y": -3E-45,
-          "Z": -2074.3838
+          "X": 2313.9592,
+          "Y": 260.0,
+          "Z": -2044.3839
         },
         {
-          "X": 2913.9592,
-          "Y": -3E-45,
-          "Z": -2074.3838
+          "X": 2883.9592,
+          "Y": 260.0,
+          "Z": -2044.3839
         },
         {
           "X": 3123.9592,
-          "Y": -3E-45,
+          "Y": 260.0,
           "Z": -2434.3838
         },
         {
           "X": 2883.9592,
-          "Y": -3E-45,
+          "Y": 260.0,
           "Z": -2974.384
         },
         {
           "X": 2313.9592,
-          "Y": -3E-45,
+          "Y": 260.0,
           "Z": -2974.384
         },
         {
+          "X": 2013.9592,
+          "Y": 780.0,
+          "Z": -2494.3838
+        },
+        {
+          "X": 2283.9592,
+          "Y": 780.0,
+          "Z": -2014.3839
+        },
+        {
+          "X": 2853.9592,
+          "Y": 780.0,
+          "Z": -2014.3839
+        },
+        {
           "X": 3123.9592,
-          "Y": 650.0,
+          "Y": 780.0,
           "Z": -2434.3838
         },
         {
           "X": 2883.9592,
-          "Y": 650.0,
+          "Y": 780.0,
           "Z": -2974.384
         },
         {
           "X": 2313.9592,
-          "Y": 650.0,
+          "Y": 780.0,
           "Z": -2974.384
         },
         {
@@ -1239,14 +1201,14 @@
           "Z": -1024.3838
         },
         {
-          "X": -296.041,
+          "X": -266.041,
           "Y": -3E-45,
-          "Z": -574.3838
+          "Z": -514.3838
         },
         {
-          "X": 273.95905,
+          "X": 243.95905,
           "Y": -3E-45,
-          "Z": -574.3838
+          "Z": -514.3838
         },
         {
           "X": 483.9591,
@@ -1269,14 +1231,14 @@
           "Z": -1024.3838
         },
         {
-          "X": 1473.9592,
+          "X": 1503.9592,
           "Y": -3E-45,
-          "Z": -574.3838
+          "Z": -514.3838
         },
         {
-          "X": 2013.9592,
+          "X": 1953.9592,
           "Y": -3E-45,
-          "Z": -574.3838
+          "Z": -514.3838
         },
         {
           "X": 2223.9592,
@@ -1294,24 +1256,24 @@
           "Z": -1444.3838
         },
         {
-          "X": 363.95905,
+          "X": 333.95905,
           "Y": -3E-45,
-          "Z": -514.3838
+          "Z": -484.3838
         },
         {
-          "X": 603.9591,
+          "X": 573.9591,
           "Y": -3E-45,
           "Z": -64.38379
         },
         {
-          "X": 1113.9591,
+          "X": 1173.9591,
           "Y": -3E-45,
           "Z": -64.38379
         },
         {
           "X": 1383.9591,
           "Y": -3E-45,
-          "Z": -484.3838
+          "Z": -424.3838
         },
         {
           "X": 1113.9591,
@@ -1324,19 +1286,19 @@
           "Z": -934.3838
         },
         {
-          "X": 2103.9592,
+          "X": 2073.9592,
           "Y": -3E-45,
-          "Z": -544.3838
+          "Z": -484.3838
         },
         {
-          "X": 2343.9592,
+          "X": 2283.9592,
           "Y": -3E-45,
-          "Z": -34.38379
+          "Z": -64.38379
         },
         {
           "X": 2883.9592,
           "Y": -3E-45,
-          "Z": -34.38379
+          "Z": -64.38379
         },
         {
           "X": 3153.9592,
@@ -1354,69 +1316,69 @@
           "Z": -934.3838
         },
         {
-          "X": -536.041,
-          "Y": -3E-45,
-          "Z": -34.38379
+          "X": 2343.9592,
+          "Y": 650.0,
+          "Z": -4.383789
         },
         {
-          "X": -266.041,
-          "Y": -3E-45,
+          "X": 2853.9592,
+          "Y": 650.0,
+          "Z": -4.383789
+        },
+        {
+          "X": 3153.9592,
+          "Y": 650.0,
+          "Z": -484.3838
+        },
+        {
+          "X": 333.95905,
+          "Y": 650.0,
+          "Z": 445.6162
+        },
+        {
+          "X": 603.9591,
+          "Y": 650.0,
+          "Z": 985.61646
+        },
+        {
+          "X": 1143.9591,
+          "Y": 650.0,
+          "Z": 985.61646
+        },
+        {
+          "X": 1323.9591,
+          "Y": 650.0,
+          "Z": 685.61646
+        },
+        {
+          "X": 1413.9591,
+          "Y": 650.0,
           "Z": 475.6162
         },
         {
-          "X": 243.95905,
-          "Y": -3E-45,
-          "Z": 475.6162
+          "X": 2073.9592,
+          "Y": 650.0,
+          "Z": 445.6162
         },
         {
-          "X": 483.9591,
-          "Y": -3E-45,
-          "Z": 55.61621
+          "X": 2313.9592,
+          "Y": 650.0,
+          "Z": 985.61646
         },
         {
-          "X": 243.95905,
-          "Y": -3E-45,
-          "Z": -454.3838
+          "X": 2853.9592,
+          "Y": 650.0,
+          "Z": 985.61646
         },
         {
-          "X": -296.041,
-          "Y": -3E-45,
-          "Z": -454.3838
+          "X": 3123.9592,
+          "Y": 650.0,
+          "Z": 565.61646
         },
         {
-          "X": 1233.9591,
+          "X": 333.95905,
           "Y": -3E-45,
-          "Z": -34.38379
-        },
-        {
-          "X": 1503.9592,
-          "Y": -3E-45,
-          "Z": 475.6162
-        },
-        {
-          "X": 2013.9592,
-          "Y": -3E-45,
-          "Z": 475.6162
-        },
-        {
-          "X": 2253.9592,
-          "Y": -3E-45,
-          "Z": 55.61621
-        },
-        {
-          "X": 1983.9592,
-          "Y": -3E-45,
-          "Z": -454.3838
-        },
-        {
-          "X": 1473.9592,
-          "Y": -3E-45,
-          "Z": -454.3838
-        },
-        {
-          "X": 363.95905,
-          "Y": -3E-45,
-          "Z": 475.6162
+          "Z": 445.6162
         },
         {
           "X": 603.9591,
@@ -1429,17 +1391,47 @@
           "Z": 985.61646
         },
         {
-          "X": 1383.9591,
+          "X": 1413.9591,
           "Y": -3E-45,
-          "Z": 565.61646
+          "Z": 505.6162
         },
         {
-          "X": 1113.9591,
+          "X": 1173.9591,
           "Y": -3E-45,
           "Z": 55.61621
         },
         {
-          "X": 603.9591,
+          "X": 573.9591,
+          "Y": -3E-45,
+          "Z": 55.61621
+        },
+        {
+          "X": 2073.9592,
+          "Y": -3E-45,
+          "Z": 445.6162
+        },
+        {
+          "X": 2313.9592,
+          "Y": -3E-45,
+          "Z": 985.61646
+        },
+        {
+          "X": 2853.9592,
+          "Y": -3E-45,
+          "Z": 985.61646
+        },
+        {
+          "X": 3123.9592,
+          "Y": -3E-45,
+          "Z": 565.61646
+        },
+        {
+          "X": 2883.9592,
+          "Y": -3E-45,
+          "Z": 55.61621
+        },
+        {
+          "X": 2313.9592,
           "Y": -3E-45,
           "Z": 55.61621
         }
@@ -1467,244 +1459,148 @@
           "VertexIndex": 0,
           "VertexCount": 0,
           "TriangleIndex": 9,
-          "TriangleCount": 2
-        },
-        {
-          "VertexIndex": 0,
-          "VertexCount": 0,
-          "TriangleIndex": 11,
-          "TriangleCount": 2
+          "TriangleCount": 4
         },
         {
           "VertexIndex": 0,
           "VertexCount": 0,
           "TriangleIndex": 13,
+          "TriangleCount": 2
+        },
+        {
+          "VertexIndex": 0,
+          "VertexCount": 0,
+          "TriangleIndex": 15,
           "TriangleCount": 1
         },
         {
           "VertexIndex": 0,
-          "VertexCount": 18,
-          "TriangleIndex": 14,
-          "TriangleCount": 37
-        },
-        {
-          "VertexIndex": 18,
           "VertexCount": 0,
-          "TriangleIndex": 51,
+          "TriangleIndex": 16,
           "TriangleCount": 1
         },
         {
-          "VertexIndex": 18,
-          "VertexCount": 48,
-          "TriangleIndex": 52,
-          "TriangleCount": 100
-        },
-        {
-          "VertexIndex": 66,
+          "VertexIndex": 0,
           "VertexCount": 0,
-          "TriangleIndex": 152,
-          "TriangleCount": 4
-        },
-        {
-          "VertexIndex": 66,
-          "VertexCount": 0,
-          "TriangleIndex": 156,
-          "TriangleCount": 1
-        },
-        {
-          "VertexIndex": 66,
-          "VertexCount": 0,
-          "TriangleIndex": 157,
-          "TriangleCount": 1
-        },
-        {
-          "VertexIndex": 66,
-          "VertexCount": 0,
-          "TriangleIndex": 158,
-          "TriangleCount": 1
-        },
-        {
-          "VertexIndex": 66,
-          "VertexCount": 0,
-          "TriangleIndex": 159,
-          "TriangleCount": 1
-        },
-        {
-          "VertexIndex": 66,
-          "VertexCount": 0,
-          "TriangleIndex": 160,
-          "TriangleCount": 4
-        },
-        {
-          "VertexIndex": 66,
-          "VertexCount": 0,
-          "TriangleIndex": 164,
-          "TriangleCount": 4
-        },
-        {
-          "VertexIndex": 66,
-          "VertexCount": 0,
-          "TriangleIndex": 168,
+          "TriangleIndex": 17,
           "TriangleCount": 3
         },
         {
-          "VertexIndex": 66,
+          "VertexIndex": 0,
           "VertexCount": 0,
-          "TriangleIndex": 171,
+          "TriangleIndex": 20,
           "TriangleCount": 4
         },
         {
-          "VertexIndex": 66,
+          "VertexIndex": 0,
+          "VertexCount": 48,
+          "TriangleIndex": 24,
+          "TriangleCount": 97
+        },
+        {
+          "VertexIndex": 48,
           "VertexCount": 0,
-          "TriangleIndex": 175,
+          "TriangleIndex": 121,
           "TriangleCount": 4
         },
         {
-          "VertexIndex": 66,
+          "VertexIndex": 48,
           "VertexCount": 0,
-          "TriangleIndex": 179,
+          "TriangleIndex": 125,
           "TriangleCount": 4
         },
         {
-          "VertexIndex": 66,
-          "VertexCount": 0,
-          "TriangleIndex": 183,
-          "TriangleCount": 4
+          "VertexIndex": 48,
+          "VertexCount": 27,
+          "TriangleIndex": 129,
+          "TriangleCount": 58
         },
         {
-          "VertexIndex": 66,
+          "VertexIndex": 75,
           "VertexCount": 0,
           "TriangleIndex": 187,
           "TriangleCount": 4
         },
         {
-          "VertexIndex": 66,
+          "VertexIndex": 75,
           "VertexCount": 0,
           "TriangleIndex": 191,
           "TriangleCount": 4
         },
         {
-          "VertexIndex": 66,
+          "VertexIndex": 75,
           "VertexCount": 0,
           "TriangleIndex": 195,
           "TriangleCount": 4
         },
         {
-          "VertexIndex": 66,
+          "VertexIndex": 75,
           "VertexCount": 0,
           "TriangleIndex": 199,
           "TriangleCount": 4
         },
         {
-          "VertexIndex": 66,
+          "VertexIndex": 75,
           "VertexCount": 0,
           "TriangleIndex": 203,
           "TriangleCount": 4
         },
         {
-          "VertexIndex": 66,
+          "VertexIndex": 75,
           "VertexCount": 0,
           "TriangleIndex": 207,
           "TriangleCount": 4
         },
         {
-          "VertexIndex": 66,
+          "VertexIndex": 75,
           "VertexCount": 0,
           "TriangleIndex": 211,
+          "TriangleCount": 4
+        },
+        {
+          "VertexIndex": 75,
+          "VertexCount": 0,
+          "TriangleIndex": 215,
+          "TriangleCount": 4
+        },
+        {
+          "VertexIndex": 75,
+          "VertexCount": 0,
+          "TriangleIndex": 219,
+          "TriangleCount": 3
+        },
+        {
+          "VertexIndex": 75,
+          "VertexCount": 0,
+          "TriangleIndex": 222,
+          "TriangleCount": 1
+        },
+        {
+          "VertexIndex": 75,
+          "VertexCount": 0,
+          "TriangleIndex": 223,
+          "TriangleCount": 4
+        },
+        {
+          "VertexIndex": 75,
+          "VertexCount": 0,
+          "TriangleIndex": 227,
+          "TriangleCount": 4
+        },
+        {
+          "VertexIndex": 75,
+          "VertexCount": 0,
+          "TriangleIndex": 231,
+          "TriangleCount": 4
+        },
+        {
+          "VertexIndex": 75,
+          "VertexCount": 0,
+          "TriangleIndex": 235,
           "TriangleCount": 4
         }
       ],
       "detailVerts": [
-        {
-          "X": -335.7184,
-          "Y": 780.0,
-          "Z": -585.9966
-        },
-        {
-          "X": -327.00873,
-          "Y": 0.0,
-          "Z": -569.54517
-        },
-        {
-          "X": -318.29904,
-          "Y": 780.0,
-          "Z": -553.0935
-        },
-        {
-          "X": -293.91196,
-          "Y": 780.0,
-          "Z": -507.0288
-        },
-        {
-          "X": -296.69907,
-          "Y": 0.0,
-          "Z": -512.29346
-        },
-        {
-          "X": -299.48615,
-          "Y": 780.0,
-          "Z": -517.55786
-        },
-        {
-          "X": -324.57004,
-          "Y": 780.0,
-          "Z": -564.9385
-        },
-        {
-          "X": -327.35712,
-          "Y": 0.0,
-          "Z": -570.2031
-        },
-        {
-          "X": -330.14423,
-          "Y": 780.0,
-          "Z": -575.4675
-        },
-        {
-          "X": -331.3636,
-          "Y": 780.0,
-          "Z": -577.77075
-        },
-        {
-          "X": -329.18616,
-          "Y": 0.0,
-          "Z": -573.65796
-        },
-        {
-          "X": -324.8313,
-          "Y": 780.0,
-          "Z": -565.4324
-        },
-        {
-          "X": -299.3313,
-          "Y": 780.0,
-          "Z": -517.2654
-        },
-        {
-          "X": -296.62164,
-          "Y": 0.0,
-          "Z": -512.1472
-        },
-        {
-          "X": -327.00873,
-          "Y": 0.0,
-          "Z": -569.54517
-        },
-        {
-          "X": -299.3841,
-          "Y": 780.0,
-          "Z": -517.36523
-        },
-        {
-          "X": -324.24628,
-          "Y": 780.0,
-          "Z": -564.32715
-        },
-        {
-          "X": -324.24628,
-          "Y": 780.0,
-          "Z": -564.32715
-        },
         {
           "X": -396.68616,
           "Y": 780.0,
@@ -1944,6 +1840,141 @@
           "X": -356.1754,
           "Y": 780.0,
           "Z": -1614.6377
+        },
+        {
+          "X": 2081.7012,
+          "Y": 910.0,
+          "Z": -2602.771
+        },
+        {
+          "X": 2072.0237,
+          "Y": 0.0,
+          "Z": -2587.287
+        },
+        {
+          "X": 2062.3464,
+          "Y": 910.0,
+          "Z": -2571.8032
+        },
+        {
+          "X": 2052.669,
+          "Y": 910.0,
+          "Z": -2556.3193
+        },
+        {
+          "X": 2042.9915,
+          "Y": 0.0,
+          "Z": -2540.8354
+        },
+        {
+          "X": 2033.314,
+          "Y": 0.0,
+          "Z": -2525.3516
+        },
+        {
+          "X": 2023.6367,
+          "Y": 910.0,
+          "Z": -2509.8677
+        },
+        {
+          "X": 2032.4343,
+          "Y": 910.0,
+          "Z": -2523.944
+        },
+        {
+          "X": 2035.5134,
+          "Y": 0.0,
+          "Z": -2528.8706
+        },
+        {
+          "X": 2041.6719,
+          "Y": 0.0,
+          "Z": -2538.724
+        },
+        {
+          "X": 2044.751,
+          "Y": 910.0,
+          "Z": -2543.651
+        },
+        {
+          "X": 2069.3845,
+          "Y": 910.0,
+          "Z": -2583.0642
+        },
+        {
+          "X": 2072.4636,
+          "Y": 0.0,
+          "Z": -2587.991
+        },
+        {
+          "X": 2075.5427,
+          "Y": 910.0,
+          "Z": -2592.9175
+        },
+        {
+          "X": 2074.443,
+          "Y": 910.0,
+          "Z": -2591.1582
+        },
+        {
+          "X": 2069.6045,
+          "Y": 910.0,
+          "Z": -2583.4163
+        },
+        {
+          "X": 2045.4109,
+          "Y": 910.0,
+          "Z": -2544.7065
+        },
+        {
+          "X": 2030.8945,
+          "Y": 910.0,
+          "Z": -2521.4807
+        },
+        {
+          "X": 2072.024,
+          "Y": 0.0,
+          "Z": -2587.287
+        },
+        {
+          "X": 2042.5076,
+          "Y": 0.0,
+          "Z": -2540.0613
+        },
+        {
+          "X": 2033.7979,
+          "Y": 0.0,
+          "Z": -2526.126
+        },
+        {
+          "X": 2034.0583,
+          "Y": 0.0,
+          "Z": -2526.5427
+        },
+        {
+          "X": 2043.5498,
+          "Y": 0.0,
+          "Z": -2541.729
+        },
+        {
+          "X": 2046.7136,
+          "Y": 910.0,
+          "Z": -2546.791
+        },
+        {
+          "X": 2068.86,
+          "Y": 910.0,
+          "Z": -2582.225
+        },
+        {
+          "X": 2069.0723,
+          "Y": 910.0,
+          "Z": -2582.5645
+        },
+        {
+          "X": 2045.4592,
+          "Y": 910.0,
+          "Z": -2544.784
         }
       ],
       "detailTris": [
@@ -2002,15 +2033,27 @@
           "Flags": 5
         },
         {
-          "VertexHash0": 3,
+          "VertexHash0": 5,
           "VertexHash1": 0,
-          "VertexHash2": 2,
+          "VertexHash2": 4,
           "Flags": 17
         },
         {
           "VertexHash0": 0,
           "VertexHash1": 1,
-          "VertexHash2": 2,
+          "VertexHash2": 4,
+          "Flags": 1
+        },
+        {
+          "VertexHash0": 1,
+          "VertexHash1": 2,
+          "VertexHash2": 4,
+          "Flags": 1
+        },
+        {
+          "VertexHash0": 2,
+          "VertexHash1": 3,
+          "VertexHash2": 4,
           "Flags": 5
         },
         {
@@ -2034,272 +2077,56 @@
         {
           "VertexHash0": 2,
           "VertexHash1": 0,
-          "VertexHash2": 19,
-          "Flags": 17
+          "VertexHash2": 1,
+          "Flags": 21
         },
         {
-          "VertexHash0": 0,
-          "VertexHash1": 18,
-          "VertexHash2": 19,
-          "Flags": 4
-        },
-        {
-          "VertexHash0": 0,
-          "VertexHash1": 20,
-          "VertexHash2": 18,
-          "Flags": 4
-        },
-        {
-          "VertexHash0": 0,
-          "VertexHash1": 17,
-          "VertexHash2": 20,
-          "Flags": 4
-        },
-        {
-          "VertexHash0": 0,
-          "VertexHash1": 19,
-          "VertexHash2": 17,
-          "Flags": 4
-        },
-        {
-          "VertexHash0": 0,
-          "VertexHash1": 18,
-          "VertexHash2": 19,
-          "Flags": 4
-        },
-        {
-          "VertexHash0": 0,
-          "VertexHash1": 16,
-          "VertexHash2": 18,
-          "Flags": 4
-        },
-        {
-          "VertexHash0": 0,
-          "VertexHash1": 15,
-          "VertexHash2": 16,
-          "Flags": 4
-        },
-        {
-          "VertexHash0": 0,
-          "VertexHash1": 14,
-          "VertexHash2": 15,
-          "Flags": 4
-        },
-        {
-          "VertexHash0": 0,
-          "VertexHash1": 17,
-          "VertexHash2": 14,
-          "Flags": 4
-        },
-        {
-          "VertexHash0": 0,
-          "VertexHash1": 13,
-          "VertexHash2": 17,
-          "Flags": 4
-        },
-        {
-          "VertexHash0": 0,
-          "VertexHash1": 12,
-          "VertexHash2": 13,
-          "Flags": 4
-        },
-        {
-          "VertexHash0": 0,
-          "VertexHash1": 11,
-          "VertexHash2": 12,
-          "Flags": 4
-        },
-        {
-          "VertexHash0": 0,
-          "VertexHash1": 10,
-          "VertexHash2": 11,
-          "Flags": 4
-        },
-        {
-          "VertexHash0": 0,
-          "VertexHash1": 9,
-          "VertexHash2": 10,
-          "Flags": 4
-        },
-        {
-          "VertexHash0": 0,
-          "VertexHash1": 8,
-          "VertexHash2": 9,
-          "Flags": 4
-        },
-        {
-          "VertexHash0": 0,
-          "VertexHash1": 7,
-          "VertexHash2": 8,
-          "Flags": 4
-        },
-        {
-          "VertexHash0": 0,
-          "VertexHash1": 6,
-          "VertexHash2": 7,
-          "Flags": 4
-        },
-        {
-          "VertexHash0": 0,
-          "VertexHash1": 16,
-          "VertexHash2": 6,
-          "Flags": 4
-        },
-        {
-          "VertexHash0": 0,
-          "VertexHash1": 15,
-          "VertexHash2": 16,
-          "Flags": 4
-        },
-        {
-          "VertexHash0": 0,
-          "VertexHash1": 5,
-          "VertexHash2": 15,
-          "Flags": 4
-        },
-        {
-          "VertexHash0": 0,
-          "VertexHash1": 14,
-          "VertexHash2": 5,
-          "Flags": 4
-        },
-        {
-          "VertexHash0": 0,
-          "VertexHash1": 4,
-          "VertexHash2": 14,
-          "Flags": 4
-        },
-        {
-          "VertexHash0": 0,
-          "VertexHash1": 13,
-          "VertexHash2": 4,
-          "Flags": 4
-        },
-        {
-          "VertexHash0": 0,
-          "VertexHash1": 12,
-          "VertexHash2": 13,
-          "Flags": 4
-        },
-        {
-          "VertexHash0": 0,
-          "VertexHash1": 3,
-          "VertexHash2": 12,
-          "Flags": 4
-        },
-        {
-          "VertexHash0": 0,
-          "VertexHash1": 11,
+          "VertexHash0": 4,
+          "VertexHash1": 0,
           "VertexHash2": 3,
-          "Flags": 4
-        },
-        {
-          "VertexHash0": 0,
-          "VertexHash1": 10,
-          "VertexHash2": 11,
-          "Flags": 4
-        },
-        {
-          "VertexHash0": 0,
-          "VertexHash1": 9,
-          "VertexHash2": 10,
-          "Flags": 4
-        },
-        {
-          "VertexHash0": 0,
-          "VertexHash1": 8,
-          "VertexHash2": 9,
-          "Flags": 4
-        },
-        {
-          "VertexHash0": 0,
-          "VertexHash1": 7,
-          "VertexHash2": 8,
-          "Flags": 4
-        },
-        {
-          "VertexHash0": 0,
-          "VertexHash1": 6,
-          "VertexHash2": 7,
-          "Flags": 4
+          "Flags": 17
         },
         {
           "VertexHash0": 0,
           "VertexHash1": 2,
-          "VertexHash2": 6,
-          "Flags": 5
-        },
-        {
-          "VertexHash0": 0,
-          "VertexHash1": 5,
-          "VertexHash2": 2,
-          "Flags": 20
-        },
-        {
-          "VertexHash0": 0,
-          "VertexHash1": 4,
-          "VertexHash2": 5,
-          "Flags": 4
-        },
-        {
-          "VertexHash0": 0,
-          "VertexHash1": 3,
-          "VertexHash2": 4,
+          "VertexHash2": 3,
           "Flags": 4
         },
         {
           "VertexHash0": 0,
           "VertexHash1": 1,
-          "VertexHash2": 3,
+          "VertexHash2": 2,
+          "Flags": 5
+        },
+        {
+          "VertexHash0": 5,
+          "VertexHash1": 0,
+          "VertexHash2": 4,
+          "Flags": 17
+        },
+        {
+          "VertexHash0": 0,
+          "VertexHash1": 1,
+          "VertexHash2": 4,
+          "Flags": 1
+        },
+        {
+          "VertexHash0": 1,
+          "VertexHash1": 2,
+          "VertexHash2": 4,
+          "Flags": 1
+        },
+        {
+          "VertexHash0": 2,
+          "VertexHash1": 3,
+          "VertexHash2": 4,
           "Flags": 5
         },
         {
           "VertexHash0": 2,
           "VertexHash1": 0,
-          "VertexHash2": 1,
-          "Flags": 21
-        },
-        {
-          "VertexHash0": 5,
-          "VertexHash1": 0,
-          "VertexHash2": 52,
+          "VertexHash2": 49,
           "Flags": 17
-        },
-        {
-          "VertexHash0": 0,
-          "VertexHash1": 51,
-          "VertexHash2": 52,
-          "Flags": 4
-        },
-        {
-          "VertexHash0": 0,
-          "VertexHash1": 53,
-          "VertexHash2": 51,
-          "Flags": 4
-        },
-        {
-          "VertexHash0": 0,
-          "VertexHash1": 50,
-          "VertexHash2": 53,
-          "Flags": 4
-        },
-        {
-          "VertexHash0": 0,
-          "VertexHash1": 52,
-          "VertexHash2": 50,
-          "Flags": 4
-        },
-        {
-          "VertexHash0": 0,
-          "VertexHash1": 51,
-          "VertexHash2": 52,
-          "Flags": 4
-        },
-        {
-          "VertexHash0": 0,
-          "VertexHash1": 49,
-          "VertexHash2": 51,
-          "Flags": 4
         },
         {
           "VertexHash0": 0,
@@ -2321,8 +2148,20 @@
         },
         {
           "VertexHash0": 0,
-          "VertexHash1": 46,
+          "VertexHash1": 49,
           "VertexHash2": 47,
+          "Flags": 4
+        },
+        {
+          "VertexHash0": 0,
+          "VertexHash1": 48,
+          "VertexHash2": 49,
+          "Flags": 4
+        },
+        {
+          "VertexHash0": 0,
+          "VertexHash1": 46,
+          "VertexHash2": 48,
           "Flags": 4
         },
         {
@@ -2333,8 +2172,14 @@
         },
         {
           "VertexHash0": 0,
-          "VertexHash1": 44,
+          "VertexHash1": 47,
           "VertexHash2": 45,
+          "Flags": 4
+        },
+        {
+          "VertexHash0": 0,
+          "VertexHash1": 44,
+          "VertexHash2": 47,
           "Flags": 4
         },
         {
@@ -2363,32 +2208,14 @@
         },
         {
           "VertexHash0": 0,
-          "VertexHash1": 49,
+          "VertexHash1": 39,
           "VertexHash2": 40,
           "Flags": 4
         },
         {
           "VertexHash0": 0,
-          "VertexHash1": 48,
-          "VertexHash2": 49,
-          "Flags": 4
-        },
-        {
-          "VertexHash0": 0,
-          "VertexHash1": 39,
-          "VertexHash2": 48,
-          "Flags": 4
-        },
-        {
-          "VertexHash0": 0,
-          "VertexHash1": 47,
-          "VertexHash2": 39,
-          "Flags": 4
-        },
-        {
-          "VertexHash0": 0,
           "VertexHash1": 38,
-          "VertexHash2": 47,
+          "VertexHash2": 39,
           "Flags": 4
         },
         {
@@ -2411,14 +2238,32 @@
         },
         {
           "VertexHash0": 0,
-          "VertexHash1": 44,
+          "VertexHash1": 36,
           "VertexHash2": 45,
           "Flags": 4
         },
         {
           "VertexHash0": 0,
-          "VertexHash1": 43,
+          "VertexHash1": 44,
+          "VertexHash2": 36,
+          "Flags": 4
+        },
+        {
+          "VertexHash0": 0,
+          "VertexHash1": 35,
           "VertexHash2": 44,
+          "Flags": 4
+        },
+        {
+          "VertexHash0": 0,
+          "VertexHash1": 34,
+          "VertexHash2": 35,
+          "Flags": 4
+        },
+        {
+          "VertexHash0": 0,
+          "VertexHash1": 43,
+          "VertexHash2": 34,
           "Flags": 4
         },
         {
@@ -2435,56 +2280,44 @@
         },
         {
           "VertexHash0": 0,
-          "VertexHash1": 36,
+          "VertexHash1": 40,
           "VertexHash2": 41,
           "Flags": 4
         },
         {
           "VertexHash0": 0,
-          "VertexHash1": 35,
-          "VertexHash2": 36,
-          "Flags": 4
-        },
-        {
-          "VertexHash0": 0,
-          "VertexHash1": 40,
-          "VertexHash2": 35,
-          "Flags": 4
-        },
-        {
-          "VertexHash0": 0,
-          "VertexHash1": 34,
+          "VertexHash1": 39,
           "VertexHash2": 40,
           "Flags": 4
         },
         {
           "VertexHash0": 0,
-          "VertexHash1": 33,
-          "VertexHash2": 34,
-          "Flags": 4
-        },
-        {
-          "VertexHash0": 0,
-          "VertexHash1": 39,
-          "VertexHash2": 33,
-          "Flags": 4
-        },
-        {
-          "VertexHash0": 0,
-          "VertexHash1": 32,
+          "VertexHash1": 38,
           "VertexHash2": 39,
           "Flags": 4
         },
         {
           "VertexHash0": 0,
-          "VertexHash1": 38,
+          "VertexHash1": 33,
+          "VertexHash2": 38,
+          "Flags": 4
+        },
+        {
+          "VertexHash0": 0,
+          "VertexHash1": 32,
+          "VertexHash2": 33,
+          "Flags": 4
+        },
+        {
+          "VertexHash0": 0,
+          "VertexHash1": 37,
           "VertexHash2": 32,
           "Flags": 4
         },
         {
           "VertexHash0": 0,
           "VertexHash1": 31,
-          "VertexHash2": 38,
+          "VertexHash2": 37,
           "Flags": 4
         },
         {
@@ -2495,20 +2328,26 @@
         },
         {
           "VertexHash0": 0,
-          "VertexHash1": 37,
+          "VertexHash1": 36,
           "VertexHash2": 30,
           "Flags": 4
         },
         {
           "VertexHash0": 0,
           "VertexHash1": 29,
-          "VertexHash2": 37,
+          "VertexHash2": 36,
+          "Flags": 4
+        },
+        {
+          "VertexHash0": 0,
+          "VertexHash1": 35,
+          "VertexHash2": 29,
           "Flags": 4
         },
         {
           "VertexHash0": 0,
           "VertexHash1": 28,
-          "VertexHash2": 29,
+          "VertexHash2": 35,
           "Flags": 4
         },
         {
@@ -2519,8 +2358,14 @@
         },
         {
           "VertexHash0": 0,
-          "VertexHash1": 26,
+          "VertexHash1": 34,
           "VertexHash2": 27,
+          "Flags": 4
+        },
+        {
+          "VertexHash0": 0,
+          "VertexHash1": 26,
+          "VertexHash2": 34,
           "Flags": 4
         },
         {
@@ -2543,14 +2388,8 @@
         },
         {
           "VertexHash0": 0,
-          "VertexHash1": 36,
-          "VertexHash2": 23,
-          "Flags": 4
-        },
-        {
-          "VertexHash0": 0,
           "VertexHash1": 22,
-          "VertexHash2": 36,
+          "VertexHash2": 23,
           "Flags": 4
         },
         {
@@ -2567,20 +2406,20 @@
         },
         {
           "VertexHash0": 0,
-          "VertexHash1": 19,
+          "VertexHash1": 33,
           "VertexHash2": 20,
           "Flags": 4
         },
         {
           "VertexHash0": 0,
-          "VertexHash1": 35,
-          "VertexHash2": 19,
+          "VertexHash1": 19,
+          "VertexHash2": 33,
           "Flags": 4
         },
         {
           "VertexHash0": 0,
           "VertexHash1": 18,
-          "VertexHash2": 35,
+          "VertexHash2": 19,
           "Flags": 4
         },
         {
@@ -2591,26 +2430,20 @@
         },
         {
           "VertexHash0": 0,
-          "VertexHash1": 34,
+          "VertexHash1": 16,
           "VertexHash2": 17,
           "Flags": 4
         },
         {
           "VertexHash0": 0,
-          "VertexHash1": 16,
-          "VertexHash2": 34,
-          "Flags": 4
-        },
-        {
-          "VertexHash0": 0,
-          "VertexHash1": 33,
+          "VertexHash1": 32,
           "VertexHash2": 16,
           "Flags": 4
         },
         {
           "VertexHash0": 0,
           "VertexHash1": 15,
-          "VertexHash2": 33,
+          "VertexHash2": 32,
           "Flags": 4
         },
         {
@@ -2621,26 +2454,26 @@
         },
         {
           "VertexHash0": 0,
-          "VertexHash1": 32,
+          "VertexHash1": 31,
           "VertexHash2": 14,
           "Flags": 4
         },
         {
           "VertexHash0": 0,
           "VertexHash1": 13,
-          "VertexHash2": 32,
+          "VertexHash2": 31,
           "Flags": 4
         },
         {
           "VertexHash0": 0,
-          "VertexHash1": 31,
+          "VertexHash1": 30,
           "VertexHash2": 13,
           "Flags": 4
         },
         {
           "VertexHash0": 0,
           "VertexHash1": 12,
-          "VertexHash2": 31,
+          "VertexHash2": 30,
           "Flags": 4
         },
         {
@@ -2651,26 +2484,20 @@
         },
         {
           "VertexHash0": 0,
-          "VertexHash1": 30,
+          "VertexHash1": 29,
           "VertexHash2": 11,
           "Flags": 4
         },
         {
           "VertexHash0": 0,
           "VertexHash1": 10,
-          "VertexHash2": 30,
-          "Flags": 4
-        },
-        {
-          "VertexHash0": 0,
-          "VertexHash1": 29,
-          "VertexHash2": 10,
+          "VertexHash2": 29,
           "Flags": 4
         },
         {
           "VertexHash0": 0,
           "VertexHash1": 28,
-          "VertexHash2": 29,
+          "VertexHash2": 10,
           "Flags": 4
         },
         {
@@ -2681,8 +2508,278 @@
         },
         {
           "VertexHash0": 0,
-          "VertexHash1": 27,
+          "VertexHash1": 8,
           "VertexHash2": 9,
+          "Flags": 4
+        },
+        {
+          "VertexHash0": 0,
+          "VertexHash1": 27,
+          "VertexHash2": 8,
+          "Flags": 4
+        },
+        {
+          "VertexHash0": 0,
+          "VertexHash1": 7,
+          "VertexHash2": 27,
+          "Flags": 4
+        },
+        {
+          "VertexHash0": 0,
+          "VertexHash1": 26,
+          "VertexHash2": 7,
+          "Flags": 4
+        },
+        {
+          "VertexHash0": 0,
+          "VertexHash1": 25,
+          "VertexHash2": 26,
+          "Flags": 4
+        },
+        {
+          "VertexHash0": 0,
+          "VertexHash1": 6,
+          "VertexHash2": 25,
+          "Flags": 4
+        },
+        {
+          "VertexHash0": 0,
+          "VertexHash1": 24,
+          "VertexHash2": 6,
+          "Flags": 4
+        },
+        {
+          "VertexHash0": 0,
+          "VertexHash1": 23,
+          "VertexHash2": 24,
+          "Flags": 4
+        },
+        {
+          "VertexHash0": 0,
+          "VertexHash1": 22,
+          "VertexHash2": 23,
+          "Flags": 4
+        },
+        {
+          "VertexHash0": 0,
+          "VertexHash1": 21,
+          "VertexHash2": 22,
+          "Flags": 4
+        },
+        {
+          "VertexHash0": 0,
+          "VertexHash1": 5,
+          "VertexHash2": 21,
+          "Flags": 4
+        },
+        {
+          "VertexHash0": 0,
+          "VertexHash1": 20,
+          "VertexHash2": 5,
+          "Flags": 4
+        },
+        {
+          "VertexHash0": 0,
+          "VertexHash1": 4,
+          "VertexHash2": 20,
+          "Flags": 4
+        },
+        {
+          "VertexHash0": 0,
+          "VertexHash1": 19,
+          "VertexHash2": 4,
+          "Flags": 4
+        },
+        {
+          "VertexHash0": 0,
+          "VertexHash1": 18,
+          "VertexHash2": 19,
+          "Flags": 4
+        },
+        {
+          "VertexHash0": 0,
+          "VertexHash1": 3,
+          "VertexHash2": 18,
+          "Flags": 4
+        },
+        {
+          "VertexHash0": 0,
+          "VertexHash1": 17,
+          "VertexHash2": 3,
+          "Flags": 4
+        },
+        {
+          "VertexHash0": 0,
+          "VertexHash1": 16,
+          "VertexHash2": 17,
+          "Flags": 4
+        },
+        {
+          "VertexHash0": 0,
+          "VertexHash1": 15,
+          "VertexHash2": 16,
+          "Flags": 4
+        },
+        {
+          "VertexHash0": 0,
+          "VertexHash1": 14,
+          "VertexHash2": 15,
+          "Flags": 4
+        },
+        {
+          "VertexHash0": 0,
+          "VertexHash1": 13,
+          "VertexHash2": 14,
+          "Flags": 4
+        },
+        {
+          "VertexHash0": 0,
+          "VertexHash1": 12,
+          "VertexHash2": 13,
+          "Flags": 4
+        },
+        {
+          "VertexHash0": 0,
+          "VertexHash1": 11,
+          "VertexHash2": 12,
+          "Flags": 4
+        },
+        {
+          "VertexHash0": 0,
+          "VertexHash1": 10,
+          "VertexHash2": 11,
+          "Flags": 4
+        },
+        {
+          "VertexHash0": 0,
+          "VertexHash1": 9,
+          "VertexHash2": 10,
+          "Flags": 4
+        },
+        {
+          "VertexHash0": 0,
+          "VertexHash1": 1,
+          "VertexHash2": 9,
+          "Flags": 5
+        },
+        {
+          "VertexHash0": 1,
+          "VertexHash1": 3,
+          "VertexHash2": 9,
+          "Flags": 21
+        },
+        {
+          "VertexHash0": 3,
+          "VertexHash1": 4,
+          "VertexHash2": 9,
+          "Flags": 21
+        },
+        {
+          "VertexHash0": 4,
+          "VertexHash1": 5,
+          "VertexHash2": 9,
+          "Flags": 21
+        },
+        {
+          "VertexHash0": 5,
+          "VertexHash1": 6,
+          "VertexHash2": 9,
+          "Flags": 21
+        },
+        {
+          "VertexHash0": 6,
+          "VertexHash1": 7,
+          "VertexHash2": 9,
+          "Flags": 21
+        },
+        {
+          "VertexHash0": 7,
+          "VertexHash1": 8,
+          "VertexHash2": 9,
+          "Flags": 21
+        },
+        {
+          "VertexHash0": 8,
+          "VertexHash1": 2,
+          "VertexHash2": 9,
+          "Flags": 21
+        },
+        {
+          "VertexHash0": 5,
+          "VertexHash1": 0,
+          "VertexHash2": 4,
+          "Flags": 17
+        },
+        {
+          "VertexHash0": 0,
+          "VertexHash1": 3,
+          "VertexHash2": 4,
+          "Flags": 4
+        },
+        {
+          "VertexHash0": 0,
+          "VertexHash1": 2,
+          "VertexHash2": 3,
+          "Flags": 4
+        },
+        {
+          "VertexHash0": 0,
+          "VertexHash1": 1,
+          "VertexHash2": 2,
+          "Flags": 5
+        },
+        {
+          "VertexHash0": 5,
+          "VertexHash1": 0,
+          "VertexHash2": 4,
+          "Flags": 17
+        },
+        {
+          "VertexHash0": 0,
+          "VertexHash1": 3,
+          "VertexHash2": 4,
+          "Flags": 4
+        },
+        {
+          "VertexHash0": 0,
+          "VertexHash1": 2,
+          "VertexHash2": 3,
+          "Flags": 4
+        },
+        {
+          "VertexHash0": 0,
+          "VertexHash1": 1,
+          "VertexHash2": 2,
+          "Flags": 5
+        },
+        {
+          "VertexHash0": 5,
+          "VertexHash1": 0,
+          "VertexHash2": 31,
+          "Flags": 17
+        },
+        {
+          "VertexHash0": 0,
+          "VertexHash1": 30,
+          "VertexHash2": 31,
+          "Flags": 4
+        },
+        {
+          "VertexHash0": 0,
+          "VertexHash1": 29,
+          "VertexHash2": 30,
+          "Flags": 4
+        },
+        {
+          "VertexHash0": 0,
+          "VertexHash1": 28,
+          "VertexHash2": 29,
+          "Flags": 4
+        },
+        {
+          "VertexHash0": 0,
+          "VertexHash1": 27,
+          "VertexHash2": 28,
           "Flags": 4
         },
         {
@@ -2699,32 +2796,68 @@
         },
         {
           "VertexHash0": 0,
-          "VertexHash1": 24,
+          "VertexHash1": 32,
           "VertexHash2": 25,
           "Flags": 4
         },
         {
           "VertexHash0": 0,
-          "VertexHash1": 8,
+          "VertexHash1": 31,
+          "VertexHash2": 32,
+          "Flags": 4
+        },
+        {
+          "VertexHash0": 0,
+          "VertexHash1": 24,
+          "VertexHash2": 31,
+          "Flags": 4
+        },
+        {
+          "VertexHash0": 0,
+          "VertexHash1": 30,
           "VertexHash2": 24,
           "Flags": 4
         },
         {
           "VertexHash0": 0,
-          "VertexHash1": 23,
-          "VertexHash2": 8,
+          "VertexHash1": 29,
+          "VertexHash2": 30,
           "Flags": 4
         },
         {
           "VertexHash0": 0,
-          "VertexHash1": 7,
+          "VertexHash1": 28,
+          "VertexHash2": 29,
+          "Flags": 4
+        },
+        {
+          "VertexHash0": 0,
+          "VertexHash1": 27,
+          "VertexHash2": 28,
+          "Flags": 4
+        },
+        {
+          "VertexHash0": 0,
+          "VertexHash1": 23,
+          "VertexHash2": 27,
+          "Flags": 4
+        },
+        {
+          "VertexHash0": 0,
+          "VertexHash1": 26,
           "VertexHash2": 23,
           "Flags": 4
         },
         {
           "VertexHash0": 0,
+          "VertexHash1": 25,
+          "VertexHash2": 26,
+          "Flags": 4
+        },
+        {
+          "VertexHash0": 0,
           "VertexHash1": 22,
-          "VertexHash2": 7,
+          "VertexHash2": 25,
           "Flags": 4
         },
         {
@@ -2735,14 +2868,14 @@
         },
         {
           "VertexHash0": 0,
-          "VertexHash1": 6,
+          "VertexHash1": 24,
           "VertexHash2": 21,
           "Flags": 4
         },
         {
           "VertexHash0": 0,
           "VertexHash1": 20,
-          "VertexHash2": 6,
+          "VertexHash2": 24,
           "Flags": 4
         },
         {
@@ -2795,15 +2928,123 @@
         },
         {
           "VertexHash0": 0,
-          "VertexHash1": 5,
+          "VertexHash1": 23,
           "VertexHash2": 12,
-          "Flags": 5
+          "Flags": 4
         },
         {
           "VertexHash0": 0,
           "VertexHash1": 11,
+          "VertexHash2": 23,
+          "Flags": 4
+        },
+        {
+          "VertexHash0": 0,
+          "VertexHash1": 10,
+          "VertexHash2": 11,
+          "Flags": 4
+        },
+        {
+          "VertexHash0": 0,
+          "VertexHash1": 22,
+          "VertexHash2": 10,
+          "Flags": 4
+        },
+        {
+          "VertexHash0": 0,
+          "VertexHash1": 9,
+          "VertexHash2": 22,
+          "Flags": 4
+        },
+        {
+          "VertexHash0": 0,
+          "VertexHash1": 8,
+          "VertexHash2": 9,
+          "Flags": 4
+        },
+        {
+          "VertexHash0": 0,
+          "VertexHash1": 21,
+          "VertexHash2": 8,
+          "Flags": 4
+        },
+        {
+          "VertexHash0": 0,
+          "VertexHash1": 7,
+          "VertexHash2": 21,
+          "Flags": 4
+        },
+        {
+          "VertexHash0": 0,
+          "VertexHash1": 20,
+          "VertexHash2": 7,
+          "Flags": 4
+        },
+        {
+          "VertexHash0": 0,
+          "VertexHash1": 6,
+          "VertexHash2": 20,
+          "Flags": 4
+        },
+        {
+          "VertexHash0": 0,
+          "VertexHash1": 19,
+          "VertexHash2": 6,
+          "Flags": 4
+        },
+        {
+          "VertexHash0": 0,
+          "VertexHash1": 18,
+          "VertexHash2": 19,
+          "Flags": 4
+        },
+        {
+          "VertexHash0": 0,
+          "VertexHash1": 17,
+          "VertexHash2": 18,
+          "Flags": 4
+        },
+        {
+          "VertexHash0": 0,
+          "VertexHash1": 16,
+          "VertexHash2": 17,
+          "Flags": 4
+        },
+        {
+          "VertexHash0": 0,
+          "VertexHash1": 15,
+          "VertexHash2": 16,
+          "Flags": 4
+        },
+        {
+          "VertexHash0": 0,
+          "VertexHash1": 14,
+          "VertexHash2": 15,
+          "Flags": 4
+        },
+        {
+          "VertexHash0": 0,
+          "VertexHash1": 13,
+          "VertexHash2": 14,
+          "Flags": 4
+        },
+        {
+          "VertexHash0": 0,
+          "VertexHash1": 5,
+          "VertexHash2": 13,
+          "Flags": 5
+        },
+        {
+          "VertexHash0": 0,
+          "VertexHash1": 12,
           "VertexHash2": 5,
           "Flags": 20
+        },
+        {
+          "VertexHash0": 0,
+          "VertexHash1": 11,
+          "VertexHash2": 12,
+          "Flags": 4
         },
         {
           "VertexHash0": 0,
@@ -2843,6 +3084,30 @@
         },
         {
           "VertexHash0": 0,
+          "VertexHash1": 1,
+          "VertexHash2": 4,
+          "Flags": 1
+        },
+        {
+          "VertexHash0": 1,
+          "VertexHash1": 2,
+          "VertexHash2": 4,
+          "Flags": 1
+        },
+        {
+          "VertexHash0": 2,
+          "VertexHash1": 3,
+          "VertexHash2": 4,
+          "Flags": 5
+        },
+        {
+          "VertexHash0": 5,
+          "VertexHash1": 0,
+          "VertexHash2": 4,
+          "Flags": 17
+        },
+        {
+          "VertexHash0": 0,
           "VertexHash1": 3,
           "VertexHash2": 4,
           "Flags": 4
@@ -2884,28 +3149,28 @@
           "Flags": 5
         },
         {
-          "VertexHash0": 2,
+          "VertexHash0": 5,
           "VertexHash1": 0,
-          "VertexHash2": 1,
-          "Flags": 21
+          "VertexHash2": 4,
+          "Flags": 17
         },
         {
-          "VertexHash0": 2,
-          "VertexHash1": 0,
-          "VertexHash2": 1,
-          "Flags": 21
+          "VertexHash0": 0,
+          "VertexHash1": 3,
+          "VertexHash2": 4,
+          "Flags": 4
         },
         {
-          "VertexHash0": 2,
-          "VertexHash1": 0,
-          "VertexHash2": 1,
-          "Flags": 21
+          "VertexHash0": 0,
+          "VertexHash1": 2,
+          "VertexHash2": 3,
+          "Flags": 4
         },
         {
-          "VertexHash0": 2,
-          "VertexHash1": 0,
-          "VertexHash2": 1,
-          "Flags": 21
+          "VertexHash0": 0,
+          "VertexHash1": 1,
+          "VertexHash2": 2,
+          "Flags": 5
         },
         {
           "VertexHash0": 5,
@@ -2929,6 +3194,78 @@
           "VertexHash0": 0,
           "VertexHash1": 1,
           "VertexHash2": 2,
+          "Flags": 5
+        },
+        {
+          "VertexHash0": 5,
+          "VertexHash1": 0,
+          "VertexHash2": 4,
+          "Flags": 17
+        },
+        {
+          "VertexHash0": 0,
+          "VertexHash1": 1,
+          "VertexHash2": 4,
+          "Flags": 1
+        },
+        {
+          "VertexHash0": 1,
+          "VertexHash1": 2,
+          "VertexHash2": 4,
+          "Flags": 1
+        },
+        {
+          "VertexHash0": 2,
+          "VertexHash1": 3,
+          "VertexHash2": 4,
+          "Flags": 5
+        },
+        {
+          "VertexHash0": 5,
+          "VertexHash1": 0,
+          "VertexHash2": 4,
+          "Flags": 17
+        },
+        {
+          "VertexHash0": 0,
+          "VertexHash1": 1,
+          "VertexHash2": 4,
+          "Flags": 1
+        },
+        {
+          "VertexHash0": 1,
+          "VertexHash1": 2,
+          "VertexHash2": 4,
+          "Flags": 1
+        },
+        {
+          "VertexHash0": 2,
+          "VertexHash1": 3,
+          "VertexHash2": 4,
+          "Flags": 5
+        },
+        {
+          "VertexHash0": 5,
+          "VertexHash1": 0,
+          "VertexHash2": 4,
+          "Flags": 17
+        },
+        {
+          "VertexHash0": 0,
+          "VertexHash1": 3,
+          "VertexHash2": 4,
+          "Flags": 4
+        },
+        {
+          "VertexHash0": 0,
+          "VertexHash1": 1,
+          "VertexHash2": 3,
+          "Flags": 1
+        },
+        {
+          "VertexHash0": 1,
+          "VertexHash1": 2,
+          "VertexHash2": 3,
           "Flags": 5
         },
         {
@@ -2974,28 +3311,10 @@
           "Flags": 5
         },
         {
-          "VertexHash0": 5,
+          "VertexHash0": 2,
           "VertexHash1": 0,
-          "VertexHash2": 4,
-          "Flags": 17
-        },
-        {
-          "VertexHash0": 0,
-          "VertexHash1": 3,
-          "VertexHash2": 4,
-          "Flags": 4
-        },
-        {
-          "VertexHash0": 0,
-          "VertexHash1": 2,
-          "VertexHash2": 3,
-          "Flags": 4
-        },
-        {
-          "VertexHash0": 0,
-          "VertexHash1": 1,
-          "VertexHash2": 2,
-          "Flags": 5
+          "VertexHash2": 1,
+          "Flags": 21
         },
         {
           "VertexHash0": 5,
@@ -3011,158 +3330,14 @@
         },
         {
           "VertexHash0": 0,
+          "VertexHash1": 1,
+          "VertexHash2": 3,
+          "Flags": 1
+        },
+        {
+          "VertexHash0": 1,
           "VertexHash1": 2,
           "VertexHash2": 3,
-          "Flags": 4
-        },
-        {
-          "VertexHash0": 0,
-          "VertexHash1": 1,
-          "VertexHash2": 2,
-          "Flags": 5
-        },
-        {
-          "VertexHash0": 5,
-          "VertexHash1": 0,
-          "VertexHash2": 4,
-          "Flags": 17
-        },
-        {
-          "VertexHash0": 0,
-          "VertexHash1": 3,
-          "VertexHash2": 4,
-          "Flags": 4
-        },
-        {
-          "VertexHash0": 0,
-          "VertexHash1": 2,
-          "VertexHash2": 3,
-          "Flags": 4
-        },
-        {
-          "VertexHash0": 0,
-          "VertexHash1": 1,
-          "VertexHash2": 2,
-          "Flags": 5
-        },
-        {
-          "VertexHash0": 5,
-          "VertexHash1": 0,
-          "VertexHash2": 4,
-          "Flags": 17
-        },
-        {
-          "VertexHash0": 0,
-          "VertexHash1": 3,
-          "VertexHash2": 4,
-          "Flags": 4
-        },
-        {
-          "VertexHash0": 0,
-          "VertexHash1": 2,
-          "VertexHash2": 3,
-          "Flags": 4
-        },
-        {
-          "VertexHash0": 0,
-          "VertexHash1": 1,
-          "VertexHash2": 2,
-          "Flags": 5
-        },
-        {
-          "VertexHash0": 5,
-          "VertexHash1": 0,
-          "VertexHash2": 4,
-          "Flags": 17
-        },
-        {
-          "VertexHash0": 0,
-          "VertexHash1": 3,
-          "VertexHash2": 4,
-          "Flags": 4
-        },
-        {
-          "VertexHash0": 0,
-          "VertexHash1": 2,
-          "VertexHash2": 3,
-          "Flags": 4
-        },
-        {
-          "VertexHash0": 0,
-          "VertexHash1": 1,
-          "VertexHash2": 2,
-          "Flags": 5
-        },
-        {
-          "VertexHash0": 5,
-          "VertexHash1": 0,
-          "VertexHash2": 4,
-          "Flags": 17
-        },
-        {
-          "VertexHash0": 0,
-          "VertexHash1": 3,
-          "VertexHash2": 4,
-          "Flags": 4
-        },
-        {
-          "VertexHash0": 0,
-          "VertexHash1": 2,
-          "VertexHash2": 3,
-          "Flags": 4
-        },
-        {
-          "VertexHash0": 0,
-          "VertexHash1": 1,
-          "VertexHash2": 2,
-          "Flags": 5
-        },
-        {
-          "VertexHash0": 5,
-          "VertexHash1": 0,
-          "VertexHash2": 4,
-          "Flags": 17
-        },
-        {
-          "VertexHash0": 0,
-          "VertexHash1": 3,
-          "VertexHash2": 4,
-          "Flags": 4
-        },
-        {
-          "VertexHash0": 0,
-          "VertexHash1": 2,
-          "VertexHash2": 3,
-          "Flags": 4
-        },
-        {
-          "VertexHash0": 0,
-          "VertexHash1": 1,
-          "VertexHash2": 2,
-          "Flags": 5
-        },
-        {
-          "VertexHash0": 5,
-          "VertexHash1": 0,
-          "VertexHash2": 4,
-          "Flags": 17
-        },
-        {
-          "VertexHash0": 0,
-          "VertexHash1": 3,
-          "VertexHash2": 4,
-          "Flags": 4
-        },
-        {
-          "VertexHash0": 0,
-          "VertexHash1": 2,
-          "VertexHash2": 3,
-          "Flags": 4
-        },
-        {
-          "VertexHash0": 0,
-          "VertexHash1": 1,
-          "VertexHash2": 2,
           "Flags": 5
         },
         {
@@ -3221,20 +3396,20 @@
         },
         {
           "VertexHash0": 0,
-          "VertexHash1": 1,
-          "VertexHash2": 4,
-          "Flags": 1
-        },
-        {
-          "VertexHash0": 1,
-          "VertexHash1": 2,
-          "VertexHash2": 4,
-          "Flags": 1
-        },
-        {
-          "VertexHash0": 2,
           "VertexHash1": 3,
           "VertexHash2": 4,
+          "Flags": 4
+        },
+        {
+          "VertexHash0": 0,
+          "VertexHash1": 2,
+          "VertexHash2": 3,
+          "Flags": 4
+        },
+        {
+          "VertexHash0": 0,
+          "VertexHash1": 1,
+          "VertexHash2": 2,
           "Flags": 5
         }
       ],
@@ -3250,11 +3425,11 @@
               },
               "Max": {
                 "X": 126,
-                "Y": 22,
+                "Y": 26,
                 "Z": 151
               }
             },
-            "Index": -55
+            "Index": -53
           },
           {
             "Bounds": {
@@ -3265,11 +3440,11 @@
               },
               "Max": {
                 "X": 125,
-                "Y": 22,
-                "Z": 134
+                "Y": 26,
+                "Z": 101
               }
             },
-            "Index": -27
+            "Index": -25
           },
           {
             "Bounds": {
@@ -3279,12 +3454,12 @@
                 "Z": 2
               },
               "Max": {
-                "X": 125,
+                "X": 97,
                 "Y": 22,
-                "Z": 70
+                "Z": 101
               }
             },
-            "Index": -13
+            "Index": -11
           },
           {
             "Bounds": {
@@ -3296,7 +3471,7 @@
               "Max": {
                 "X": 69,
                 "Y": 22,
-                "Z": 70
+                "Z": 36
               }
             },
             "Index": -5
@@ -3326,7 +3501,7 @@
               "Max": {
                 "X": 69,
                 "Y": 22,
-                "Z": 70
+                "Z": 36
               }
             },
             "Index": -3
@@ -3349,122 +3524,17 @@
           {
             "Bounds": {
               "Min": {
-                "X": 3,
+                "X": 11,
                 "Y": 21,
                 "Z": 19
               },
               "Max": {
                 "X": 69,
                 "Y": 22,
-                "Z": 70
-              }
-            },
-            "Index": 8
-          },
-          {
-            "Bounds": {
-              "Min": {
-                "X": 11,
-                "Y": 0,
-                "Z": 19
-              },
-              "Max": {
-                "X": 125,
-                "Y": 22,
-                "Z": 51
-              }
-            },
-            "Index": -7
-          },
-          {
-            "Bounds": {
-              "Min": {
-                "X": 11,
-                "Y": 0,
-                "Z": 19
-              },
-              "Max": {
-                "X": 67,
-                "Y": 22,
-                "Z": 49
-              }
-            },
-            "Index": -3
-          },
-          {
-            "Bounds": {
-              "Min": {
-                "X": 11,
-                "Y": 21,
-                "Z": 19
-              },
-              "Max": {
-                "X": 40,
-                "Y": 22,
                 "Z": 36
               }
             },
-            "Index": 5
-          },
-          {
-            "Bounds": {
-              "Min": {
-                "X": 33,
-                "Y": 0,
-                "Z": 19
-              },
-              "Max": {
-                "X": 67,
-                "Y": 0,
-                "Z": 49
-              }
-            },
-            "Index": 14
-          },
-          {
-            "Bounds": {
-              "Min": {
-                "X": 88,
-                "Y": 0,
-                "Z": 19
-              },
-              "Max": {
-                "X": 125,
-                "Y": 22,
-                "Z": 51
-              }
-            },
-            "Index": -3
-          },
-          {
-            "Bounds": {
-              "Min": {
-                "X": 88,
-                "Y": 21,
-                "Z": 19
-              },
-              "Max": {
-                "X": 125,
-                "Y": 22,
-                "Z": 51
-              }
-            },
-            "Index": 16
-          },
-          {
-            "Bounds": {
-              "Min": {
-                "X": 90,
-                "Y": 0,
-                "Z": 19
-              },
-              "Max": {
-                "X": 125,
-                "Y": 0,
-                "Z": 49
-              }
-            },
-            "Index": 15
+            "Index": 7
           },
           {
             "Bounds": {
@@ -3474,27 +3544,42 @@
                 "Z": 36
               },
               "Max": {
-                "X": 125,
+                "X": 97,
                 "Y": 22,
-                "Z": 134
-              }
-            },
-            "Index": -13
-          },
-          {
-            "Bounds": {
-              "Min": {
-                "X": 3,
-                "Y": 0,
-                "Z": 36
-              },
-              "Max": {
-                "X": 116,
-                "Y": 22,
-                "Z": 134
+                "Z": 101
               }
             },
             "Index": -5
+          },
+          {
+            "Bounds": {
+              "Min": {
+                "X": 3,
+                "Y": 21,
+                "Z": 36
+              },
+              "Max": {
+                "X": 12,
+                "Y": 22,
+                "Z": 70
+              }
+            },
+            "Index": 9
+          },
+          {
+            "Bounds": {
+              "Min": {
+                "X": 3,
+                "Y": 0,
+                "Z": 36
+              },
+              "Max": {
+                "X": 97,
+                "Y": 22,
+                "Z": 101
+              }
+            },
+            "Index": -3
           },
           {
             "Bounds": {
@@ -3509,22 +3594,7 @@
                 "Z": 66
               }
             },
-            "Index": 18
-          },
-          {
-            "Bounds": {
-              "Min": {
-                "X": 12,
-                "Y": 0,
-                "Z": 36
-              },
-              "Max": {
-                "X": 116,
-                "Y": 22,
-                "Z": 134
-              }
-            },
-            "Index": -3
+            "Index": 14
           },
           {
             "Bounds": {
@@ -3534,27 +3604,57 @@
                 "Z": 36
               },
               "Max": {
-                "X": 116,
+                "X": 97,
                 "Y": 22,
-                "Z": 134
+                "Z": 101
               }
             },
-            "Index": 9
+            "Index": 8
           },
           {
             "Bounds": {
               "Min": {
                 "X": 33,
                 "Y": 0,
-                "Z": 53
+                "Z": 19
               },
               "Max": {
-                "X": 66,
-                "Y": 0,
-                "Z": 83
+                "X": 125,
+                "Y": 26,
+                "Z": 101
               }
             },
-            "Index": 19
+            "Index": -13
+          },
+          {
+            "Bounds": {
+              "Min": {
+                "X": 33,
+                "Y": 0,
+                "Z": 19
+              },
+              "Max": {
+                "X": 125,
+                "Y": 22,
+                "Z": 101
+              }
+            },
+            "Index": -5
+          },
+          {
+            "Bounds": {
+              "Min": {
+                "X": 33,
+                "Y": 0,
+                "Z": 19
+              },
+              "Max": {
+                "X": 67,
+                "Y": 0,
+                "Z": 49
+              }
+            },
+            "Index": 10
           },
           {
             "Bounds": {
@@ -3566,22 +3666,7 @@
               "Max": {
                 "X": 125,
                 "Y": 22,
-                "Z": 86
-              }
-            },
-            "Index": -7
-          },
-          {
-            "Bounds": {
-              "Min": {
-                "X": 62,
-                "Y": 0,
-                "Z": 36
-              },
-              "Max": {
-                "X": 116,
-                "Y": 22,
-                "Z": 66
+                "Z": 101
               }
             },
             "Index": -3
@@ -3599,7 +3684,97 @@
                 "Z": 66
               }
             },
-            "Index": 17
+            "Index": 13
+          },
+          {
+            "Bounds": {
+              "Min": {
+                "X": 68,
+                "Y": 21,
+                "Z": 52
+              },
+              "Max": {
+                "X": 125,
+                "Y": 22,
+                "Z": 101
+              }
+            },
+            "Index": 3
+          },
+          {
+            "Bounds": {
+              "Min": {
+                "X": 69,
+                "Y": 0,
+                "Z": 19
+              },
+              "Max": {
+                "X": 125,
+                "Y": 26,
+                "Z": 83
+              }
+            },
+            "Index": -7
+          },
+          {
+            "Bounds": {
+              "Min": {
+                "X": 88,
+                "Y": 8,
+                "Z": 19
+              },
+              "Max": {
+                "X": 125,
+                "Y": 26,
+                "Z": 51
+              }
+            },
+            "Index": -3
+          },
+          {
+            "Bounds": {
+              "Min": {
+                "X": 88,
+                "Y": 25,
+                "Z": 19
+              },
+              "Max": {
+                "X": 125,
+                "Y": 26,
+                "Z": 51
+              }
+            },
+            "Index": 12
+          },
+          {
+            "Bounds": {
+              "Min": {
+                "X": 90,
+                "Y": 8,
+                "Z": 19
+              },
+              "Max": {
+                "X": 125,
+                "Y": 9,
+                "Z": 50
+              }
+            },
+            "Index": 11
+          },
+          {
+            "Bounds": {
+              "Min": {
+                "X": 69,
+                "Y": 0,
+                "Z": 36
+              },
+              "Max": {
+                "X": 125,
+                "Y": 22,
+                "Z": 83
+              }
+            },
+            "Index": -3
           },
           {
             "Bounds": {
@@ -3609,42 +3784,12 @@
                 "Z": 36
               },
               "Max": {
-                "X": 116,
+                "X": 97,
                 "Y": 22,
-                "Z": 51
+                "Z": 52
               }
             },
-            "Index": 11
-          },
-          {
-            "Bounds": {
-              "Min": {
-                "X": 91,
-                "Y": 0,
-                "Z": 51
-              },
-              "Max": {
-                "X": 125,
-                "Y": 22,
-                "Z": 86
-              }
-            },
-            "Index": -3
-          },
-          {
-            "Bounds": {
-              "Min": {
-                "X": 116,
-                "Y": 21,
-                "Z": 51
-              },
-              "Max": {
-                "X": 125,
-                "Y": 22,
-                "Z": 86
-              }
-            },
-            "Index": 10
+            "Index": 5
           },
           {
             "Bounds": {
@@ -3659,14 +3804,14 @@
                 "Z": 83
               }
             },
-            "Index": 20
+            "Index": 16
           },
           {
             "Bounds": {
               "Min": {
                 "X": 3,
                 "Y": 0,
-                "Z": 70
+                "Z": 53
               },
               "Max": {
                 "X": 126,
@@ -3681,7 +3826,7 @@
               "Min": {
                 "X": 3,
                 "Y": 0,
-                "Z": 70
+                "Z": 53
               },
               "Max": {
                 "X": 68,
@@ -3696,45 +3841,15 @@
               "Min": {
                 "X": 3,
                 "Y": 0,
-                "Z": 70
+                "Z": 53
               },
               "Max": {
-                "X": 67,
+                "X": 66,
                 "Y": 22,
-                "Z": 116
+                "Z": 101
               }
             },
             "Index": -5
-          },
-          {
-            "Bounds": {
-              "Min": {
-                "X": 3,
-                "Y": 21,
-                "Z": 70
-              },
-              "Max": {
-                "X": 12,
-                "Y": 22,
-                "Z": 103
-              }
-            },
-            "Index": 6
-          },
-          {
-            "Bounds": {
-              "Min": {
-                "X": 3,
-                "Y": 0,
-                "Z": 70
-              },
-              "Max": {
-                "X": 67,
-                "Y": 0,
-                "Z": 116
-              }
-            },
-            "Index": -3
           },
           {
             "Bounds": {
@@ -3746,32 +3861,62 @@
               "Max": {
                 "X": 37,
                 "Y": 0,
-                "Z": 99
+                "Z": 101
               }
             },
-            "Index": 21
-          },
-          {
-            "Bounds": {
-              "Min": {
-                "X": 33,
-                "Y": 0,
-                "Z": 87
-              },
-              "Max": {
-                "X": 67,
-                "Y": 0,
-                "Z": 116
-              }
-            },
-            "Index": 23
+            "Index": 17
           },
           {
             "Bounds": {
               "Min": {
                 "X": 3,
                 "Y": 0,
-                "Z": 103
+                "Z": 53
+              },
+              "Max": {
+                "X": 66,
+                "Y": 22,
+                "Z": 101
+              }
+            },
+            "Index": -3
+          },
+          {
+            "Bounds": {
+              "Min": {
+                "X": 3,
+                "Y": 21,
+                "Z": 70
+              },
+              "Max": {
+                "X": 32,
+                "Y": 22,
+                "Z": 101
+              }
+            },
+            "Index": 2
+          },
+          {
+            "Bounds": {
+              "Min": {
+                "X": 33,
+                "Y": 0,
+                "Z": 53
+              },
+              "Max": {
+                "X": 66,
+                "Y": 0,
+                "Z": 83
+              }
+            },
+            "Index": 15
+          },
+          {
+            "Bounds": {
+              "Min": {
+                "X": 32,
+                "Y": 0,
+                "Z": 87
               },
               "Max": {
                 "X": 68,
@@ -3784,14 +3929,14 @@
           {
             "Bounds": {
               "Min": {
-                "X": 3,
+                "X": 32,
                 "Y": 0,
-                "Z": 103
+                "Z": 87
               },
               "Max": {
-                "X": 37,
+                "X": 68,
                 "Y": 22,
-                "Z": 134
+                "Z": 118
               }
             },
             "Index": -3
@@ -3799,74 +3944,29 @@
           {
             "Bounds": {
               "Min": {
-                "X": 3,
+                "X": 32,
                 "Y": 0,
-                "Z": 103
+                "Z": 87
               },
               "Max": {
-                "X": 37,
+                "X": 67,
                 "Y": 0,
-                "Z": 134
+                "Z": 116
               }
             },
-            "Index": 25
+            "Index": 19
           },
           {
             "Bounds": {
               "Min": {
-                "X": 3,
+                "X": 32,
                 "Y": 21,
-                "Z": 103
-              },
-              "Max": {
-                "X": 31,
-                "Y": 22,
-                "Z": 134
-              }
-            },
-            "Index": 2
-          },
-          {
-            "Bounds": {
-              "Min": {
-                "X": 12,
-                "Y": 21,
-                "Z": 103
+                "Z": 101
               },
               "Max": {
                 "X": 68,
                 "Y": 22,
-                "Z": 151
-              }
-            },
-            "Index": -3
-          },
-          {
-            "Bounds": {
-              "Min": {
-                "X": 12,
-                "Y": 21,
-                "Z": 103
-              },
-              "Max": {
-                "X": 68,
-                "Y": 22,
-                "Z": 134
-              }
-            },
-            "Index": 13
-          },
-          {
-            "Bounds": {
-              "Min": {
-                "X": 31,
-                "Y": 21,
-                "Z": 134
-              },
-              "Max": {
-                "X": 68,
-                "Y": 22,
-                "Z": 151
+                "Z": 118
               }
             },
             "Index": 4
@@ -3874,7 +3974,52 @@
           {
             "Bounds": {
               "Min": {
-                "X": 33,
+                "X": 32,
+                "Y": 0,
+                "Z": 118
+              },
+              "Max": {
+                "X": 68,
+                "Y": 22,
+                "Z": 151
+              }
+            },
+            "Index": -3
+          },
+          {
+            "Bounds": {
+              "Min": {
+                "X": 32,
+                "Y": 21,
+                "Z": 118
+              },
+              "Max": {
+                "X": 68,
+                "Y": 22,
+                "Z": 151
+              }
+            },
+            "Index": 23
+          },
+          {
+            "Bounds": {
+              "Min": {
+                "X": 32,
+                "Y": 0,
+                "Z": 120
+              },
+              "Max": {
+                "X": 68,
+                "Y": 0,
+                "Z": 151
+              }
+            },
+            "Index": 25
+          },
+          {
+            "Bounds": {
+              "Min": {
+                "X": 59,
                 "Y": 0,
                 "Z": 70
               },
@@ -3889,14 +4034,14 @@
           {
             "Bounds": {
               "Min": {
-                "X": 33,
+                "X": 62,
                 "Y": 0,
                 "Z": 70
               },
               "Max": {
-                "X": 96,
-                "Y": 0,
-                "Z": 151
+                "X": 126,
+                "Y": 22,
+                "Z": 118
               }
             },
             "Index": -5
@@ -3911,22 +4056,22 @@
               "Max": {
                 "X": 95,
                 "Y": 0,
-                "Z": 99
+                "Z": 101
               }
             },
-            "Index": 22
+            "Index": 18
           },
           {
             "Bounds": {
               "Min": {
-                "X": 33,
-                "Y": 0,
-                "Z": 103
+                "X": 88,
+                "Y": 21,
+                "Z": 84
               },
               "Max": {
-                "X": 96,
-                "Y": 0,
-                "Z": 151
+                "X": 126,
+                "Y": 22,
+                "Z": 118
               }
             },
             "Index": -3
@@ -3934,44 +4079,44 @@
           {
             "Bounds": {
               "Min": {
-                "X": 33,
-                "Y": 0,
-                "Z": 120
+                "X": 88,
+                "Y": 21,
+                "Z": 84
               },
               "Max": {
-                "X": 67,
-                "Y": 0,
-                "Z": 151
+                "X": 117,
+                "Y": 22,
+                "Z": 101
               }
             },
-            "Index": 27
+            "Index": 6
           },
           {
             "Bounds": {
               "Min": {
-                "X": 62,
-                "Y": 0,
-                "Z": 103
-              },
-              "Max": {
-                "X": 96,
-                "Y": 0,
-                "Z": 134
-              }
-            },
-            "Index": 26
-          },
-          {
-            "Bounds": {
-              "Min": {
-                "X": 68,
-                "Y": 0,
-                "Z": 86
+                "X": 88,
+                "Y": 21,
+                "Z": 87
               },
               "Max": {
                 "X": 126,
                 "Y": 22,
-                "Z": 134
+                "Z": 118
+              }
+            },
+            "Index": 21
+          },
+          {
+            "Bounds": {
+              "Min": {
+                "X": 59,
+                "Y": 0,
+                "Z": 87
+              },
+              "Max": {
+                "X": 126,
+                "Y": 22,
+                "Z": 151
               }
             },
             "Index": -7
@@ -3979,59 +4124,14 @@
           {
             "Bounds": {
               "Min": {
-                "X": 68,
-                "Y": 21,
-                "Z": 86
-              },
-              "Max": {
-                "X": 116,
-                "Y": 22,
-                "Z": 134
-              }
-            },
-            "Index": -3
-          },
-          {
-            "Bounds": {
-              "Min": {
-                "X": 68,
-                "Y": 21,
-                "Z": 86
-              },
-              "Max": {
-                "X": 116,
-                "Y": 22,
-                "Z": 134
-              }
-            },
-            "Index": 12
-          },
-          {
-            "Bounds": {
-              "Min": {
-                "X": 68,
-                "Y": 21,
-                "Z": 117
-              },
-              "Max": {
-                "X": 97,
-                "Y": 22,
-                "Z": 134
-              }
-            },
-            "Index": 7
-          },
-          {
-            "Bounds": {
-              "Min": {
-                "X": 91,
+                "X": 59,
                 "Y": 0,
-                "Z": 86
+                "Z": 87
               },
               "Max": {
                 "X": 126,
                 "Y": 22,
-                "Z": 117
+                "Z": 151
               }
             },
             "Index": -3
@@ -4039,14 +4139,59 @@
           {
             "Bounds": {
               "Min": {
-                "X": 91,
+                "X": 59,
+                "Y": 21,
+                "Z": 134
+              },
+              "Max": {
+                "X": 68,
+                "Y": 22,
+                "Z": 151
+              }
+            },
+            "Index": 22
+          },
+          {
+            "Bounds": {
+              "Min": {
+                "X": 90,
                 "Y": 0,
                 "Z": 87
               },
               "Max": {
                 "X": 126,
                 "Y": 0,
-                "Z": 117
+                "Z": 116
+              }
+            },
+            "Index": 20
+          },
+          {
+            "Bounds": {
+              "Min": {
+                "X": 90,
+                "Y": 0,
+                "Z": 118
+              },
+              "Max": {
+                "X": 125,
+                "Y": 22,
+                "Z": 151
+              }
+            },
+            "Index": -3
+          },
+          {
+            "Bounds": {
+              "Min": {
+                "X": 90,
+                "Y": 21,
+                "Z": 118
+              },
+              "Max": {
+                "X": 125,
+                "Y": 22,
+                "Z": 151
               }
             },
             "Index": 24
@@ -4054,17 +4199,17 @@
           {
             "Bounds": {
               "Min": {
-                "X": 97,
-                "Y": 21,
-                "Z": 86
+                "X": 90,
+                "Y": 0,
+                "Z": 120
               },
               "Max": {
-                "X": 126,
-                "Y": 22,
-                "Z": 117
+                "X": 125,
+                "Y": 0,
+                "Z": 151
               }
             },
-            "Index": 3
+            "Index": 26
           },
           {
             "Bounds": {
@@ -4084,7 +4229,7 @@
         ]
       },
       "bvQuantFactor": 0.03333333,
-      "bvNodeCount": 56,
+      "bvNodeCount": 54,
       "walkableClimb": 2.0
     }
   ]

@@ -13,20 +13,17 @@ namespace QuixPhysics
 
         public AIManager(Simulator simulator, Arena arena) : base(simulator, arena)
         {
-            CreateCrocoLoca();
+           
         }
 
         public override void OnStart()
         {
-            this.bot.OnStart();
+             CreateCrocoLoca();
         }
 
         public override void OnMapsLoaded()
         {
-            CreateBot();
             base.OnMapsLoaded();
-            
-
         }
 
         private CrocoLoca CreateCrocoLoca(){

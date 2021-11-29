@@ -14,7 +14,7 @@ namespace QuixPhysics.Hextiles
 
         int index;
 
-        public static Vector3 _PADDDING = new Vector3(0, Hexagon._SIZE * 1.1f, 0);
+        public static Vector3 _PADDDING = new Vector3(0, Hexagon._SIZE, 0);
 
         public float randomHeight = 0;
 

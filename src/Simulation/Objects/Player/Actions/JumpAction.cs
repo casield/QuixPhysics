@@ -7,7 +7,7 @@ namespace QuixPhysics.Player
     {
         private PhyWaiter jumpWaiter;
         private PhyWaiter jumpsLimitWaiter;
-        private static int maxJumps = 1;
+        private static int maxJumps = 10;
         private int jumps = maxJumps;
         private bool canJump = true;
         private PhyObject lastContacted;
@@ -59,7 +59,6 @@ namespace QuixPhysics.Player
             player.bodyReference.Velocity.Linear += direction * player.playerStats.force;
 
             canJump = false;
-            jumps--;
             ResetNormal();
 
         }
