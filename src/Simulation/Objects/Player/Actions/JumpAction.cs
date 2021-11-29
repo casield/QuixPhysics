@@ -7,7 +7,7 @@ namespace QuixPhysics.Player
     {
         private PhyWaiter jumpWaiter;
         private PhyWaiter jumpsLimitWaiter;
-        private static int maxJumps = 30;
+        private static int maxJumps = 1;
         private int jumps = maxJumps;
         private bool canJump = true;
         private PhyObject lastContacted;
@@ -68,7 +68,10 @@ namespace QuixPhysics.Player
         {
             if (canJump && jumps > 0)
             {
-                Jump(lastNormal);
+                var b = -Vector3.Normalize(player.GetVelocity());
+                b.Y =-1;
+                lastNormal*= (-b);
+                Jump(lastNormal );
             }
 
 

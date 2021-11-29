@@ -164,7 +164,7 @@ namespace QuixPhysics
 
             settings.CellSize = .3f * mulre;
             settings.CellHeight = 1.30f * mulre;
-            settings.MaxClimb = 2f * mulre;
+            settings.MaxClimb = 2f;
 
             settings.AgentHeight = 3f*mulre;
             settings.AgentRadius = .2f * mulre;

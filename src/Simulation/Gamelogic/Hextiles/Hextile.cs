@@ -24,7 +24,7 @@ namespace QuixPhysics.Hextiles
             this.index = position;
 
             Random random = new Random();
-            if (random.Next(0, 100) > 50)
+            if (random.Next(0, 100) > 90)
             {
                 randomHeight = random.Next(0, 400);
             }
@@ -55,6 +55,8 @@ namespace QuixPhysics.Hextiles
 
         /// <summary>
         /// Gets worlds position
+        /// 
+        /// It returns the top of the hexagon.
         /// </summary>
         /// <returns></returns>
         public Vector3 GetPosition()

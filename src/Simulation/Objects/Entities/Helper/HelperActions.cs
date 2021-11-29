@@ -14,16 +14,15 @@ namespace QuixPhysics
         public bool OnLastPolygon()
         {
             // GoRandomPoint(); 
-            /*QuixConsole.Log("On last polygn");
             if (LastPointIsClose())
             {
                 return true;
             }
-            helper.vehicle.Arrive(helper.trail.GetPoint());*/
+            helper.vehicle.Arrive(helper.trail.GetPoint());
 
 
 
-            return true;
+            return false;
         }
 
         private bool LastPointIsClose()
@@ -69,12 +68,12 @@ namespace QuixPhysics
         {
             //throw new System.NotImplementedException();
             QuixConsole.Log("Stuck in HelperAction");
-            helper.Jump();
-            // GoRandomPoint();
+            GoRandomPoint();
         }
 
         public void OnFall()
         {
+            this.helper.ChangeLoop(null);
             GoRandomPoint();
         }
     }

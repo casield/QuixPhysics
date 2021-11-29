@@ -104,7 +104,7 @@ namespace QuixPhysics
             knowledge.CheckObject(obj);
             if(obj is Hexagon){
                 Hexagon hexagon = (Hexagon)obj;
-                if(Distance(hexagon.GetPosition())>50 && hexagon.GetPosition().Y > GetPosition().Y && hexagon.hextile.randomHeight>100){
+                if(Distance(hexagon.GetPosition())<50 && hexagon.hextile.GetPosition().Y > GetPosition().Y+50){
                     Jump();
                 }
             }
@@ -175,6 +175,11 @@ namespace QuixPhysics
             return false;
 
         }
+        /// <summary>
+        /// Changes actual Loop.
+        /// Set to null to restart flow.
+        /// </summary>
+        /// <param name="loop"></param>
         public void ChangeLoop(EntityLifeLoop loop)
         {
             currentLoop = loop;

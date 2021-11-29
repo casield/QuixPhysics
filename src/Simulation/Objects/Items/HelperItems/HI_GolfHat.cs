@@ -113,11 +113,11 @@ namespace QuixPhysics
                 Desactivate();
             }
 
-            if (!helper.trail.IsOnPoly(helper.trail.GetLastPoint().Polygon, golfBall.GetPosition(), helper.extend))
+           /* if (!helper.trail.IsOnPoly(helper.trail.GetLastPoint().Polygon, golfBall.GetPosition(), helper.extend))
             {
                 QuixConsole.Log("Follow again");
                 FollowGolfBall();
-            }
+            }*/
 
 
             helper.vehicle.Arrive(helper.trail.GetPoint());

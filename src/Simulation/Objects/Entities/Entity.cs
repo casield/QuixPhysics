@@ -212,7 +212,7 @@ namespace QuixPhysics
         {
             base.Load(bodyHandle, connectionState, simulator, state, guid, room);
             arena = (Arena)room.gamemode;
-            stuckWaiter = new PhyWaiter(1000);
+            stuckWaiter = new PhyWaiter(5000);
             CreateRayCast();
             simulator.collidableMaterials[bodyHandle.bodyHandle].collidable = true;
             simulator.collidableMaterials[bodyHandle.bodyHandle].SpringSettings = new SpringSettings(1000f, 100f);
@@ -230,7 +230,7 @@ namespace QuixPhysics
             raycast = new Raycast(simulator, room);
             raycast.distance = 1000;
             raycast.debugRayShape = true;
-            raycast.SetRayShape(new SpiralRayShape(25, 20, raycast));
+            raycast.SetRayShape(new SpiralRayShape(1, 20, raycast));
             raycast.ObjectHitListeners += OnRayCastHit;
         }
 

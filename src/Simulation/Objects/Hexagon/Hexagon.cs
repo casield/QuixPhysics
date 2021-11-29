@@ -25,12 +25,6 @@ namespace QuixPhysics
             return state;
         }
 
-        public override void Load(Handle bodyHandle, ConnectionState connectionState, Simulator simulator, ObjectState state, Guid guid, Room room)
-        {
-            base.Load(bodyHandle, connectionState, simulator, state, guid, room);
-
-        }
-
         public void AddHextile(Hextile tile)
         {
             hextile = tile;

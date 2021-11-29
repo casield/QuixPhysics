@@ -17,7 +17,7 @@ namespace QuixPhysics
         {
             //Create Helper
 
-            for (int i = 0; i < 1; i++)
+            for (int i = 0; i < 6; i++)
             {
                 Entity entity = (Entity)room.factory.Create(new SphereState()
                 {
