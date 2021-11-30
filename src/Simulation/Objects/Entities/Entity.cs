@@ -366,13 +366,6 @@ namespace QuixPhysics
 
         }
 
-        internal Vector3 GetForward()
-        {
-            var v = Vector3.Normalize(GetVelocity());
-            v.Y = 0;
-            return v;
-        }
-
         #endregion
 
         #region Abstract & virtual classes

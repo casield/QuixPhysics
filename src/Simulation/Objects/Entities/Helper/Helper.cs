@@ -61,7 +61,8 @@ namespace QuixPhysics
             SetItems();
             var randompoint = room.GetGameMode<Arena>().hextilesAddon.GetRandomHextile().GetPosition();
             QuixConsole.Log("Random point", randompoint);
-            vehicle.props.maxSpeed = new Vector3(.1f, .01f, .1f);
+            var planeVelocity = 0.04f;
+            vehicle.props.maxSpeed = new Vector3(planeVelocity, .01f, planeVelocity);
             // vehicle.isActive = false;
             helperAction = new HelperAction(this);
 

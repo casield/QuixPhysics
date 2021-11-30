@@ -166,6 +166,12 @@ namespace QuixPhysics
             return worker;
         }
 
+        public void AddToContactListener(){
+            if(room.factory !=null){
+                room.factory.OnContactListeners.Add(guid,this);
+            }
+        }
+
         public void SetPosition(Vector3 position)
         {
 
@@ -179,6 +185,22 @@ namespace QuixPhysics
             else
             {
                 bodyReference.Pose.Position = position;
+            }
+        }
+
+        public void SetQuaternion(Quaternion quaternion)
+        {
+
+            if (state.mass == 0)
+            {
+
+                staticDescription.Pose.Orientation = quaternion;
+                simulator.Simulation.Statics.ApplyDescription(handle.staticHandle, staticDescription);
+                needUpdate = true;
+            }
+            else
+            {
+                bodyReference.Pose.Orientation = quaternion;
             }
         }
         public Vector3 GetPosition()
@@ -213,6 +235,13 @@ namespace QuixPhysics
                 }
             }
             return Vector3.Zero;
+        }
+
+        internal Vector3 GetForward()
+        {
+            var v = Vector3.Normalize(GetVelocity());
+            v.Y = 0;
+            return v;
         }
 
 

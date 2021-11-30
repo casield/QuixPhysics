@@ -82,10 +82,19 @@ namespace QuixPhysics
             CreateBall();
             CreateGauntlets();
             CreateLookObject();
+            CreateDummy();
 
             QuixConsole.Log("Player loaded - ");
 
         }
+
+        private void CreateDummy()
+        {
+           Dummy dummy = (Dummy)room.factory.Create(Dummy.Build(),room);
+
+           dummy.AddToObject(this);
+        }
+
         /// <summary>
         /// Create the actions manager class and initialize the actions that will run by default.
         /// </summary>
