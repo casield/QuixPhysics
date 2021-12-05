@@ -36,7 +36,7 @@ namespace QuixPhysics
             return new BoxState()
             {
                 halfSize = new Vector3(20, 40, 20),
-                instantiate = true,
+                instantiate = false,
                 type = "Dummy"
             };
 
