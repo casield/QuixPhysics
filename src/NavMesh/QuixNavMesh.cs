@@ -53,87 +53,88 @@ namespace QuixPhysics
 
 
             //navMesh = NavMesh.Generate(model.GetTriangles(), settings);
-            GenerateNavMeshFilters(model,settings);
+            GenerateNavMeshFilters(model, settings);
 
             buildData = new NavMeshBuilder(polyMesh, polyMeshDetail, new SharpNav.Pathfinding.OffMeshConnection[0], settings);
 
 
 
             stopWatch.Stop();
-         
+
             Console.WriteLine("Navmesh generation " + stopWatch.ElapsedMilliseconds);
-            
-            return hasGenerated?buildData:null;
+
+            return hasGenerated ? buildData : null;
         }
 
-        private void GenerateNavMeshFilters(ObjModel level,NavMeshGenerationSettings settings){
+        private void GenerateNavMeshFilters(ObjModel level, NavMeshGenerationSettings settings)
+        {
             Console.WriteLine("Generating NavMesh");
 
-			Stopwatch sw = new Stopwatch();
-			sw.Start();
-			long prevMs = 0;
-			try
-			{
-				//level.SetBoundingBoxOffset(new SVector3(settings.CellSize * 0.5f, settings.CellHeight * 0.5f, settings.CellSize * 0.5f));
-				var levelTris = level.GetTriangles();
-				var triEnumerable = TriangleEnumerable.FromTriangle(levelTris, 0, levelTris.Length);
-				BBox3 bounds = triEnumerable.GetBoundingBox();
+            Stopwatch sw = new Stopwatch();
+            sw.Start();
+            long prevMs = 0;
+            try
+            {
+                //level.SetBoundingBoxOffset(new SVector3(settings.CellSize * 0.5f, settings.CellHeight * 0.5f, settings.CellSize * 0.5f));
+                var levelTris = level.GetTriangles();
+                var triEnumerable = TriangleEnumerable.FromTriangle(levelTris, 0, levelTris.Length);
+                BBox3 bounds = triEnumerable.GetBoundingBox();
 
-				heightfield = new Heightfield(bounds, settings);
+                heightfield = new Heightfield(bounds, settings);
 
-				Console.WriteLine("Heightfield");
-				Console.WriteLine(" + Ctor\t\t\t\t" + (sw.ElapsedMilliseconds - prevMs).ToString("D3") + " ms");
-				prevMs = sw.ElapsedMilliseconds;
+                Console.WriteLine("Heightfield");
+                Console.WriteLine(" + Ctor\t\t\t\t" + (sw.ElapsedMilliseconds - prevMs).ToString("D3") + " ms");
+                prevMs = sw.ElapsedMilliseconds;
 
-				/*Area[] areas = AreaGenerator.From(triEnumerable, Area.Default)
+                /*Area[] areas = AreaGenerator.From(triEnumerable, Area.Default)
 					.MarkAboveHeight(areaSettings.MaxLevelHeight, Area.Null)
 					.MarkBelowHeight(areaSettings.MinLevelHeight, Area.Null)
 					.MarkBelowSlope(areaSettings.MaxTriSlope, Area.Null)
 					.ToArray();
 				heightfield.RasterizeTrianglesWithAreas(levelTris, areas);*/
-				heightfield.RasterizeTriangles(levelTris, Area.Default);
+                heightfield.RasterizeTriangles(levelTris, Area.Default);
 
-				Console.WriteLine(" + Rasterization\t\t" + (sw.ElapsedMilliseconds - prevMs).ToString("D3") + " ms");
-				Console.WriteLine(" + Filtering");
-				prevMs = sw.ElapsedMilliseconds;
+                Console.WriteLine(" + Rasterization\t\t" + (sw.ElapsedMilliseconds - prevMs).ToString("D3") + " ms");
+                Console.WriteLine(" + Filtering");
+                prevMs = sw.ElapsedMilliseconds;
 
-				heightfield.FilterLedgeSpans(settings.VoxelAgentHeight, settings.VoxelMaxClimb);
+                heightfield.FilterLedgeSpans(settings.VoxelAgentHeight, settings.VoxelMaxClimb);
 
-				Console.WriteLine("   + Ledge Spans\t\t" + (sw.ElapsedMilliseconds - prevMs).ToString("D3") + " ms");
-				prevMs = sw.ElapsedMilliseconds;
+                Console.WriteLine("   + Ledge Spans\t\t" + (sw.ElapsedMilliseconds - prevMs).ToString("D3") + " ms");
+                prevMs = sw.ElapsedMilliseconds;
 
-				heightfield.FilterLowHangingWalkableObstacles(settings.VoxelMaxClimb);
+                heightfield.FilterLowHangingWalkableObstacles(settings.VoxelMaxClimb);
 
-				Console.WriteLine("   + Low Hanging Obstacles\t" + (sw.ElapsedMilliseconds - prevMs).ToString("D3") + " ms");
-				prevMs = sw.ElapsedMilliseconds;
+                Console.WriteLine("   + Low Hanging Obstacles\t" + (sw.ElapsedMilliseconds - prevMs).ToString("D3") + " ms");
+                prevMs = sw.ElapsedMilliseconds;
 
-				heightfield.FilterWalkableLowHeightSpans(settings.VoxelAgentHeight);
+                heightfield.FilterWalkableLowHeightSpans(settings.VoxelAgentHeight);
 
-				Console.WriteLine("   + Low Height Spans\t" + (sw.ElapsedMilliseconds - prevMs).ToString("D3") + " ms");
-				prevMs = sw.ElapsedMilliseconds;
+                Console.WriteLine("   + Low Height Spans\t" + (sw.ElapsedMilliseconds - prevMs).ToString("D3") + " ms");
+                prevMs = sw.ElapsedMilliseconds;
 
-				compactHeightfield = new CompactHeightfield(heightfield, settings);
+                compactHeightfield = new CompactHeightfield(heightfield, settings);
 
-				Console.WriteLine("CompactHeightfield");
-				Console.WriteLine(" + Ctor\t\t\t\t" + (sw.ElapsedMilliseconds - prevMs).ToString("D3") + " ms");
-				prevMs = sw.ElapsedMilliseconds;
-				 
-				compactHeightfield.Erode(settings.VoxelAgentRadius);
+                Console.WriteLine("CompactHeightfield");
+                Console.WriteLine(" + Ctor\t\t\t\t" + (sw.ElapsedMilliseconds - prevMs).ToString("D3") + " ms");
+                prevMs = sw.ElapsedMilliseconds;
 
-				Console.WriteLine(" + Erosion\t\t\t" + (sw.ElapsedMilliseconds - prevMs).ToString("D3") + " ms");
-				prevMs = sw.ElapsedMilliseconds;
+                compactHeightfield.Erode(settings.VoxelAgentRadius);
 
-				compactHeightfield.BuildDistanceField();
+                Console.WriteLine(" + Erosion\t\t\t" + (sw.ElapsedMilliseconds - prevMs).ToString("D3") + " ms");
+                prevMs = sw.ElapsedMilliseconds;
 
-				Console.WriteLine(" + Distance Field\t" + (sw.ElapsedMilliseconds - prevMs).ToString("D3") + " ms");
-				prevMs = sw.ElapsedMilliseconds;
+                compactHeightfield.BuildDistanceField();
 
-				compactHeightfield.BuildRegions(0, settings.MinRegionSize, settings.MergedRegionSize);
+                Console.WriteLine(" + Distance Field\t" + (sw.ElapsedMilliseconds - prevMs).ToString("D3") + " ms");
+                prevMs = sw.ElapsedMilliseconds;
 
-				Console.WriteLine(" + Regions\t\t\t" + (sw.ElapsedMilliseconds - prevMs).ToString("D3") + " ms");
-				prevMs = sw.ElapsedMilliseconds;
+                compactHeightfield.BuildRegions(0, settings.MinRegionSize, settings.MergedRegionSize);
 
-				/*Random r = new Random();
+                Console.WriteLine(" + Regions\t\t\t" + (sw.ElapsedMilliseconds - prevMs).ToString("D3") + " ms");
+                prevMs = sw.ElapsedMilliseconds;
+
+                /*Random r = new Random();
 				regionColors = new Color4[compactHeightfield.MaxRegions];
 				regionColors[0] = Color4.Black;
 				for (int i = 1; i < regionColors.Length; i++)
@@ -142,39 +143,39 @@ namespace QuixPhysics
 				Console.WriteLine(" + Colors\t\t\t\t" + (sw.ElapsedMilliseconds - prevMs).ToString("D3") + " ms");
 				prevMs = sw.ElapsedMilliseconds;*/
 
-				contourSet = compactHeightfield.BuildContourSet(settings);
+                contourSet = compactHeightfield.BuildContourSet(settings);
 
-				Console.WriteLine("ContourSet");
-				Console.WriteLine(" + Ctor\t\t\t\t" + (sw.ElapsedMilliseconds - prevMs).ToString("D3") + " ms");
-				prevMs = sw.ElapsedMilliseconds;
+                Console.WriteLine("ContourSet");
+                Console.WriteLine(" + Ctor\t\t\t\t" + (sw.ElapsedMilliseconds - prevMs).ToString("D3") + " ms");
+                prevMs = sw.ElapsedMilliseconds;
 
-				polyMesh = new PolyMesh(contourSet, settings);
+                polyMesh = new PolyMesh(contourSet, settings);
 
-				Console.WriteLine("PolyMesh");
-				Console.WriteLine(" + Ctor\t\t\t\t" + (sw.ElapsedMilliseconds - prevMs).ToString("D3") + " ms");
-				prevMs = sw.ElapsedMilliseconds;
+                Console.WriteLine("PolyMesh");
+                Console.WriteLine(" + Ctor\t\t\t\t" + (sw.ElapsedMilliseconds - prevMs).ToString("D3") + " ms");
+                prevMs = sw.ElapsedMilliseconds;
 
-				polyMeshDetail = new PolyMeshDetail(polyMesh, compactHeightfield, settings);
+                polyMeshDetail = new PolyMeshDetail(polyMesh, compactHeightfield, settings);
 
-				Console.WriteLine("PolyMeshDetail");
-				Console.WriteLine(" + Ctor\t\t\t\t" + (sw.ElapsedMilliseconds - prevMs).ToString("D3") + " ms");
-				prevMs = sw.ElapsedMilliseconds;
+                Console.WriteLine("PolyMeshDetail");
+                Console.WriteLine(" + Ctor\t\t\t\t" + (sw.ElapsedMilliseconds - prevMs).ToString("D3") + " ms");
+                prevMs = sw.ElapsedMilliseconds;
 
-				hasGenerated = true;
+                hasGenerated = true;
 
 
-			}
-			catch (Exception e)
-			{
-				if (!interceptExceptions)
-					throw;
-				else
-					Console.WriteLine("Navmesh generation failed with exception:" + Environment.NewLine + e.ToString());
-			}
-			finally
-			{
-				sw.Stop();
-			}
+            }
+            catch (Exception e)
+            {
+                if (!interceptExceptions)
+                    throw;
+                else
+                    Console.WriteLine("Navmesh generation failed with exception:" + Environment.NewLine + e.ToString());
+            }
+            finally
+            {
+                sw.Stop();
+            }
         }
         public void SaveNavMeshToFile(string name, TiledNavMesh tiled)
         {
@@ -186,7 +187,7 @@ namespace QuixPhysics
 
             try
             {
-                new NavMeshJsonSerializer().Serialize(FILES_DIR + name,tiled);
+                new NavMeshJsonSerializer().Serialize(FILES_DIR + name, tiled);
             }
             catch (Exception e)
             {
@@ -226,12 +227,14 @@ namespace QuixPhysics
                             if (!scenesLoaded.ContainsKey(nameObj))
                             {
                                 loaderScene = new Scene();
-                            
-                            
-                                loaderScene.Open(nameObj);
-                                scenesLoaded.Add(nameObj,loaderScene);
 
-                            }else{
+
+                                loaderScene.Open(nameObj);
+                                scenesLoaded.Add(nameObj, loaderScene);
+
+                            }
+                            else
+                            {
                                 loaderScene = scenesLoaded[nameObj];
                             }
 
@@ -261,18 +264,24 @@ namespace QuixPhysics
                 }
                 scene.RootNode.Transform.Scale *= new Aspose.ThreeD.Utilities.Vector3(1, 1, 1);
                 PolygonModifier.Triangulate(scene);
-
-                using (FileStream fs = File.Create("C:/Users/Casiel/Desktop/ciberchico420/C#/SharpNav/Source/SharpNav.Examples/nav_test.obj"))
+                try
                 {
-                    scene.Save(fs, FileFormat.WavefrontOBJ);
-                    fs.Dispose();
+                    using (FileStream fs = File.Create("C:/Users/Casiel/Desktop/ciberchico420/C#/SharpNav/Source/SharpNav.Examples/nav_test.obj"))
+                    {
+                        scene.Save(fs, FileFormat.WavefrontOBJ);
+                        fs.Dispose();
+                    }
+
+                    using (FileStream fs = File.Create(FILES_DIR + name + ".obj"))
+                    {
+                        scene.Save(fs, FileFormat.WavefrontOBJ);
+                        fs.Dispose();
+                    }
+
+                }catch(DirectoryNotFoundException e){
+                    QuixConsole.Log("eror",e);
                 }
 
-                using (FileStream fs = File.Create(FILES_DIR + name + ".obj"))
-                {
-                    scene.Save(fs, FileFormat.WavefrontOBJ);
-                    fs.Dispose();
-                }
 
 
 
