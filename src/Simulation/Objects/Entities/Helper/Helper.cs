@@ -46,11 +46,14 @@ namespace QuixPhysics
         public User owner;
         private HelperAction helperAction;
         private bool canJump = true;
+        private Dummy dummy;
 
         public override void Load(Handle bodyHandle, ConnectionState connectionState, Simulator simulator, ObjectState state, Guid guid, Room room)
         {
             base.Load(bodyHandle, connectionState, simulator, state, guid, room);
             room.factory.OnContactListeners.Add(this.guid, this);
+           dummy = (Dummy)room.factory.Create(Dummy.Build(),room);
+           dummy.AddToObject(this);
         }
 
         public override void Init()

@@ -31,8 +31,6 @@ namespace QuixPhysics
         {
             return Newtonsoft.Json.JsonConvert.SerializeObject(this);
         }
-
-
     }
     public class PhyBoundBox{
         public Vector3 center;

@@ -23,9 +23,9 @@ namespace QuixPhysics
 
             var random = true;
 
-            for (int x = 0; x < 10; x++)
+            for (int x = 0; x < Hexgrid._GRID_SIZE; x++)
             {
-                for (int y = 0; y < 10; y++)
+                for (int y = 0; y < Hexgrid._GRID_SIZE; y++)
                 {
 
                     int month = rnd.Next(1, 13);

@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Numerics;
 using ContentLoader;
 using Newtonsoft.Json;
+using System.Diagnostics;
 
 namespace QuixPhysics
 {
@@ -22,6 +23,8 @@ namespace QuixPhysics
         public Dictionary<Guid, PhyObject> allObjects = new Dictionary<Guid, PhyObject>();
 
         public Dictionary<Guid, PhyObject> OnContactListeners = new Dictionary<Guid, PhyObject>();
+
+        private Stopwatch stopwatch = new Stopwatch();
         public PhyObjectFactory(Room room)
         {
             this.room = room;
@@ -36,7 +39,8 @@ namespace QuixPhysics
             if (instantiated == null)
             {
                 phy = GetPhyClass(state.type);
-                if(phy is Player2 && state.owner =="Bot"){
+                if (phy is Player2 && state.owner == "Bot")
+                {
                     phy = new PlayerBot();
                 }
             }
@@ -232,7 +236,7 @@ namespace QuixPhysics
             {
                 phy = new PhyObject();
             }
-            
+
             return phy;
         }
 
@@ -242,29 +246,22 @@ namespace QuixPhysics
             string[] bodies2 = new string[allObjects.Count];
             int bodiesAdded = 0;
 
-
-
-            for (var bodyIndex = 0; bodyIndex < set.Count; ++bodyIndex)
+            stopwatch.Reset();
+            stopwatch.Start();
+            int bodyIndex = 0;
+            foreach (var body in objectsHandlers)
             {
-                try
+                if (body.Value.bodyReference.Awake)
                 {
+                    bodies2[bodyIndex] = body.Value.getJSON();
+                    bodyIndex++;
 
-                    var handle = set.IndexToHandle[bodyIndex];
-                    if (objectsHandlers[handle].state.instantiate)
-                    {
-
-                        bodies2[bodyIndex] = objectsHandlers[handle].getJSON();
-                        bodiesAdded += 1;
-                    }
-
-
+                    bodiesAdded++;
                 }
-                catch (KeyNotFoundException e)
-                {
-                    QuixConsole.Log("Key not found", e);
-                }
-
             }
+
+            stopwatch.Stop();
+            QuixConsole.Log("time", stopwatch.Elapsed);
 
 
             foreach (var item in staticObjectsHandlers)
