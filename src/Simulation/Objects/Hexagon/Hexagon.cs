@@ -96,7 +96,7 @@ namespace QuixPhysics
                     halfSize = new Vector3(hextile.GetWidth() * 1.15f, Hexagon._SIZE / 2, 20),
                     instantiate = true,
                     position = pos,
-                    type = "Hexwall" + index + ("-x" + XY.X + "-y" + XY.Y),
+                    type = "QuixBox",
                     quaternion = quat
                 };
 

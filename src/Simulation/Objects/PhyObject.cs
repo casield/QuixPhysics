@@ -180,7 +180,10 @@ namespace QuixPhysics
 
                 staticDescription.Pose.Position = position;
                 simulator.Simulation.Statics.ApplyDescription(handle.staticHandle, staticDescription);
-                needUpdate = true;
+                if(state.instantiate){
+                    needUpdate = true;
+                }
+                
             }
             else
             {

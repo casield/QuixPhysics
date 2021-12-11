@@ -146,7 +146,7 @@ namespace QuixPhysics
                 Vector3 m_dir;
 
                 rayShape.SetRay(i, out m_origin, out m_dir);
-                simulator.Simulation.RayCast<HitHandler>(m_origin, m_dir, float.MaxValue, ref hitHandler, i);
+                simulator.Simulation.RayCast<HitHandler>(m_origin, m_dir, distance, ref hitHandler, i);
                 if (debugRayShape)
                 {
                     if (debugTime > distance)

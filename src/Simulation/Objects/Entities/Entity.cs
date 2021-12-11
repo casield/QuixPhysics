@@ -202,6 +202,7 @@ namespace QuixPhysics
         public EntityKnowledge knowledge;
         private PhyWaiter stuckWaiter;
         private Raycast raycast;
+        private bool isActive = false;
 
         public Entity()
         {
@@ -289,37 +290,41 @@ namespace QuixPhysics
         /// </summary>
         internal virtual void Update()
         {
-            if (NavQueryExists())
+            if (isActive)
             {
-                if (trail.IsActive())
+                if (NavQueryExists())
                 {
-                    OnTrailActive();
-                    if (trail.hasFinished)
+                    if (trail.IsActive())
                     {
-                        if (OnLastPolygon())
+                        OnTrailActive();
+                        if (trail.hasFinished)
                         {
-                            trail.Stop();
+                            if (OnLastPolygon())
+                            {
+                                trail.Stop();
+                            }
                         }
+                        vehicle.Arrive(trail.GetPoint());
+
                     }
-                    vehicle.Arrive(trail.GetPoint());
 
+                    else
+                    {
+                        OnTrailInactive();
+                    }
+
+
+                    if (IsFalling())
+                    {
+                        OnFall();
+                    }
+                    UpdateRaycast();
+                    CheckPositionForStuck();
+                    vehicle.Update();
+                    AfterUpdate();
                 }
-
-                else
-                {
-                    OnTrailInactive();
-                }
-
-
-                if (IsFalling())
-                {
-                    OnFall();
-                }
-                UpdateRaycast();
-                CheckPositionForStuck();
-                vehicle.Update();
-                AfterUpdate();
             }
+
 
         }
 
@@ -336,7 +341,6 @@ namespace QuixPhysics
         {
             if (bodyReference.Exists && raycast != null)
             {
-                var pos = GetPosition();
                 raycast.Update(GetPosition() + new Vector3(0, 25, 0), GetForward(), state.quaternion);
             }
 

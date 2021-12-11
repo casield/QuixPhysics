@@ -54,11 +54,11 @@ namespace QuixPhysics
         {
             users.Add(user);
 
-            if (users.Count == props.MIN_USERS)
+            if (users.Count == 1)
             {
                 Start();
             }
-
+            AddPlayer(user);
         }
 
         public override Vector3 GetStartPoint(User user)
@@ -108,6 +108,12 @@ namespace QuixPhysics
                 item.CreatePlayer(startpoint);
             }
         }
+        private void AddPlayer(User user)
+        {
+            var startpoint = room.gamemode.GetStartPoint(user);
+            user.CreatePlayer(startpoint);
+            userLoader.LoadUser(user);
+        }
 
         private void GenerateMap()
         {
@@ -116,10 +122,10 @@ namespace QuixPhysics
             // var objs = command.GenerateMap("hexagons", room);                    
             // navObjects.AddRange(objs);
 
-
+            hextilesAddon.OnMapsLoaded();
             userLoader.OnMapsLoaded();
             aIManager.OnMapsLoaded();
-            hextilesAddon.OnMapsLoaded();
+
             room.factory.createObjects();
         }
         public NavPoint GetRandomPoint(Vector3 position, Vector3 extend)
@@ -138,13 +144,14 @@ namespace QuixPhysics
         public override void Start()
         {
 
-            CreatePlayers();
+           // CreatePlayers();
 
-
+            hextilesAddon.OnStart();
             GenerateNavMesh();
+
             aIManager.OnStart();
             userLoader.OnStart();
-            hextilesAddon.OnStart();
+
 
 
             QuixConsole.Log("NavMesh ready", navMeshName);
@@ -166,7 +173,7 @@ namespace QuixPhysics
             settings.CellHeight = 1.30f * mulre;
             settings.MaxClimb = 2f;
 
-            settings.AgentHeight = 3f*mulre;
+            settings.AgentHeight = 3f * mulre;
             settings.AgentRadius = .2f * mulre;
 
 

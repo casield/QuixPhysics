@@ -81,6 +81,9 @@ namespace QuixPhysics
         {
             return active;
         }
+        public void SetActive(bool active){
+            this.active = active;
+        }
 
         public bool IsOnPoly(NavPolyId polyId, Vector3 position, Vector3 extends)
         {

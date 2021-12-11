@@ -14,6 +14,12 @@ namespace QuixPhysics
     {
 
         Simulator simulator;
+
+        internal DummyPart Create(SphereState sphereState)
+        {
+            throw new NotImplementedException();
+        }
+
         Room room;
         public Dictionary<string, PhyObject> objects = new Dictionary<string, PhyObject>();
         Simulation Simulation;
@@ -246,8 +252,6 @@ namespace QuixPhysics
             string[] bodies2 = new string[allObjects.Count];
             int bodiesAdded = 0;
 
-            stopwatch.Reset();
-            stopwatch.Start();
             int bodyIndex = 0;
             foreach (var body in objectsHandlers)
             {
@@ -260,8 +264,6 @@ namespace QuixPhysics
                 }
             }
 
-            stopwatch.Stop();
-            QuixConsole.Log("time", stopwatch.Elapsed);
 
 
             foreach (var item in staticObjectsHandlers)

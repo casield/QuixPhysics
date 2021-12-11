@@ -27,8 +27,7 @@ namespace QuixPhysics
                     instantiate = true,
                     mass = 30,
                     owner = user.sessionId,
-                    mesh = "Stadiums/Isla/Helper/Helper"
-            ,
+                  //  mesh = "Stadiums/Isla/Helper/Helper"
                     type = "Helper",
                 }, room);
 
@@ -39,10 +38,10 @@ namespace QuixPhysics
         public override void OnStart()
         {
 
-            foreach (var item in arena.room.users)
+           /* foreach (var item in arena.room.users)
             {
                 LoadUser(item.Value);
-            }
+            }*/
         }
         public override void OnMapsLoaded()
         {

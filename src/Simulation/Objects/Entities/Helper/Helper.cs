@@ -52,8 +52,8 @@ namespace QuixPhysics
         {
             base.Load(bodyHandle, connectionState, simulator, state, guid, room);
             room.factory.OnContactListeners.Add(this.guid, this);
-           dummy = (Dummy)room.factory.Create(Dummy.Build(),room);
-           dummy.AddToObject(this);
+            //dummy = (Dummy)room.factory.Create(Dummy.Build(), room);
+            //dummy.AddToObject(this);
         }
 
         public override void Init()
@@ -74,16 +74,18 @@ namespace QuixPhysics
             stats.vision = 30000;
 
             trail.OnPointChangeListener += OnPointChange;
+            this.trail.SetActive(false);
+            this.vehicle.isActive = false;
 
         }
 
         public void Jump()
         {
-            if(!canJump)return;
-            
+            if (!canJump) return;
+
             QuixConsole.Log("Jump!");
             GetBodyReference().ApplyLinearImpulse(new Vector3(0, state.mass * 100, 0));
-            canJump=false;
+            canJump = false;
         }
 
         private void OnPointChange(Vector3 point)
@@ -106,17 +108,20 @@ namespace QuixPhysics
         internal override void OnRayCastHit(PhyObject obj, Vector3 normal)
         {
             knowledge.CheckObject(obj);
-            if(obj is Hexagon){
+            if (obj is Hexagon)
+            {
                 Hexagon hexagon = (Hexagon)obj;
-                if(Distance(hexagon.GetPosition())<50 && hexagon.hextile.GetPosition().Y > GetPosition().Y+50){
+                if (Distance(hexagon.GetPosition()) < 50 && hexagon.hextile.GetPosition().Y > GetPosition().Y + 50)
+                {
                     Jump();
                 }
             }
         }
         public override void OnContact<TManifold>(PhyObject obj, TManifold manifold)
         {
-            if(!canJump){
-                canJump=true;
+            if (!canJump)
+            {
+                canJump = true;
             }
         }
 

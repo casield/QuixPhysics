@@ -161,12 +161,7 @@ namespace QuixPhysics
                     room.Value.factory.OnContactListeners[b.guid].OnContact(room.Value.factory.allObjects[a.guid],manifold);
                 }
 
-                
-
             }
-
-
-
             pairMaterial.FrictionCoefficient = a.FrictionCoefficient * b.FrictionCoefficient;
             pairMaterial.MaximumRecoveryVelocity = MathF.Max(a.MaximumRecoveryVelocity, b.MaximumRecoveryVelocity);
             pairMaterial.SpringSettings = pairMaterial.MaximumRecoveryVelocity == a.MaximumRecoveryVelocity ? a.SpringSettings : b.SpringSettings;

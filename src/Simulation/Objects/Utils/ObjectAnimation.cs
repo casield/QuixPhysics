@@ -1,4 +1,6 @@
+using System;
 using System.Numerics;
+using BepuUtilities;
 
 namespace QuixPhysics
 {
@@ -6,12 +8,80 @@ namespace QuixPhysics
     {
         public PhyObject phyObject;
 
-        public Vector3[] Animation { get; set; }
-        public int animationPosition =0;
+        private Vector3[] Animation { get; set; }
+        private Vector3 localPosition = new Vector3();
+        public int animationPosition = 0;
 
-        public ObjectAnimation(PhyObject obj){
+        private float animationVelocity = .1f;
+        private float threshold = 10f;
+        private float angle = 0;
+
+        public ObjectAnimation(PhyObject obj)
+        {
             phyObject = obj;
-            
+
+        }
+        public void Start()
+        {
+
+        }
+        public void SetAnimation(Vector3[] animation)
+        {
+            Animation = animation;
+            localPosition = Animation[0];
+        }
+        public void SetVelocity(float vel){
+            animationVelocity=vel;
+        }
+
+        private Vector3 GetLastAnimationPosition()
+        {
+
+            if (animationPosition == 0) return Animation[0];
+
+            return Animation[animationPosition - 1];
+        }
+        private Vector3 GetAnimationPosition()
+        {
+            return Animation[animationPosition];
+        }
+
+        public void Update()
+        {
+            var distance = localPosition - GetAnimationPosition();
+            if (localPosition == Animation[0] && GetAnimationPosition() == Animation[0])
+            {
+                localPosition = Animation[0];
+                animationPosition++;
+                return;
+            }
+            localPosition = Vector3.Lerp(localPosition, GetAnimationPosition(), animationVelocity / distance.Length());
+
+            if (distance.Length() <= threshold)
+            {
+                animationPosition++;
+                if (animationPosition == Animation.Length)
+                {
+                    animationPosition = 0;
+                    localPosition = Animation[0];
+                }
+            }
+
+
+        }
+
+        public Vector3 RotateToDirection(Quaternion quaternion)
+        {
+            var transform = Matrix3x3.CreateFromQuaternion(quaternion);
+
+            Matrix3x3.Transform(localPosition, transform, out Vector3 outOrigin);
+
+            return outOrigin;
+        }
+
+        public void SetPositionOnObject(Quaternion quaternion)
+        {
+            phyObject.SetPosition(phyObject.GetPosition() + RotateToDirection(quaternion));
         }
     }
 }
