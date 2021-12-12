@@ -15,11 +15,6 @@ namespace QuixPhysics
 
         Simulator simulator;
 
-        internal DummyPart Create(SphereState sphereState)
-        {
-            throw new NotImplementedException();
-        }
-
         Room room;
         public Dictionary<string, PhyObject> objects = new Dictionary<string, PhyObject>();
         Simulation Simulation;

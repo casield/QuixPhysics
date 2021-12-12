@@ -37,7 +37,7 @@ namespace QuixPhysics
         public PlayerStats playerStats = new PlayerStats
         {
             force = 60,
-            friction = .99f,
+            friction = .90f,
             speed = .15f,
             maxSpeed = 1f,
             maxDistanceWithBall = 20,

@@ -42,7 +42,7 @@ namespace QuixPhysics
             box.position = position;
 
 
-            var player = (Player2)room.Create(box);
+            var player = (Player2)room.factory.Create(box,room,null,false);
             this.player = player;
             player.user = this;
             StartGemCount();
