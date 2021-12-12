@@ -37,9 +37,9 @@ namespace QuixPhysics
         public PlayerStats playerStats = new PlayerStats
         {
             force = 60,
-            friction = .90f,
+            friction = .96f,
             speed = .15f,
-            maxSpeed = 1f,
+            maxSpeed = 3f,
             maxDistanceWithBall = 20,
             height = 30
         };
@@ -59,6 +59,7 @@ namespace QuixPhysics
         public bool cameraLocked = false;
 
         public LookObject lookObject;
+        public Dummy dummy;
 
         public Player2()
         {
@@ -69,10 +70,6 @@ namespace QuixPhysics
         {
             base.Load(bodyHandle, connectionState, simulator, state, guid, room);
             AddWorker(new PhyInterval(1, simulator)).Completed += Tick;
-
-
-            //simulator.collidableMaterials[bodyHandle.bodyHandle].collidable = true;
-            //simulator.collidableMaterials[bodyHandle.bodyHandle].SpringSettings = new SpringSettings(10f, 1f);
 
             bodyReference = simulator.Simulation.Bodies.GetBodyReference(bodyHandle.bodyHandle);
             room.factory.OnContactListeners.Add(this.guid, this);
@@ -90,9 +87,10 @@ namespace QuixPhysics
 
         private void CreateDummy()
         {
-           Dummy dummy = (Dummy)room.factory.Create(Dummy.Build(),room);
+           Dummy dummy = (Dummy)room.factory.Create(Dummy.Build(),room,null,false);
 
            dummy.AddToObject(this);
+           this.dummy = dummy;
         }
 
         /// <summary>

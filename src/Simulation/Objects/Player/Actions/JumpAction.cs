@@ -56,7 +56,7 @@ namespace QuixPhysics.Player
                 direction = Vector3.Normalize(direction);
             }
 
-            player.bodyReference.Velocity.Linear += direction * player.playerStats.force;
+            player.dummy.bodyReference.Velocity.Linear += new Vector3(0,10,0) * player.playerStats.force;
 
             canJump = false;
             ResetNormal();

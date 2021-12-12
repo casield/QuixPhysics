@@ -27,7 +27,7 @@ namespace QuixPhysics
         public override void Load(Handle bodyHandle, ConnectionState connectionState, Simulator simulator, ObjectState state, Guid guid, Room room)
         {
             base.Load(bodyHandle, connectionState, simulator, state, guid, room);
-            SetCollidable(false);
+            //SetCollidable(false);
             AddToContactListener();
             CreateDummyBody();
         }
@@ -46,8 +46,7 @@ namespace QuixPhysics
         public void AddToObject(PhyObject obj)
         {
             added = obj;
-
-            AddWorker(new PhyInterval(1, simulator)).Completed += Update;
+            room.simulator.Simulation.Solver.Add(handle.bodyHandle, obj.handle.bodyHandle, new Weld { LocalOffset = new Vector3(0, -30, 0), LocalOrientation = Quaternion.Identity, SpringSettings = new SpringSettings(30, 1) });
         }
 
         public static BoxState Build()
@@ -56,6 +55,7 @@ namespace QuixPhysics
             {
                 halfSize = new Vector3(20, 40, 20),
                 instantiate = true,
+                mass=1,
                 type = "Dummy"
             };
 
@@ -70,8 +70,8 @@ namespace QuixPhysics
 
         private void Update()
         {
-            SetPosition(added.GetPosition() + new Vector3(0, 30, 0));
-            dummyBody.arm.Update();
+         /*   SetPosition(added.GetPosition() + new Vector3(0, 30, 0));
+            dummyBody.arm.Update();*/
         }
     }
 }
