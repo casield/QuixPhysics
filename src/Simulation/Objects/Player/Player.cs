@@ -37,9 +37,9 @@ namespace QuixPhysics
         public PlayerStats playerStats = new PlayerStats
         {
             force = 60,
-            friction = .90f,
+            friction = .00f,
             speed = .15f,
-            maxSpeed = 1f,
+            maxSpeed = 3f,
             maxDistanceWithBall = 20,
             height = 30
         };
@@ -60,11 +60,6 @@ namespace QuixPhysics
 
         public LookObject lookObject;
 
-        public Player2()
-        {
-            this.updateRotation = false;
-
-        }
         public override void Load(Handle bodyHandle, ConnectionState connectionState, Simulator simulator, ObjectState state, Guid guid, Room room)
         {
             base.Load(bodyHandle, connectionState, simulator, state, guid, room);

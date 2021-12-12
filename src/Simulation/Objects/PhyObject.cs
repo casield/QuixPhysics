@@ -36,10 +36,6 @@ namespace QuixPhysics
         public ObjectState state;
         public Handle handle;
         internal Simulator simulator;
-        /// <summary>
-        /// This variable is used to know if the simulation quaternion should be adden when sending JSON to the server
-        /// </summary>
-        internal bool updateRotation = true;
         internal ConnectionState connectionState;
         public SimpleMaterial material;
         public BodyReference bodyReference;
@@ -166,9 +162,11 @@ namespace QuixPhysics
             return worker;
         }
 
-        public void AddToContactListener(){
-            if(room.factory !=null){
-                room.factory.OnContactListeners.Add(guid,this);
+        public void AddToContactListener()
+        {
+            if (room.factory != null)
+            {
+                room.factory.OnContactListeners.Add(guid, this);
             }
         }
 
@@ -180,10 +178,11 @@ namespace QuixPhysics
 
                 staticDescription.Pose.Position = position;
                 simulator.Simulation.Statics.ApplyDescription(handle.staticHandle, staticDescription);
-                if(state.instantiate){
+                if (state.instantiate)
+                {
                     needUpdate = true;
                 }
-                
+
             }
             else
             {
@@ -328,12 +327,8 @@ namespace QuixPhysics
 
         public virtual string getJSON()
         {
-
             state.position = GetPosition();
-            if (updateRotation)
-            {
-                state.quaternion = GetQuaternion();
-            }
+            state.quaternion = GetQuaternion();
             ChangeStateBeforeSend();
             return state.getJson();
         }
