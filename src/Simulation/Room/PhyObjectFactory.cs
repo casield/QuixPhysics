@@ -37,14 +37,22 @@ namespace QuixPhysics
             this.simulator = room.simulator;
             this.Simulation = simulator.Simulation;
         }
-
-        public PhyObject Create(ObjectState state, Room room, PhyObject instantiated = null)
+        /// <summary>
+        /// Creates a PhyObject. If the instantiated value is not null, it will take that instance and create the Physic object and add it to it.
+        /// Otherwise it will create a new class instance of the state.type string. (e.g. state.type == 'Player2')
+        /// </summary>
+        /// <param name="state"></param>
+        /// <param name="room"></param>
+        /// <param name="instantiated"></param>
+        /// <returns></returns>
+        public PhyObject Create(ObjectState state, Room room, PhyObject instantiated = null,bool bodyRotates=true)
         {
 
             PhyObject phy;
             if (instantiated == null)
             {
                 phy = GetPhyClass(state.type);
+                //Create a bot... should not be this way...
                 if (phy is Player2 && state.owner == "Bot")
                 {
                     phy = new PlayerBot();
@@ -66,17 +74,17 @@ namespace QuixPhysics
             {
                 if (phy is MeshBox)
                 {
-                    phy = CreateMesh((BoxState)state, room, instantiated);
+                    phy = CreateMesh((BoxState)state, room, instantiated,bodyRotates);
                 }
                 else
                 {
-                    phy = CreateBox((BoxState)state, room, instantiated);
+                    phy = CreateBox((BoxState)state, room, instantiated,bodyRotates);
                 }
 
             }
             if (state is SphereState)
             {
-                phy = CreateSphere((SphereState)state, room, instantiated);
+                phy = CreateSphere((SphereState)state, room, instantiated,bodyRotates);
             }
 
 
@@ -97,10 +105,6 @@ namespace QuixPhysics
                 }
             }
             return phy;
-
-        }
-        public void Instantiate(PhyObject phyObject, ObjectState state)
-        {
 
         }
         private PhyObject CreateVanilla(ObjectState state, CollidableDescription collidableDescription, BodyInertia bodyInertia, Room room, PhyObject instantiated)
@@ -166,15 +170,20 @@ namespace QuixPhysics
 
             return phy;
         }
-        private PhyObject CreateBox(BoxState state, Room room, PhyObject instantiated)
+
+        private PhyObject CreateBox(BoxState state, Room room, PhyObject instantiated,bool bodyRotates)
         {
 
             var box = new Box(state.halfSize.X, state.halfSize.Y, state.halfSize.Z);
 
             CollidableDescription collidableDescription = new CollidableDescription(Simulation.Shapes.Add(box), 0.1f);
             BodyInertia bodyInertia;
-
-            box.ComputeInertia(state.mass, out bodyInertia);
+            if(bodyRotates){
+                 box.ComputeInertia(state.mass, out bodyInertia);
+            }else{
+                bodyInertia = new BodyInertia{InverseMass=1/state.mass};
+            }
+           
 
 
             var phy = CreateVanilla(state, collidableDescription, bodyInertia, room, instantiated);
@@ -182,20 +191,24 @@ namespace QuixPhysics
 
         }
 
-        private PhyObject CreateSphere(SphereState state, Room room, PhyObject instantiated)
+        private PhyObject CreateSphere(SphereState state, Room room, PhyObject instantiated,bool bodyRotates)
         {
 
             var sphere = new Sphere(state.radius);
             CollidableDescription collidableDescription = new CollidableDescription(Simulation.Shapes.Add(sphere), 0.1f);
             BodyInertia bodyInertia;
-
-            sphere.ComputeInertia(state.mass, out bodyInertia);
+            if(bodyRotates){
+                sphere.ComputeInertia(state.mass, out bodyInertia);
+            }else{
+                bodyInertia = new BodyInertia{InverseMass=1/state.mass};
+            }
+            
 
             var phy = CreateVanilla(state, collidableDescription, bodyInertia, room, instantiated);
             return phy;
         }
 
-        private PhyObject CreateMesh(BoxState state, Room room, PhyObject instantiated)
+        private PhyObject CreateMesh(BoxState state, Room room, PhyObject instantiated,bool bodyRotates)
         {
             LoadModel(simulator.server.GetMesh(state.mesh), out var mesh, state.halfSize);
 
@@ -204,9 +217,13 @@ namespace QuixPhysics
             TypedIndex shapeIndex = Simulation.Shapes.Add(mesh);
 
             CollidableDescription collidableDescription = new CollidableDescription(shapeIndex, 0.1f);
-
-
-            mesh.ComputeClosedInertia(state.mass, out var bodyInertia);
+            BodyInertia bodyInertia;
+            if(bodyRotates){
+               mesh.ComputeClosedInertia(state.mass, out bodyInertia); 
+            }else{
+                bodyInertia = new BodyInertia{InverseMass=1/state.mass};
+            }
+            
 
             var phy = CreateVanilla(state, collidableDescription, bodyInertia, room, instantiated);
             phy.shapeIndex = shapeIndex;

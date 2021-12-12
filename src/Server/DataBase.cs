@@ -20,11 +20,11 @@ namespace QuixPhysics
 
         public DataBase()
         {
-            QuixConsole.WriteLine("Init Database");
+           /* QuixConsole.WriteLine("Init Database");
             MongoClient dbClient = new MongoClient("mongodb://localhost/golf");
 
             database = dbClient.GetDatabase("golf");
-            maps = database.GetCollection<MapMongo>("maps");
+            maps = database.GetCollection<MapMongo>("maps");*/
 
 
             //GetMap("arena");

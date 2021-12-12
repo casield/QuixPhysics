@@ -79,7 +79,10 @@ namespace QuixPhysics
         }
 
         private MeshContent LoadObjFile(string path){
-            var npath = Path.Combine("",path);
+             string current = Directory.GetCurrentDirectory();
+            var npath = Path.Combine(current,path);
+            QuixConsole.Log("Loading",npath);
+            //return null;
             using (FileStream fs = File.OpenRead(path))
             {
                 return MeshBuilder.Build(fs);
@@ -94,7 +97,7 @@ namespace QuixPhysics
             IPEndPoint localEndPoint = new IPEndPoint(ipAddress, 1337);
 
             // Create a TCP/IP socket.  
-            Socket listener = new Socket(ipAddress.AddressFamily,
+            Socket listener = new Socket(AddressFamily.InterNetwork,
                 SocketType.Stream, ProtocolType.Tcp);
 
 

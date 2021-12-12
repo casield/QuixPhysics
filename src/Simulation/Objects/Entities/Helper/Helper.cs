@@ -74,6 +74,7 @@ namespace QuixPhysics
             stats.vision = 30000;
 
             trail.OnPointChangeListener += OnPointChange;
+            //set movement inactive
             this.trail.SetActive(false);
             this.vehicle.isActive = false;
 
