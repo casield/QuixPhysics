@@ -13,7 +13,7 @@ namespace QuixPhysics
         public void Create(Dummy dummy)
         {
             this.dummy = dummy;
-            arm = (DummyPart)dummy.room.factory.Create(DummyPart.Build(), dummy.room, null, true);
+            arm = (DummyPart)dummy.room.factory.Create(DummyPart.Build(), dummy.room);
             arm.AddParent(dummy);
         }
     }
@@ -23,7 +23,7 @@ namespace QuixPhysics
         public event DummyContactAction onContactListener;
         public PhyObject added;
         private ObjectAnimation animation;
-        private DummyBody dummyBody;
+        public DummyBody dummyBody;
         public override void Load(Handle bodyHandle, ConnectionState connectionState, Simulator simulator, ObjectState state, Guid guid, Room room)
         {
             base.Load(bodyHandle, connectionState, simulator, state, guid, room);

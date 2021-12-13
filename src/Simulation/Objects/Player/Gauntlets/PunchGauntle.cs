@@ -2,38 +2,36 @@ using System.Numerics;
 
 namespace QuixPhysics
 {
-    public class PunchGauntle : IGauntlet
+    public class PunchGauntle : Gauntlet
     {
-        public string name { get => throw new System.NotImplementedException(); set => throw new System.NotImplementedException(); }
-
-        public void Activate(bool active)
+        public PunchGauntle()
         {
-            throw new System.NotImplementedException();
+            name = "punch";
+        }
+        public override void Init()
+        {
+
         }
 
-        public void AddPlayer(Player2 player)
+        public override void OnActivate()
         {
-            throw new System.NotImplementedException();
+
+        }
+        public override void Activate(bool active)
+        {
+            if(!active)return;
+            QuixConsole.Log("Activate punch");
+            player.dummy.dummyBody.arm.animation.RestartAnimation();
         }
 
-        public void Init()
+        public override void OnChange()
         {
-            throw new System.NotImplementedException();
+
         }
 
-        public void OnActivate()
+        public override void Swipe(double degree, Vector3 direction)
         {
-            throw new System.NotImplementedException();
-        }
 
-        public void OnChange()
-        {
-            throw new System.NotImplementedException();
-        }
-
-        public void Swipe(double degree, Vector3 direction)
-        {
-            throw new System.NotImplementedException();
         }
     }
 }

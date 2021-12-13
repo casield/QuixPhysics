@@ -52,7 +52,6 @@ namespace QuixPhysics.Player
         public override void OnUpdate()
         {
             if(!player.actionsManager.grabBallAction.IsGrabbing && IsAtracting){
-                 QuixConsole.Log("Not Grabbing");
                 if (player.golfball != null)
                 {
                     player.simulator.Simulation.Awakener.AwakenBody(player.golfball.handle.bodyHandle);

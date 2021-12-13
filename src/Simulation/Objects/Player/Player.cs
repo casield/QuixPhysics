@@ -108,8 +108,9 @@ namespace QuixPhysics
         {
             AddGauntletToAvailable(new AtractGauntlet());
             AddGauntletToAvailable(new ItemGauntlet());
+            AddGauntletToAvailable(new PunchGauntle());
 
-            ChangeGauntlet("atract");
+            ChangeGauntlet("punch");
         }
         private void AddGauntletToAvailable(IGauntlet gauntlet)
         {
@@ -193,7 +194,9 @@ namespace QuixPhysics
         {
             if (activeGauntlet != null)
             {
-               // activeGauntlet.Activate(activate);
+                activeGauntlet.Activate(activate);
+            }else{
+                QuixConsole.Log("No active gauntlet");
             }
         }
         public void Swipe(double degree, Vector3 direction)

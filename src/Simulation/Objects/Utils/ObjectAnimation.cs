@@ -8,9 +8,10 @@ namespace QuixPhysics
     {
         public PhyObject phyObject;
 
-        private Vector3[] Animation { get; set; }
+        public Vector3[] Animation { get; private set; }
         private Vector3 localPosition = new Vector3();
         public int animationPosition = 0;
+        public bool loop = false;
 
         private float animationVelocity = .1f;
         private float threshold = 10f;
@@ -34,8 +35,9 @@ namespace QuixPhysics
         /// Sets the velocity of the animation. With a higher value it goes slower.
         /// </summary>
         /// <param name="vel"></param>
-        public void SetVelocity(float vel){
-            animationVelocity=vel;
+        public void SetVelocity(float vel)
+        {
+            animationVelocity = vel;
         }
 
         private Vector3 GetLastAnimationPosition()
@@ -61,15 +63,25 @@ namespace QuixPhysics
             }
             localPosition = Vector3.Lerp(localPosition, GetAnimationPosition(), animationVelocity / distance.Length());
 
-            if (distance.Length() <= threshold)
+            if (distance.Length() <= threshold && animationPosition<Animation.Length-1)
             {
                 animationPosition++;
-                if (animationPosition == Animation.Length)
+                if (animationPosition == Animation.Length )
                 {
-                    animationPosition = 0;
-                    localPosition = Animation[0];
+                    if(loop){
+                        RestartAnimation();
+                    }
+                    
                 }
             }
+
+        }
+
+        public void RestartAnimation()
+        {
+
+            animationPosition = 0;
+            localPosition = Animation[0];
 
         }
 
@@ -78,8 +90,8 @@ namespace QuixPhysics
             var transform = Matrix3x3.CreateFromQuaternion(quaternion);
 
             Matrix3x3.Transform(localPosition, transform, out Vector3 outOrigin);
-            outOrigin.X=-outOrigin.X;
-            outOrigin.Z=-outOrigin.Z;
+            outOrigin.X = -outOrigin.X;
+            outOrigin.Z = -outOrigin.Z;
 
             return outOrigin;
         }
