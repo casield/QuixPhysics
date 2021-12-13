@@ -15,7 +15,7 @@ namespace QuixPhysics.Player
         public MoveAction moveAction;
         public JumpAction jumpAction;
         public RotationAction rotationAction;
-        public ShootAction shootAction;
+        public ShootAndGrabAction shootAction;
         public RaycastAction raycastAction;
         public FallAction fallAction;
         public  GrabBallAction grabBallAction;
@@ -35,7 +35,7 @@ namespace QuixPhysics.Player
 
             jumpAction = new JumpAction(player);
             rotationAction = new RotationAction(player);
-            shootAction = new ShootAction(player);
+            shootAction = new ShootAndGrabAction(player);
             raycastAction = new RaycastAction(player);
             fallAction = new FallAction(player);
             grabBallAction = new GrabBallAction(player);

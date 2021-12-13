@@ -14,6 +14,8 @@ namespace QuixPhysics
         private bool hasCharge = false;
 
         public bool infinite = true;
+        private byte maxForce = 8;
+
 
         public AtractGauntlet()
         {
@@ -26,49 +28,49 @@ namespace QuixPhysics
             {
 
                 golfBallRef = player.golfball.GetBodyReference();
-                vehicle = new Vehicle(player.golfball, new VehicleProps(){maxSpeed=new Vector3(.4f,.7f,.4f)});
+                vehicle = new Vehicle(player.golfball, new VehicleProps() { maxSpeed = new Vector3(.4f, .7f, .4f) });
                 vehicle.isActive = false;
                 player.simulator.Simulation.Awakener.AwakenBody(golfBallRef.Handle);
                 player.actionsManager.shootAction.ShootListeners += OnShoot;
             }
 
         }
-        
+
+
         public override void Activate(bool active)
         {
-
-            if (hasCharge || infinite)
-            {
-
-
-                CreateInterval();
-                isActive = true;
-                hasCharge = false;
-
-
-            }
-            if (isActive)
-            {
-                vehicle.isActive = active;
-                if (active)
+            
+                if (hasCharge || infinite)
                 {
-                    player.simulator.Simulation.Awakener.AwakenBody(golfBallRef.Handle);
-                }
 
-                if (!infinite)
+
+                    CreateInterval();
+                    isActive = true;
+                    hasCharge = false;
+
+
+                }
+                if (isActive)
                 {
-                    player.cameraLocked = true;
+                    vehicle.isActive = active;
+                    if (active)
+                    {
+                        player.simulator.Simulation.Awakener.AwakenBody(golfBallRef.Handle);
+                    }
+
+                    if (!infinite)
+                    {
+                        player.cameraLocked = true;
+                    }
+
                 }
-
-            }
-
-
+            
         }
         public override void Swipe(double degree, Vector3 dir)
         {
             if (isActive)
             {
-                
+
                 hasCharge = false;
                 player.simulator.Simulation.Awakener.AwakenBody(golfBallRef.Handle);
                 float force = 40;
@@ -131,6 +133,11 @@ namespace QuixPhysics
         {
             return player != null && vehicle != null;
         }
+        private bool IsGrabbing()
+        {
+            return (player.actionsManager.grabBallAction.IsGrabbing);
+
+        }
 
         public override void Update()
         {
@@ -139,7 +146,7 @@ namespace QuixPhysics
                 PhyObject whoToLook = player;
                 vehicle.Arrive(whoToLook.GetPosition());
                 vehicle.Update();
-                if (player.actionsManager.grabBallAction.IsGrabbing)
+                if (IsGrabbing())
                 {
 
                     vehicle.isActive = false;

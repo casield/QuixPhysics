@@ -193,7 +193,7 @@ namespace QuixPhysics
         {
             if (activeGauntlet != null)
             {
-                activeGauntlet.Activate(activate);
+               // activeGauntlet.Activate(activate);
             }
         }
         public void Swipe(double degree, Vector3 direction)
