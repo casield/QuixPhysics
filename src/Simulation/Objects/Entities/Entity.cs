@@ -202,7 +202,7 @@ namespace QuixPhysics
         public EntityKnowledge knowledge;
         private PhyWaiter stuckWaiter;
         private Raycast raycast;
-        private bool isActive = false;
+        private bool isActive = true;
 
         public Entity()
         {
@@ -230,7 +230,7 @@ namespace QuixPhysics
         {
             raycast = new Raycast(simulator, room);
             raycast.distance = 1000;
-            raycast.debugRayShape = true;
+            raycast.debugRayShape = false;
             raycast.SetRayShape(new SpiralRayShape(1, 20, raycast));
             raycast.ObjectHitListeners += OnRayCastHit;
         }

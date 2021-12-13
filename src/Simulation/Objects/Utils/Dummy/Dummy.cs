@@ -13,7 +13,7 @@ namespace QuixPhysics
         public void Create(Dummy dummy)
         {
             this.dummy = dummy;
-            arm = (DummyPart)dummy.room.factory.Create(DummyPart.Build(), dummy.room);
+            arm = (DummyPart)dummy.room.factory.Create(DummyPart.Build(), dummy.room, null, true);
             arm.AddParent(dummy);
         }
     }
@@ -34,6 +34,7 @@ namespace QuixPhysics
 
         private void CreateDummyBody()
         {
+            QuixConsole.Log("Create DymmyBody");
             dummyBody = new DummyBody();
             dummyBody.Create(this);
         }
@@ -46,7 +47,14 @@ namespace QuixPhysics
         public void AddToObject(PhyObject obj)
         {
             added = obj;
-            room.simulator.Simulation.Solver.Add(handle.bodyHandle, obj.handle.bodyHandle, new Weld { LocalOffset = new Vector3(0, -30, 0), LocalOrientation = Quaternion.Identity, SpringSettings = new SpringSettings(30, 1) });
+            QuixConsole.Log("height", added.GetHeight());
+            room.simulator.Simulation.Solver.Add(handle.bodyHandle, obj.handle.bodyHandle,
+             new Weld
+             {
+                 LocalOffset = new Vector3(0, -(added.GetHeight() * 1.5f), 0),
+                 LocalOrientation = Quaternion.Identity,
+                 SpringSettings = new SpringSettings(30, 1)
+             });
         }
 
         public static BoxState Build()
@@ -54,8 +62,8 @@ namespace QuixPhysics
             return new BoxState()
             {
                 halfSize = new Vector3(20, 40, 20),
-                instantiate = true,
-                mass=1,
+                instantiate = false,
+                mass = 1,
                 type = "Dummy"
             };
 
@@ -63,15 +71,10 @@ namespace QuixPhysics
 
         public void OnDummyPartHit(DummyPart part, PhyObject hitObj, Vector3 normal)
         {
-            if(this.added is Player2){
-                QuixConsole.Log(hitObj.state.type,hitObj.state.uID);
+            if (this.added is Player2)
+            {
+                QuixConsole.Log(hitObj.state.type, hitObj.state.uID);
             }
-        }
-
-        private void Update()
-        {
-         /*   SetPosition(added.GetPosition() + new Vector3(0, 30, 0));
-            dummyBody.arm.Update();*/
         }
     }
 }

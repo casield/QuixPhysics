@@ -266,7 +266,7 @@ namespace QuixPhysics
                 }
                 else
                 {
-                    QuixConsole.Log("Polys not found", polyArounObj.Count, polyAroundTarget.Count);
+                   // QuixConsole.Log("Polys not found", polyArounObj.Count, polyAroundTarget.Count);
                     return false;
                 }
             }

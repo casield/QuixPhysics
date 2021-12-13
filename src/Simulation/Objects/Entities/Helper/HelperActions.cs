@@ -13,7 +13,7 @@ namespace QuixPhysics
 
         public bool OnLastPolygon()
         {
-            // GoRandomPoint(); 
+             GoRandomPoint(); 
             if (LastPointIsClose())
             {
                 return true;
@@ -53,15 +53,8 @@ namespace QuixPhysics
 
         public void OnTrailInactive()
         {
-            /*if (helper.trail.PolysAround(helper.GetPosition(), new System.Numerics.Vector3(500)).Count > 0)
-            {*/
-
             QuixConsole.Log("Trail inactive");
             GoRandomPoint();
-
-
-            // }
-
         }
 
         public void OnStuck()

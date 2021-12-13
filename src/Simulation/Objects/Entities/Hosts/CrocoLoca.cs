@@ -15,7 +15,7 @@ namespace QuixPhysics
 
         public void CreateQuixtam(){
             
-            Quixtam quixtam = (Quixtam)room.factory.Create(Quixtam.Build(state.position+new Vector3(150,-300,0)),room);
+            Quixtam quixtam = (Quixtam)room.factory.Create(Quixtam.Build(state.position+new Vector3(150,-400,0)),room);
         }
         
         public override void ChangeStateBeforeSend()

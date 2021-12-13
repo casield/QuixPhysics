@@ -49,6 +49,7 @@ namespace QuixPhysics.Player
 
         public void Jump(Vector3 direction)
         {
+            if(player.dummy == null)return;
             player.bodyReference.Awake = true;
 
             if (direction != Vector3.Zero)

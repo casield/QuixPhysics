@@ -52,8 +52,8 @@ namespace QuixPhysics
         {
             base.Load(bodyHandle, connectionState, simulator, state, guid, room);
             room.factory.OnContactListeners.Add(this.guid, this);
-            //dummy = (Dummy)room.factory.Create(Dummy.Build(), room);
-            //dummy.AddToObject(this);
+           // dummy = (Dummy)room.factory.Create(Dummy.Build(), room,null,false);
+           // dummy.AddToObject(this);
         }
 
         public override void Init()
@@ -64,9 +64,8 @@ namespace QuixPhysics
             SetItems();
             var randompoint = room.GetGameMode<Arena>().hextilesAddon.GetRandomHextile().GetPosition();
             QuixConsole.Log("Random point", randompoint);
-            var planeVelocity = 0.04f;
+            var planeVelocity = .04f;
             vehicle.props.maxSpeed = new Vector3(planeVelocity, .01f, planeVelocity);
-            // vehicle.isActive = false;
             helperAction = new HelperAction(this);
 
 
@@ -74,10 +73,17 @@ namespace QuixPhysics
             stats.vision = 30000;
 
             trail.OnPointChangeListener += OnPointChange;
-            //set movement inactive
-            this.trail.SetActive(false);
-            this.vehicle.isActive = false;
 
+
+            // SetMoveActive(true);
+
+
+        }
+
+        public void SetMoveActive(bool active)
+        {
+            this.trail.SetActive(active);
+            this.vehicle.isActive = active;
         }
 
         public void Jump()
@@ -213,6 +219,7 @@ namespace QuixPhysics
 
         public override void OnTrailInactive()
         {
+
             if (currentLoop != null)
             {
                 currentLoop.OnTrailInactive();
@@ -228,7 +235,6 @@ namespace QuixPhysics
 
         public override void OnTrailActive()
         {
-            var point = trail.GetPoint();
             if (currentLoop != null)
             {
                 currentLoop.OnTrailActive();

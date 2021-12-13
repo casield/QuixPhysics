@@ -166,9 +166,11 @@ namespace QuixPhysics
             return worker;
         }
 
-        public void AddToContactListener(){
-            if(room.factory !=null){
-                room.factory.OnContactListeners.Add(guid,this);
+        public void AddToContactListener()
+        {
+            if (room.factory != null)
+            {
+                room.factory.OnContactListeners.Add(guid, this);
             }
         }
 
@@ -180,10 +182,11 @@ namespace QuixPhysics
 
                 staticDescription.Pose.Position = position;
                 simulator.Simulation.Statics.ApplyDescription(handle.staticHandle, staticDescription);
-                if(state.instantiate){
+                if (state.instantiate)
+                {
                     needUpdate = true;
                 }
-                
+
             }
             else
             {
@@ -245,6 +248,18 @@ namespace QuixPhysics
             var v = Vector3.Normalize(GetVelocity());
             v.Y = 0;
             return v;
+        }
+
+        public float GetHeight()
+        {
+            if (state is SphereState)
+            {
+                return ((SphereState)state).radius*2;
+            }
+            else
+            {
+                return ((BoxState)state).halfSize.Y*2;
+            }
         }
 
 

@@ -30,6 +30,10 @@ namespace QuixPhysics
             Animation = animation;
             localPosition = Animation[0];
         }
+        /// <summary>
+        /// Sets the velocity of the animation. With a higher value it goes slower.
+        /// </summary>
+        /// <param name="vel"></param>
         public void SetVelocity(float vel){
             animationVelocity=vel;
         }
@@ -67,7 +71,6 @@ namespace QuixPhysics
                 }
             }
 
-
         }
 
         public Vector3 RotateToDirection(Quaternion quaternion)
@@ -75,13 +78,10 @@ namespace QuixPhysics
             var transform = Matrix3x3.CreateFromQuaternion(quaternion);
 
             Matrix3x3.Transform(localPosition, transform, out Vector3 outOrigin);
+            outOrigin.X=-outOrigin.X;
+            outOrigin.Z=-outOrigin.Z;
 
             return outOrigin;
-        }
-
-        public void SetPositionOnObject(Quaternion quaternion)
-        {
-            phyObject.SetPosition(phyObject.GetPosition() + RotateToDirection(quaternion));
         }
     }
 }

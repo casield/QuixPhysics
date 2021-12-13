@@ -27,7 +27,7 @@ namespace QuixPhysics
                     instantiate = true,
                     mass = 30,
                     owner = user.sessionId,
-                  //  mesh = "Stadiums/Isla/Helper/Helper"
+                    //mesh = "Stadiums/Isla/Helper/Helper",
                     type = "Helper",
                 }, room);
 
