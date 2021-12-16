@@ -75,7 +75,7 @@ namespace QuixPhysics
             trail.OnPointChangeListener += OnPointChange;
 
 
-             SetMoveActive(false);
+           //  SetMoveActive(false);
 
 
         }
