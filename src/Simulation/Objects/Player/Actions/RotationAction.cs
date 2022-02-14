@@ -8,8 +8,9 @@ namespace QuixPhysics.Player
     {
         private XYMessage rotateMessage;
         private float rotationAcceleration;
-        private float rotationSpeed = 2.5f;
-        private float maxAcc = 0.5f;
+        private static float _rotationSpeed = .5f;
+        private float rotationSpeed = _rotationSpeed;
+        private float maxAcc = .4f;
 
         public RotationAction(Player2 player) : base(player)
         {
@@ -17,10 +18,12 @@ namespace QuixPhysics.Player
 
         public override void OnActivate()
         {
-           
+
         }
-        public void SetRotateMessage(XYMessage message){
-            rotateMessage = message;
+        public void SetRotateMessage(XYMessage message)
+        {
+          
+            rotateMessage = message;  
         }
 
         public override void OnUpdate()
@@ -29,14 +32,18 @@ namespace QuixPhysics.Player
             {
                 if (rotateMessage.clientId != null)
                 {
+                    var x= Math.Abs(rotateMessage.x);
+                    var distance = 1-x;
                     player.bodyReference.Awake = true;
-
-                    if (Math.Abs(rotateMessage.x) > 0)
+                    if (x > 0)
                     {
                         player.bodyReference.Awake = true;
-                        rotationAcceleration += rotationSpeed * rotateMessage.x;
+                        rotationAcceleration +=(rotationSpeed) * rotateMessage.x;
+                    
                         rotationAcceleration = Math.Clamp(rotationAcceleration, -maxAcc, maxAcc);
-                        rotationAcceleration /= 100;
+                        rotationAcceleration/=100;
+                       // MathF.Pow(2f,(7/x));
+                        
                     }
 
                     player.lookObject.AddY(rotateMessage.y);

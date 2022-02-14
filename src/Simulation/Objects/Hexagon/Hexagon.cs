@@ -9,7 +9,7 @@ namespace QuixPhysics
     public class Hexagon : MeshBox
     {
 
-        public static float _SIZE = 1000;
+        public static float _SIZE = 500;
         public Hextile hextile;
         public static BoxState Build(Vector3 position)
         {

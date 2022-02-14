@@ -136,7 +136,7 @@ namespace QuixPhysics
             {
                 instantiate = true,
                 mass = 0,
-                //halfSize=new Vector3(10,10,10),
+                halfSize=new Vector3(10,10,10),
                 type = "LookObject",
                 owner = state.owner
             });

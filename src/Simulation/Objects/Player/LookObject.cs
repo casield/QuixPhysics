@@ -12,20 +12,20 @@ namespace QuixPhysics
         private float yMessage = 0;
         private float yAdded = 0;
 
-        private float acceleration = 0;
-        private float velocity = .03f;
+        private float accelerationY = 0;
+        private float velocity = .3f;
 
         private bool released = true;
         /// <summary>
         /// How much up can LookObject go.
         /// </summary>
-        private float maxYAdded = 380;
+        private float maxYAdded = 150;
 
         float distance = 300;
         public override void BeforeLoad(ObjectState state)
         {
             base.BeforeLoad(state);
-         //   ((BoxState)state).halfSize = new Vector3(10, 10, 10);
+            //   ((BoxState)state).halfSize = new Vector3(10, 10, 10);
         }
 
         public override void Load(Handle bodyHandle, ConnectionState connectionState, Simulator simulator, ObjectState state, Guid guid, Room room)
@@ -71,16 +71,12 @@ namespace QuixPhysics
         {
             ChangeWatching(player);
         }
-        float Lerp(float firstFloat, float secondFloat, float by)
-        {
-            return firstFloat * (1 - by) + secondFloat * by;
-        }
         public void SetLookPosition(Vector3 position)
         {
             if (watching is Player2)
             {
                 var newpos = GetAroundPosition();
-                SetPosition(Vector3.Lerp(newpos, GetPosition(), .9f));
+                SetPosition(Vector3.Lerp(newpos, GetPosition(), .1f));
             }
             else
             {
@@ -90,30 +86,13 @@ namespace QuixPhysics
         }
         public Vector3 GetAroundPosition()
         {
-            float sep = 0;
+
             var newPos = player.GetPosition();
-            var x = -(float)Math.Cos(player.rotationController + sep);
-            var y = -(float)Math.Sin(player.rotationController + sep);
+            var x = -(float)Math.Cos(player.rotationController);
+            var y = -(float)Math.Sin(player.rotationController);
 
             newPos.X += (x * distance);
             newPos.Z += y * distance;
-
-            if (yMessage != 0)
-            {
-                acceleration += velocity * yMessage;
-
-                //  acceleration = 
-            }
-            else
-            {
-
-                acceleration *= .9f;
-            }
-            yAdded += acceleration;
-
-            yAdded = Math.Clamp(yAdded, -(maxYAdded), maxYAdded * .5f);
-            newPos.Y -= yAdded;
-
 
             return newPos;
         }
