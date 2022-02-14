@@ -17,7 +17,7 @@ namespace QuixPhysics
             base.Load(bodyHandle, connectionState, simulator, state, guid, room);
             SetCollidable(true);
             animation = new ObjectAnimation(this);
-            animation.SetAnimation(new Vector3[] { new Vector3(30, -20, -30), new Vector3(15, -10, -30), new Vector3(100, 0, 0) });
+            animation.SetAnimation(new Vector3[] { new Vector3(-30,0,-30),new Vector3(-30,0,-40) });
             animation.SetVelocity(1f);
             animation.Start();
             AddWorker(new PhyInterval(1, simulator)).Completed += Update;

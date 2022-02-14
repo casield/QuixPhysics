@@ -62,6 +62,9 @@ namespace QuixPhysics
                 return;
             }
             localPosition = Vector3.Lerp(localPosition, GetAnimationPosition(), animationVelocity / distance.Length());
+            if(float.IsNaN(localPosition.X) || float.IsNaN(localPosition.Y) || float.IsNaN(localPosition.Z)){
+                localPosition = GetAnimationPosition();
+            }
 
             if (distance.Length() <= threshold && animationPosition<Animation.Length-1)
             {

@@ -144,17 +144,17 @@ namespace QuixPhysics
         public override void Start()
         {
 
-           // CreatePlayers();
-
-            hextilesAddon.OnStart();
-            GenerateNavMesh();
-
-            aIManager.OnStart();
-            userLoader.OnStart();
-
-
-
-            QuixConsole.Log("NavMesh ready", navMeshName);
+            // CreatePlayers();
+            var timeout = new PhyTimeOut(3000, simulator, true);
+            timeout.Completed += () =>
+            {
+                hextilesAddon.OnStart();
+                GenerateNavMesh();
+                aIManager.OnStart();
+                userLoader.OnStart();
+                QuixConsole.Log("NavMesh ready", navMeshName);
+            };
+            simulator.workers.Add(timeout);
         }
 
         private void GenerateNavMesh()

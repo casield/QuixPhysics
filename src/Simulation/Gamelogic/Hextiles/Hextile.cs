@@ -18,6 +18,11 @@ namespace QuixPhysics.Hextiles
 
         public float randomHeight = 0;
 
+        /// <summary>
+        /// Three types normal, 
+        /// </summary>
+        public String type = "normal";
+
         public Hextile(Hexgrid hexagon, int position)
         {
             this._hexgrid = hexagon;
@@ -26,7 +31,7 @@ namespace QuixPhysics.Hextiles
             Random random = new Random();
             if (random.Next(0, 100) > 90)
             {
-                randomHeight = random.Next(0, 400);
+                randomHeight = random.Next(0, 100);
             }
 
         }

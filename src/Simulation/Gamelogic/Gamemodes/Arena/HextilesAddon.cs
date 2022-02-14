@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Numerics;
 
 using QuixPhysics.Hextiles;
@@ -10,6 +11,8 @@ namespace QuixPhysics
     {
 
         Hexgrid hexgrid;
+        List<Hexagon> addedHexagons = new List<Hexagon>();
+        Random rnd = new Random();
         public bool IsOdd(float value)
         {
             return value % 2 != 0;
@@ -18,7 +21,7 @@ namespace QuixPhysics
         public HextilesAddon(Simulator simulator, Arena arena) : base(simulator, arena)
         {
             hexgrid = new Hexgrid(Hexagon._SIZE);
-            Random rnd = new Random();
+
             QuixConsole.Log("Creating Hextile");
 
             var random = true;
@@ -54,6 +57,8 @@ namespace QuixPhysics
                     ob.AddHextile(hextile);
                     arena.navObjects.Add(ob);
 
+                    addedHexagons.Add(ob);
+
                     var wallspos = new List<int>();
                     /*****/
 
@@ -65,13 +70,9 @@ namespace QuixPhysics
 
                         if (tt == null)
                         {
-
                             wallspos.Add(num);
                         }
                     }
-
-
-
 
                     var walls = ob.AddWalls(wallspos.ToArray());
 
@@ -83,12 +84,22 @@ namespace QuixPhysics
 
         public Hextile GetRandomHextile()
         {
-         return hexgrid.GetRandomHextile();
+            return hexgrid.GetRandomHextile();
         }
 
         public override void OnStart()
         {
+            for (int i = 0; i < addedHexagons.Count; i++)
+            {
+                Hexagon hexagon = addedHexagons[i];
+                Color randomColor = Color.FromArgb(rnd.Next(256), rnd.Next(256), rnd.Next(256));
+                hexagon.ChangeColor(HexConverter(randomColor));
+            }
             // throw new NotImplementedException();
+        }
+        private static String HexConverter(System.Drawing.Color c)
+        {
+            return "#" + c.R.ToString("X2") + c.G.ToString("X2") + c.B.ToString("X2");
         }
     }
 }

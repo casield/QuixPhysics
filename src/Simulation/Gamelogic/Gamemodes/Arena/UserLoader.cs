@@ -21,7 +21,7 @@ namespace QuixPhysics
 
             for (int i = 0; i < 1; i++)
             {
-                Entity entity = (Entity)room.factory.Create(new SphereState()
+                /*Entity entity = (Entity)room.factory.Create(new SphereState()
                 {
                     radius = 30,//halfSize=new Vector3(100),
                     instantiate = true,
@@ -31,7 +31,7 @@ namespace QuixPhysics
                     type = "Helper",
                 }, room);
 
-                entity.Init();
+                entity.Init();*/
             }
             //Load saved Items
         }
