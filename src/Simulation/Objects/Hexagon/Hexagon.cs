@@ -47,26 +47,11 @@ namespace QuixPhysics
             this.hex = hex;
         }
         #region Hexagon Calculation
-        /// <summary>
-        /// Get HexSide of some position
-        /// /// </summary>
-        /// <returns></returns>
-        public Vector3 GetCornerPoint(float cornerPoint)
-        {
-            var _size = _SIZE / 2;
-            var angle_deg = 60 * cornerPoint;
-            var angle_rad = (MathF.PI / 180) * angle_deg;
-            var hexagon_pos = this.GetPosition();
-
-            return new Vector3(hexagon_pos.X + _size * MathF.Cos(angle_rad),
-            hexagon_pos.Y,
-            hexagon_pos.Z + _size * MathF.Sin(angle_rad));
-        }
 
         public Vector3 GetSidePoint(float point)
         {
-            var _size = _SIZE / 2;
-            var angle_deg = 60 * point - 30;
+            var _size = 230;
+            var angle_deg = -60 * point;
             var angle_rad = (MathF.PI / 180) * angle_deg;
             var hexagon_pos = GetPosition();
 
@@ -77,18 +62,18 @@ namespace QuixPhysics
 
         public Vector3 GetPointDirection(Vector3 point)
         {
-            return -(Vector3.Normalize(point - GetPosition()));
+            return (Vector3.Normalize(point - GetPosition()));
         }
         #endregion
 
         #region Game Functions
-        public PhyObject[] AddWalls(int[] sides)
+        public PhyObject[] AddWalls(int[] sides,HextilesAddon hextilesAddon)
         {
 
             List<PhyObject> wall = new List<PhyObject>();
             foreach (var index in sides)
             {
-                var XY = hextile.getXY();
+                var XY = hextilesAddon.GetPositionFromHex(hex);
                 var pos = GetSidePoint(index) + new Vector3(0, Hexagon._SIZE / 2, 0);
                 var dir = GetPointDirection(pos);
                 var rot = MathF.Atan2(dir.X, dir.Z);
@@ -98,7 +83,7 @@ namespace QuixPhysics
                 var boxState = new BoxState()
                 {
 
-                    halfSize = new Vector3(hextile.GetWidth() * 1.15f, Hexagon._SIZE / 2, 20),
+                    halfSize = new Vector3(250, Hexagon._SIZE / 2, 20),
                     instantiate = true,
                     position = pos,
                     type = "QuixBox",

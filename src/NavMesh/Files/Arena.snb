@@ -13,7 +13,7 @@
   "tileWidth": 2490.0002,
   "tileHeight": 2250.0002,
   "maxTiles": 1.0,
-  "maxPolys": 94.0,
+  "maxPolys": 83.0,
   "tiles": [
     {
       "polyId": 128,
@@ -594,64 +594,102 @@
         },
         {
           "PolyType": 0,
-          "Links": [
-            {
-              "Reference": 146,
-              "Edge": 2,
-              "Side": 255,
-              "BMin": 0,
-              "BMax": 0
-            }
-          ],
+          "Links": [],
           "Verts": [
             28,
             29,
             30,
-            0,
-            0,
-            0
-          ],
-          "Neis": [
-            0,
-            0,
-            19,
-            0,
-            0,
-            0
-          ],
-          "Tag": null,
-          "VertCount": 3,
-          "Area": 255
-        },
-        {
-          "PolyType": 0,
-          "Links": [
-            {
-              "Reference": 146,
-              "Edge": 2,
-              "Side": 255,
-              "BMin": 0,
-              "BMax": 0
-            }
-          ],
-          "Verts": [
-            30,
             31,
             32,
+            0
+          ],
+          "Neis": [
             0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "Tag": null,
+          "VertCount": 5,
+          "Area": 255
+        },
+        {
+          "PolyType": 0,
+          "Links": [],
+          "Verts": [
+            34,
+            35,
+            36,
+            33,
             0,
             0
           ],
           "Neis": [
             0,
             0,
-            19,
+            0,
             0,
             0,
             0
           ],
           "Tag": null,
-          "VertCount": 3,
+          "VertCount": 4,
+          "Area": 255
+        },
+        {
+          "PolyType": 0,
+          "Links": [],
+          "Verts": [
+            38,
+            39,
+            40,
+            37,
+            0,
+            0
+          ],
+          "Neis": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "Tag": null,
+          "VertCount": 4,
+          "Area": 255
+        },
+        {
+          "PolyType": 0,
+          "Links": [
+            {
+              "Reference": 147,
+              "Edge": 2,
+              "Side": 255,
+              "BMin": 0,
+              "BMax": 0
+            }
+          ],
+          "Verts": [
+            46,
+            41,
+            42,
+            45,
+            0,
+            0
+          ],
+          "Neis": [
+            0,
+            0,
+            20,
+            0,
+            0,
+            0
+          ],
+          "Tag": null,
+          "VertCount": 4,
           "Area": 255
         },
         {
@@ -659,71 +697,26 @@
           "Links": [
             {
               "Reference": 146,
-              "Edge": 2,
+              "Edge": 3,
               "Side": 255,
               "BMin": 0,
               "BMax": 0
             }
           ],
           "Verts": [
-            32,
-            33,
-            34,
-            0,
+            42,
+            43,
+            44,
+            45,
             0,
             0
           ],
           "Neis": [
+            0,
             0,
             0,
             19,
             0,
-            0,
-            0
-          ],
-          "Tag": null,
-          "VertCount": 3,
-          "Area": 255
-        },
-        {
-          "PolyType": 0,
-          "Links": [
-            {
-              "Reference": 145,
-              "Edge": 2,
-              "Side": 255,
-              "BMin": 0,
-              "BMax": 0
-            },
-            {
-              "Reference": 144,
-              "Edge": 1,
-              "Side": 255,
-              "BMin": 0,
-              "BMax": 0
-            },
-            {
-              "Reference": 143,
-              "Edge": 0,
-              "Side": 255,
-              "BMin": 0,
-              "BMax": 0
-            }
-          ],
-          "Verts": [
-            28,
-            30,
-            32,
-            34,
-            0,
-            0
-          ],
-          "Neis": [
-            16,
-            17,
-            18,
-            0,
-            0,
             0
           ],
           "Tag": null,
@@ -734,95 +727,10 @@
           "PolyType": 0,
           "Links": [],
           "Verts": [
-            36,
-            37,
-            38,
-            35,
-            0,
-            0
-          ],
-          "Neis": [
-            0,
-            0,
-            0,
-            0,
-            0,
-            0
-          ],
-          "Tag": null,
-          "VertCount": 4,
-          "Area": 255
-        },
-        {
-          "PolyType": 0,
-          "Links": [],
-          "Verts": [
-            40,
-            41,
-            42,
-            39,
-            0,
-            0
-          ],
-          "Neis": [
-            0,
-            0,
-            0,
-            0,
-            0,
-            0
-          ],
-          "Tag": null,
-          "VertCount": 4,
-          "Area": 255
-        },
-        {
-          "PolyType": 0,
-          "Links": [
-            {
-              "Reference": 151,
-              "Edge": 2,
-              "Side": 255,
-              "BMin": 0,
-              "BMax": 0
-            }
-          ],
-          "Verts": [
-            50,
-            43,
-            44,
-            49,
-            0,
-            0
-          ],
-          "Neis": [
-            0,
-            0,
-            24,
-            0,
-            0,
-            0
-          ],
-          "Tag": null,
-          "VertCount": 4,
-          "Area": 255
-        },
-        {
-          "PolyType": 0,
-          "Links": [
-            {
-              "Reference": 151,
-              "Edge": 3,
-              "Side": 255,
-              "BMin": 0,
-              "BMax": 0
-            }
-          ],
-          "Verts": [
-            46,
-            47,
             48,
             49,
+            50,
+            47,
             0,
             0
           ],
@@ -830,7 +738,7 @@
             0,
             0,
             0,
-            24,
+            0,
             0,
             0
           ],
@@ -840,89 +748,12 @@
         },
         {
           "PolyType": 0,
-          "Links": [
-            {
-              "Reference": 149,
-              "Edge": 3,
-              "Side": 255,
-              "BMin": 0,
-              "BMax": 0
-            },
-            {
-              "Reference": 150,
-              "Edge": 2,
-              "Side": 255,
-              "BMin": 0,
-              "BMax": 0
-            }
-          ],
+          "Links": [],
           "Verts": [
-            44,
-            45,
-            46,
-            49,
-            0,
-            0
-          ],
-          "Neis": [
-            0,
-            0,
-            23,
-            22,
-            0,
-            0
-          ],
-          "Tag": null,
-          "VertCount": 4,
-          "Area": 255
-        },
-        {
-          "PolyType": 0,
-          "Links": [
-            {
-              "Reference": 153,
-              "Edge": 2,
-              "Side": 255,
-              "BMin": 0,
-              "BMax": 0
-            }
-          ],
-          "Verts": [
-            51,
             52,
             53,
-            56,
-            0,
-            0
-          ],
-          "Neis": [
-            0,
-            0,
-            26,
-            0,
-            0,
-            0
-          ],
-          "Tag": null,
-          "VertCount": 4,
-          "Area": 255
-        },
-        {
-          "PolyType": 0,
-          "Links": [
-            {
-              "Reference": 152,
-              "Edge": 3,
-              "Side": 255,
-              "BMin": 0,
-              "BMax": 0
-            }
-          ],
-          "Verts": [
-            53,
             54,
-            55,
-            56,
+            51,
             0,
             0
           ],
@@ -930,7 +761,7 @@
             0,
             0,
             0,
-            25,
+            0,
             0,
             0
           ],
@@ -940,52 +771,36 @@
         },
         {
           "PolyType": 0,
-          "Links": [
-            {
-              "Reference": 155,
-              "Edge": 2,
-              "Side": 255,
-              "BMin": 0,
-              "BMax": 0
-            }
-          ],
+          "Links": [],
           "Verts": [
+            56,
             57,
             58,
-            59,
-            0,
+            55,
             0,
             0
           ],
           "Neis": [
             0,
             0,
-            28,
+            0,
             0,
             0,
             0
           ],
           "Tag": null,
-          "VertCount": 3,
+          "VertCount": 4,
           "Area": 255
         },
         {
           "PolyType": 0,
-          "Links": [
-            {
-              "Reference": 154,
-              "Edge": 4,
-              "Side": 255,
-              "BMin": 0,
-              "BMax": 0
-            }
-          ],
+          "Links": [],
           "Verts": [
             59,
             60,
             61,
-            62,
-            57,
+            0,
+            0,
             0
           ],
           "Neis": [
@@ -993,67 +808,51 @@
             0,
             0,
             0,
-            27,
+            0,
             0
           ],
           "Tag": null,
-          "VertCount": 5,
+          "VertCount": 3,
           "Area": 255
         },
         {
           "PolyType": 0,
-          "Links": [
-            {
-              "Reference": 157,
-              "Edge": 3,
-              "Side": 255,
-              "BMin": 0,
-              "BMax": 0
-            }
-          ],
+          "Links": [],
           "Verts": [
-            65,
+            62,
+            63,
+            64,
+            0,
+            0,
+            0
+          ],
+          "Neis": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "Tag": null,
+          "VertCount": 3,
+          "Area": 255
+        },
+        {
+          "PolyType": 0,
+          "Links": [],
+          "Verts": [
             66,
             67,
             68,
-            0,
-            0
-          ],
-          "Neis": [
-            0,
-            0,
-            0,
-            30,
-            0,
-            0
-          ],
-          "Tag": null,
-          "VertCount": 4,
-          "Area": 255
-        },
-        {
-          "PolyType": 0,
-          "Links": [
-            {
-              "Reference": 156,
-              "Edge": 2,
-              "Side": 255,
-              "BMin": 0,
-              "BMax": 0
-            }
-          ],
-          "Verts": [
-            63,
-            64,
             65,
-            68,
             0,
             0
           ],
           "Neis": [
             0,
             0,
-            29,
+            0,
             0,
             0,
             0
@@ -1064,51 +863,35 @@
         },
         {
           "PolyType": 0,
-          "Links": [
-            {
-              "Reference": 159,
-              "Edge": 3,
-              "Side": 255,
-              "BMin": 0,
-              "BMax": 0
-            }
-          ],
+          "Links": [],
           "Verts": [
+            69,
             70,
             71,
             72,
-            73,
-            69,
+            0,
             0
           ],
           "Neis": [
             0,
             0,
             0,
-            32,
+            0,
             0,
             0
           ],
           "Tag": null,
-          "VertCount": 5,
+          "VertCount": 4,
           "Area": 255
         },
         {
           "PolyType": 0,
-          "Links": [
-            {
-              "Reference": 158,
-              "Edge": 3,
-              "Side": 255,
-              "BMin": 0,
-              "BMax": 0
-            }
-          ],
+          "Links": [],
           "Verts": [
             73,
             74,
             75,
-            69,
+            0,
             0,
             0
           ],
@@ -1116,12 +899,12 @@
             0,
             0,
             0,
-            31,
+            0,
             0,
             0
           ],
           "Tag": null,
-          "VertCount": 4,
+          "VertCount": 3,
           "Area": 255
         },
         {
@@ -1174,7 +957,7 @@
           "PolyType": 0,
           "Links": [
             {
-              "Reference": 163,
+              "Reference": 159,
               "Edge": 2,
               "Side": 255,
               "BMin": 0,
@@ -1192,7 +975,7 @@
           "Neis": [
             0,
             0,
-            36,
+            32,
             0,
             0,
             0
@@ -1205,7 +988,7 @@
           "PolyType": 0,
           "Links": [
             {
-              "Reference": 162,
+              "Reference": 158,
               "Edge": 3,
               "Side": 255,
               "BMin": 0,
@@ -1224,7 +1007,7 @@
             0,
             0,
             0,
-            35,
+            31,
             0,
             0
           ],
@@ -1257,135 +1040,20 @@
         },
         {
           "PolyType": 0,
-          "Links": [
-            {
-              "Reference": 168,
-              "Edge": 2,
-              "Side": 255,
-              "BMin": 0,
-              "BMax": 0
-            }
-          ],
-          "Verts": [
-            97,
-            98,
-            99,
-            0,
-            0,
-            0
-          ],
-          "Neis": [
-            0,
-            0,
-            41,
-            0,
-            0,
-            0
-          ],
-          "Tag": null,
-          "VertCount": 3,
-          "Area": 255
-        },
-        {
-          "PolyType": 0,
-          "Links": [
-            {
-              "Reference": 168,
-              "Edge": 2,
-              "Side": 255,
-              "BMin": 0,
-              "BMax": 0
-            }
-          ],
-          "Verts": [
-            99,
-            100,
-            94,
-            0,
-            0,
-            0
-          ],
-          "Neis": [
-            0,
-            0,
-            41,
-            0,
-            0,
-            0
-          ],
-          "Tag": null,
-          "VertCount": 3,
-          "Area": 255
-        },
-        {
-          "PolyType": 0,
-          "Links": [
-            {
-              "Reference": 168,
-              "Edge": 2,
-              "Side": 255,
-              "BMin": 0,
-              "BMax": 0
-            }
-          ],
+          "Links": [],
           "Verts": [
             95,
             96,
             97,
-            0,
-            0,
-            0
-          ],
-          "Neis": [
-            0,
-            0,
-            41,
-            0,
-            0,
-            0
-          ],
-          "Tag": null,
-          "VertCount": 3,
-          "Area": 255
-        },
-        {
-          "PolyType": 0,
-          "Links": [
-            {
-              "Reference": 166,
-              "Edge": 3,
-              "Side": 255,
-              "BMin": 0,
-              "BMax": 0
-            },
-            {
-              "Reference": 165,
-              "Edge": 2,
-              "Side": 255,
-              "BMin": 0,
-              "BMax": 0
-            },
-            {
-              "Reference": 167,
-              "Edge": 1,
-              "Side": 255,
-              "BMin": 0,
-              "BMax": 0
-            }
-          ],
-          "Verts": [
             94,
-            95,
-            97,
-            99,
             0,
             0
           ],
           "Neis": [
             0,
-            40,
-            38,
-            39,
+            0,
+            0,
+            0,
             0,
             0
           ],
@@ -1397,10 +1065,33 @@
           "PolyType": 0,
           "Links": [],
           "Verts": [
+            98,
+            99,
+            100,
             101,
+            0,
+            0
+          ],
+          "Neis": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "Tag": null,
+          "VertCount": 4,
+          "Area": 255
+        },
+        {
+          "PolyType": 0,
+          "Links": [],
+          "Verts": [
             102,
             103,
             104,
+            105,
             0,
             0
           ],
@@ -1420,10 +1111,10 @@
           "PolyType": 0,
           "Links": [],
           "Verts": [
-            105,
-            106,
             107,
             108,
+            109,
+            106,
             0,
             0
           ],
@@ -1446,7 +1137,7 @@
             110,
             111,
             112,
-            109,
+            113,
             0,
             0
           ],
@@ -1466,10 +1157,10 @@
           "PolyType": 0,
           "Links": [],
           "Verts": [
-            113,
-            114,
             115,
             116,
+            117,
+            114,
             0,
             0
           ],
@@ -1492,7 +1183,7 @@
             118,
             119,
             120,
-            117,
+            0,
             0,
             0
           ],
@@ -1505,17 +1196,17 @@
             0
           ],
           "Tag": null,
-          "VertCount": 4,
+          "VertCount": 3,
           "Area": 255
         },
         {
           "PolyType": 0,
           "Links": [],
           "Verts": [
+            121,
             122,
             123,
-            124,
-            121,
+            0,
             0,
             0
           ],
@@ -1528,17 +1219,17 @@
             0
           ],
           "Tag": null,
-          "VertCount": 4,
+          "VertCount": 3,
           "Area": 255
         },
         {
           "PolyType": 0,
           "Links": [],
           "Verts": [
+            125,
             126,
             127,
-            128,
-            125,
+            124,
             0,
             0
           ],
@@ -1558,10 +1249,79 @@
           "PolyType": 0,
           "Links": [],
           "Verts": [
+            128,
+            129,
             130,
+            0,
+            0,
+            0
+          ],
+          "Neis": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "Tag": null,
+          "VertCount": 3,
+          "Area": 255
+        },
+        {
+          "PolyType": 0,
+          "Links": [],
+          "Verts": [
             131,
             132,
-            129,
+            133,
+            0,
+            0,
+            0
+          ],
+          "Neis": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "Tag": null,
+          "VertCount": 3,
+          "Area": 255
+        },
+        {
+          "PolyType": 0,
+          "Links": [],
+          "Verts": [
+            134,
+            135,
+            136,
+            0,
+            0,
+            0
+          ],
+          "Neis": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "Tag": null,
+          "VertCount": 3,
+          "Area": 255
+        },
+        {
+          "PolyType": 0,
+          "Links": [],
+          "Verts": [
+            138,
+            139,
+            140,
+            137,
             0,
             0
           ],
@@ -1581,156 +1341,33 @@
           "PolyType": 0,
           "Links": [],
           "Verts": [
-            133,
-            134,
-            135,
-            0,
-            0,
-            0
-          ],
-          "Neis": [
-            0,
-            0,
-            0,
-            0,
-            0,
-            0
-          ],
-          "Tag": null,
-          "VertCount": 3,
-          "Area": 255
-        },
-        {
-          "PolyType": 0,
-          "Links": [],
-          "Verts": [
-            136,
-            137,
-            138,
-            0,
-            0,
-            0
-          ],
-          "Neis": [
-            0,
-            0,
-            0,
-            0,
-            0,
-            0
-          ],
-          "Tag": null,
-          "VertCount": 3,
-          "Area": 255
-        },
-        {
-          "PolyType": 0,
-          "Links": [
-            {
-              "Reference": 181,
-              "Edge": 2,
-              "Side": 255,
-              "BMin": 0,
-              "BMax": 0
-            }
-          ],
-          "Verts": [
-            145,
-            139,
-            140,
-            0,
-            0,
-            0
-          ],
-          "Neis": [
-            0,
-            0,
-            54,
-            0,
-            0,
-            0
-          ],
-          "Tag": null,
-          "VertCount": 3,
-          "Area": 255
-        },
-        {
-          "PolyType": 0,
-          "Links": [
-            {
-              "Reference": 181,
-              "Edge": 2,
-              "Side": 255,
-              "BMin": 0,
-              "BMax": 0
-            }
-          ],
-          "Verts": [
-            143,
-            144,
-            145,
-            0,
-            0,
-            0
-          ],
-          "Neis": [
-            0,
-            0,
-            54,
-            0,
-            0,
-            0
-          ],
-          "Tag": null,
-          "VertCount": 3,
-          "Area": 255
-        },
-        {
-          "PolyType": 0,
-          "Links": [
-            {
-              "Reference": 179,
-              "Edge": 4,
-              "Side": 255,
-              "BMin": 0,
-              "BMax": 0
-            },
-            {
-              "Reference": 180,
-              "Edge": 3,
-              "Side": 255,
-              "BMin": 0,
-              "BMax": 0
-            }
-          ],
-          "Verts": [
-            140,
             141,
             142,
             143,
-            145,
+            0,
+            0,
             0
           ],
           "Neis": [
             0,
             0,
             0,
-            53,
-            52,
+            0,
+            0,
             0
           ],
           "Tag": null,
-          "VertCount": 5,
+          "VertCount": 3,
           "Area": 255
         },
         {
           "PolyType": 0,
           "Links": [],
           "Verts": [
+            145,
             146,
             147,
-            148,
-            149,
+            144,
             0,
             0
           ],
@@ -1750,10 +1387,33 @@
           "PolyType": 0,
           "Links": [],
           "Verts": [
+            149,
+            150,
             151,
+            148,
+            0,
+            0
+          ],
+          "Neis": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "Tag": null,
+          "VertCount": 4,
+          "Area": 255
+        },
+        {
+          "PolyType": 0,
+          "Links": [],
+          "Verts": [
             152,
             153,
-            150,
+            154,
+            155,
             0,
             0
           ],
@@ -1773,56 +1433,56 @@
           "PolyType": 0,
           "Links": [],
           "Verts": [
-            155,
             156,
             157,
-            154,
-            0,
-            0
-          ],
-          "Neis": [
-            0,
-            0,
-            0,
-            0,
-            0,
-            0
-          ],
-          "Tag": null,
-          "VertCount": 4,
-          "Area": 255
-        },
-        {
-          "PolyType": 0,
-          "Links": [],
-          "Verts": [
             158,
             159,
+            0,
+            0
+          ],
+          "Neis": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "Tag": null,
+          "VertCount": 4,
+          "Area": 255
+        },
+        {
+          "PolyType": 0,
+          "Links": [],
+          "Verts": [
             160,
             161,
-            0,
-            0
-          ],
-          "Neis": [
-            0,
-            0,
-            0,
-            0,
-            0,
-            0
-          ],
-          "Tag": null,
-          "VertCount": 4,
-          "Area": 255
-        },
-        {
-          "PolyType": 0,
-          "Links": [],
-          "Verts": [
             162,
             163,
+            0,
+            0
+          ],
+          "Neis": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "Tag": null,
+          "VertCount": 4,
+          "Area": 255
+        },
+        {
+          "PolyType": 0,
+          "Links": [],
+          "Verts": [
             164,
             165,
+            166,
+            0,
             0,
             0
           ],
@@ -1835,17 +1495,17 @@
             0
           ],
           "Tag": null,
-          "VertCount": 4,
+          "VertCount": 3,
           "Area": 255
         },
         {
           "PolyType": 0,
           "Links": [],
           "Verts": [
-            166,
-            167,
             168,
             169,
+            170,
+            167,
             0,
             0
           ],
@@ -1865,11 +1525,11 @@
           "PolyType": 0,
           "Links": [],
           "Verts": [
-            170,
             171,
             172,
             173,
             0,
+            0,
             0
           ],
           "Neis": [
@@ -1881,7 +1541,7 @@
             0
           ],
           "Tag": null,
-          "VertCount": 4,
+          "VertCount": 3,
           "Area": 255
         },
         {
@@ -1934,55 +1594,9 @@
           "PolyType": 0,
           "Links": [],
           "Verts": [
+            181,
             182,
             183,
-            184,
-            181,
-            0,
-            0
-          ],
-          "Neis": [
-            0,
-            0,
-            0,
-            0,
-            0,
-            0
-          ],
-          "Tag": null,
-          "VertCount": 4,
-          "Area": 255
-        },
-        {
-          "PolyType": 0,
-          "Links": [],
-          "Verts": [
-            186,
-            187,
-            188,
-            185,
-            0,
-            0
-          ],
-          "Neis": [
-            0,
-            0,
-            0,
-            0,
-            0,
-            0
-          ],
-          "Tag": null,
-          "VertCount": 4,
-          "Area": 255
-        },
-        {
-          "PolyType": 0,
-          "Links": [],
-          "Verts": [
-            189,
-            190,
-            191,
             0,
             0,
             0
@@ -2003,13 +1617,90 @@
           "PolyType": 0,
           "Links": [
             {
-              "Reference": 196,
+              "Reference": 187,
               "Edge": 2,
               "Side": 255,
               "BMin": 0,
               "BMax": 0
             }
           ],
+          "Verts": [
+            186,
+            187,
+            188,
+            185,
+            0,
+            0
+          ],
+          "Neis": [
+            0,
+            0,
+            60,
+            0,
+            0,
+            0
+          ],
+          "Tag": null,
+          "VertCount": 4,
+          "Area": 255
+        },
+        {
+          "PolyType": 0,
+          "Links": [
+            {
+              "Reference": 186,
+              "Edge": 1,
+              "Side": 255,
+              "BMin": 0,
+              "BMax": 0
+            }
+          ],
+          "Verts": [
+            184,
+            185,
+            188,
+            189,
+            0,
+            0
+          ],
+          "Neis": [
+            0,
+            59,
+            0,
+            0,
+            0,
+            0
+          ],
+          "Tag": null,
+          "VertCount": 4,
+          "Area": 255
+        },
+        {
+          "PolyType": 0,
+          "Links": [],
+          "Verts": [
+            190,
+            191,
+            192,
+            0,
+            0,
+            0
+          ],
+          "Neis": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "Tag": null,
+          "VertCount": 3,
+          "Area": 255
+        },
+        {
+          "PolyType": 0,
+          "Links": [],
           "Verts": [
             194,
             195,
@@ -2021,7 +1712,7 @@
           "Neis": [
             0,
             0,
-            69,
+            0,
             0,
             0,
             0
@@ -2032,66 +1723,20 @@
         },
         {
           "PolyType": 0,
-          "Links": [
-            {
-              "Reference": 196,
-              "Edge": 3,
-              "Side": 255,
-              "BMin": 0,
-              "BMax": 0
-            }
-          ],
+          "Links": [],
           "Verts": [
-            198,
-            199,
-            192,
-            193,
-            0,
-            0
-          ],
-          "Neis": [
-            0,
-            0,
-            0,
-            69,
-            0,
-            0
-          ],
-          "Tag": null,
-          "VertCount": 4,
-          "Area": 255
-        },
-        {
-          "PolyType": 0,
-          "Links": [
-            {
-              "Reference": 195,
-              "Edge": 3,
-              "Side": 255,
-              "BMin": 0,
-              "BMax": 0
-            },
-            {
-              "Reference": 194,
-              "Edge": 0,
-              "Side": 255,
-              "BMin": 0,
-              "BMax": 0
-            }
-          ],
-          "Verts": [
-            193,
-            196,
             197,
             198,
+            199,
+            200,
             0,
             0
           ],
           "Neis": [
-            67,
             0,
             0,
-            68,
+            0,
+            0,
             0,
             0
           ],
@@ -2103,7 +1748,7 @@
           "PolyType": 0,
           "Links": [
             {
-              "Reference": 198,
+              "Reference": 192,
               "Edge": 3,
               "Side": 255,
               "BMin": 0,
@@ -2112,7 +1757,7 @@
           ],
           "Verts": [
             205,
-            200,
+            206,
             201,
             202,
             0,
@@ -2122,7 +1767,7 @@
             0,
             0,
             0,
-            71,
+            65,
             0,
             0
           ],
@@ -2134,7 +1779,7 @@
           "PolyType": 0,
           "Links": [
             {
-              "Reference": 197,
+              "Reference": 191,
               "Edge": 2,
               "Side": 255,
               "BMin": 0,
@@ -2152,7 +1797,7 @@
           "Neis": [
             0,
             0,
-            70,
+            64,
             0,
             0,
             0
@@ -2168,29 +1813,6 @@
             207,
             208,
             209,
-            206,
-            0,
-            0
-          ],
-          "Neis": [
-            0,
-            0,
-            0,
-            0,
-            0,
-            0
-          ],
-          "Tag": null,
-          "VertCount": 4,
-          "Area": 255
-        },
-        {
-          "PolyType": 0,
-          "Links": [],
-          "Verts": [
-            211,
-            212,
-            213,
             210,
             0,
             0
@@ -2211,41 +1833,33 @@
           "PolyType": 0,
           "Links": [],
           "Verts": [
+            212,
+            213,
             214,
+            211,
+            0,
+            0
+          ],
+          "Neis": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "Tag": null,
+          "VertCount": 4,
+          "Area": 255
+        },
+        {
+          "PolyType": 0,
+          "Links": [],
+          "Verts": [
             215,
             216,
             217,
-            0,
-            0
-          ],
-          "Neis": [
-            0,
-            0,
-            0,
-            0,
-            0,
-            0
-          ],
-          "Tag": null,
-          "VertCount": 4,
-          "Area": 255
-        },
-        {
-          "PolyType": 0,
-          "Links": [
-            {
-              "Reference": 203,
-              "Edge": 3,
-              "Side": 255,
-              "BMin": 0,
-              "BMax": 0
-            }
-          ],
-          "Verts": [
-            222,
-            223,
             218,
-            219,
             0,
             0
           ],
@@ -2253,7 +1867,7 @@
             0,
             0,
             0,
-            76,
+            0,
             0,
             0
           ],
@@ -2263,15 +1877,7 @@
         },
         {
           "PolyType": 0,
-          "Links": [
-            {
-              "Reference": 202,
-              "Edge": 2,
-              "Side": 255,
-              "BMin": 0,
-              "BMax": 0
-            }
-          ],
+          "Links": [],
           "Verts": [
             220,
             221,
@@ -2283,7 +1889,7 @@
           "Neis": [
             0,
             0,
-            75,
+            0,
             0,
             0,
             0
@@ -2296,33 +1902,33 @@
           "PolyType": 0,
           "Links": [],
           "Verts": [
+            223,
             224,
             225,
+            0,
+            0,
+            0
+          ],
+          "Neis": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "Tag": null,
+          "VertCount": 3,
+          "Area": 255
+        },
+        {
+          "PolyType": 0,
+          "Links": [],
+          "Verts": [
             226,
             227,
-            0,
-            0
-          ],
-          "Neis": [
-            0,
-            0,
-            0,
-            0,
-            0,
-            0
-          ],
-          "Tag": null,
-          "VertCount": 4,
-          "Area": 255
-        },
-        {
-          "PolyType": 0,
-          "Links": [],
-          "Verts": [
-            229,
-            230,
-            231,
             228,
+            229,
             0,
             0
           ],
@@ -2342,33 +1948,33 @@
           "PolyType": 0,
           "Links": [],
           "Verts": [
+            231,
             232,
             233,
-            234,
+            230,
+            0,
+            0
+          ],
+          "Neis": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "Tag": null,
+          "VertCount": 4,
+          "Area": 255
+        },
+        {
+          "PolyType": 0,
+          "Links": [],
+          "Verts": [
             235,
-            0,
-            0
-          ],
-          "Neis": [
-            0,
-            0,
-            0,
-            0,
-            0,
-            0
-          ],
-          "Tag": null,
-          "VertCount": 4,
-          "Area": 255
-        },
-        {
-          "PolyType": 0,
-          "Links": [],
-          "Verts": [
-            237,
-            238,
-            239,
             236,
+            237,
+            234,
             0,
             0
           ],
@@ -2388,10 +1994,33 @@
           "PolyType": 0,
           "Links": [],
           "Verts": [
+            239,
+            240,
             241,
+            238,
+            0,
+            0
+          ],
+          "Neis": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "Tag": null,
+          "VertCount": 4,
+          "Area": 255
+        },
+        {
+          "PolyType": 0,
+          "Links": [],
+          "Verts": [
             242,
             243,
-            240,
+            244,
+            0,
             0,
             0
           ],
@@ -2404,7 +2033,7 @@
             0
           ],
           "Tag": null,
-          "VertCount": 4,
+          "VertCount": 3,
           "Area": 255
         },
         {
@@ -2414,7 +2043,7 @@
             245,
             246,
             247,
-            244,
+            0,
             0,
             0
           ],
@@ -2427,94 +2056,24 @@
             0
           ],
           "Tag": null,
-          "VertCount": 4,
+          "VertCount": 3,
           "Area": 255
         },
         {
           "PolyType": 0,
-          "Links": [
-            {
-              "Reference": 211,
-              "Edge": 3,
-              "Side": 255,
-              "BMin": 0,
-              "BMax": 0
-            }
-          ],
+          "Links": [],
           "Verts": [
-            253,
             248,
             249,
             250,
             0,
-            0
-          ],
-          "Neis": [
-            0,
-            0,
-            0,
-            84,
-            0,
-            0
-          ],
-          "Tag": null,
-          "VertCount": 4,
-          "Area": 255
-        },
-        {
-          "PolyType": 0,
-          "Links": [
-            {
-              "Reference": 210,
-              "Edge": 2,
-              "Side": 255,
-              "BMin": 0,
-              "BMax": 0
-            }
-          ],
-          "Verts": [
-            251,
-            252,
-            253,
-            250,
             0,
             0
           ],
           "Neis": [
             0,
             0,
-            83,
             0,
-            0,
-            0
-          ],
-          "Tag": null,
-          "VertCount": 4,
-          "Area": 255
-        },
-        {
-          "PolyType": 0,
-          "Links": [
-            {
-              "Reference": 213,
-              "Edge": 2,
-              "Side": 255,
-              "BMin": 0,
-              "BMax": 0
-            }
-          ],
-          "Verts": [
-            259,
-            254,
-            255,
-            0,
-            0,
-            0
-          ],
-          "Neis": [
-            0,
-            0,
-            86,
             0,
             0,
             0
@@ -2525,266 +2084,127 @@
         },
         {
           "PolyType": 0,
-          "Links": [
-            {
-              "Reference": 212,
-              "Edge": 3,
-              "Side": 255,
-              "BMin": 0,
-              "BMax": 0
-            }
+          "Links": [],
+          "Verts": [
+            252,
+            253,
+            254,
+            251,
+            0,
+            0
           ],
+          "Neis": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "Tag": null,
+          "VertCount": 4,
+          "Area": 255
+        },
+        {
+          "PolyType": 0,
+          "Links": [],
           "Verts": [
             256,
             257,
             258,
-            259,
             255,
-            0
-          ],
-          "Neis": [
-            0,
-            0,
-            0,
-            85,
-            0,
-            0
-          ],
-          "Tag": null,
-          "VertCount": 5,
-          "Area": 255
-        },
-        {
-          "PolyType": 0,
-          "Links": [
-            {
-              "Reference": 215,
-              "Edge": 2,
-              "Side": 255,
-              "BMin": 0,
-              "BMax": 0
-            }
-          ],
-          "Verts": [
-            263,
-            264,
-            265,
-            0,
             0,
             0
           ],
           "Neis": [
             0,
             0,
-            88,
+            0,
             0,
             0,
             0
           ],
           "Tag": null,
-          "VertCount": 3,
+          "VertCount": 4,
           "Area": 255
         },
         {
           "PolyType": 0,
-          "Links": [
-            {
-              "Reference": 214,
-              "Edge": 1,
-              "Side": 255,
-              "BMin": 0,
-              "BMax": 0
-            }
-          ],
+          "Links": [],
           "Verts": [
-            262,
-            263,
-            265,
             260,
             261,
+            262,
+            259,
+            0,
             0
           ],
           "Neis": [
             0,
-            87,
+            0,
             0,
             0,
             0,
             0
           ],
           "Tag": null,
-          "VertCount": 5,
+          "VertCount": 4,
           "Area": 255
         },
         {
           "PolyType": 0,
-          "Links": [
-            {
-              "Reference": 219,
-              "Edge": 2,
-              "Side": 255,
-              "BMin": 0,
-              "BMax": 0
-            }
-          ],
+          "Links": [],
           "Verts": [
-            272,
+            264,
+            265,
             266,
-            267,
-            0,
+            263,
             0,
             0
           ],
           "Neis": [
             0,
             0,
-            92,
+            0,
             0,
             0,
             0
           ],
           "Tag": null,
-          "VertCount": 3,
+          "VertCount": 4,
           "Area": 255
         },
         {
           "PolyType": 0,
-          "Links": [
-            {
-              "Reference": 219,
-              "Edge": 2,
-              "Side": 255,
-              "BMin": 0,
-              "BMax": 0
-            }
-          ],
+          "Links": [],
           "Verts": [
             268,
             269,
             270,
-            0,
-            0,
-            0
-          ],
-          "Neis": [
-            0,
-            0,
-            92,
-            0,
-            0,
-            0
-          ],
-          "Tag": null,
-          "VertCount": 3,
-          "Area": 255
-        },
-        {
-          "PolyType": 0,
-          "Links": [
-            {
-              "Reference": 219,
-              "Edge": 2,
-              "Side": 255,
-              "BMin": 0,
-              "BMax": 0
-            }
-          ],
-          "Verts": [
-            270,
-            271,
-            272,
-            0,
-            0,
-            0
-          ],
-          "Neis": [
-            0,
-            0,
-            92,
-            0,
-            0,
-            0
-          ],
-          "Tag": null,
-          "VertCount": 3,
-          "Area": 255
-        },
-        {
-          "PolyType": 0,
-          "Links": [
-            {
-              "Reference": 216,
-              "Edge": 3,
-              "Side": 255,
-              "BMin": 0,
-              "BMax": 0
-            },
-            {
-              "Reference": 218,
-              "Edge": 2,
-              "Side": 255,
-              "BMin": 0,
-              "BMax": 0
-            },
-            {
-              "Reference": 217,
-              "Edge": 1,
-              "Side": 255,
-              "BMin": 0,
-              "BMax": 0
-            }
-          ],
-          "Verts": [
             267,
-            268,
-            270,
+            0,
+            0
+          ],
+          "Neis": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "Tag": null,
+          "VertCount": 4,
+          "Area": 255
+        },
+        {
+          "PolyType": 0,
+          "Links": [],
+          "Verts": [
             272,
-            0,
-            0
-          ],
-          "Neis": [
-            0,
-            90,
-            91,
-            89,
-            0,
-            0
-          ],
-          "Tag": null,
-          "VertCount": 4,
-          "Area": 255
-        },
-        {
-          "PolyType": 0,
-          "Links": [],
-          "Verts": [
-            274,
-            275,
-            276,
             273,
-            0,
-            0
-          ],
-          "Neis": [
-            0,
-            0,
-            0,
-            0,
-            0,
-            0
-          ],
-          "Tag": null,
-          "VertCount": 4,
-          "Area": 255
-        },
-        {
-          "PolyType": 0,
-          "Links": [],
-          "Verts": [
-            278,
-            279,
-            280,
-            277,
+            274,
+            271,
             0,
             0
           ],
@@ -2953,19 +2373,9 @@
           "Z": -100.99246
         },
         {
-          "X": -243.19382,
+          "X": -363.19382,
           "Y": 130.0,
-          "Z": -190.99246
-        },
-        {
-          "X": -63.193787,
-          "Y": 130.0,
-          "Z": -130.99246
-        },
-        {
-          "X": -63.193787,
-          "Y": 130.0,
-          "Z": -280.99246
+          "Z": -100.99246
         },
         {
           "X": 116.80621,
@@ -3023,19 +2433,9 @@
           "Z": -430.9925
         },
         {
-          "X": 1346.8063,
-          "Y": 130.0,
-          "Z": -310.9925
-        },
-        {
-          "X": 1346.8063,
-          "Y": 130.0,
-          "Z": -40.992462
-        },
-        {
           "X": 1556.8064,
           "Y": 130.0,
-          "Z": 79.00757
+          "Z": -160.99246
         },
         {
           "X": 1556.8064,
@@ -3058,14 +2458,9 @@
           "Z": -490.9925
         },
         {
-          "X": -3.1937866,
+          "X": 56.806213,
           "Y": 130.0,
-          "Z": -250.99246
-        },
-        {
-          "X": -3.1937866,
-          "Y": 130.0,
-          "Z": -70.99246
+          "Z": -280.99246
         },
         {
           "X": 176.80621,
@@ -3075,12 +2470,7 @@
         {
           "X": 386.80627,
           "Y": 130.0,
-          "Z": -100.99246
-        },
-        {
-          "X": 386.80627,
-          "Y": 130.0,
-          "Z": -280.99246
+          "Z": -250.99246
         },
         {
           "X": 236.80621,
@@ -3088,32 +2478,22 @@
           "Z": -370.9925
         },
         {
-          "X": 476.80627,
+          "X": 506.80627,
           "Y": 130.0,
           "Z": -280.99246
         },
         {
-          "X": 476.80627,
-          "Y": 130.0,
-          "Z": -100.99246
-        },
-        {
-          "X": 626.8063,
+          "X": 596.8063,
           "Y": 130.0,
           "Z": -190.99246
         },
         {
           "X": 806.8063,
           "Y": 130.0,
-          "Z": -100.99246
+          "Z": -250.99246
         },
         {
-          "X": 776.8063,
-          "Y": 130.0,
-          "Z": -310.9925
-        },
-        {
-          "X": 626.8063,
+          "X": 656.8063,
           "Y": 130.0,
           "Z": -370.9925
         },
@@ -3123,22 +2503,12 @@
           "Z": -280.99246
         },
         {
-          "X": 926.8063,
-          "Y": 130.0,
-          "Z": -130.99246
-        },
-        {
-          "X": 1106.8063,
+          "X": 1016.8063,
           "Y": 130.0,
           "Z": -190.99246
         },
         {
-          "X": 1286.8063,
-          "Y": 130.0,
-          "Z": -100.99246
-        },
-        {
-          "X": 1286.8063,
+          "X": 1226.8063,
           "Y": 130.0,
           "Z": -250.99246
         },
@@ -3148,6 +2518,56 @@
           "Z": -370.9925
         },
         {
+          "X": -3.1937866,
+          "Y": 130.0,
+          "Z": -220.99246
+        },
+        {
+          "X": -3.1937866,
+          "Y": 130.0,
+          "Z": -70.99246
+        },
+        {
+          "X": 116.80621,
+          "Y": 130.0,
+          "Z": -130.99246
+        },
+        {
+          "X": 1166.8063,
+          "Y": 130.0,
+          "Z": -160.99246
+        },
+        {
+          "X": 1286.8063,
+          "Y": 130.0,
+          "Z": -100.99246
+        },
+        {
+          "X": 1286.8063,
+          "Y": 130.0,
+          "Z": -220.99246
+        },
+        {
+          "X": 1346.8063,
+          "Y": 130.0,
+          "Z": -190.99246
+        },
+        {
+          "X": 1346.8063,
+          "Y": 130.0,
+          "Z": -40.992462
+        },
+        {
+          "X": 1496.8064,
+          "Y": 130.0,
+          "Z": 49.00757
+        },
+        {
+          "X": 1496.8064,
+          "Y": 130.0,
+          "Z": -130.99246
+        },
+        {
           "X": -423.19382,
           "Y": 130.0,
           "Z": -10.992432
@@ -3155,32 +2575,32 @@
         {
           "X": -423.19382,
           "Y": 130.0,
-          "Z": 259.00757
+          "Z": 199.00757
         },
         {
-          "X": -333.19382,
-          "Y": 130.0,
-          "Z": 319.00757
-        },
-        {
-          "X": -273.19382,
-          "Y": 130.0,
-          "Z": 319.00757
-        },
-        {
-          "X": -273.19382,
+          "X": -243.19382,
           "Y": 130.0,
           "Z": 79.00757
+        },
+        {
+          "X": -243.19382,
+          "Y": 130.0,
+          "Z": -100.99246
+        },
+        {
+          "X": -213.19382,
+          "Y": 130.0,
+          "Z": -100.99246
+        },
+        {
+          "X": -213.19382,
+          "Y": 130.0,
+          "Z": 49.00757
         },
         {
           "X": -93.19379,
           "Y": 130.0,
           "Z": -10.992432
-        },
-        {
-          "X": -273.19382,
-          "Y": 130.0,
-          "Z": -100.99246
         },
         {
           "X": 86.80621,
@@ -3278,29 +2698,14 @@
           "Z": 109.00757
         },
         {
-          "X": -573.19385,
+          "X": -633.19385,
           "Y": 130.0,
-          "Z": 679.0076
+          "Z": 619.0076
         },
         {
           "X": -483.19385,
           "Y": 130.0,
           "Z": 709.0076
-        },
-        {
-          "X": -483.19385,
-          "Y": 130.0,
-          "Z": 439.00757
-        },
-        {
-          "X": -363.19382,
-          "Y": 130.0,
-          "Z": 409.00757
-        },
-        {
-          "X": -483.19385,
-          "Y": 130.0,
-          "Z": 289.00757
         },
         {
           "X": -483.19385,
@@ -3415,17 +2820,27 @@
         {
           "X": 1346.8063,
           "Y": 130.0,
+          "Z": 199.00757
+        },
+        {
+          "X": 1496.8064,
+          "Y": 130.0,
+          "Z": 139.00757
+        },
+        {
+          "X": -393.19382,
+          "Y": 130.0,
           "Z": 229.00757
         },
         {
-          "X": 1496.8064,
+          "X": -273.19382,
           "Y": 130.0,
-          "Z": 289.00757
+          "Z": 319.00757
         },
         {
-          "X": 1496.8064,
+          "X": -273.19382,
           "Y": 130.0,
-          "Z": 109.00757
+          "Z": 199.00757
         },
         {
           "X": -183.19382,
@@ -3448,9 +2863,9 @@
           "Z": 289.00757
         },
         {
-          "X": 1226.8063,
+          "X": 1346.8063,
           "Y": 130.0,
-          "Z": 349.00757
+          "Z": 289.00757
         },
         {
           "X": 1346.8063,
@@ -3461,11 +2876,6 @@
           "X": 1466.8064,
           "Y": 130.0,
           "Z": 409.00757
-        },
-        {
-          "X": 1376.8064,
-          "Y": 130.0,
-          "Z": 289.00757
         },
         {
           "X": 356.80627,
@@ -3498,14 +2908,9 @@
           "Z": 319.00757
         },
         {
-          "X": 1436.8064,
-          "Y": 130.0,
-          "Z": 739.0076
-        },
-        {
           "X": 1556.8064,
           "Y": 130.0,
-          "Z": 829.0076
+          "Z": 409.00757
         },
         {
           "X": 1556.8064,
@@ -3523,29 +2928,14 @@
           "Z": 499.00763
         },
         {
-          "X": 1556.8064,
+          "X": -393.19382,
           "Y": 130.0,
-          "Z": 409.00757
-        },
-        {
-          "X": 1586.8064,
-          "Y": 130.0,
-          "Z": 679.0076
-        },
-        {
-          "X": -423.19382,
-          "Y": 130.0,
-          "Z": 499.00763
-        },
-        {
-          "X": -423.19382,
-          "Y": 130.0,
-          "Z": 649.0076
+          "Z": 469.00757
         },
         {
           "X": -273.19382,
           "Y": 130.0,
-          "Z": 589.0076
+          "Z": 559.0076
         },
         {
           "X": -273.19382,
@@ -3609,26 +2999,6 @@
         },
         {
           "X": 1076.8063,
-          "Y": 130.0,
-          "Z": 469.00757
-        },
-        {
-          "X": 1346.8063,
-          "Y": 130.0,
-          "Z": 529.0076
-        },
-        {
-          "X": 1346.8063,
-          "Y": 130.0,
-          "Z": 709.0076
-        },
-        {
-          "X": 1526.8064,
-          "Y": 130.0,
-          "Z": 619.0076
-        },
-        {
-          "X": 1496.8064,
           "Y": 130.0,
           "Z": 469.00757
         },
@@ -3708,22 +3078,32 @@
           "Z": 529.0076
         },
         {
+          "X": 1346.8063,
+          "Y": 130.0,
+          "Z": 559.0076
+        },
+        {
+          "X": 1346.8063,
+          "Y": 130.0,
+          "Z": 709.0076
+        },
+        {
+          "X": 1496.8064,
+          "Y": 130.0,
+          "Z": 649.0076
+        },
+        {
           "X": -393.19382,
           "Y": 130.0,
           "Z": 739.0076
         },
         {
-          "X": -303.19382,
+          "X": -243.19382,
           "Y": 130.0,
           "Z": 829.0076
         },
         {
-          "X": -123.19379,
-          "Y": 130.0,
-          "Z": 769.0076
-        },
-        {
-          "X": -213.19382,
+          "X": -243.19382,
           "Y": 130.0,
           "Z": 679.0076
         },
@@ -3783,44 +3163,14 @@
           "Z": 1549.0078
         },
         {
-          "X": -273.19382,
-          "Y": 130.0,
-          "Z": 1429.0076
-        },
-        {
-          "X": -273.19382,
-          "Y": 130.0,
-          "Z": 1159.0076
-        },
-        {
           "X": -483.19385,
           "Y": 130.0,
-          "Z": 1039.0076
+          "Z": 1279.0076
         },
         {
           "X": -483.19385,
           "Y": 130.0,
           "Z": 799.0076
-        },
-        {
-          "X": 1166.8063,
-          "Y": 130.0,
-          "Z": 1129.0076
-        },
-        {
-          "X": 1286.8063,
-          "Y": 130.0,
-          "Z": 1249.0076
-        },
-        {
-          "X": 1496.8064,
-          "Y": 130.0,
-          "Z": 1129.0076
-        },
-        {
-          "X": 1496.8064,
-          "Y": 130.0,
-          "Z": 859.0076
         },
         {
           "X": 1346.8063,
@@ -3830,27 +3180,12 @@
         {
           "X": 1346.8063,
           "Y": 130.0,
-          "Z": 1039.0076
+          "Z": 949.0076
         },
         {
-          "X": -423.19382,
+          "X": 1496.8064,
           "Y": 130.0,
-          "Z": 829.0076
-        },
-        {
-          "X": -423.19382,
-          "Y": 130.0,
-          "Z": 1009.0076
-        },
-        {
-          "X": -273.19382,
-          "Y": 130.0,
-          "Z": 1069.0076
-        },
-        {
-          "X": -273.19382,
-          "Y": 130.0,
-          "Z": 919.0076
+          "Z": 889.0076
         },
         {
           "X": -3.1937866,
@@ -4003,6 +3338,41 @@
           "Z": 949.0076
         },
         {
+          "X": -393.19382,
+          "Y": 130.0,
+          "Z": 979.0076
+        },
+        {
+          "X": -273.19382,
+          "Y": 130.0,
+          "Z": 1069.0076
+        },
+        {
+          "X": -273.19382,
+          "Y": 130.0,
+          "Z": 949.0076
+        },
+        {
+          "X": 1346.8063,
+          "Y": 130.0,
+          "Z": 1009.0076
+        },
+        {
+          "X": 1346.8063,
+          "Y": 130.0,
+          "Z": 1219.0076
+        },
+        {
+          "X": 1496.8064,
+          "Y": 130.0,
+          "Z": 1129.0076
+        },
+        {
+          "X": 1496.8064,
+          "Y": 130.0,
+          "Z": 949.0076
+        },
+        {
           "X": 296.8062,
           "Y": 130.0,
           "Z": 1129.0076
@@ -4043,6 +3413,41 @@
           "Z": 1069.0076
         },
         {
+          "X": -423.19382,
+          "Y": 130.0,
+          "Z": 1099.0076
+        },
+        {
+          "X": -423.19382,
+          "Y": 130.0,
+          "Z": 1249.0076
+        },
+        {
+          "X": -273.19382,
+          "Y": 130.0,
+          "Z": 1309.0076
+        },
+        {
+          "X": -273.19382,
+          "Y": 130.0,
+          "Z": 1159.0076
+        },
+        {
+          "X": 1166.8063,
+          "Y": 130.0,
+          "Z": 1129.0076
+        },
+        {
+          "X": 1286.8063,
+          "Y": 130.0,
+          "Z": 1219.0076
+        },
+        {
+          "X": 1286.8063,
+          "Y": 130.0,
+          "Z": 1099.0076
+        },
+        {
           "X": -213.19382,
           "Y": 130.0,
           "Z": 1219.0076
@@ -4050,87 +3455,27 @@
         {
           "X": -213.19382,
           "Y": 130.0,
-          "Z": 1369.0076
+          "Z": 1339.0076
         },
         {
-          "X": -33.193787,
+          "X": -93.19379,
           "Y": 130.0,
-          "Z": 1489.0076
+          "Z": 1279.0076
         },
         {
-          "X": 146.80621,
-          "Y": 130.0,
-          "Z": 1429.0076
-        },
-        {
-          "X": 146.80621,
+          "X": 956.8063,
           "Y": 130.0,
           "Z": 1249.0076
-        },
-        {
-          "X": -33.193787,
-          "Y": 130.0,
-          "Z": 1309.0076
-        },
-        {
-          "X": 266.8062,
-          "Y": 130.0,
-          "Z": 1219.0076
-        },
-        {
-          "X": 296.8062,
-          "Y": 130.0,
-          "Z": 1429.0076
-        },
-        {
-          "X": 476.80627,
-          "Y": 130.0,
-          "Z": 1489.0076
-        },
-        {
-          "X": 596.8063,
-          "Y": 130.0,
-          "Z": 1399.0076
-        },
-        {
-          "X": 596.8063,
-          "Y": 130.0,
-          "Z": 1249.0076
-        },
-        {
-          "X": 386.80627,
-          "Y": 130.0,
-          "Z": 1309.0076
-        },
-        {
-          "X": 716.8063,
-          "Y": 130.0,
-          "Z": 1249.0076
-        },
-        {
-          "X": 716.8063,
-          "Y": 130.0,
-          "Z": 1399.0076
-        },
-        {
-          "X": 836.8063,
-          "Y": 130.0,
-          "Z": 1489.0076
         },
         {
           "X": 1076.8063,
           "Y": 130.0,
-          "Z": 1369.0076
+          "Z": 1339.0076
         },
         {
           "X": 1076.8063,
           "Y": 130.0,
           "Z": 1219.0076
-        },
-        {
-          "X": 926.8063,
-          "Y": 130.0,
-          "Z": 1309.0076
         },
         {
           "X": 956.8063,
@@ -4148,24 +3493,69 @@
           "Z": 1369.0076
         },
         {
-          "X": 1496.8064,
+          "X": 1466.8064,
           "Y": 130.0,
           "Z": 1219.0076
         },
         {
-          "X": 1346.8063,
+          "X": -153.19379,
+          "Y": 130.0,
+          "Z": 1369.0076
+        },
+        {
+          "X": -33.193787,
+          "Y": 130.0,
+          "Z": 1489.0076
+        },
+        {
+          "X": 146.80621,
+          "Y": 130.0,
+          "Z": 1429.0076
+        },
+        {
+          "X": 26.806213,
           "Y": 130.0,
           "Z": 1309.0076
         },
         {
-          "X": 1136.8063,
+          "X": 296.8062,
           "Y": 130.0,
-          "Z": 1249.0076
+          "Z": 1369.0076
         },
         {
-          "X": 1136.8063,
+          "X": 416.80627,
+          "Y": 130.0,
+          "Z": 1489.0076
+        },
+        {
+          "X": 566.8063,
           "Y": 130.0,
           "Z": 1429.0076
+        },
+        {
+          "X": 476.80627,
+          "Y": 130.0,
+          "Z": 1309.0076
+        },
+        {
+          "X": 716.8063,
+          "Y": 130.0,
+          "Z": 1369.0076
+        },
+        {
+          "X": 836.8063,
+          "Y": 130.0,
+          "Z": 1489.0076
+        },
+        {
+          "X": 1016.8063,
+          "Y": 130.0,
+          "Z": 1399.0076
+        },
+        {
+          "X": 896.8063,
+          "Y": 130.0,
+          "Z": 1309.0076
         },
         {
           "X": 86.80621,
@@ -4303,19 +3693,7 @@
           "VertexIndex": 0,
           "VertexCount": 0,
           "TriangleIndex": 26,
-          "TriangleCount": 1
-        },
-        {
-          "VertexIndex": 0,
-          "VertexCount": 0,
-          "TriangleIndex": 27,
-          "TriangleCount": 1
-        },
-        {
-          "VertexIndex": 0,
-          "VertexCount": 0,
-          "TriangleIndex": 28,
-          "TriangleCount": 1
+          "TriangleCount": 3
         },
         {
           "VertexIndex": 0,
@@ -4363,37 +3741,49 @@
           "VertexIndex": 0,
           "VertexCount": 0,
           "TriangleIndex": 43,
-          "TriangleCount": 2
-        },
-        {
-          "VertexIndex": 0,
-          "VertexCount": 0,
-          "TriangleIndex": 45,
           "TriangleCount": 1
         },
         {
           "VertexIndex": 0,
           "VertexCount": 0,
-          "TriangleIndex": 46,
-          "TriangleCount": 3
+          "TriangleIndex": 44,
+          "TriangleCount": 1
+        },
+        {
+          "VertexIndex": 0,
+          "VertexCount": 0,
+          "TriangleIndex": 45,
+          "TriangleCount": 2
+        },
+        {
+          "VertexIndex": 0,
+          "VertexCount": 0,
+          "TriangleIndex": 47,
+          "TriangleCount": 2
         },
         {
           "VertexIndex": 0,
           "VertexCount": 0,
           "TriangleIndex": 49,
+          "TriangleCount": 1
+        },
+        {
+          "VertexIndex": 0,
+          "VertexCount": 0,
+          "TriangleIndex": 50,
           "TriangleCount": 2
         },
         {
           "VertexIndex": 0,
           "VertexCount": 0,
-          "TriangleIndex": 51,
+          "TriangleIndex": 52,
           "TriangleCount": 2
         },
         {
           "VertexIndex": 0,
           "VertexCount": 0,
-          "TriangleIndex": 53,
-          "TriangleCount": 3
+          "TriangleIndex": 54,
+          "TriangleCount": 2
         },
         {
           "VertexIndex": 0,
@@ -4435,43 +3825,49 @@
           "VertexIndex": 0,
           "VertexCount": 0,
           "TriangleIndex": 68,
-          "TriangleCount": 1
-        },
-        {
-          "VertexIndex": 0,
-          "VertexCount": 0,
-          "TriangleIndex": 69,
-          "TriangleCount": 1
+          "TriangleCount": 2
         },
         {
           "VertexIndex": 0,
           "VertexCount": 0,
           "TriangleIndex": 70,
+          "TriangleCount": 2
+        },
+        {
+          "VertexIndex": 0,
+          "VertexCount": 0,
+          "TriangleIndex": 72,
           "TriangleCount": 1
         },
         {
           "VertexIndex": 0,
           "VertexCount": 0,
-          "TriangleIndex": 71,
-          "TriangleCount": 2
-        },
-        {
-          "VertexIndex": 0,
-          "VertexCount": 0,
           "TriangleIndex": 73,
+          "TriangleCount": 1
+        },
+        {
+          "VertexIndex": 0,
+          "VertexCount": 0,
+          "TriangleIndex": 74,
           "TriangleCount": 2
         },
         {
           "VertexIndex": 0,
           "VertexCount": 0,
-          "TriangleIndex": 75,
-          "TriangleCount": 2
+          "TriangleIndex": 76,
+          "TriangleCount": 1
         },
         {
           "VertexIndex": 0,
           "VertexCount": 0,
           "TriangleIndex": 77,
-          "TriangleCount": 2
+          "TriangleCount": 1
+        },
+        {
+          "VertexIndex": 0,
+          "VertexCount": 0,
+          "TriangleIndex": 78,
+          "TriangleCount": 1
         },
         {
           "VertexIndex": 0,
@@ -4483,43 +3879,37 @@
           "VertexIndex": 0,
           "VertexCount": 0,
           "TriangleIndex": 81,
-          "TriangleCount": 2
-        },
-        {
-          "VertexIndex": 0,
-          "VertexCount": 0,
-          "TriangleIndex": 83,
-          "TriangleCount": 2
-        },
-        {
-          "VertexIndex": 0,
-          "VertexCount": 0,
-          "TriangleIndex": 85,
-          "TriangleCount": 2
-        },
-        {
-          "VertexIndex": 0,
-          "VertexCount": 0,
-          "TriangleIndex": 87,
-          "TriangleCount": 2
-        },
-        {
-          "VertexIndex": 0,
-          "VertexCount": 0,
-          "TriangleIndex": 89,
           "TriangleCount": 1
+        },
+        {
+          "VertexIndex": 0,
+          "VertexCount": 0,
+          "TriangleIndex": 82,
+          "TriangleCount": 2
+        },
+        {
+          "VertexIndex": 0,
+          "VertexCount": 0,
+          "TriangleIndex": 84,
+          "TriangleCount": 2
+        },
+        {
+          "VertexIndex": 0,
+          "VertexCount": 0,
+          "TriangleIndex": 86,
+          "TriangleCount": 2
+        },
+        {
+          "VertexIndex": 0,
+          "VertexCount": 0,
+          "TriangleIndex": 88,
+          "TriangleCount": 2
         },
         {
           "VertexIndex": 0,
           "VertexCount": 0,
           "TriangleIndex": 90,
-          "TriangleCount": 1
-        },
-        {
-          "VertexIndex": 0,
-          "VertexCount": 0,
-          "TriangleIndex": 91,
-          "TriangleCount": 1
+          "TriangleCount": 2
         },
         {
           "VertexIndex": 0,
@@ -4531,19 +3921,31 @@
           "VertexIndex": 0,
           "VertexCount": 0,
           "TriangleIndex": 93,
-          "TriangleCount": 3
+          "TriangleCount": 2
+        },
+        {
+          "VertexIndex": 0,
+          "VertexCount": 0,
+          "TriangleIndex": 95,
+          "TriangleCount": 1
         },
         {
           "VertexIndex": 0,
           "VertexCount": 0,
           "TriangleIndex": 96,
+          "TriangleCount": 1
+        },
+        {
+          "VertexIndex": 0,
+          "VertexCount": 0,
+          "TriangleIndex": 97,
           "TriangleCount": 2
         },
         {
           "VertexIndex": 0,
           "VertexCount": 0,
-          "TriangleIndex": 98,
-          "TriangleCount": 2
+          "TriangleIndex": 99,
+          "TriangleCount": 1
         },
         {
           "VertexIndex": 0,
@@ -4561,25 +3963,25 @@
           "VertexIndex": 0,
           "VertexCount": 0,
           "TriangleIndex": 104,
-          "TriangleCount": 2
-        },
-        {
-          "VertexIndex": 0,
-          "VertexCount": 0,
-          "TriangleIndex": 106,
-          "TriangleCount": 2
-        },
-        {
-          "VertexIndex": 0,
-          "VertexCount": 0,
-          "TriangleIndex": 108,
-          "TriangleCount": 2
-        },
-        {
-          "VertexIndex": 0,
-          "VertexCount": 0,
-          "TriangleIndex": 110,
           "TriangleCount": 1
+        },
+        {
+          "VertexIndex": 0,
+          "VertexCount": 0,
+          "TriangleIndex": 105,
+          "TriangleCount": 2
+        },
+        {
+          "VertexIndex": 0,
+          "VertexCount": 0,
+          "TriangleIndex": 107,
+          "TriangleCount": 2
+        },
+        {
+          "VertexIndex": 0,
+          "VertexCount": 0,
+          "TriangleIndex": 109,
+          "TriangleCount": 2
         },
         {
           "VertexIndex": 0,
@@ -4603,19 +4005,19 @@
           "VertexIndex": 0,
           "VertexCount": 0,
           "TriangleIndex": 117,
+          "TriangleCount": 2
+        },
+        {
+          "VertexIndex": 0,
+          "VertexCount": 0,
+          "TriangleIndex": 119,
+          "TriangleCount": 2
+        },
+        {
+          "VertexIndex": 0,
+          "VertexCount": 0,
+          "TriangleIndex": 121,
           "TriangleCount": 1
-        },
-        {
-          "VertexIndex": 0,
-          "VertexCount": 0,
-          "TriangleIndex": 118,
-          "TriangleCount": 2
-        },
-        {
-          "VertexIndex": 0,
-          "VertexCount": 0,
-          "TriangleIndex": 120,
-          "TriangleCount": 2
         },
         {
           "VertexIndex": 0,
@@ -4645,132 +4047,54 @@
           "VertexIndex": 0,
           "VertexCount": 0,
           "TriangleIndex": 130,
-          "TriangleCount": 2
+          "TriangleCount": 1
+        },
+        {
+          "VertexIndex": 0,
+          "VertexCount": 0,
+          "TriangleIndex": 131,
+          "TriangleCount": 1
         },
         {
           "VertexIndex": 0,
           "VertexCount": 0,
           "TriangleIndex": 132,
-          "TriangleCount": 2
-        },
-        {
-          "VertexIndex": 0,
-          "VertexCount": 0,
-          "TriangleIndex": 134,
-          "TriangleCount": 2
-        },
-        {
-          "VertexIndex": 0,
-          "VertexCount": 0,
-          "TriangleIndex": 136,
-          "TriangleCount": 2
-        },
-        {
-          "VertexIndex": 0,
-          "VertexCount": 0,
-          "TriangleIndex": 138,
-          "TriangleCount": 2
-        },
-        {
-          "VertexIndex": 0,
-          "VertexCount": 0,
-          "TriangleIndex": 140,
-          "TriangleCount": 2
-        },
-        {
-          "VertexIndex": 0,
-          "VertexCount": 0,
-          "TriangleIndex": 142,
-          "TriangleCount": 2
-        },
-        {
-          "VertexIndex": 0,
-          "VertexCount": 0,
-          "TriangleIndex": 144,
-          "TriangleCount": 2
-        },
-        {
-          "VertexIndex": 0,
-          "VertexCount": 0,
-          "TriangleIndex": 146,
-          "TriangleCount": 2
-        },
-        {
-          "VertexIndex": 0,
-          "VertexCount": 0,
-          "TriangleIndex": 148,
-          "TriangleCount": 2
-        },
-        {
-          "VertexIndex": 0,
-          "VertexCount": 0,
-          "TriangleIndex": 150,
-          "TriangleCount": 2
-        },
-        {
-          "VertexIndex": 0,
-          "VertexCount": 0,
-          "TriangleIndex": 152,
-          "TriangleCount": 2
-        },
-        {
-          "VertexIndex": 0,
-          "VertexCount": 0,
-          "TriangleIndex": 154,
           "TriangleCount": 1
         },
         {
           "VertexIndex": 0,
           "VertexCount": 0,
-          "TriangleIndex": 155,
-          "TriangleCount": 3
-        },
-        {
-          "VertexIndex": 0,
-          "VertexCount": 0,
-          "TriangleIndex": 158,
-          "TriangleCount": 1
-        },
-        {
-          "VertexIndex": 0,
-          "VertexCount": 0,
-          "TriangleIndex": 159,
-          "TriangleCount": 3
-        },
-        {
-          "VertexIndex": 0,
-          "VertexCount": 0,
-          "TriangleIndex": 162,
-          "TriangleCount": 1
-        },
-        {
-          "VertexIndex": 0,
-          "VertexCount": 0,
-          "TriangleIndex": 163,
-          "TriangleCount": 1
-        },
-        {
-          "VertexIndex": 0,
-          "VertexCount": 0,
-          "TriangleIndex": 164,
-          "TriangleCount": 1
-        },
-        {
-          "VertexIndex": 0,
-          "VertexCount": 0,
-          "TriangleIndex": 165,
+          "TriangleIndex": 133,
           "TriangleCount": 2
         },
         {
           "VertexIndex": 0,
           "VertexCount": 0,
-          "TriangleIndex": 167,
+          "TriangleIndex": 135,
           "TriangleCount": 2
         },
         {
           "VertexIndex": 0,
           "VertexCount": 0,
-          "TriangleIndex": 169,
+          "TriangleIndex": 137,
+          "TriangleCount": 2
+        },
+        {
+          "VertexIndex": 0,
+          "VertexCount": 0,
+          "TriangleIndex": 139,
+          "TriangleCount": 2
+        },
+        {
+          "VertexIndex": 0,
+          "VertexCount": 0,
+          "TriangleIndex": 141,
+          "TriangleCount": 2
+        },
+        {
+          "VertexIndex": 0,
+          "VertexCount": 0,
+          "TriangleIndex": 143,
           "TriangleCount": 2
         }
       ],
@@ -4933,408 +4257,6 @@
           "Flags": 21
         },
         {
-          "VertexHash0": 2,
-          "VertexHash1": 0,
-          "VertexHash2": 1,
-          "Flags": 21
-        },
-        {
-          "VertexHash0": 2,
-          "VertexHash1": 0,
-          "VertexHash2": 1,
-          "Flags": 21
-        },
-        {
-          "VertexHash0": 2,
-          "VertexHash1": 0,
-          "VertexHash2": 1,
-          "Flags": 21
-        },
-        {
-          "VertexHash0": 3,
-          "VertexHash1": 0,
-          "VertexHash2": 2,
-          "Flags": 17
-        },
-        {
-          "VertexHash0": 0,
-          "VertexHash1": 1,
-          "VertexHash2": 2,
-          "Flags": 5
-        },
-        {
-          "VertexHash0": 3,
-          "VertexHash1": 0,
-          "VertexHash2": 2,
-          "Flags": 17
-        },
-        {
-          "VertexHash0": 0,
-          "VertexHash1": 1,
-          "VertexHash2": 2,
-          "Flags": 5
-        },
-        {
-          "VertexHash0": 3,
-          "VertexHash1": 0,
-          "VertexHash2": 2,
-          "Flags": 17
-        },
-        {
-          "VertexHash0": 0,
-          "VertexHash1": 1,
-          "VertexHash2": 2,
-          "Flags": 5
-        },
-        {
-          "VertexHash0": 3,
-          "VertexHash1": 0,
-          "VertexHash2": 2,
-          "Flags": 17
-        },
-        {
-          "VertexHash0": 0,
-          "VertexHash1": 1,
-          "VertexHash2": 2,
-          "Flags": 5
-        },
-        {
-          "VertexHash0": 3,
-          "VertexHash1": 0,
-          "VertexHash2": 2,
-          "Flags": 17
-        },
-        {
-          "VertexHash0": 0,
-          "VertexHash1": 1,
-          "VertexHash2": 2,
-          "Flags": 5
-        },
-        {
-          "VertexHash0": 3,
-          "VertexHash1": 0,
-          "VertexHash2": 2,
-          "Flags": 17
-        },
-        {
-          "VertexHash0": 0,
-          "VertexHash1": 1,
-          "VertexHash2": 2,
-          "Flags": 5
-        },
-        {
-          "VertexHash0": 3,
-          "VertexHash1": 0,
-          "VertexHash2": 2,
-          "Flags": 17
-        },
-        {
-          "VertexHash0": 0,
-          "VertexHash1": 1,
-          "VertexHash2": 2,
-          "Flags": 5
-        },
-        {
-          "VertexHash0": 3,
-          "VertexHash1": 0,
-          "VertexHash2": 2,
-          "Flags": 17
-        },
-        {
-          "VertexHash0": 0,
-          "VertexHash1": 1,
-          "VertexHash2": 2,
-          "Flags": 5
-        },
-        {
-          "VertexHash0": 2,
-          "VertexHash1": 0,
-          "VertexHash2": 1,
-          "Flags": 21
-        },
-        {
-          "VertexHash0": 4,
-          "VertexHash1": 0,
-          "VertexHash2": 3,
-          "Flags": 17
-        },
-        {
-          "VertexHash0": 0,
-          "VertexHash1": 2,
-          "VertexHash2": 3,
-          "Flags": 4
-        },
-        {
-          "VertexHash0": 0,
-          "VertexHash1": 1,
-          "VertexHash2": 2,
-          "Flags": 5
-        },
-        {
-          "VertexHash0": 3,
-          "VertexHash1": 0,
-          "VertexHash2": 2,
-          "Flags": 17
-        },
-        {
-          "VertexHash0": 0,
-          "VertexHash1": 1,
-          "VertexHash2": 2,
-          "Flags": 5
-        },
-        {
-          "VertexHash0": 3,
-          "VertexHash1": 0,
-          "VertexHash2": 2,
-          "Flags": 17
-        },
-        {
-          "VertexHash0": 0,
-          "VertexHash1": 1,
-          "VertexHash2": 2,
-          "Flags": 5
-        },
-        {
-          "VertexHash0": 4,
-          "VertexHash1": 0,
-          "VertexHash2": 3,
-          "Flags": 17
-        },
-        {
-          "VertexHash0": 0,
-          "VertexHash1": 1,
-          "VertexHash2": 3,
-          "Flags": 1
-        },
-        {
-          "VertexHash0": 1,
-          "VertexHash1": 2,
-          "VertexHash2": 3,
-          "Flags": 5
-        },
-        {
-          "VertexHash0": 3,
-          "VertexHash1": 0,
-          "VertexHash2": 2,
-          "Flags": 17
-        },
-        {
-          "VertexHash0": 0,
-          "VertexHash1": 1,
-          "VertexHash2": 2,
-          "Flags": 5
-        },
-        {
-          "VertexHash0": 3,
-          "VertexHash1": 0,
-          "VertexHash2": 2,
-          "Flags": 17
-        },
-        {
-          "VertexHash0": 0,
-          "VertexHash1": 1,
-          "VertexHash2": 2,
-          "Flags": 5
-        },
-        {
-          "VertexHash0": 3,
-          "VertexHash1": 0,
-          "VertexHash2": 2,
-          "Flags": 17
-        },
-        {
-          "VertexHash0": 0,
-          "VertexHash1": 1,
-          "VertexHash2": 2,
-          "Flags": 5
-        },
-        {
-          "VertexHash0": 3,
-          "VertexHash1": 0,
-          "VertexHash2": 2,
-          "Flags": 17
-        },
-        {
-          "VertexHash0": 0,
-          "VertexHash1": 1,
-          "VertexHash2": 2,
-          "Flags": 5
-        },
-        {
-          "VertexHash0": 3,
-          "VertexHash1": 0,
-          "VertexHash2": 2,
-          "Flags": 17
-        },
-        {
-          "VertexHash0": 0,
-          "VertexHash1": 1,
-          "VertexHash2": 2,
-          "Flags": 5
-        },
-        {
-          "VertexHash0": 3,
-          "VertexHash1": 0,
-          "VertexHash2": 2,
-          "Flags": 17
-        },
-        {
-          "VertexHash0": 0,
-          "VertexHash1": 1,
-          "VertexHash2": 2,
-          "Flags": 5
-        },
-        {
-          "VertexHash0": 2,
-          "VertexHash1": 0,
-          "VertexHash2": 1,
-          "Flags": 21
-        },
-        {
-          "VertexHash0": 2,
-          "VertexHash1": 0,
-          "VertexHash2": 1,
-          "Flags": 21
-        },
-        {
-          "VertexHash0": 2,
-          "VertexHash1": 0,
-          "VertexHash2": 1,
-          "Flags": 21
-        },
-        {
-          "VertexHash0": 3,
-          "VertexHash1": 0,
-          "VertexHash2": 2,
-          "Flags": 17
-        },
-        {
-          "VertexHash0": 0,
-          "VertexHash1": 1,
-          "VertexHash2": 2,
-          "Flags": 5
-        },
-        {
-          "VertexHash0": 3,
-          "VertexHash1": 0,
-          "VertexHash2": 2,
-          "Flags": 17
-        },
-        {
-          "VertexHash0": 0,
-          "VertexHash1": 1,
-          "VertexHash2": 2,
-          "Flags": 5
-        },
-        {
-          "VertexHash0": 3,
-          "VertexHash1": 0,
-          "VertexHash2": 2,
-          "Flags": 17
-        },
-        {
-          "VertexHash0": 0,
-          "VertexHash1": 1,
-          "VertexHash2": 2,
-          "Flags": 5
-        },
-        {
-          "VertexHash0": 3,
-          "VertexHash1": 0,
-          "VertexHash2": 2,
-          "Flags": 17
-        },
-        {
-          "VertexHash0": 0,
-          "VertexHash1": 1,
-          "VertexHash2": 2,
-          "Flags": 5
-        },
-        {
-          "VertexHash0": 3,
-          "VertexHash1": 0,
-          "VertexHash2": 2,
-          "Flags": 17
-        },
-        {
-          "VertexHash0": 0,
-          "VertexHash1": 1,
-          "VertexHash2": 2,
-          "Flags": 5
-        },
-        {
-          "VertexHash0": 3,
-          "VertexHash1": 0,
-          "VertexHash2": 2,
-          "Flags": 17
-        },
-        {
-          "VertexHash0": 0,
-          "VertexHash1": 1,
-          "VertexHash2": 2,
-          "Flags": 5
-        },
-        {
-          "VertexHash0": 3,
-          "VertexHash1": 0,
-          "VertexHash2": 2,
-          "Flags": 17
-        },
-        {
-          "VertexHash0": 0,
-          "VertexHash1": 1,
-          "VertexHash2": 2,
-          "Flags": 5
-        },
-        {
-          "VertexHash0": 3,
-          "VertexHash1": 0,
-          "VertexHash2": 2,
-          "Flags": 17
-        },
-        {
-          "VertexHash0": 0,
-          "VertexHash1": 1,
-          "VertexHash2": 2,
-          "Flags": 5
-        },
-        {
-          "VertexHash0": 3,
-          "VertexHash1": 0,
-          "VertexHash2": 2,
-          "Flags": 17
-        },
-        {
-          "VertexHash0": 0,
-          "VertexHash1": 1,
-          "VertexHash2": 2,
-          "Flags": 5
-        },
-        {
-          "VertexHash0": 2,
-          "VertexHash1": 0,
-          "VertexHash2": 1,
-          "Flags": 21
-        },
-        {
-          "VertexHash0": 2,
-          "VertexHash1": 0,
-          "VertexHash2": 1,
-          "Flags": 21
-        },
-        {
-          "VertexHash0": 2,
-          "VertexHash1": 0,
-          "VertexHash2": 1,
-          "Flags": 21
-        },
-        {
-          "VertexHash0": 2,
-          "VertexHash1": 0,
-          "VertexHash2": 1,
-          "Flags": 21
-        },
-        {
           "VertexHash0": 4,
           "VertexHash1": 0,
           "VertexHash2": 3,
@@ -5443,16 +4365,10 @@
           "Flags": 21
         },
         {
-          "VertexHash0": 3,
+          "VertexHash0": 2,
           "VertexHash1": 0,
-          "VertexHash2": 2,
-          "Flags": 17
-        },
-        {
-          "VertexHash0": 0,
-          "VertexHash1": 1,
-          "VertexHash2": 2,
-          "Flags": 5
+          "VertexHash2": 1,
+          "Flags": 21
         },
         {
           "VertexHash0": 3,
@@ -5617,6 +4533,216 @@
           "Flags": 5
         },
         {
+          "VertexHash0": 2,
+          "VertexHash1": 0,
+          "VertexHash2": 1,
+          "Flags": 21
+        },
+        {
+          "VertexHash0": 2,
+          "VertexHash1": 0,
+          "VertexHash2": 1,
+          "Flags": 21
+        },
+        {
+          "VertexHash0": 3,
+          "VertexHash1": 0,
+          "VertexHash2": 2,
+          "Flags": 17
+        },
+        {
+          "VertexHash0": 0,
+          "VertexHash1": 1,
+          "VertexHash2": 2,
+          "Flags": 5
+        },
+        {
+          "VertexHash0": 2,
+          "VertexHash1": 0,
+          "VertexHash2": 1,
+          "Flags": 21
+        },
+        {
+          "VertexHash0": 2,
+          "VertexHash1": 0,
+          "VertexHash2": 1,
+          "Flags": 21
+        },
+        {
+          "VertexHash0": 2,
+          "VertexHash1": 0,
+          "VertexHash2": 1,
+          "Flags": 21
+        },
+        {
+          "VertexHash0": 3,
+          "VertexHash1": 0,
+          "VertexHash2": 2,
+          "Flags": 17
+        },
+        {
+          "VertexHash0": 0,
+          "VertexHash1": 1,
+          "VertexHash2": 2,
+          "Flags": 5
+        },
+        {
+          "VertexHash0": 2,
+          "VertexHash1": 0,
+          "VertexHash2": 1,
+          "Flags": 21
+        },
+        {
+          "VertexHash0": 3,
+          "VertexHash1": 0,
+          "VertexHash2": 2,
+          "Flags": 17
+        },
+        {
+          "VertexHash0": 0,
+          "VertexHash1": 1,
+          "VertexHash2": 2,
+          "Flags": 5
+        },
+        {
+          "VertexHash0": 3,
+          "VertexHash1": 0,
+          "VertexHash2": 2,
+          "Flags": 17
+        },
+        {
+          "VertexHash0": 0,
+          "VertexHash1": 1,
+          "VertexHash2": 2,
+          "Flags": 5
+        },
+        {
+          "VertexHash0": 3,
+          "VertexHash1": 0,
+          "VertexHash2": 2,
+          "Flags": 17
+        },
+        {
+          "VertexHash0": 0,
+          "VertexHash1": 1,
+          "VertexHash2": 2,
+          "Flags": 5
+        },
+        {
+          "VertexHash0": 3,
+          "VertexHash1": 0,
+          "VertexHash2": 2,
+          "Flags": 17
+        },
+        {
+          "VertexHash0": 0,
+          "VertexHash1": 1,
+          "VertexHash2": 2,
+          "Flags": 5
+        },
+        {
+          "VertexHash0": 3,
+          "VertexHash1": 0,
+          "VertexHash2": 2,
+          "Flags": 17
+        },
+        {
+          "VertexHash0": 0,
+          "VertexHash1": 1,
+          "VertexHash2": 2,
+          "Flags": 5
+        },
+        {
+          "VertexHash0": 2,
+          "VertexHash1": 0,
+          "VertexHash2": 1,
+          "Flags": 21
+        },
+        {
+          "VertexHash0": 3,
+          "VertexHash1": 0,
+          "VertexHash2": 2,
+          "Flags": 17
+        },
+        {
+          "VertexHash0": 0,
+          "VertexHash1": 1,
+          "VertexHash2": 2,
+          "Flags": 5
+        },
+        {
+          "VertexHash0": 2,
+          "VertexHash1": 0,
+          "VertexHash2": 1,
+          "Flags": 21
+        },
+        {
+          "VertexHash0": 2,
+          "VertexHash1": 0,
+          "VertexHash2": 1,
+          "Flags": 21
+        },
+        {
+          "VertexHash0": 3,
+          "VertexHash1": 0,
+          "VertexHash2": 2,
+          "Flags": 17
+        },
+        {
+          "VertexHash0": 0,
+          "VertexHash1": 1,
+          "VertexHash2": 2,
+          "Flags": 5
+        },
+        {
+          "VertexHash0": 2,
+          "VertexHash1": 0,
+          "VertexHash2": 1,
+          "Flags": 21
+        },
+        {
+          "VertexHash0": 3,
+          "VertexHash1": 0,
+          "VertexHash2": 2,
+          "Flags": 17
+        },
+        {
+          "VertexHash0": 0,
+          "VertexHash1": 1,
+          "VertexHash2": 2,
+          "Flags": 5
+        },
+        {
+          "VertexHash0": 3,
+          "VertexHash1": 0,
+          "VertexHash2": 2,
+          "Flags": 17
+        },
+        {
+          "VertexHash0": 0,
+          "VertexHash1": 1,
+          "VertexHash2": 2,
+          "Flags": 5
+        },
+        {
+          "VertexHash0": 2,
+          "VertexHash1": 0,
+          "VertexHash2": 1,
+          "Flags": 21
+        },
+        {
+          "VertexHash0": 3,
+          "VertexHash1": 0,
+          "VertexHash2": 2,
+          "Flags": 17
+        },
+        {
+          "VertexHash0": 0,
+          "VertexHash1": 1,
+          "VertexHash2": 2,
+          "Flags": 5
+        },
+        {
           "VertexHash0": 3,
           "VertexHash1": 0,
           "VertexHash2": 2,
@@ -5707,40 +4833,46 @@
           "Flags": 21
         },
         {
-          "VertexHash0": 4,
+          "VertexHash0": 3,
           "VertexHash1": 0,
-          "VertexHash2": 3,
+          "VertexHash2": 2,
           "Flags": 17
         },
         {
           "VertexHash0": 0,
           "VertexHash1": 1,
-          "VertexHash2": 3,
-          "Flags": 1
-        },
-        {
-          "VertexHash0": 1,
-          "VertexHash1": 2,
-          "VertexHash2": 3,
+          "VertexHash2": 2,
           "Flags": 5
         },
         {
-          "VertexHash0": 2,
+          "VertexHash0": 3,
           "VertexHash1": 0,
-          "VertexHash2": 1,
-          "Flags": 21
-        },
-        {
-          "VertexHash0": 4,
-          "VertexHash1": 0,
-          "VertexHash2": 3,
+          "VertexHash2": 2,
           "Flags": 17
         },
         {
           "VertexHash0": 0,
-          "VertexHash1": 2,
-          "VertexHash2": 3,
-          "Flags": 4
+          "VertexHash1": 1,
+          "VertexHash2": 2,
+          "Flags": 5
+        },
+        {
+          "VertexHash0": 3,
+          "VertexHash1": 0,
+          "VertexHash2": 2,
+          "Flags": 17
+        },
+        {
+          "VertexHash0": 0,
+          "VertexHash1": 1,
+          "VertexHash2": 2,
+          "Flags": 5
+        },
+        {
+          "VertexHash0": 3,
+          "VertexHash1": 0,
+          "VertexHash2": 2,
+          "Flags": 17
         },
         {
           "VertexHash0": 0,
@@ -5765,6 +4897,42 @@
           "VertexHash1": 0,
           "VertexHash2": 1,
           "Flags": 21
+        },
+        {
+          "VertexHash0": 3,
+          "VertexHash1": 0,
+          "VertexHash2": 2,
+          "Flags": 17
+        },
+        {
+          "VertexHash0": 0,
+          "VertexHash1": 1,
+          "VertexHash2": 2,
+          "Flags": 5
+        },
+        {
+          "VertexHash0": 3,
+          "VertexHash1": 0,
+          "VertexHash2": 2,
+          "Flags": 17
+        },
+        {
+          "VertexHash0": 0,
+          "VertexHash1": 1,
+          "VertexHash2": 2,
+          "Flags": 5
+        },
+        {
+          "VertexHash0": 3,
+          "VertexHash1": 0,
+          "VertexHash2": 2,
+          "Flags": 17
+        },
+        {
+          "VertexHash0": 0,
+          "VertexHash1": 1,
+          "VertexHash2": 2,
+          "Flags": 5
         },
         {
           "VertexHash0": 3,
@@ -5819,7 +4987,7 @@
                 "Z": 72
               }
             },
-            "Index": -187
+            "Index": -165
           },
           {
             "Bounds": {
@@ -5834,7 +5002,7 @@
                 "Z": 72
               }
             },
-            "Index": -93
+            "Index": -81
           },
           {
             "Bounds": {
@@ -5849,14 +5017,14 @@
                 "Z": 72
               }
             },
-            "Index": -45
+            "Index": -39
           },
           {
             "Bounds": {
               "Min": {
                 "X": 2,
                 "Y": 4,
-                "Z": 6
+                "Z": 2
               },
               "Max": {
                 "X": 75,
@@ -5864,14 +5032,14 @@
                 "Z": 72
               }
             },
-            "Index": -21
+            "Index": -19
           },
           {
             "Bounds": {
               "Min": {
                 "X": 2,
                 "Y": 4,
-                "Z": 22
+                "Z": 20
               },
               "Max": {
                 "X": 22,
@@ -5886,15 +5054,30 @@
               "Min": {
                 "X": 2,
                 "Y": 4,
-                "Z": 22
+                "Z": 20
               },
               "Max": {
                 "X": 7,
                 "Y": 22,
-                "Z": 64
+                "Z": 43
               }
             },
             "Index": -3
+          },
+          {
+            "Bounds": {
+              "Min": {
+                "X": 2,
+                "Y": 4,
+                "Z": 20
+              },
+              "Max": {
+                "X": 7,
+                "Y": 5,
+                "Z": 42
+              }
+            },
+            "Index": 33
           },
           {
             "Bounds": {
@@ -5919,21 +5102,6 @@
                 "Z": 45
               },
               "Max": {
-                "X": 7,
-                "Y": 5,
-                "Z": 64
-              }
-            },
-            "Index": 67
-          },
-          {
-            "Bounds": {
-              "Min": {
-                "X": 2,
-                "Y": 4,
-                "Z": 53
-              },
-              "Max": {
                 "X": 22,
                 "Y": 22,
                 "Z": 72
@@ -5946,22 +5114,22 @@
               "Min": {
                 "X": 2,
                 "Y": 4,
-                "Z": 53
+                "Z": 45
               },
               "Max": {
-                "X": 14,
+                "X": 7,
                 "Y": 5,
-                "Z": 66
+                "Z": 64
               }
             },
-            "Index": 68
+            "Index": 59
           },
           {
             "Bounds": {
               "Min": {
                 "X": 2,
                 "Y": 4,
-                "Z": 64
+                "Z": 61
               },
               "Max": {
                 "X": 22,
@@ -5976,7 +5144,7 @@
               "Min": {
                 "X": 2,
                 "Y": 4,
-                "Z": 64
+                "Z": 61
               },
               "Max": {
                 "X": 21,
@@ -5984,7 +5152,7 @@
                 "Z": 72
               }
             },
-            "Index": 66
+            "Index": 58
           },
           {
             "Bounds": {
@@ -6006,7 +5174,7 @@
               "Min": {
                 "X": 2,
                 "Y": 4,
-                "Z": 6
+                "Z": 2
               },
               "Max": {
                 "X": 75,
@@ -6014,47 +5182,17 @@
                 "Z": 69
               }
             },
-            "Index": -11
+            "Index": -9
           },
           {
             "Bounds": {
               "Min": {
                 "X": 2,
-                "Y": 4,
-                "Z": 20
+                "Y": 21,
+                "Z": 6
               },
               "Max": {
-                "X": 36,
-                "Y": 22,
-                "Z": 69
-              }
-            },
-            "Index": -5
-          },
-          {
-            "Bounds": {
-              "Min": {
-                "X": 2,
-                "Y": 4,
-                "Z": 20
-              },
-              "Max": {
-                "X": 7,
-                "Y": 5,
-                "Z": 28
-              }
-            },
-            "Index": 38
-          },
-          {
-            "Bounds": {
-              "Min": {
-                "X": 2,
-                "Y": 4,
-                "Z": 22
-              },
-              "Max": {
-                "X": 36,
+                "X": 44,
                 "Y": 22,
                 "Z": 69
               }
@@ -6065,16 +5203,16 @@
             "Bounds": {
               "Min": {
                 "X": 2,
-                "Y": 4,
-                "Z": 22
+                "Y": 21,
+                "Z": 6
               },
               "Max": {
-                "X": 7,
-                "Y": 5,
-                "Z": 41
+                "X": 44,
+                "Y": 22,
+                "Z": 22
               }
             },
-            "Index": 40
+            "Index": 14
           },
           {
             "Bounds": {
@@ -6096,7 +5234,7 @@
               "Min": {
                 "X": 2,
                 "Y": 4,
-                "Z": 6
+                "Z": 2
               },
               "Max": {
                 "X": 75,
@@ -6124,119 +5262,14 @@
           {
             "Bounds": {
               "Min": {
-                "X": 2,
-                "Y": 4,
-                "Z": 6
-              },
-              "Max": {
-                "X": 44,
-                "Y": 22,
-                "Z": 42
-              }
-            },
-            "Index": -3
-          },
-          {
-            "Bounds": {
-              "Min": {
-                "X": 2,
-                "Y": 21,
-                "Z": 6
-              },
-              "Max": {
-                "X": 44,
-                "Y": 22,
-                "Z": 22
-              }
-            },
-            "Index": 14
-          },
-          {
-            "Bounds": {
-              "Min": {
-                "X": 4,
-                "Y": 4,
-                "Z": 33
-              },
-              "Max": {
-                "X": 7,
-                "Y": 5,
-                "Z": 42
-              }
-            },
-            "Index": 39
-          },
-          {
-            "Bounds": {
-              "Min": {
-                "X": 7,
-                "Y": 4,
-                "Z": 2
-              },
-              "Max": {
-                "X": 44,
-                "Y": 22,
-                "Z": 54
-              }
-            },
-            "Index": -23
-          },
-          {
-            "Bounds": {
-              "Min": {
                 "X": 9,
                 "Y": 4,
                 "Z": 2
               },
               "Max": {
-                "X": 44,
+                "X": 28,
                 "Y": 22,
-                "Z": 21
-              }
-            },
-            "Index": -11
-          },
-          {
-            "Bounds": {
-              "Min": {
-                "X": 9,
-                "Y": 4,
-                "Z": 2
-              },
-              "Max": {
-                "X": 44,
-                "Y": 22,
-                "Z": 18
-              }
-            },
-            "Index": -5
-          },
-          {
-            "Bounds": {
-              "Min": {
-                "X": 9,
-                "Y": 4,
-                "Z": 2
-              },
-              "Max": {
-                "X": 22,
-                "Y": 5,
-                "Z": 12
-              }
-            },
-            "Index": 18
-          },
-          {
-            "Bounds": {
-              "Min": {
-                "X": 9,
-                "Y": 21,
-                "Z": 2
-              },
-              "Max": {
-                "X": 44,
-                "Y": 22,
-                "Z": 18
+                "Z": 25
               }
             },
             "Index": -3
@@ -6260,6 +5293,81 @@
             "Bounds": {
               "Min": {
                 "X": 9,
+                "Y": 4,
+                "Z": 15
+              },
+              "Max": {
+                "X": 15,
+                "Y": 5,
+                "Z": 25
+              }
+            },
+            "Index": 26
+          },
+          {
+            "Bounds": {
+              "Min": {
+                "X": 9,
+                "Y": 4,
+                "Z": 2
+              },
+              "Max": {
+                "X": 44,
+                "Y": 22,
+                "Z": 63
+              }
+            },
+            "Index": -19
+          },
+          {
+            "Bounds": {
+              "Min": {
+                "X": 9,
+                "Y": 4,
+                "Z": 2
+              },
+              "Max": {
+                "X": 44,
+                "Y": 22,
+                "Z": 39
+              }
+            },
+            "Index": -9
+          },
+          {
+            "Bounds": {
+              "Min": {
+                "X": 9,
+                "Y": 4,
+                "Z": 2
+              },
+              "Max": {
+                "X": 44,
+                "Y": 22,
+                "Z": 18
+              }
+            },
+            "Index": -3
+          },
+          {
+            "Bounds": {
+              "Min": {
+                "X": 9,
+                "Y": 4,
+                "Z": 2
+              },
+              "Max": {
+                "X": 27,
+                "Y": 5,
+                "Z": 15
+              }
+            },
+            "Index": 15
+          },
+          {
+            "Bounds": {
+              "Min": {
+                "X": 9,
                 "Y": 21,
                 "Z": 5
               },
@@ -6274,14 +5382,14 @@
           {
             "Bounds": {
               "Min": {
-                "X": 9,
+                "X": 10,
                 "Y": 4,
-                "Z": 9
+                "Z": 25
               },
               "Max": {
                 "X": 21,
                 "Y": 5,
-                "Z": 21
+                "Z": 39
               }
             },
             "Index": -5
@@ -6289,99 +5397,9 @@
           {
             "Bounds": {
               "Min": {
-                "X": 9,
+                "X": 10,
                 "Y": 4,
-                "Z": 10
-              },
-              "Max": {
-                "X": 15,
-                "Y": 5,
-                "Z": 15
-              }
-            },
-            "Index": 15
-          },
-          {
-            "Bounds": {
-              "Min": {
-                "X": 9,
-                "Y": 4,
-                "Z": 9
-              },
-              "Max": {
-                "X": 21,
-                "Y": 5,
-                "Z": 21
-              }
-            },
-            "Index": -3
-          },
-          {
-            "Bounds": {
-              "Min": {
-                "X": 9,
-                "Y": 4,
-                "Z": 15
-              },
-              "Max": {
-                "X": 20,
-                "Y": 5,
-                "Z": 21
-              }
-            },
-            "Index": 31
-          },
-          {
-            "Bounds": {
-              "Min": {
-                "X": 15,
-                "Y": 4,
-                "Z": 9
-              },
-              "Max": {
-                "X": 21,
-                "Y": 5,
-                "Z": 14
-              }
-            },
-            "Index": 16
-          },
-          {
-            "Bounds": {
-              "Min": {
-                "X": 7,
-                "Y": 4,
-                "Z": 18
-              },
-              "Max": {
-                "X": 21,
-                "Y": 5,
-                "Z": 54
-              }
-            },
-            "Index": -11
-          },
-          {
-            "Bounds": {
-              "Min": {
-                "X": 7,
-                "Y": 4,
-                "Z": 18
-              },
-              "Max": {
-                "X": 14,
-                "Y": 5,
-                "Z": 40
-              }
-            },
-            "Index": -5
-          },
-          {
-            "Bounds": {
-              "Min": {
-                "X": 9,
-                "Y": 4,
-                "Z": 18
+                "Z": 25
               },
               "Max": {
                 "X": 14,
@@ -6389,19 +5407,19 @@
                 "Z": 29
               }
             },
-            "Index": 30
+            "Index": 40
           },
           {
             "Bounds": {
               "Min": {
-                "X": 7,
+                "X": 10,
                 "Y": 4,
-                "Z": 28
+                "Z": 33
               },
               "Max": {
-                "X": 14,
+                "X": 21,
                 "Y": 5,
-                "Z": 40
+                "Z": 39
               }
             },
             "Index": -3
@@ -6409,47 +5427,17 @@
           {
             "Bounds": {
               "Min": {
-                "X": 7,
-                "Y": 4,
-                "Z": 28
-              },
-              "Max": {
-                "X": 11,
-                "Y": 5,
-                "Z": 33
-              }
-            },
-            "Index": 37
-          },
-          {
-            "Bounds": {
-              "Min": {
-                "X": 9,
+                "X": 10,
                 "Y": 4,
                 "Z": 33
               },
               "Max": {
                 "X": 14,
                 "Y": 5,
-                "Z": 40
+                "Z": 37
               }
             },
-            "Index": 54
-          },
-          {
-            "Bounds": {
-              "Min": {
-                "X": 9,
-                "Y": 4,
-                "Z": 34
-              },
-              "Max": {
-                "X": 21,
-                "Y": 5,
-                "Z": 54
-              }
-            },
-            "Index": -5
+            "Index": 46
           },
           {
             "Bounds": {
@@ -6464,7 +5452,7 @@
                 "Z": 39
               }
             },
-            "Index": 55
+            "Index": 47
           },
           {
             "Bounds": {
@@ -6474,7 +5462,22 @@
                 "Z": 41
               },
               "Max": {
-                "X": 19,
+                "X": 27,
+                "Y": 5,
+                "Z": 63
+              }
+            },
+            "Index": -9
+          },
+          {
+            "Bounds": {
+              "Min": {
+                "X": 10,
+                "Y": 4,
+                "Z": 41
+              },
+              "Max": {
+                "X": 15,
                 "Y": 5,
                 "Z": 54
               }
@@ -6489,19 +5492,19 @@
                 "Z": 41
               },
               "Max": {
-                "X": 19,
+                "X": 15,
                 "Y": 5,
                 "Z": 46
               }
             },
-            "Index": 63
+            "Index": 55
           },
           {
             "Bounds": {
               "Min": {
-                "X": 9,
+                "X": 10,
                 "Y": 4,
-                "Z": 46
+                "Z": 50
               },
               "Max": {
                 "X": 14,
@@ -6509,7 +5512,82 @@
                 "Z": 54
               }
             },
-            "Index": 71
+            "Index": 69
+          },
+          {
+            "Bounds": {
+              "Min": {
+                "X": 9,
+                "Y": 4,
+                "Z": 53
+              },
+              "Max": {
+                "X": 27,
+                "Y": 5,
+                "Z": 63
+              }
+            },
+            "Index": -5
+          },
+          {
+            "Bounds": {
+              "Min": {
+                "X": 9,
+                "Y": 4,
+                "Z": 55
+              },
+              "Max": {
+                "X": 14,
+                "Y": 5,
+                "Z": 62
+              }
+            },
+            "Index": 73
+          },
+          {
+            "Bounds": {
+              "Min": {
+                "X": 16,
+                "Y": 4,
+                "Z": 53
+              },
+              "Max": {
+                "X": 27,
+                "Y": 5,
+                "Z": 63
+              }
+            },
+            "Index": -3
+          },
+          {
+            "Bounds": {
+              "Min": {
+                "X": 16,
+                "Y": 4,
+                "Z": 53
+              },
+              "Max": {
+                "X": 27,
+                "Y": 5,
+                "Z": 59
+              }
+            },
+            "Index": 64
+          },
+          {
+            "Bounds": {
+              "Min": {
+                "X": 16,
+                "Y": 4,
+                "Z": 59
+              },
+              "Max": {
+                "X": 20,
+                "Y": 5,
+                "Z": 63
+              }
+            },
+            "Index": 75
           },
           {
             "Bounds": {
@@ -6524,7 +5602,7 @@
                 "Z": 72
               }
             },
-            "Index": -47
+            "Index": -41
           },
           {
             "Bounds": {
@@ -6536,15 +5614,15 @@
               "Max": {
                 "X": 44,
                 "Y": 22,
-                "Z": 41
+                "Z": 34
               }
             },
-            "Index": -23
+            "Index": -19
           },
           {
             "Bounds": {
               "Min": {
-                "X": 21,
+                "X": 23,
                 "Y": 4,
                 "Z": 2
               },
@@ -6554,37 +5632,7 @@
                 "Z": 20
               }
             },
-            "Index": -11
-          },
-          {
-            "Bounds": {
-              "Min": {
-                "X": 21,
-                "Y": 4,
-                "Z": 2
-              },
-              "Max": {
-                "X": 35,
-                "Y": 5,
-                "Z": 20
-              }
-            },
-            "Index": -5
-          },
-          {
-            "Bounds": {
-              "Min": {
-                "X": 21,
-                "Y": 4,
-                "Z": 2
-              },
-              "Max": {
-                "X": 27,
-                "Y": 5,
-                "Z": 9
-              }
-            },
-            "Index": 17
+            "Index": -9
           },
           {
             "Bounds": {
@@ -6594,9 +5642,9 @@
                 "Z": 6
               },
               "Max": {
-                "X": 35,
+                "X": 36,
                 "Y": 5,
-                "Z": 20
+                "Z": 16
               }
             },
             "Index": -3
@@ -6606,15 +5654,45 @@
               "Min": {
                 "X": 23,
                 "Y": 4,
-                "Z": 6
+                "Z": 11
               },
               "Max": {
-                "X": 31,
+                "X": 27,
                 "Y": 5,
                 "Z": 16
               }
             },
-            "Index": 24
+            "Index": 23
+          },
+          {
+            "Bounds": {
+              "Min": {
+                "X": 25,
+                "Y": 4,
+                "Z": 6
+              },
+              "Max": {
+                "X": 36,
+                "Y": 5,
+                "Z": 12
+              }
+            },
+            "Index": 20
+          },
+          {
+            "Bounds": {
+              "Min": {
+                "X": 26,
+                "Y": 4,
+                "Z": 2
+              },
+              "Max": {
+                "X": 44,
+                "Y": 22,
+                "Z": 20
+              }
+            },
+            "Index": -5
           },
           {
             "Bounds": {
@@ -6629,37 +5707,7 @@
                 "Z": 20
               }
             },
-            "Index": 32
-          },
-          {
-            "Bounds": {
-              "Min": {
-                "X": 28,
-                "Y": 4,
-                "Z": 2
-              },
-              "Max": {
-                "X": 44,
-                "Y": 22,
-                "Z": 15
-              }
-            },
-            "Index": -5
-          },
-          {
-            "Bounds": {
-              "Min": {
-                "X": 29,
-                "Y": 4,
-                "Z": 6
-              },
-              "Max": {
-                "X": 36,
-                "Y": 5,
-                "Z": 15
-              }
-            },
-            "Index": 25
+            "Index": 28
           },
           {
             "Bounds": {
@@ -6689,7 +5737,7 @@
                 "Z": 8
               }
             },
-            "Index": 19
+            "Index": 16
           },
           {
             "Bounds": {
@@ -6711,30 +5759,45 @@
               "Min": {
                 "X": 16,
                 "Y": 4,
-                "Z": 19
+                "Z": 15
               },
               "Max": {
                 "X": 36,
                 "Y": 5,
-                "Z": 41
+                "Z": 34
               }
             },
-            "Index": -11
+            "Index": -9
           },
           {
             "Bounds": {
               "Min": {
                 "X": 16,
                 "Y": 4,
-                "Z": 19
+                "Z": 15
               },
               "Max": {
-                "X": 36,
+                "X": 21,
                 "Y": 5,
                 "Z": 28
               }
             },
-            "Index": -5
+            "Index": -3
+          },
+          {
+            "Bounds": {
+              "Min": {
+                "X": 16,
+                "Y": 4,
+                "Z": 15
+              },
+              "Max": {
+                "X": 20,
+                "Y": 5,
+                "Z": 20
+              }
+            },
+            "Index": 27
           },
           {
             "Bounds": {
@@ -6747,6 +5810,36 @@
                 "X": 21,
                 "Y": 5,
                 "Z": 28
+              }
+            },
+            "Index": 34
+          },
+          {
+            "Bounds": {
+              "Min": {
+                "X": 17,
+                "Y": 4,
+                "Z": 19
+              },
+              "Max": {
+                "X": 36,
+                "Y": 5,
+                "Z": 34
+              }
+            },
+            "Index": -5
+          },
+          {
+            "Bounds": {
+              "Min": {
+                "X": 17,
+                "Y": 4,
+                "Z": 28
+              },
+              "Max": {
+                "X": 26,
+                "Y": 5,
+                "Z": 34
               }
             },
             "Index": 41
@@ -6779,7 +5872,7 @@
                 "Z": 27
               }
             },
-            "Index": 36
+            "Index": 32
           },
           {
             "Bounds": {
@@ -6794,37 +5887,37 @@
                 "Z": 27
               }
             },
-            "Index": 42
+            "Index": 35
           },
           {
             "Bounds": {
               "Min": {
-                "X": 17,
+                "X": 16,
                 "Y": 4,
-                "Z": 28
+                "Z": 34
+              },
+              "Max": {
+                "X": 42,
+                "Y": 22,
+                "Z": 72
+              }
+            },
+            "Index": -21
+          },
+          {
+            "Bounds": {
+              "Min": {
+                "X": 16,
+                "Y": 4,
+                "Z": 34
               },
               "Max": {
                 "X": 36,
                 "Y": 5,
-                "Z": 41
+                "Z": 56
               }
             },
-            "Index": -5
-          },
-          {
-            "Bounds": {
-              "Min": {
-                "X": 17,
-                "Y": 4,
-                "Z": 28
-              },
-              "Max": {
-                "X": 26,
-                "Y": 5,
-                "Z": 34
-              }
-            },
-            "Index": 47
+            "Index": -9
           },
           {
             "Bounds": {
@@ -6854,7 +5947,7 @@
                 "Z": 41
               }
             },
-            "Index": 59
+            "Index": 50
           },
           {
             "Bounds": {
@@ -6869,7 +5962,7 @@
                 "Z": 40
               }
             },
-            "Index": 56
+            "Index": 48
           },
           {
             "Bounds": {
@@ -6879,72 +5972,12 @@
                 "Z": 42
               },
               "Max": {
-                "X": 43,
-                "Y": 22,
-                "Z": 72
-              }
-            },
-            "Index": -23
-          },
-          {
-            "Bounds": {
-              "Min": {
-                "X": 16,
-                "Y": 4,
-                "Z": 42
-              },
-              "Max": {
-                "X": 42,
+                "X": 33,
                 "Y": 5,
-                "Z": 60
-              }
-            },
-            "Index": -11
-          },
-          {
-            "Bounds": {
-              "Min": {
-                "X": 16,
-                "Y": 4,
-                "Z": 46
-              },
-              "Max": {
-                "X": 28,
-                "Y": 5,
-                "Z": 59
+                "Z": 56
               }
             },
             "Index": -5
-          },
-          {
-            "Bounds": {
-              "Min": {
-                "X": 23,
-                "Y": 4,
-                "Z": 46
-              },
-              "Max": {
-                "X": 28,
-                "Y": 5,
-                "Z": 54
-              }
-            },
-            "Index": 72
-          },
-          {
-            "Bounds": {
-              "Min": {
-                "X": 16,
-                "Y": 4,
-                "Z": 47
-              },
-              "Max": {
-                "X": 27,
-                "Y": 5,
-                "Z": 59
-              }
-            },
-            "Index": -3
           },
           {
             "Bounds": {
@@ -6959,37 +5992,22 @@
                 "Z": 56
               }
             },
-            "Index": 74
+            "Index": 63
           },
           {
             "Bounds": {
               "Min": {
-                "X": 16,
-                "Y": 4,
-                "Z": 53
-              },
-              "Max": {
-                "X": 27,
-                "Y": 5,
-                "Z": 59
-              }
-            },
-            "Index": 75
-          },
-          {
-            "Bounds": {
-              "Min": {
-                "X": 27,
+                "X": 23,
                 "Y": 4,
                 "Z": 42
               },
               "Max": {
-                "X": 42,
+                "X": 33,
                 "Y": 5,
-                "Z": 60
+                "Z": 54
               }
             },
-            "Index": -5
+            "Index": -3
           },
           {
             "Bounds": {
@@ -7004,7 +6022,67 @@
                 "Z": 44
               }
             },
-            "Index": 65
+            "Index": 57
+          },
+          {
+            "Bounds": {
+              "Min": {
+                "X": 23,
+                "Y": 4,
+                "Z": 46
+              },
+              "Max": {
+                "X": 28,
+                "Y": 5,
+                "Z": 54
+              }
+            },
+            "Index": 61
+          },
+          {
+            "Bounds": {
+              "Min": {
+                "X": 18,
+                "Y": 4,
+                "Z": 47
+              },
+              "Max": {
+                "X": 42,
+                "Y": 22,
+                "Z": 72
+              }
+            },
+            "Index": -11
+          },
+          {
+            "Bounds": {
+              "Min": {
+                "X": 18,
+                "Y": 4,
+                "Z": 47
+              },
+              "Max": {
+                "X": 42,
+                "Y": 5,
+                "Z": 68
+              }
+            },
+            "Index": -5
+          },
+          {
+            "Bounds": {
+              "Min": {
+                "X": 18,
+                "Y": 4,
+                "Z": 62
+              },
+              "Max": {
+                "X": 28,
+                "Y": 5,
+                "Z": 68
+              }
+            },
+            "Index": 78
           },
           {
             "Bounds": {
@@ -7034,7 +6112,7 @@
                 "Z": 54
               }
             },
-            "Index": 76
+            "Index": 65
           },
           {
             "Bounds": {
@@ -7049,82 +6127,22 @@
                 "Z": 60
               }
             },
-            "Index": 80
+            "Index": 71
           },
           {
             "Bounds": {
               "Min": {
-                "X": 16,
+                "X": 22,
                 "Y": 4,
-                "Z": 59
+                "Z": 62
               },
               "Max": {
-                "X": 43,
-                "Y": 22,
-                "Z": 72
-              }
-            },
-            "Index": -11
-          },
-          {
-            "Bounds": {
-              "Min": {
-                "X": 16,
-                "Y": 4,
-                "Z": 59
-              },
-              "Max": {
-                "X": 36,
+                "X": 42,
                 "Y": 22,
                 "Z": 72
               }
             },
             "Index": -5
-          },
-          {
-            "Bounds": {
-              "Min": {
-                "X": 16,
-                "Y": 4,
-                "Z": 59
-              },
-              "Max": {
-                "X": 22,
-                "Y": 5,
-                "Z": 68
-              }
-            },
-            "Index": 82
-          },
-          {
-            "Bounds": {
-              "Min": {
-                "X": 22,
-                "Y": 4,
-                "Z": 60
-              },
-              "Max": {
-                "X": 36,
-                "Y": 22,
-                "Z": 72
-              }
-            },
-            "Index": -3
-          },
-          {
-            "Bounds": {
-              "Min": {
-                "X": 22,
-                "Y": 4,
-                "Z": 60
-              },
-              "Max": {
-                "X": 28,
-                "Y": 5,
-                "Z": 68
-              }
-            },
-            "Index": 83
           },
           {
             "Bounds": {
@@ -7146,15 +6164,15 @@
               "Min": {
                 "X": 26,
                 "Y": 4,
-                "Z": 59
+                "Z": 62
               },
               "Max": {
-                "X": 43,
+                "X": 42,
                 "Y": 5,
                 "Z": 72
               }
             },
-            "Index": -5
+            "Index": -3
           },
           {
             "Bounds": {
@@ -7169,52 +6187,22 @@
                 "Z": 72
               }
             },
-            "Index": 92
-          },
-          {
-            "Bounds": {
-              "Min": {
-                "X": 32,
-                "Y": 4,
-                "Z": 59
-              },
-              "Max": {
-                "X": 43,
-                "Y": 5,
-                "Z": 68
-              }
-            },
-            "Index": -3
-          },
-          {
-            "Bounds": {
-              "Min": {
-                "X": 32,
-                "Y": 4,
-                "Z": 59
-              },
-              "Max": {
-                "X": 36,
-                "Y": 5,
-                "Z": 66
-              }
-            },
-            "Index": 84
+            "Index": 81
           },
           {
             "Bounds": {
               "Min": {
                 "X": 33,
                 "Y": 4,
-                "Z": 60
+                "Z": 62
               },
               "Max": {
-                "X": 43,
+                "X": 42,
                 "Y": 5,
                 "Z": 68
               }
             },
-            "Index": 85
+            "Index": 79
           },
           {
             "Bounds": {
@@ -7229,7 +6217,7 @@
                 "Z": 72
               }
             },
-            "Index": -93
+            "Index": -83
           },
           {
             "Bounds": {
@@ -7244,12 +6232,12 @@
                 "Z": 57
               }
             },
-            "Index": -45
+            "Index": -41
           },
           {
             "Bounds": {
               "Min": {
-                "X": 39,
+                "X": 40,
                 "Y": 4,
                 "Z": 2
               },
@@ -7259,12 +6247,12 @@
                 "Z": 30
               }
             },
-            "Index": -21
+            "Index": -19
           },
           {
             "Bounds": {
               "Min": {
-                "X": 39,
+                "X": 40,
                 "Y": 4,
                 "Z": 2
               },
@@ -7279,14 +6267,14 @@
           {
             "Bounds": {
               "Min": {
-                "X": 39,
+                "X": 40,
                 "Y": 4,
-                "Z": 6
+                "Z": 2
               },
               "Max": {
-                "X": 50,
-                "Y": 5,
-                "Z": 15
+                "X": 57,
+                "Y": 22,
+                "Z": 12
               }
             },
             "Index": -3
@@ -7294,47 +6282,17 @@
           {
             "Bounds": {
               "Min": {
-                "X": 39,
+                "X": 40,
                 "Y": 4,
                 "Z": 6
               },
               "Max": {
                 "X": 50,
                 "Y": 5,
-                "Z": 15
+                "Z": 12
               }
             },
-            "Index": 27
-          },
-          {
-            "Bounds": {
-              "Min": {
-                "X": 39,
-                "Y": 4,
-                "Z": 9
-              },
-              "Max": {
-                "X": 44,
-                "Y": 5,
-                "Z": 15
-              }
-            },
-            "Index": 26
-          },
-          {
-            "Bounds": {
-              "Min": {
-                "X": 44,
-                "Y": 4,
-                "Z": 2
-              },
-              "Max": {
-                "X": 81,
-                "Y": 22,
-                "Z": 30
-              }
-            },
-            "Index": -5
+            "Index": 21
           },
           {
             "Bounds": {
@@ -7364,7 +6322,7 @@
                 "Z": 30
               }
             },
-            "Index": -3
+            "Index": -5
           },
           {
             "Bounds": {
@@ -7389,42 +6347,27 @@
                 "Z": 2
               },
               "Max": {
+                "X": 64,
+                "Y": 5,
+                "Z": 12
+              }
+            },
+            "Index": -3
+          },
+          {
+            "Bounds": {
+              "Min": {
+                "X": 48,
+                "Y": 4,
+                "Z": 2
+              },
+              "Max": {
                 "X": 56,
                 "Y": 5,
                 "Z": 7
               }
             },
-            "Index": 20
-          },
-          {
-            "Bounds": {
-              "Min": {
-                "X": 54,
-                "Y": 4,
-                "Z": 2
-              },
-              "Max": {
-                "X": 81,
-                "Y": 22,
-                "Z": 29
-              }
-            },
-            "Index": -11
-          },
-          {
-            "Bounds": {
-              "Min": {
-                "X": 54,
-                "Y": 4,
-                "Z": 2
-              },
-              "Max": {
-                "X": 81,
-                "Y": 22,
-                "Z": 15
-              }
-            },
-            "Index": -5
+            "Index": 17
           },
           {
             "Bounds": {
@@ -7434,12 +6377,12 @@
                 "Z": 6
               },
               "Max": {
-                "X": 60,
+                "X": 64,
                 "Y": 5,
-                "Z": 14
+                "Z": 12
               }
             },
-            "Index": 29
+            "Index": 22
           },
           {
             "Bounds": {
@@ -7451,7 +6394,22 @@
               "Max": {
                 "X": 81,
                 "Y": 22,
-                "Z": 15
+                "Z": 29
+              }
+            },
+            "Index": -9
+          },
+          {
+            "Bounds": {
+              "Min": {
+                "X": 57,
+                "Y": 4,
+                "Z": 2
+              },
+              "Max": {
+                "X": 81,
+                "Y": 22,
+                "Z": 13
               }
             },
             "Index": -3
@@ -7474,24 +6432,24 @@
           {
             "Bounds": {
               "Min": {
-                "X": 60,
+                "X": 62,
                 "Y": 4,
-                "Z": 6
+                "Z": 2
               },
               "Max": {
-                "X": 66,
+                "X": 81,
                 "Y": 5,
-                "Z": 15
+                "Z": 13
               }
             },
-            "Index": 28
+            "Index": 18
           },
           {
             "Bounds": {
               "Min": {
                 "X": 62,
                 "Y": 4,
-                "Z": 2
+                "Z": 10
               },
               "Max": {
                 "X": 81,
@@ -7506,22 +6464,22 @@
               "Min": {
                 "X": 62,
                 "Y": 4,
-                "Z": 2
+                "Z": 11
               },
               "Max": {
-                "X": 81,
+                "X": 66,
                 "Y": 5,
-                "Z": 10
+                "Z": 15
               }
             },
-            "Index": 21
+            "Index": 24
           },
           {
             "Bounds": {
               "Min": {
                 "X": 68,
                 "Y": 4,
-                "Z": 8
+                "Z": 10
               },
               "Max": {
                 "X": 81,
@@ -7530,21 +6488,6 @@
               }
             },
             "Index": -3
-          },
-          {
-            "Bounds": {
-              "Min": {
-                "X": 68,
-                "Y": 4,
-                "Z": 8
-              },
-              "Max": {
-                "X": 81,
-                "Y": 5,
-                "Z": 21
-              }
-            },
-            "Index": 23
           },
           {
             "Bounds": {
@@ -7559,7 +6502,22 @@
                 "Z": 29
               }
             },
-            "Index": 22
+            "Index": 19
+          },
+          {
+            "Bounds": {
+              "Min": {
+                "X": 68,
+                "Y": 4,
+                "Z": 12
+              },
+              "Max": {
+                "X": 73,
+                "Y": 5,
+                "Z": 20
+              }
+            },
+            "Index": 25
           },
           {
             "Bounds": {
@@ -7574,7 +6532,7 @@
                 "Z": 57
               }
             },
-            "Index": -23
+            "Index": -21
           },
           {
             "Bounds": {
@@ -7584,42 +6542,12 @@
                 "Z": 15
               },
               "Max": {
-                "X": 59,
+                "X": 54,
                 "Y": 5,
                 "Z": 33
               }
             },
-            "Index": -11
-          },
-          {
-            "Bounds": {
-              "Min": {
-                "X": 35,
-                "Y": 4,
-                "Z": 15
-              },
-              "Max": {
-                "X": 49,
-                "Y": 5,
-                "Z": 33
-              }
-            },
-            "Index": -5
-          },
-          {
-            "Bounds": {
-              "Min": {
-                "X": 40,
-                "Y": 4,
-                "Z": 15
-              },
-              "Max": {
-                "X": 49,
-                "Y": 5,
-                "Z": 20
-              }
-            },
-            "Index": 33
+            "Index": -9
           },
           {
             "Bounds": {
@@ -7649,7 +6577,7 @@
                 "Z": 27
               }
             },
-            "Index": 43
+            "Index": 36
           },
           {
             "Bounds": {
@@ -7664,7 +6592,37 @@
                 "Z": 33
               }
             },
-            "Index": 49
+            "Index": 43
+          },
+          {
+            "Bounds": {
+              "Min": {
+                "X": 40,
+                "Y": 4,
+                "Z": 15
+              },
+              "Max": {
+                "X": 54,
+                "Y": 5,
+                "Z": 32
+              }
+            },
+            "Index": -5
+          },
+          {
+            "Bounds": {
+              "Min": {
+                "X": 40,
+                "Y": 4,
+                "Z": 15
+              },
+              "Max": {
+                "X": 49,
+                "Y": 5,
+                "Z": 20
+              }
+            },
+            "Index": 29
           },
           {
             "Bounds": {
@@ -7674,12 +6632,12 @@
                 "Z": 20
               },
               "Max": {
-                "X": 59,
+                "X": 54,
                 "Y": 5,
                 "Z": 32
               }
             },
-            "Index": -5
+            "Index": -3
           },
           {
             "Bounds": {
@@ -7694,37 +6652,7 @@
                 "Z": 27
               }
             },
-            "Index": 44
-          },
-          {
-            "Bounds": {
-              "Min": {
-                "X": 50,
-                "Y": 4,
-                "Z": 20
-              },
-              "Max": {
-                "X": 59,
-                "Y": 5,
-                "Z": 32
-              }
-            },
-            "Index": -3
-          },
-          {
-            "Bounds": {
-              "Min": {
-                "X": 54,
-                "Y": 4,
-                "Z": 20
-              },
-              "Max": {
-                "X": 59,
-                "Y": 5,
-                "Z": 28
-              }
-            },
-            "Index": 45
+            "Index": 37
           },
           {
             "Bounds": {
@@ -7739,12 +6667,12 @@
                 "Z": 32
               }
             },
-            "Index": 50
+            "Index": 44
           },
           {
             "Bounds": {
               "Min": {
-                "X": 55,
+                "X": 54,
                 "Y": 4,
                 "Z": 15
               },
@@ -7759,12 +6687,12 @@
           {
             "Bounds": {
               "Min": {
-                "X": 55,
+                "X": 54,
                 "Y": 4,
                 "Z": 15
               },
               "Max": {
-                "X": 73,
+                "X": 66,
                 "Y": 5,
                 "Z": 28
               }
@@ -7784,22 +6712,37 @@
                 "Z": 21
               }
             },
-            "Index": 34
+            "Index": 30
           },
           {
             "Bounds": {
               "Min": {
-                "X": 61,
+                "X": 54,
                 "Y": 4,
                 "Z": 18
               },
               "Max": {
-                "X": 73,
+                "X": 66,
                 "Y": 5,
                 "Z": 28
               }
             },
             "Index": -3
+          },
+          {
+            "Bounds": {
+              "Min": {
+                "X": 54,
+                "Y": 4,
+                "Z": 20
+              },
+              "Max": {
+                "X": 59,
+                "Y": 5,
+                "Z": 28
+              }
+            },
+            "Index": 38
           },
           {
             "Bounds": {
@@ -7814,7 +6757,7 @@
                 "Z": 27
               }
             },
-            "Index": 35
+            "Index": 31
           },
           {
             "Bounds": {
@@ -7822,21 +6765,6 @@
                 "X": 68,
                 "Y": 4,
                 "Z": 20
-              },
-              "Max": {
-                "X": 73,
-                "Y": 5,
-                "Z": 28
-              }
-            },
-            "Index": 46
-          },
-          {
-            "Bounds": {
-              "Min": {
-                "X": 64,
-                "Y": 4,
-                "Z": 28
               },
               "Max": {
                 "X": 81,
@@ -7849,7 +6777,37 @@
           {
             "Bounds": {
               "Min": {
-                "X": 64,
+                "X": 68,
+                "Y": 4,
+                "Z": 20
+              },
+              "Max": {
+                "X": 73,
+                "Y": 5,
+                "Z": 25
+              }
+            },
+            "Index": 39
+          },
+          {
+            "Bounds": {
+              "Min": {
+                "X": 68,
+                "Y": 4,
+                "Z": 28
+              },
+              "Max": {
+                "X": 81,
+                "Y": 22,
+                "Z": 57
+              }
+            },
+            "Index": -3
+          },
+          {
+            "Bounds": {
+              "Min": {
+                "X": 68,
                 "Y": 4,
                 "Z": 28
               },
@@ -7859,22 +6817,7 @@
                 "Z": 34
               }
             },
-            "Index": 48
-          },
-          {
-            "Bounds": {
-              "Min": {
-                "X": 73,
-                "Y": 4,
-                "Z": 30
-              },
-              "Max": {
-                "X": 81,
-                "Y": 22,
-                "Z": 57
-              }
-            },
-            "Index": -3
+            "Index": 42
           },
           {
             "Bounds": {
@@ -7894,24 +6837,9 @@
           {
             "Bounds": {
               "Min": {
-                "X": 75,
-                "Y": 4,
-                "Z": 32
-              },
-              "Max": {
-                "X": 81,
-                "Y": 5,
-                "Z": 41
-              }
-            },
-            "Index": 52
-          },
-          {
-            "Bounds": {
-              "Min": {
                 "X": 36,
                 "Y": 4,
-                "Z": 34
+                "Z": 32
               },
               "Max": {
                 "X": 81,
@@ -7919,14 +6847,14 @@
                 "Z": 72
               }
             },
-            "Index": -47
+            "Index": -41
           },
           {
             "Bounds": {
               "Min": {
                 "X": 36,
                 "Y": 4,
-                "Z": 34
+                "Z": 35
               },
               "Max": {
                 "X": 74,
@@ -7934,7 +6862,7 @@
                 "Z": 72
               }
             },
-            "Index": -23
+            "Index": -19
           },
           {
             "Bounds": {
@@ -7949,7 +6877,7 @@
                 "Z": 72
               }
             },
-            "Index": -11
+            "Index": -9
           },
           {
             "Bounds": {
@@ -7964,7 +6892,7 @@
                 "Z": 72
               }
             },
-            "Index": -5
+            "Index": -3
           },
           {
             "Bounds": {
@@ -7991,50 +6919,20 @@
               "Max": {
                 "X": 43,
                 "Y": 5,
-                "Z": 54
-              }
-            },
-            "Index": -3
-          },
-          {
-            "Bounds": {
-              "Min": {
-                "X": 39,
-                "Y": 4,
-                "Z": 35
-              },
-              "Max": {
-                "X": 43,
-                "Y": 5,
                 "Z": 40
               }
             },
-            "Index": 60
+            "Index": 51
           },
           {
             "Bounds": {
               "Min": {
                 "X": 39,
                 "Y": 4,
-                "Z": 47
-              },
-              "Max": {
-                "X": 43,
-                "Y": 5,
-                "Z": 54
-              }
-            },
-            "Index": 77
-          },
-          {
-            "Bounds": {
-              "Min": {
-                "X": 40,
-                "Y": 4,
                 "Z": 35
               },
               "Max": {
-                "X": 59,
+                "X": 50,
                 "Y": 5,
                 "Z": 72
               }
@@ -8054,22 +6952,37 @@
                 "Z": 40
               }
             },
-            "Index": 61
+            "Index": 52
           },
           {
             "Bounds": {
               "Min": {
-                "X": 40,
+                "X": 39,
                 "Y": 4,
-                "Z": 60
+                "Z": 47
               },
               "Max": {
-                "X": 59,
+                "X": 49,
                 "Y": 5,
                 "Z": 72
               }
             },
             "Index": -3
+          },
+          {
+            "Bounds": {
+              "Min": {
+                "X": 39,
+                "Y": 4,
+                "Z": 47
+              },
+              "Max": {
+                "X": 43,
+                "Y": 5,
+                "Z": 54
+              }
+            },
+            "Index": 66
           },
           {
             "Bounds": {
@@ -8084,67 +6997,7 @@
                 "Z": 72
               }
             },
-            "Index": 93
-          },
-          {
-            "Bounds": {
-              "Min": {
-                "X": 47,
-                "Y": 4,
-                "Z": 60
-              },
-              "Max": {
-                "X": 59,
-                "Y": 5,
-                "Z": 68
-              }
-            },
-            "Index": 87
-          },
-          {
-            "Bounds": {
-              "Min": {
-                "X": 47,
-                "Y": 4,
-                "Z": 34
-              },
-              "Max": {
-                "X": 74,
-                "Y": 22,
-                "Z": 72
-              }
-            },
-            "Index": -11
-          },
-          {
-            "Bounds": {
-              "Min": {
-                "X": 47,
-                "Y": 4,
-                "Z": 34
-              },
-              "Max": {
-                "X": 59,
-                "Y": 5,
-                "Z": 55
-              }
-            },
-            "Index": -5
-          },
-          {
-            "Bounds": {
-              "Min": {
-                "X": 54,
-                "Y": 4,
-                "Z": 34
-              },
-              "Max": {
-                "X": 59,
-                "Y": 5,
-                "Z": 39
-              }
-            },
-            "Index": 57
+            "Index": 82
           },
           {
             "Bounds": {
@@ -8154,9 +7007,24 @@
                 "Z": 47
               },
               "Max": {
-                "X": 59,
+                "X": 74,
+                "Y": 22,
+                "Z": 72
+              }
+            },
+            "Index": -9
+          },
+          {
+            "Bounds": {
+              "Min": {
+                "X": 47,
+                "Y": 4,
+                "Z": 47
+              },
+              "Max": {
+                "X": 57,
                 "Y": 5,
-                "Z": 55
+                "Z": 68
               }
             },
             "Index": -3
@@ -8174,29 +7042,29 @@
                 "Z": 54
               }
             },
-            "Index": 78
+            "Index": 67
           },
           {
             "Bounds": {
               "Min": {
-                "X": 54,
+                "X": 47,
                 "Y": 4,
-                "Z": 47
+                "Z": 62
               },
               "Max": {
-                "X": 59,
+                "X": 57,
                 "Y": 5,
-                "Z": 55
+                "Z": 68
               }
             },
-            "Index": 79
+            "Index": 80
           },
           {
             "Bounds": {
               "Min": {
                 "X": 48,
                 "Y": 4,
-                "Z": 54
+                "Z": 47
               },
               "Max": {
                 "X": 74,
@@ -8219,14 +7087,14 @@
                 "Z": 59
               }
             },
-            "Index": 81
+            "Index": 72
           },
           {
             "Bounds": {
               "Min": {
                 "X": 50,
                 "Y": 4,
-                "Z": 57
+                "Z": 47
               },
               "Max": {
                 "X": 74,
@@ -8235,6 +7103,21 @@
               }
             },
             "Index": -3
+          },
+          {
+            "Bounds": {
+              "Min": {
+                "X": 54,
+                "Y": 4,
+                "Z": 47
+              },
+              "Max": {
+                "X": 59,
+                "Y": 5,
+                "Z": 55
+              }
+            },
+            "Index": 68
           },
           {
             "Bounds": {
@@ -8256,22 +7139,7 @@
               "Min": {
                 "X": 54,
                 "Y": 4,
-                "Z": 59
-              },
-              "Max": {
-                "X": 59,
-                "Y": 5,
-                "Z": 64
-              }
-            },
-            "Index": 86
-          },
-          {
-            "Bounds": {
-              "Min": {
-                "X": 55,
-                "Y": 4,
-                "Z": 34
+                "Z": 32
               },
               "Max": {
                 "X": 81,
@@ -8279,37 +7147,52 @@
                 "Z": 72
               }
             },
-            "Index": -23
+            "Index": -21
           },
           {
             "Bounds": {
               "Min": {
-                "X": 56,
+                "X": 54,
                 "Y": 4,
-                "Z": 34
+                "Z": 32
               },
               "Max": {
                 "X": 81,
                 "Y": 5,
-                "Z": 56
+                "Z": 54
               }
             },
-            "Index": -11
+            "Index": -9
           },
           {
             "Bounds": {
               "Min": {
-                "X": 56,
+                "X": 54,
                 "Y": 4,
                 "Z": 34
               },
               "Max": {
-                "X": 74,
+                "X": 66,
                 "Y": 5,
                 "Z": 46
               }
             },
-            "Index": -5
+            "Index": -3
+          },
+          {
+            "Bounds": {
+              "Min": {
+                "X": 54,
+                "Y": 4,
+                "Z": 34
+              },
+              "Max": {
+                "X": 59,
+                "Y": 5,
+                "Z": 39
+              }
+            },
+            "Index": 49
           },
           {
             "Bounds": {
@@ -8324,17 +7207,47 @@
                 "Z": 46
               }
             },
-            "Index": 64
+            "Index": 56
           },
           {
             "Bounds": {
               "Min": {
                 "X": 61,
                 "Y": 4,
-                "Z": 34
+                "Z": 32
               },
               "Max": {
-                "X": 74,
+                "X": 81,
+                "Y": 5,
+                "Z": 54
+              }
+            },
+            "Index": -5
+          },
+          {
+            "Bounds": {
+              "Min": {
+                "X": 75,
+                "Y": 4,
+                "Z": 32
+              },
+              "Max": {
+                "X": 81,
+                "Y": 5,
+                "Z": 54
+              }
+            },
+            "Index": 45
+          },
+          {
+            "Bounds": {
+              "Min": {
+                "X": 61,
+                "Y": 4,
+                "Z": 35
+              },
+              "Max": {
+                "X": 73,
                 "Y": 5,
                 "Z": 42
               }
@@ -8354,51 +7267,6 @@
                 "Z": 40
               }
             },
-            "Index": 62
-          },
-          {
-            "Bounds": {
-              "Min": {
-                "X": 68,
-                "Y": 4,
-                "Z": 34
-              },
-              "Max": {
-                "X": 74,
-                "Y": 5,
-                "Z": 42
-              }
-            },
-            "Index": 58
-          },
-          {
-            "Bounds": {
-              "Min": {
-                "X": 68,
-                "Y": 4,
-                "Z": 35
-              },
-              "Max": {
-                "X": 81,
-                "Y": 5,
-                "Z": 56
-              }
-            },
-            "Index": -5
-          },
-          {
-            "Bounds": {
-              "Min": {
-                "X": 75,
-                "Y": 4,
-                "Z": 35
-              },
-              "Max": {
-                "X": 81,
-                "Y": 5,
-                "Z": 54
-              }
-            },
             "Index": 53
           },
           {
@@ -8406,52 +7274,22 @@
               "Min": {
                 "X": 68,
                 "Y": 4,
-                "Z": 41
-              },
-              "Max": {
-                "X": 76,
-                "Y": 5,
-                "Z": 56
-              }
-            },
-            "Index": -3
-          },
-          {
-            "Bounds": {
-              "Min": {
-                "X": 71,
-                "Y": 4,
-                "Z": 41
-              },
-              "Max": {
-                "X": 76,
-                "Y": 5,
-                "Z": 46
-              }
-            },
-            "Index": 51
-          },
-          {
-            "Bounds": {
-              "Min": {
-                "X": 68,
-                "Y": 4,
-                "Z": 45
+                "Z": 37
               },
               "Max": {
                 "X": 73,
                 "Y": 5,
-                "Z": 56
+                "Z": 42
               }
             },
-            "Index": 70
+            "Index": 54
           },
           {
             "Bounds": {
               "Min": {
                 "X": 55,
                 "Y": 4,
-                "Z": 46
+                "Z": 45
               },
               "Max": {
                 "X": 74,
@@ -8466,15 +7304,45 @@
               "Min": {
                 "X": 61,
                 "Y": 4,
-                "Z": 46
+                "Z": 45
               },
               "Max": {
-                "X": 74,
+                "X": 73,
                 "Y": 5,
-                "Z": 64
+                "Z": 59
               }
             },
             "Index": -5
+          },
+          {
+            "Bounds": {
+              "Min": {
+                "X": 68,
+                "Y": 4,
+                "Z": 45
+              },
+              "Max": {
+                "X": 73,
+                "Y": 5,
+                "Z": 50
+              }
+            },
+            "Index": 60
+          },
+          {
+            "Bounds": {
+              "Min": {
+                "X": 61,
+                "Y": 4,
+                "Z": 46
+              },
+              "Max": {
+                "X": 73,
+                "Y": 5,
+                "Z": 59
+              }
+            },
+            "Index": -3
           },
           {
             "Bounds": {
@@ -8489,59 +7357,29 @@
                 "Z": 54
               }
             },
-            "Index": 73
-          },
-          {
-            "Bounds": {
-              "Min": {
-                "X": 62,
-                "Y": 4,
-                "Z": 53
-              },
-              "Max": {
-                "X": 74,
-                "Y": 5,
-                "Z": 64
-              }
-            },
-            "Index": -3
-          },
-          {
-            "Bounds": {
-              "Min": {
-                "X": 62,
-                "Y": 4,
-                "Z": 53
-              },
-              "Max": {
-                "X": 73,
-                "Y": 5,
-                "Z": 60
-              }
-            },
-            "Index": 69
+            "Index": 62
           },
           {
             "Bounds": {
               "Min": {
                 "X": 68,
                 "Y": 4,
-                "Z": 59
+                "Z": 50
               },
               "Max": {
-                "X": 74,
+                "X": 73,
                 "Y": 5,
-                "Z": 64
+                "Z": 59
               }
             },
-            "Index": 89
+            "Index": 70
           },
           {
             "Bounds": {
               "Min": {
                 "X": 55,
                 "Y": 4,
-                "Z": 60
+                "Z": 55
               },
               "Max": {
                 "X": 74,
@@ -8556,22 +7394,22 @@
               "Min": {
                 "X": 55,
                 "Y": 4,
-                "Z": 66
+                "Z": 59
               },
               "Max": {
-                "X": 61,
+                "X": 59,
                 "Y": 5,
-                "Z": 72
+                "Z": 63
               }
             },
-            "Index": 88
+            "Index": 76
           },
           {
             "Bounds": {
               "Min": {
-                "X": 60,
+                "X": 55,
                 "Y": 4,
-                "Z": 60
+                "Z": 55
               },
               "Max": {
                 "X": 74,
@@ -8584,9 +7422,9 @@
           {
             "Bounds": {
               "Min": {
-                "X": 60,
+                "X": 55,
                 "Y": 4,
-                "Z": 62
+                "Z": 59
               },
               "Max": {
                 "X": 74,
@@ -8594,22 +7432,22 @@
                 "Z": 72
               }
             },
-            "Index": 91
+            "Index": 77
           },
           {
             "Bounds": {
               "Min": {
-                "X": 61,
+                "X": 62,
                 "Y": 4,
-                "Z": 60
+                "Z": 55
               },
               "Max": {
-                "X": 68,
+                "X": 66,
                 "Y": 5,
-                "Z": 66
+                "Z": 59
               }
             },
-            "Index": 90
+            "Index": 74
           },
           {
             "Bounds": {
@@ -8629,7 +7467,7 @@
         ]
       },
       "bvQuantFactor": 0.03333333,
-      "bvNodeCount": 188,
+      "bvNodeCount": 166,
       "walkableClimb": 2.0
     }
   ]

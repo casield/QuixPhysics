@@ -11,7 +11,7 @@ namespace QuixPhysics
 
         List<Hexagon> addedHexagons = new List<Hexagon>();
         Random rnd = new Random();
-        Layout layout;
+        public Layout layout;
         int offset = OffsetCoord.EVEN;
         public bool IsOdd(float value)
         {
@@ -31,10 +31,12 @@ namespace QuixPhysics
             {
                 for (int y = 0; y < size; y++)
                 {
-                    var posPoint = layout.HexToPixel(OffsetCoord.RoffsetToCube(offset, new OffsetCoord(x, y)));
+                    var off = OffsetCoord.RoffsetToCube(offset, new OffsetCoord(x, y));
+                    var posPoint = layout.HexToPixel(off);
                     var pos = new Vector3((float)posPoint.x, 100, (float)posPoint.y);
                     Hexagon ob = (Hexagon)room.factory.Create(Hexagon.Build(pos), room);
                     // ob.AddHextile(hextile);
+                    ob.AddHex(off);
                     arena.navObjects.Add(ob);
 
                     addedHexagons.Add(ob);
@@ -42,59 +44,30 @@ namespace QuixPhysics
                 }
             }
 
-            List<int> wallpos = new List<int>();
-
             foreach (var hex in addedHexagons)
             {
+                List<int> wallpos = new List<int>();
                 for (int a = 0; a < 6; a++)
                 {
                     int num = a;
-                    var neighbor = addedHexagons.Find(e=>{
-                        return true;
+                    var neighbor = hex.hex.Neighbor(a);
+                    var find = addedHexagons.Find(e =>
+                    {
+                        var offE = OffsetCoord.QoffsetFromCube(offset, e.hex);
+                        var offNei = OffsetCoord.QoffsetFromCube(offset, neighbor);
+
+                        return (offE.col == offNei.col && offE.row == offNei.row);
                     });
 
-                    if (neighbor == null)
+                    if (find == null)
                     {
                         wallpos.Add(num);
                     }
                 }
-                var walls = hex.AddWalls(wallpos.ToArray());
+                var walls = hex.AddWalls(wallpos.ToArray(), this);
 
                 arena.navObjects.AddRange(walls);
             }
-
-            for (int a = 0; a < 0; a++)
-            {
-
-                Vector3 pos = new Vector3(rnd.Next(0, 10), 500, rnd.Next(0, 10));
-
-
-                Hexagon ob = (Hexagon)room.factory.Create(Hexagon.Build(pos), room);
-                // ob.AddHextile(hextile);
-                arena.navObjects.Add(ob);
-
-                addedHexagons.Add(ob);
-
-                var wallspos = new List<int>();
-                /**
-
-                for (int a = 0; a < 6; a++)
-                {
-                    int num = a;
-                    var posElem = hextile.GetSide(num);
-                    var tt = hexgrid.GetHextile((int)(gridpos.X + posElem.X), (int)(gridpos.Y + posElem.Y));
-
-                    if (tt == null)
-                    {
-                        wallspos.Add(num);
-                    }
-                }
-
-                var walls = ob.AddWalls(wallspos.ToArray());
-
-                arena.navObjects.AddRange(walls);***/
-            }
-
 
         }
 
@@ -121,6 +94,13 @@ namespace QuixPhysics
 
             var newx = layout.HexToPixel(hex.HexRound());
             return new Vector3((float)newx.x, 800, (float)newx.y);
+        }
+
+        public Vector3 GetPositionFromHex(Hex hex)
+        {
+            var pos = layout.HexToPixel(hex);
+
+            return new Vector3((float)pos.x, 800, (float)pos.y);
         }
 
         private static String HexConverter(System.Drawing.Color c)

@@ -91,6 +91,10 @@ public struct Hex
         return Subtract(b).Length();
     }
 
+    public override string ToString(){
+        return "Q:"+q+" R:"+r+" S:"+s;
+    }
+
 }
 
 public struct FractionalHex
@@ -212,6 +216,11 @@ public struct OffsetCoord
             throw new ArgumentException("offset must be EVEN (+1) or ODD (-1)");
         }
         return new Hex(q, r, s);
+    }
+
+    public override string ToString()
+    {
+        return "Row: "+row+" Col:"+col;
     }
 
 }
