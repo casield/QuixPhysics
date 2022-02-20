@@ -29,7 +29,7 @@ namespace QuixPhysics
             base.Load(bodyHandle, connectionState, simulator, state, guid, room);
             //SetCollidable(false);
             AddToContactListener();
-            CreateDummyBody();
+            //CreateDummyBody();
         }
 
         private void CreateDummyBody()

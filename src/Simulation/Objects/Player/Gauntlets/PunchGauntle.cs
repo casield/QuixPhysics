@@ -21,7 +21,7 @@ namespace QuixPhysics
         {
             if(!active)return;
             QuixConsole.Log("Activate punch");
-            player.dummy.dummyBody.arm.animation.RestartAnimation();
+           // player.dummy.dummyBody.arm.animation.RestartAnimation();
         }
 
         public override void OnChange()
