@@ -11,6 +11,7 @@ namespace QuixPhysics
 
         public static float _SIZE = 500;
         public Hextile hextile;
+        public Hex hex;
         public static BoxState Build(Vector3 position)
         {
             BoxState state = new BoxState()
@@ -18,7 +19,7 @@ namespace QuixPhysics
                 halfSize = new Vector3(_SIZE),
                 mesh = "Stadiums/Hexagons/Hextile",
                 instantiate = true,
-                position = position-Hextile._PADDDING,
+                position = position,
                 type = "Hexagon"
             };
 
@@ -40,6 +41,10 @@ namespace QuixPhysics
                 ChangeColor("#FF0000");
             }
 
+        }
+
+        public void AddHex(Hex hex){
+            this.hex = hex;
         }
         #region Hexagon Calculation
         /// <summary>

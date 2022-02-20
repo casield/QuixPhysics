@@ -47,8 +47,8 @@ namespace QuixPhysics
         public ActionsManager actionsManager;
 
 
-        internal delegate void OnContactAction(PhyObject obj,Vector3 normal);
-        internal event OnContactAction ContactListeners ;
+        internal delegate void OnContactAction(PhyObject obj, Vector3 normal);
+        internal event OnContactAction ContactListeners;
 
         public GolfBall2 golfball;
 
@@ -60,6 +60,8 @@ namespace QuixPhysics
 
         public LookObject lookObject;
         public Dummy dummy;
+
+        public Shop shop;
 
         public Player2()
         {
@@ -80,17 +82,24 @@ namespace QuixPhysics
             CreateGauntlets();
             CreateLookObject();
             CreateDummy();
+            CreateShop();
+
 
             QuixConsole.Log("Player loaded - ");
 
         }
 
+        private void CreateShop()
+        {
+            shop = new Shop(this);
+        }
+
         private void CreateDummy()
         {
-           Dummy dummy = (Dummy)room.factory.Create(Dummy.Build(),room,null,false);
+            Dummy dummy = (Dummy)room.factory.Create(Dummy.Build(), room, null, false);
 
-           dummy.AddToObject(this);
-           this.dummy = dummy;
+            dummy.AddToObject(this);
+            this.dummy = dummy;
         }
 
         /// <summary>
@@ -136,7 +145,7 @@ namespace QuixPhysics
             {
                 instantiate = true,
                 mass = 0,
-                halfSize=new Vector3(10,10,10),
+                halfSize = new Vector3(10, 10, 10),
                 type = "LookObject",
                 owner = state.owner
             });
@@ -162,9 +171,9 @@ namespace QuixPhysics
 
         public override void OnContact<TManifold>(PhyObject obj, TManifold manifold)
         {
-            Vector3 normal = manifold.GetNormal(ref manifold,0);
-            
-            ContactListeners?.Invoke(obj,normal);
+            Vector3 normal = manifold.GetNormal(ref manifold, 0);
+
+            ContactListeners?.Invoke(obj, normal);
         }
         public void Tick()
         {
@@ -177,6 +186,7 @@ namespace QuixPhysics
                     lookObject.Update();
                 }
             }
+            
         }
         public void SetPositionToStartPoint()
         {
@@ -195,7 +205,9 @@ namespace QuixPhysics
             if (activeGauntlet != null)
             {
                 activeGauntlet.Activate(activate);
-            }else{
+            }
+            else
+            {
                 QuixConsole.Log("No active gauntlet");
             }
         }
@@ -206,6 +218,13 @@ namespace QuixPhysics
                 activeGauntlet.Swipe(degree, direction);
             }
 
+        }
+        internal override void OnObjectMessage(string data, string clientId, string roomId)
+        {
+            if (data.Contains("buy:"))
+            {
+                shop.BuyItem();
+            }
         }
     }
 

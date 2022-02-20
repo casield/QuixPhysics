@@ -27,10 +27,11 @@ namespace QuixPhysics
         }
 
         private CrocoLoca CreateCrocoLoca(){
-            var randhextile = room.GetGameMode<Arena>().hextilesAddon.GetRandomHextile();
-            CrocoLoca croc = (CrocoLoca)room.factory.Create(CrocoLoca.Build(randhextile.GetPosition()),room);
+           // var randhextile = room.GetGameMode<Arena>().hextilesAddon.GetRandomHextile();
+           // CrocoLoca croc = (CrocoLoca)room.factory.Create(CrocoLoca.Build(randhextile.GetPosition()),room);
 
-            return croc;
+           // return croc;
+           return null;
         }        
 
         private void CreateBot()

@@ -24,7 +24,10 @@ namespace QuixPhysics
 
         private UserLoader userLoader;
         public AIManager aIManager;
+        private GameFlowAddon gameFlowAddon;
         public HextilesAddon hextilesAddon;
+
+        public List<ArenaAddon> addons = new List<ArenaAddon>();
 
         private List<User> turnWinners = new List<User>();
 
@@ -47,6 +50,12 @@ namespace QuixPhysics
             hextilesAddon = new HextilesAddon(simulator, this);
             userLoader = new UserLoader(simulator, this);
             aIManager = new AIManager(simulator, this);
+            gameFlowAddon = new GameFlowAddon(simulator, this);
+
+            addons.Add(hextilesAddon);
+            addons.Add(userLoader);
+            addons.Add(aIManager);
+            addons.Add(gameFlowAddon);
 
             GenerateMap();
         }
@@ -67,7 +76,7 @@ namespace QuixPhysics
             //GetStartPointOnMap
             if (hextilesAddon != null)
             {
-                point = hextilesAddon.GetRandomHextile().GetPosition();
+                point = new Vector3(0,600,0);
                 QuixConsole.Log("Point", point);
             }
 
@@ -117,14 +126,10 @@ namespace QuixPhysics
 
         private void GenerateMap()
         {
-            // GenerateMapCommand command = new GenerateMapCommand(simulator);
-
-            // var objs = command.GenerateMap("hexagons", room);                    
-            // navObjects.AddRange(objs);
-
-            hextilesAddon.OnMapsLoaded();
-            userLoader.OnMapsLoaded();
-            aIManager.OnMapsLoaded();
+            foreach (var item in addons)
+            {
+                item.OnMapsLoaded();
+            }
 
             room.factory.createObjects();
         }
@@ -145,13 +150,15 @@ namespace QuixPhysics
         {
 
             // CreatePlayers();
-            var timeout = new PhyTimeOut(3000, simulator, true);
+            var timeout = new PhyTimeOut(10000, simulator, true);
             timeout.Completed += () =>
             {
-                hextilesAddon.OnStart();
+
+                foreach (var item in addons)
+                {
+                    item.OnStart();
+                }
                 GenerateNavMesh();
-                aIManager.OnStart();
-                userLoader.OnStart();
                 QuixConsole.Log("NavMesh ready", navMeshName);
             };
             simulator.workers.Add(timeout);
@@ -192,49 +199,6 @@ namespace QuixPhysics
 
             OnNavMeshReadyListeners?.Invoke();
 
-        }
-        internal void OnHoleWin(User winner)
-        {
-
-            int gemsWon = 0;
-            foreach (var item in users)
-            {
-                //TODO ADD GEMS FROM ALL SOURCES
-                if (item != winner)
-                {
-                    gemsWon += (int)item.gems.value;
-                }
-
-            }
-            gemsWon /= users.Count;
-            turnWinners.Add(winner);
-            winner.gems.Update((int)winner.gems.value + gemsWon);
-            if (turnWinners.Count == props.TURNS_TO_WIN)
-            {
-                Finish();
-            }
-
-        }
-
-        public override void Finish()
-        {
-            User winner = null;
-            foreach (var user in users)
-            {
-                if (winner == null)
-                {
-                    winner = user;
-                }
-                else
-                {
-                    if ((int)winner.gems.value > (int)user.gems.value)
-                    {
-                        winner = user;
-                    }
-                }
-            }
-
-            QuixConsole.Log("Winner!", winner.sessionId);
         }
 
     }

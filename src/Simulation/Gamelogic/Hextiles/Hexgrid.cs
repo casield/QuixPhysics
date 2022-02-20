@@ -37,15 +37,17 @@ namespace QuixPhysics.Hextiles
             Random rnd = new Random();
             Hextile tile = null;
             Hextile firstOne = null;
-            while(tile==null){
-                var x = rnd.Next(0,Hexgrid._GRID_SIZE-1);
-                var y = rnd.Next(0,Hexgrid._GRID_SIZE-1);
-                var index = GetIndex(x,y);
-                if(hextiles[index]!=null){
-                    tile=hextiles[index];
+            while (tile == null)
+            {
+                var x = rnd.Next(0, Hexgrid._GRID_SIZE - 1);
+                var y = rnd.Next(0, Hexgrid._GRID_SIZE - 1);
+                var index = GetIndex(x, y);
+                if (hextiles[index] != null)
+                {
+                    tile = hextiles[index];
                 }
             }
-        
+
             if (tile == null)
             {
                 return firstOne;
@@ -86,6 +88,11 @@ namespace QuixPhysics.Hextiles
                 return tile;
             }
             return null;
+
+        }
+
+        public void CubeRound()
+        {
 
         }
     }
