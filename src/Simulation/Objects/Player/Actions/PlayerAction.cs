@@ -28,7 +28,9 @@ public interface IPlayerAction
         public void SetPlayer(Player2 player){
             this.player = player;
         }
-
+        /// <summary>
+        /// Removes itself from actiosn manager list
+        /// </summary>
         public void Remove(){
             player.actionsManager.RemoveAction(this);
         }

@@ -19,6 +19,7 @@ namespace QuixPhysics.Player
         public RaycastAction raycastAction;
         public FallAction fallAction;
         public  GrabBallAction grabBallAction;
+        public DamageAction damageAction;
 
         public ActionsManager(Player2 player)
         {
@@ -39,6 +40,7 @@ namespace QuixPhysics.Player
             raycastAction = new RaycastAction(player);
             fallAction = new FallAction(player);
             grabBallAction = new GrabBallAction(player);
+            damageAction = new DamageAction(player);
 
         }
         /// <summary>
@@ -84,6 +86,10 @@ namespace QuixPhysics.Player
         {
             ActivateAction(jumpAction);
 
+        }
+        public void TakeDamage(int damage){
+            damageAction.SetDamage(damage);
+            ActivateAction(damageAction);
         }
 
         internal void Rotate(XYMessage message)

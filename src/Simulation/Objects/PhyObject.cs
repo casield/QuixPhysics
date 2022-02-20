@@ -254,11 +254,11 @@ namespace QuixPhysics
         {
             if (state is SphereState)
             {
-                return ((SphereState)state).radius*2;
+                return ((SphereState)state).radius * 2;
             }
             else
             {
-                return ((BoxState)state).halfSize.Y*2;
+                return ((BoxState)state).halfSize.Y * 2;
             }
         }
 
@@ -368,6 +368,16 @@ namespace QuixPhysics
         public virtual void OnContact<TManifold>(PhyObject obj, TManifold manifold) where TManifold : struct, IContactManifold<TManifold>
         {
             throw new NotImplementedException("Type :" + obj.state.type);
+        }
+        /// <summary>
+        /// Destroys this object in the next simulation tick
+        /// </summary>
+        public void DestroyOnNext()
+        {
+            AddWorker(new PhyTimeOut(1, simulator, true)).Completed += () =>
+            {
+                Destroy();
+            };
         }
 
         public virtual void Destroy()
