@@ -8,6 +8,8 @@ namespace QuixPhysics
         float velocity = 5000;
         int damage = 1;
         bool hasDamage = false;
+
+
         public static SphereState Build()
         {
             return new SphereState()
@@ -35,7 +37,7 @@ namespace QuixPhysics
 
             }
 
-            DestroyOnNext();
+            DestroyOnTime(100);
         }
         public void ShootToObject(PhyObject obj)
         {
@@ -50,8 +52,9 @@ namespace QuixPhysics
     public class Town : Item
     {
         private User user;
+
+        private int maxShoots = 3;
         private int shoots = 0;
-        private int maxShoots = 4;
 
         public Town(User user)
         {
@@ -69,32 +72,29 @@ namespace QuixPhysics
             foreach (var user in room.users)
             {
                 var distance = Vector3.Distance(user.Value.player.GetPosition(), GetPosition());
-                if (distance < 500 && shoots == 0)
+                if (distance < 500)
                 {
-                    Shoot(user.Value.player, distance);
+                    StartShoot(user.Value.player, distance);
                 }
             }
         }
 
-        private void Shoot(Player2 player, float distance)
+        private void StartShoot(Player2 player, float distance)
         {
-            var worker = new PhyTimeOut(100, simulator, false);
-            AddWorker(worker).Completed += () =>
-            {
                 TownBullet bullet = (TownBullet)room.factory.Create(TownBullet.Build(), room);
                 bullet.SetPosition(GetPosition() + new Vector3(0, GetHeight() + 10, 0));
                 bullet.ShootToObject(player);
                 shoots++;
-                worker.Reset();
-                if (shoots == maxShoots)
-                {
-                    worker.Destroy();
+                if(shoots==maxShoots){
                     shoots = 0;
+                    return;
                 }
 
-
-            };
+                AddWorker(new PhyTimeOut(300,simulator,true)).Completed+=()=>{
+                    StartShoot(player,distance);
+                } ;  
         }
+
 
         public override void Instantiate(Room room, Vector3 position)
         {

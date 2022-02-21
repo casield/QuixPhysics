@@ -24,22 +24,26 @@ namespace QuixPhysics
 
             QuixConsole.Log("Creating Hextile");
 
-            var random = false;
-            var size = 4;
+            var random = true;
+            var size = 6;
 
             for (int x = 0; x < size; x++)
             {
                 for (int y = 0; y < size; y++)
                 {
-                    var off = OffsetCoord.RoffsetToCube(offset, new OffsetCoord(x, y));
-                    var posPoint = layout.HexToPixel(off);
-                    var pos = new Vector3((float)posPoint.x, 100, (float)posPoint.y);
-                    Hexagon ob = (Hexagon)room.factory.Create(Hexagon.Build(pos), room);
-                    // ob.AddHextile(hextile);
-                    ob.AddHex(off);
-                    arena.navObjects.Add(ob);
+                    if (!random || rnd.Next(10) < 8)
+                    {
+                        var off = OffsetCoord.RoffsetToCube(offset, new OffsetCoord(x, y));
+                        var posPoint = layout.HexToPixel(off);
+                        var pos = new Vector3((float)posPoint.x, 100, (float)posPoint.y);
+                        Hexagon ob = (Hexagon)room.factory.Create(Hexagon.Build(pos), room);
+                        // ob.AddHextile(hextile);
+                        ob.AddHex(off);
+                        arena.navObjects.Add(ob);
 
-                    addedHexagons.Add(ob);
+                        addedHexagons.Add(ob);
+                    }
+
 
                 }
             }

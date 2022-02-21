@@ -18,15 +18,13 @@ namespace QuixPhysics
             this.time = time;
             //Console.WriteLine("Created a worker");
             this.simulator = _simulator;
-            lock (_simulator.workers)
-            {
-                _simulator.workersToAdd.Add(this);
-            }
 
+            _simulator.workersToAdd.Add(this);
 
         }
 
-        public bool ShouldDestroy(){
+        public bool ShouldDestroy()
+        {
             return destroy;
         }
         protected virtual void OnTick()
@@ -74,9 +72,6 @@ namespace QuixPhysics
                 tickTime++;
                 OnTick();
             }
-
-
-
             return false;
         }
         public void Reset()
@@ -111,7 +106,9 @@ namespace QuixPhysics
             if (shouldDestroy)
             {
                 Destroy();
-            }else{
+            }
+            else
+            {
                 paused = true;
             }
 
@@ -119,36 +116,44 @@ namespace QuixPhysics
 
 
     }
-    
+
     /// <summary>
     /// Waits an amount of time. Then it return true on the Tick method.
     /// </summary>
-    public class PhyWaiter {
-        private int tick =0;
+    public class PhyWaiter
+    {
+        private int tick = 0;
         private int time = 1;
         public event PhyAction OnCompleteListeners;
-        public PhyWaiter(int time){
+        public PhyWaiter(int time)
+        {
             this.time = time;
         }
-        public bool Tick(){
+        public bool Tick()
+        {
             tick++;
-            if(tick==time){
+            if (tick == time)
+            {
                 OnTimeCompleted();
                 Reset();
                 return true;
             }
             return false;
         }
-        public int GetTick(){
+        public int GetTick()
+        {
             return tick;
         }
-        public void Reset(){
-            tick=0;
+        public void Reset()
+        {
+            tick = 0;
         }
-        public void SetTime(int newTime){
+        public void SetTime(int newTime)
+        {
             time = newTime;
         }
-        private void OnTimeCompleted(){
+        private void OnTimeCompleted()
+        {
             OnCompleteListeners?.Invoke();
         }
     }

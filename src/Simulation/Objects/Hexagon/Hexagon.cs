@@ -86,7 +86,7 @@ namespace QuixPhysics
                     halfSize = new Vector3(250, Hexagon._SIZE / 2, 20),
                     instantiate = true,
                     position = pos,
-                    type = "QuixBox",
+                    type = "Wall",
                     quaternion = quat
                 };
 

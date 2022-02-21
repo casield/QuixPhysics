@@ -19,7 +19,7 @@ namespace QuixPhysics.Player
 
         public override void OnActivate()
         {
-            savedSpeed = player.playerStats.speed;
+            savedSpeed = player.playerStatsInitial.speed;
             int gems = (int)player.user.gems.value;
             player.user.gems.Update(gems-nextDamage);
             SetDamage(0);
@@ -32,7 +32,7 @@ namespace QuixPhysics.Player
         public override void OnUpdate()
         {
             if(player.playerStats.speed<savedSpeed){
-                player.playerStats.speed+=.0002f;
+                player.playerStats.speed+=.0001f;
             }else{
                 player.playerStats.speed = savedSpeed;
                 Remove();

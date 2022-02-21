@@ -59,6 +59,7 @@ namespace QuixPhysics
         public StaticDescription staticDescription;
         public BodyDescription bodyDescription;
         public bool Destroyed = false;
+        public bool isDestroying = false;
 
 
         public PhyObject()
@@ -359,7 +360,7 @@ namespace QuixPhysics
         public static string createUID()
         {
 
-            return Guid.NewGuid().ToString().GetHashCode().ToString(); ;
+            return Guid.NewGuid().ToString().GetHashCode().ToString();
         }
 
         /// <summary>
@@ -372,16 +373,19 @@ namespace QuixPhysics
         /// <summary>
         /// Destroys this object in the next simulation tick
         /// </summary>
-        public void DestroyOnNext()
+        public void DestroyOnTime(int time)
         {
-            AddWorker(new PhyTimeOut(1, simulator, true)).Completed += () =>
+            if(isDestroying)return;
+            AddWorker(new PhyTimeOut(time, simulator, true)).Completed += () =>
             {
                 Destroy();
             };
+            isDestroying = true;
         }
 
         public virtual void Destroy()
         {
+            if(Destroyed)return;
             if (state.mass == 0)
             {
                 room.factory.staticObjectsHandlers.Remove(handle.staticHandle);

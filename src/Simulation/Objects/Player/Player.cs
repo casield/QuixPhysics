@@ -33,8 +33,7 @@ namespace QuixPhysics
     {
         public float rotationController = 0;
 
-
-        public PlayerStats playerStats = new PlayerStats
+       public PlayerStats playerStatsInitial = new PlayerStats
         {
             force = 60,
             friction = 1f,
@@ -43,6 +42,8 @@ namespace QuixPhysics
             maxDistanceWithBall = 20,
             height = 30
         };
+        public PlayerStats playerStats = new PlayerStats{};
+
         public OverBoardStats overStats = new OverBoardStats { acceleration = .06f };
         public ActionsManager actionsManager;
 
@@ -66,6 +67,7 @@ namespace QuixPhysics
         public Player2()
         {
             this.updateRotation = false;
+            playerStats = playerStatsInitial;
 
         }
         public override void Load(Handle bodyHandle, ConnectionState connectionState, Simulator simulator, ObjectState state, Guid guid, Room room)
